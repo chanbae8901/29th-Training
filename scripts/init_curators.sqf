@@ -3,7 +3,7 @@
 //	if (isServer) then {_x call BIS_fnc_drawCuratorLocations;}; // add location names to curators UI
 //	[_x,[WEST,EAST,INDEPENDENT,CIVILIAN]] call BIS_fnc_drawCuratorRespawnMarkers;
 } forEach allCurators;
-
+/*
 {
 // Checks if the deleted object in a respawnInventory module and then deletes all respawn inventories
 // configfile >> "CfgFunctions" >> "A3_Modules_F_Curator" >> "Respawn" >> "moduleRespawnInventory"
@@ -16,7 +16,7 @@
 	}];
 	
 } forEach allCurators;
-
+*/
 if (isClass (configFile >> "CfgPatches" >> "ace_main")) then {
 	{
 		// Call ACE3 Fast Rope function on each helicopter placed
