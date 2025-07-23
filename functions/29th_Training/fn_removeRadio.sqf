@@ -1,8 +1,24 @@
+/*
+ * Name:	fnc_removeRadio
+ * Date:	9/10/2018
+ * Version: 1.0
+ * Author: Rellikplug	AKA: Hill [29th ID]
+ *
+ * Description:
+ * Deletes SR radio in linked slot along with LR backpack, if either exist on unit.
+ *
+ * Parameter(s): unit: Object - unit to delete radios from
+ *
+ * Returns:
+ * Array in format [removed SR, removed LR]
+ *
+ * Example:
+ * [player] call Hill_fnc_removeRadio;
+ * 
+ */
+
 if !(hasInterface) exitWith {};
 if !(isClass (configfile >> "CfgPatches" >> "task_force_radio_items")) exitWith {};
-
-_removeRadiosFromDead = "removeRadiosFromDead" call BIS_fnc_getParamValue;
-if (_removeRadiosFromDead == 0) exitWith {};
 
 params ["_unit"];
 
