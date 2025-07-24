@@ -11,8 +11,6 @@ execVM "scripts\baseObjectsInit.sqf";
 [EAST, "29TH_PARADE_EAST"] call BIS_fnc_addRespawnInventory;
 [INDEPENDENT, "29TH_PARADE_INDEPENDENT"] call BIS_fnc_addRespawnInventory;
 
-execVM "scripts\dateAndWeather.sqf";
-
 //Init chat command system
 [] execVM "module_chatIntercept\init.sqf";
 

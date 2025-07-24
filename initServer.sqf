@@ -31,6 +31,12 @@ publicVariable "disabledTI";
 artilleryComputer = "artilleryComputer" call BIS_fnc_getParamValue;
 publicVariable "artilleryComputer";
 
+//set-up default date and weather
+private _forcedDate     = [2018, 3, 30, 12, 0]; 
+private _forcedOvercast = 0.1;
+private _forcedFog      = [0.1, 0.01, 0];
+[_forcedDate, _forcedOvercast, _forcedFog] execVM "scripts\dateAndWeather.sqf";
+
 //removeRadiosFromDead = "removeRadiosFromDead" call BIS_fnc_getParamValue;
 //publicVariable "removeRadiosFromDead";
 
