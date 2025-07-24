@@ -3,7 +3,7 @@ waitUntil {!isNull player};
 waitUntil {player == player};
 waitUntil {alive player};
 
-private ["_theClient","_sqdParams","_theClientSquad"];
+private ["_theClient","_sqdParams","_theClientSquad","_insigTrue","_theClient_Insig"];
 
 _theClient = _this;
 

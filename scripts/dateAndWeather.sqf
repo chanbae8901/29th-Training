@@ -3,7 +3,7 @@ switch (true) do {
     [] spawn {
       if (isNil "serverDateAndWeatherSet") then {waitUntil {!isNil "serverDateAndWeatherSet";};};
       if (serverDateAndWeatherSet) then {
-        _name = profileName;
+        private _name = profileName;
         if (isNil "forcedDate" || isNil "forcedOvercast" || isNil "forcedFog") then {waitUntil {!isNil "forcedDate" && !isNil "forcedOvercast" && !isNil "forcedFog";};};
         setDate forcedDate;
         0 setOvercast forcedOvercast;

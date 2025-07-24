@@ -1,5 +1,5 @@
 //spawn Hill_fnc_assignCurator with the right parameters determined by the player joining
- _unitName = str (_this select 0);
+private _unitName = str (_this select 0);
 
 switch (_unitName) do {
     case "blu_co":       { [blu_co,       zeus_co]        spawn Hill_fnc_assignCurator };

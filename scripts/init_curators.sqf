@@ -146,9 +146,9 @@ if (isNil "disabledTI") then {
 {
   curatorEnteredLog = _x addEventHandler ["CuratorObjectRegistered", {
     params ["_curator"];
-    _curatorObj = getAssignedCuratorUnit _curator;
-    _curatorName = name _curatorObj;
-    _msg = text format ["CURATOR INTERFACE OPENED:  %1",_curatorName];
+    private _curatorObj = getAssignedCuratorUnit _curator;
+    private _curatorName = name _curatorObj;
+    private _msg = text format ["CURATOR INTERFACE OPENED:  %1",_curatorName];
     _msg remoteExec ["diag_log",2];
   }];
 } forEach allCurators;

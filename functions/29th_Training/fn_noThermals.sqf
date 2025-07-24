@@ -1,6 +1,6 @@
 if (!hasInterface) exitWith {};
-_theGuy = _this select 0 select 0;
-_layer = 85125; 
+private _theGuy = _this select 0 select 0;
+private _layer = 85125; 
 
 if (currentVisionMode _theGuy == 2) then {
   _layer	cutText ["FLIR Mode is disallowed. Please Turn off Thermals.","BLACK",-1];

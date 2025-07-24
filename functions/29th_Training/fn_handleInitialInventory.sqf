@@ -1,6 +1,6 @@
 if (!hasInterface) exitWith {};
 
-_theClient = _this select 0;
+private _theClient = _this select 0;
 
 waitUntil {!isNull player && player == player};
 

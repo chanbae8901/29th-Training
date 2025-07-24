@@ -1,7 +1,7 @@
 //function not working properly
 waitUntil {!isNil "Headless Client"};
 if (!isServer) exitWith {};
-_HC = owner "Headless Client"; //<string> denotes the name of the HC entity/unit in-game
+private _HC = owner "Headless Client"; //<string> denotes the name of the HC entity/unit in-game
 
 /* ["HCS_addToHC", "onEachFrame", {
     if ((isPlayer)||(_x in units group _HC)) exitWith {};
