@@ -10,7 +10,7 @@ class 29th_Training {
     class addRadio {};
     class arsenalClosed {};
     class removeRadio {};
-    //class assignCurator {};
+    class assignCurator {};
     //class randomizeRadioHz {};
     //class removeAllRespawnInventory {};    
   };

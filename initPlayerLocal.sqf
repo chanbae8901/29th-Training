@@ -13,15 +13,17 @@ params ["_theClient","_didJIP"];
 
 enableSentences false;
 enableEnvironment [false, true];
-
-[] spawn {
+// ==============================================================================
+[] spawn 
+{
   waitUntil {!isNil "artilleryComputer"};
   if (artilleryComputer == 0) then {
     enableEngineArtillery false;
   };
 };
 
-[] spawn {
+[] spawn 
+{
   waitUntil {!isNil "disabledTI"};
   if (disabledTI == 0) then {
     ["visionMode", {
@@ -30,12 +32,17 @@ enableEnvironment [false, true];
   };
 };
 
-[_theClient] spawn Hill_fnc_handleInitialInventory;
-
-//sleep 1;
-
 // ==============================================================================
-
+if(_didJIP) then 
+{
+  [_theClient] spawn 
+  {
+    params ["_theClient"];
+    waitUntil { sleep 1; _theClient == _theClient }; //most reliable way to call script early without it breaking
+    [_theClient] execVM "scripts\checkCuratorAssignment.sqf";
+  };
+};
+[_theClient] spawn Hill_fnc_handleInitialInventory;
 [_theClient] execVM "scripts\player_arsenal_handlers.sqf";
 
 //maintains a neutral rating in the event of "accidental" team kills
