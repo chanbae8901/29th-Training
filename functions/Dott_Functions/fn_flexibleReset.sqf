@@ -43,14 +43,7 @@ private _resetInventory = false;
 
 if (count _inventory != 0) then
 {	
-	player call DOTT_fnc_removeWeaponMags; //prevent inaudible weapon bug
-
-	//setUnitLoadout will fail if called during weapon switch	
-	//also give time for empty mags to sync to server
-	waitUntil {sleep .5; !isSwitchingWeapon player};	
-
-	player setUnitLoadout [_inventory, true];
-	
+	[player, _inventory, true] spawn DOTT_fnc_safeSetUnitLoadout;
 	_resetInventory = true; //set to true for switch below
 };
 

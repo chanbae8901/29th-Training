@@ -9,5 +9,6 @@ class Dott_Functions
 		class ticketCount {};
 		class flexibleReset {};
 		class removeWeaponMags {};
+		class safeSetUnitLoadout {};
 	};
 };

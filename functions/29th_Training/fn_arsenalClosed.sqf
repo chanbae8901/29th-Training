@@ -6,6 +6,12 @@ player spawn Hill_fnc_setInsignia;
 
 resetLoadout = getUnitLoadout player;
 
+//prevent inaudible weapon bug
+[] spawn {
+	sleep 1;
+	[player, resetLoadout, true] call DOTT_fnc_safeSetUnitLoadout;	
+};
+
 if (!(weaponLowered player)) then {
 	player action ["WeaponOnBack", player];
 };
