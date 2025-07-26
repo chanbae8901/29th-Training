@@ -27,7 +27,7 @@ enableEnvironment [false, true];
   waitUntil {!isNil "disabledTI"};
   if (disabledTI == 0) then {
     ["visionMode", {
-      [_this] spawn Hill_fnc_noThermals;
+      [] spawn Hill_fnc_noThermals;
     }] call CBA_fnc_addPlayerEventHandler;
   };
 };
