@@ -38,7 +38,7 @@ if(_didJIP) then
   [_theClient] spawn 
   {
     params ["_theClient"];
-    waitUntil { sleep 1; _theClient == _theClient }; //most reliable way to call script early without it breaking
+    waitUntil { sleep 1; !isNull _theClient }; //most reliable way to call script early without it breaking
     [_theClient] execVM "scripts\checkCuratorAssignment.sqf";
   };
 };
