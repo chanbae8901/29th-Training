@@ -9,7 +9,6 @@ Overall Future Goals
 	- Instead of regular cap zone, instead proximity to center adds more weight
 	- Not really for training... but events
 	- Could define area with polygon instead of circle or rectangle
-* Fix inconsistent thermals
 * Check if player in zone (inPolygon? Also marker rectangle or circles)
 * Random mortars in area defined by admin
 * Teleport pole that teleports you inside a radius, or into an area, or along a circle edge (COULD USE POLY TOO)
@@ -25,7 +24,6 @@ Overall Future Goals
 	- Wave system for team leaders to call in player waves
 		- Could also use timer
 	- ! chat command printing to logs
-	- Artillery computer is broken
 	- Deploy area. Allow a side to deploy within or outside of a designated circle.
 
 ---
@@ -37,6 +35,44 @@ TBD
 	- Included new class "FlagTaken"
 	- Included new class "FlagCaptured"
 	- Included new class "FlagReturned"
+
+---
+v4.2.0  
+27 JUL 2025
+
+---
+
+* Parade loadout
+	- Combined PARADE_WEST, PARADE_EAST, and PARADE_INDEPENDENT roles into a single PARADE role in cfgRoles and cfgInventories
+  - Deprecated radios in loadout swapped.
+  - fn_handleInitalInventory.sqf fixed, but also no longer called due to redundancy.
+
+* Improved loadout and arsenal handling
+	- Added "functions\Dott_Functions\fn_removeWeaponMags.sqf" and "functions\Dott_Functions\fn_safeSetUnitLoadout.sqf" to hopefully prevent inaudible weapon bug
+	- fn_arsenalClosed and fn_flexibleReset now use safeSetUnitLoadout, modified fn_flexibleReset params to accomodate.
+
+* Legacy cleanup
+	- fn_addRadio deprecated radios swapped.
+  - fn_assignCurator, checkCuratorAssignment rewritten, checkCuratorAssignment call moved to initPlayerLocal from initServer
+    Now properly lets JIP Zeus slots access it without respawn.
+  - fn_cleaner now properly cleans up items in base, added description, returns boolean
+  - fn_noThermals cleaned up with descriptions, defines, param change
+  - fn_removeRadio now has description, moved _removeRadiosFromDead check to onPlayerKilled
+  - fn_setInsignia rewritten with hashmap instead of switch case, different standard for non-combat kits. 
+    Cleaned up call to it from onPlayerRespawn and removed it from arsenal_handlers as it is included in safeSetUnitLoadout.
+  - Unused functions randomizeRadioHz and removeAllRespawnInventories moved to archives folder and calls (TFAR_eventHandlers and init_curators respectively) commented out.
+  - dateAndWeather function greatly simplified, moved completely server side. Call moved from init.sqf to initServer.sqf. 
+    Numeric values moved from script to initServer, now passed as params.
+  - Disabled all Headless Client "functionality" due to nonfunctional behavior.
+    init_hc is no longer called from initServer and has been marked as non-working.
+    Headless Client-related code in init_curators has been commented out.
+
+* Tweaked "fn_flexibleReset.sqf"
+  - Teleport now waits up to 30 seconds for a dead player to respawn before attempting teleport to reduce need for manual teleporting in these situations.
+
+* Fixed mission parameters
+  - artilleryComputer now properly disables artillery computers. 
+  - disabledTI now properly spawns Hill_fnc_noThermals via EH. Infantry NVGs and launchers can no longer use thermals.
 
 ---
 v4.1.1
