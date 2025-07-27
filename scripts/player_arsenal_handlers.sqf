@@ -7,13 +7,10 @@ waitUntil {!isNull player};
 }] call BIS_fnc_addScriptedEventHandler;
 
 [missionNamespace, "arsenalOpened", {
-	player spawn Hill_fnc_setInsignia;
-//	systemChat "Your insignia has been applied.";
 }] call BIS_fnc_addScriptedEventHandler;
 
 if (isClass (configFile >> "CfgPatches" >> "ace_main")) then {
   ["ace_arsenal_displayOpened", {
-    player spawn Hill_fnc_setInsignia;
   }] call CBA_fnc_addEventHandler;
   
   ["ace_arsenal_displayClosed", {

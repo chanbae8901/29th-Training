@@ -6,10 +6,7 @@ Executed locally (client only) when player respawns in a multiplayer mission.
 */
 params ["_newUnit", "_oldUnit"];
 
-if (isNull _oldUnit) then {
-  [_newUnit, ""] call BIS_fnc_setUnitInsignia;
-  _newUnit spawn Hill_fnc_setInsignia;
-};
+_newUnit spawn Hill_fnc_setInsignia;
 
 
 if (!isNull _oldUnit) then { //was '!(isNull _oldUnit)' Not sure why, changed it - Dott
@@ -28,15 +25,6 @@ if (!isNull _oldUnit) then { //was '!(isNull _oldUnit)' Not sure why, changed it
   titleText ["", "BLACK IN", 2];
   //diag_log text format ["|RESPAWN 03|  NEW UNIT POS 02:  %1, NEW UNIT IS HIDDEN?: %2, NEW UNIT SIMULATION?:  %3",position _newUnit,isObjectHidden _newUnit,simulationEnabled _newUnit];
 
-  [_newUnit] spawn {
-    params ["_newUnit"];
-    waitUntil {alive _newUnit};
-    uiSleep 1;
-    [_newUnit, ""] call BIS_fnc_setUnitInsignia;
-    _newUnit spawn Hill_fnc_setInsignia;
-  };
-
-//  [ _newUnit, [ missionNamespace, "currentInventory" ] ] call BIS_fnc_loadInventory; // load player's inventory
 	if ( missionNamespace getVariable [ "menuRespawn", true ] ) then {
 		if (autoSpectate) then {
 			systemChat "AutoSpectate is ON.";

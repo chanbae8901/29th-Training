@@ -6,6 +6,7 @@
  *
  * Description:
  * Wrapper function that removes causes of inaudible weapon glitch when applying loadout to unit.
+ * Also applies squad insignia.
  * Should spawn this function over setUnitLoadout
  *
  * Parameter(s): 
@@ -37,5 +38,5 @@ _unit call DOTT_fnc_removeWeaponMags; //prevent inaudible weapon bug
 waitUntil {sleep .01; !isSwitchingWeapon _unit};	
 
 _unit setUnitLoadout [_loadout, _fullMagazines];
-
+_unit spawn Hill_fnc_setInsignia;
 true
