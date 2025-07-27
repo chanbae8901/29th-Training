@@ -148,7 +148,7 @@ if (isNil "disabledTI") then {
     params ["_curator"];
     private _curatorObj = getAssignedCuratorUnit _curator;
     private _curatorName = name _curatorObj;
-    private _msg = text format ["CURATOR INTERFACE OPENED:  %1",_curatorName];
+    private _msg = format ["CURATOR INTERFACE OPENED:  %1",_curatorName];
     _msg remoteExec ["diag_log",2];
   }];
 } forEach allCurators;
