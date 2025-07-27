@@ -263,15 +263,15 @@ pvpfw_chatIntercept_allCommands = [
 			_argument = _this select 0;
 			if (_argument isEqualTo "") exitWith //empty arg means heal all players
 			{
-				[["", true], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
+				[[[], true], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
 				systemChat "Healing all players!"
 			};
 			_argument = toLower _argument; //otherwise select team and heal
 			switch (_argument) do
 			{
-				case "blufor": { [{ ["", true] spawn DOTT_fnc_flexibleReset} ] remoteExec ["call", west]; systemChat "Healing Blufor players!"; };
-				case "opfor": { [{ ["", true] spawn DOTT_fnc_flexibleReset} ] remoteExec ["call", east]; systemChat "Healing Opfor players!";  };
-				case "grnfor": { [{ ["", true] spawn DOTT_fnc_flexibleReset} ] remoteExec ["call", resistance]; systemChat "Healing Grnfor players!";  };
+				case "blufor": { [{ [[], true] spawn DOTT_fnc_flexibleReset} ] remoteExec ["call", west]; systemChat "Healing Blufor players!"; };
+				case "opfor": { [{ [[], true] spawn DOTT_fnc_flexibleReset} ] remoteExec ["call", east]; systemChat "Healing Opfor players!";  };
+				case "grnfor": { [{ [[], true] spawn DOTT_fnc_flexibleReset} ] remoteExec ["call", resistance]; systemChat "Healing Grnfor players!";  };
 				default {systemChat "Error: Invalid input! Must be 'blufor', 'opfor', or 'grnfor'"};
 			};
 		}
@@ -363,7 +363,7 @@ pvpfw_chatIntercept_allCommands = [
 			if (_argument isEqualTo "") then
 			{
 				private _pos = getPosASL res_blu;
-				[["", true, _pos], DOTT_fnc_flexibleReset ] remoteExec ["spawn"];
+				[[[], true, _pos], DOTT_fnc_flexibleReset ] remoteExec ["spawn"];
 				systemChat "Healing and teleporting all players to Blufor base!";
 			}
 			else //teleport all players to 15 meters in front of admin
@@ -375,7 +375,7 @@ pvpfw_chatIntercept_allCommands = [
 				//use offset x/y but player z (satisfies ASL requirement)
 				private _telePos = [_offset select 0, _offset select 1, _pos select 2];
 				
-				[["", true, _telePos], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
+				[[[], true, _telePos], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
 				systemChat "Healing and teleporting all players to you!";
 			};
 		}
@@ -391,9 +391,9 @@ pvpfw_chatIntercept_allCommands = [
 			_argument = toLower _argument;
 			switch (_argument) do
 			{
-				case "blufor": { ["",false,getPosASL blu_ammo] spawn DOTT_fnc_flexibleReset; systemChat "Teleporting to Blufor spawn!"; };
-				case "opfor": { ["",false,getPosASL red_ammo] spawn DOTT_fnc_flexibleReset; systemChat "Teleporting to Opfor spawn!"; };
-				case "grnfor": { ["",false,getPosASL grn_ammo] spawn DOTT_fnc_flexibleReset; systemChat "Teleporting to Grnfor spawn!"; };
+				case "blufor": { [[],false,getPosASL blu_ammo] spawn DOTT_fnc_flexibleReset; systemChat "Teleporting to Blufor spawn!"; };
+				case "opfor": { [[],false,getPosASL red_ammo] spawn DOTT_fnc_flexibleReset; systemChat "Teleporting to Opfor spawn!"; };
+				case "grnfor": { [[],false,getPosASL grn_ammo] spawn DOTT_fnc_flexibleReset; systemChat "Teleporting to Grnfor spawn!"; };
 				default {systemChat "Error: Invalid input! Must be 'blufor', 'opfor', or 'grnfor'"};
 			};
 		}
