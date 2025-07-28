@@ -66,7 +66,9 @@ v4.2.0
   - Unused functions randomizeRadioHz and removeAllRespawnInventories moved to archives folder and calls (TFAR_eventHandlers and init_curators respectively) commented out.
   - dateAndWeather function greatly simplified, moved completely server side. Call moved from init.sqf to initServer.sqf. 
     Numeric values moved from script to initServer, now passed as params.
-  - Disabled all Headless Client "functionality" due to nonfunctional behavior.
+  - excludeObjFromZeus now uses a flag to check for removal instead of comparing against all listed editor placed objects.
+    initPlayerServer will now not add player to curator editable objects if they are a headless client.
+  - Disabled most Headless Client "functionality" due to nonfunctional behavior.
     init_hc is no longer called from initServer and has been marked as non-working.
     Headless Client-related code in init_curators has been commented out.
 
