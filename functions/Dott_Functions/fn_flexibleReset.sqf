@@ -51,6 +51,10 @@ if (_heal) then
 {
 	//call ace medical treatment function
 	[ player ] call ACE_medical_treatment_fnc_fullHealLocal;
+	if (["ace_hearing"] call ace_common_fnc_isModLoaded) then 
+	{
+    	ace_hearing_deafnessDV = 0;
+	};
 };
 
 private _pointCount = count _point;

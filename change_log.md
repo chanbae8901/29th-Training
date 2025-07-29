@@ -82,6 +82,7 @@ v4.2.0
 
 * Tweaked "fn_flexibleReset.sqf"
   - Teleport now waits up to 30 seconds for a dead player to respawn before attempting teleport to reduce need for manual teleporting in these situations.
+  - Heal now also resets ACE Hearing deafness.
 
 * Fixed mission parameters
   - artilleryComputer now properly disables artillery computers. 
