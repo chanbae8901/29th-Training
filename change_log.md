@@ -55,11 +55,6 @@ v4.2.0
     caused similar issues, but left unused for now as no gameplay issues have been found related to it.
 	- fn_arsenalClosed and fn_flexibleReset now use fullSetUnitLoadout, modified fn_flexibleReset params to accomodate.
 
-* Added ACE Spectator as additional option at spectate terminal
-  - Mostly copy and pasted over fn_spectator into fn_ace_spectator, edited baseObjectInit to add to terminal.
-  - Notable benefit to spectators is P to see projectile lines. 
-  - https://ace3.acemod.org/wiki/feature/spectator for more info
-  
 * Legacy cleanup
 	- fn_addRadio deprecated radios swapped.
   - fn_assignCurator, checkCuratorAssignment rewritten, checkCuratorAssignment call moved to initPlayerLocal from initServer

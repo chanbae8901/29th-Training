@@ -10,6 +10,5 @@ class Dott_Functions
 		class flexibleReset {};
 		class removeWeaponMags {};
 		class fullSetUnitLoadout {};
-		class ace_spectator {};
 	};
 };
