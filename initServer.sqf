@@ -16,6 +16,12 @@ if (count (entities "HeadlessClient_F") > 0) then {
 	publicVariable "hc_online";
 };
 */
+
+//set-up Parade Inventories
+[WEST, "29TH_PARADE_WEST"] call BIS_fnc_addRespawnInventory;
+[EAST, "29TH_PARADE_EAST"] call BIS_fnc_addRespawnInventory;
+[INDEPENDENT, "29TH_PARADE_INDEPENDENT"] call BIS_fnc_addRespawnInventory;
+
 _autoSpectate = "autoSpectate" call BIS_fnc_getParamValue;
 if (_autoSpectate == 1) then {
 	autoSpectate = true;

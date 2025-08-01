@@ -3,11 +3,6 @@ diag_log text format ["|=============================   %1: init.sqf Running   =
 //Run Curator (Zeus) Setup
 execVM "scripts\init_curators.sqf";
 
-//set-up Parade Inventories
-[WEST, "29TH_PARADE_WEST"] call BIS_fnc_addRespawnInventory;
-[EAST, "29TH_PARADE_EAST"] call BIS_fnc_addRespawnInventory;
-[INDEPENDENT, "29TH_PARADE_INDEPENDENT"] call BIS_fnc_addRespawnInventory;
-
 //Init chat command system
 [] execVM "module_chatIntercept\init.sqf";
 

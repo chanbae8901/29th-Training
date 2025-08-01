@@ -66,6 +66,7 @@ v4.2.0
     Cleaned up call to it from onPlayerRespawn.
   - fn_spectator separated into fn_enter_spectator and fn_exit_spectator. Player no longer sits down but will lower weapon upon exiting spectator (prevent accidental discharge).
   - scripts/baseObjectsInit.sqf call moved from init.sqf to initPlayerLocal.sqf
+  - Parade loadout setup moved from init.sqf to initServer.sqf
   - Unused functions randomizeRadioHz and removeAllRespawnInventories moved to archives folder and calls (TFAR_eventHandlers and init_curators respectively) commented out.
   - dateAndWeather function greatly simplified, moved completely server side. Call moved from init.sqf to initServer.sqf. 
     Numeric values moved from script to initServer, now passed as params.
