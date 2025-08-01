@@ -41,8 +41,6 @@ Then look up the IDC of the spectate button and add from there
 
 if (isDedicated || !hasInterface) exitWith {["Player must be not be dedicated server or HC."] call BIS_fnc_error; false};
 
-["Initialize", [player, [], false]] call BIS_fnc_EGSpectator;  // Start Spectator
-
 hintSilent "SPECTATOR\n----------\nPress RELOAD to exit";  // Tell player they are spectating
 [] spawn {
 	while {!isNil {missionNamespace getVariable "BIS_EGSpectator_initialized"}} do { // While spectator is active show messages
@@ -52,8 +50,9 @@ hintSilent "SPECTATOR\n----------\nPress RELOAD to exit";  // Tell player they a
 };
 
 [player, true] remoteExec ["hideObjectGlobal", 0];
-uiSleep 1; //untested if needed
 player enableSimulation false;
+
+["Initialize", [player, [], false]] call BIS_fnc_EGSpectator;  // Start Spectator
 
 ["exitSpectator", "onEachFrame", {
 	if (inputAction "ReloadMagazine" > 0) exitWith { // Check if "Reload" key is pressed
