@@ -28,7 +28,7 @@ if (!isNull _oldUnit) then { //was '!(isNull _oldUnit)' Not sure why, changed it
 	if ( missionNamespace getVariable [ "menuRespawn", true ] ) then {
 		if (autoSpectate) then {
 			systemChat "AutoSpectate is ON.";
-			[_newUnit] spawn Hill_fnc_spectator;
+			[_newUnit] spawn Hill_fnc_enter_spectator;
 		};
 	};
 };

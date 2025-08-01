@@ -58,6 +58,9 @@ if (!isNumber (missionConfigFile >> "respawnButton") || {getNumber (missionConfi
 	};
 };
 
+//Add actions to spectator terminals, garbage cans, and ammo boxes
+execVM "scripts\baseObjectsInit.sqf";
+
 // ==============================================================================
 
 //Draw little skulls each time a player dies.  Seen only by Zeus.

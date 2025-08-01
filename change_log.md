@@ -64,6 +64,8 @@ v4.2.0
   - fn_removeRadio now has description, moved _removeRadiosFromDead check to onPlayerKilled
   - fn_setInsignia rewritten with hashmap instead of switch case, different standard for non-combat kits. 
     Cleaned up call to it from onPlayerRespawn.
+  - fn_spectator separated into fn_enter_spectator and fn_exit_spectator. Player no longer sits down but will lower weapon upon exiting spectator (prevent accidental discharge).
+  - scripts/baseObjectsInit.sqf call moved from init.sqf to initPlayerLocal.sqf
   - Unused functions randomizeRadioHz and removeAllRespawnInventories moved to archives folder and calls (TFAR_eventHandlers and init_curators respectively) commented out.
   - dateAndWeather function greatly simplified, moved completely server side. Call moved from init.sqf to initServer.sqf. 
     Numeric values moved from script to initServer, now passed as params.
@@ -78,6 +80,7 @@ v4.2.0
 
 * Tweaked "fn_flexibleReset.sqf"
   - Teleport now waits up to 30 seconds for a dead player to respawn before attempting teleport to reduce need for manual teleporting in these situations.
+  - Teleport now kicks player out of spectator box.
   - Heal now also resets ACE Hearing deafness.
 
 * Fixed mission parameters

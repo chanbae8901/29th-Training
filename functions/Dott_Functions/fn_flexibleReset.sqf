@@ -70,6 +70,8 @@ else //otherwise if array is correct size, then teleport requested
 	private _timeStart = time; 
 	waitUntil {sleep 1; time - _timeStart > 30 || (!isNull player && alive player)}; 
 
+	call Hill_fnc_exit_spectator; //kick player out of spectator
+
 	//check distance to point and compare to _pointRad, if less then skip teleport
 	private _pointDist = player distance2D _point;
 	if (_pointDist < _pointRad) exitWith {};
