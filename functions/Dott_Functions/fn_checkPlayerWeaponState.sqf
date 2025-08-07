@@ -10,8 +10,9 @@
  * Should be called server side, player won't desync his own weapon.
  *
  * Parameter(s): 
- * _unit: The unit to check the weapon state of.
- * _event (Optional): A string to append to the message, useful for context (e.g., "Arsenal", "Respawn").
+ * _unit (Object): The unit to check the weapon state of.
+ * _autoFix (Boolean - Optional): If true, will automatically attempt to fix the weapon state by calling DOTT_fnc_fullSetUnitLoadout.
+ * _msg (String - Optional): A message to broadcast to all players if unit weapon state is invalid.
  *
  * Returns:
  * true if the weapon state is correct, false otherwise.
@@ -21,20 +22,15 @@
  * 
  */
 
-if (!isServer) exitWith {};
-params [["_unit", objNull, [objNull]],["_event", "", [""]]];
+params [["_unit",objNull,[objNull]], ["_autoFix", false, [false]] ,["_msg","",[""]]];
+if (!isServer) exitWith {[_unit, _autoFix, _msg] remoteExec ["DOTT_fnc_checkPlayerWeaponState", 2];	};
+
 private _weapon = currentWeapon _unit; 
 
 if !(_weapon in ["Throw", "Put"]) exitWith {true};
 
-private _msg = format [
-    "%1 has incorrect weapon state ""%2"" - Drop and re-equip your weapon. %3",
-    name _unit,
-    _weapon,
-    if (_event != "") then { " - " + _event } else { "" }
-];
-
-_msg remoteExec ["systemChat", 0];
+if(_autoFix) then {[_unit, "resetLoadout", true] remoteExec ["DOTT_fnc_fullSetUnitLoadout", _unit];};
+if(_msg != "") then {_msg remoteExec ["systemChat", 0];};
 false;
 
 

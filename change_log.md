@@ -56,7 +56,8 @@ v4.2.0
     caused similar issues, but found use in prevent one cause of bug above.
 	- fn_flexibleReset now use fullSetUnitLoadout, modified fn_flexibleReset params to accomodate.
   - fn_checkPlayerWeaponState added to check if player weapon state has desynced. Currently checks when leaving ACE Arsenal, after !reset, and on respawn.
-    Notifies all players when player in game has incorrect weapon state.
+    In some cases will automatically attempt to fix and/or notify players. Liberally used for now to help narrow down what causes the issue and find any 
+    more sources, will likely remove some calls in the future.
 
 * Legacy cleanup
 	- fn_addRadio deprecated radios swapped.

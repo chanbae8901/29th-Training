@@ -11,6 +11,7 @@
  * Parameter(s): 
  * ["_unit","_loadout", "_fullMagazines"]
  * Reference Syntax 2 of https://community.bistudio.com/wiki/setUnitLoadout
+ * "_loadout" can also be a string representing a variable from missionNamespace
  *
  * Returns:
  * false if _unit not local, true otherwise
@@ -27,6 +28,13 @@ params
     "_fullMagazines"
 ];
 
+if (_loadout isEqualType "") then {
+    _loadout = missionNamespace getVariable [_loadout, nil];
+    if (isNil {_loadout}) exitWith {
+        ["Loadout not found in missionNamespace"] call BIS_fnc_error; false;
+    };
+};
+
 //setUnitLoadout as of 2.20 temporarily does not work non-local
 if (!local _unit) exitWith {["Unit %1 must be local.", _unit] call BIS_fnc_error; false;};
 
@@ -40,5 +48,11 @@ waitUntil {sleep .1; !isSwitchingWeapon _unit};
 _unit setUnitLoadout [_loadout, _fullMagazines];
 _unit spawn Hill_fnc_setInsignia;
 sleep 3;
-[_unit] remoteExec ["DOTT_fnc_checkPlayerWeaponState", 2];	
+private _weaponStateMsg = format [
+    "%1 has incorrect weapon state - Drop and re-equip your weapon. - On Reset",
+    name _unit
+];
+//Weapon state should be correct due to removeWeaponMags, but check just in case
+//remove in future if this never shows up in systemChat
+[_unit, false, _weaponStateMsg] spawn DOTT_fnc_checkPlayerWeaponState;		
 true

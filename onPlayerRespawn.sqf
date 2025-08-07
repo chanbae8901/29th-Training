@@ -40,4 +40,10 @@ if (DOTT_ticketEnabled) then
 	[_playerSide] remoteExec ["DOTT_fnc_ticketCount", 2];
 };
 
-[_newUnit] remoteExec ["DOTT_fnc_checkPlayerWeaponState", 2];	
+private _weaponStateMsg = format [
+    "%1 has incorrect weapon state - Drop and re-equip your weapon. - On Respawn",
+    name _newUnit
+];
+//arsenal saved loadout might be different from respawned loadout, so don't auto fix
+//remove in future if this never shows up in systemChat
+[_newUnit, false, _weaponStateMsg] spawn DOTT_fnc_checkPlayerWeaponState;	
