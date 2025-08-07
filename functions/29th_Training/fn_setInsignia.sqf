@@ -56,7 +56,7 @@ if(!isClass (configFile >> "CfgPatches" >> "29th_Insignias")) exitWith
 
 waitUntil {sleep .5; !isNull _target && _target == _target && alive _target};
 
-private ["_sqdParams", "_targetSquad", "_foundInsignias", "_targetInsignia"];
+private ["_sqdParams", "_targetSquad", "_foundInsignias", "_targetInsignia", "_curInsignia"];
 
 _sqdParams = squadParams _target;
 if (count _sqdParams == 0) exitWith 
@@ -89,6 +89,12 @@ if (count _foundInsignias == 2) then
 	if (_isNotCombatLoadout) then { //use non-combat version
 		_targetInsignia = _foundInsignias select 1;
 	};
+};
+
+_curInsignia = _target call BIS_fnc_getUnitInsignia;
+if(_curInsignia != _targetInsignia && _curInsignia != "") then 
+{
+	systemChat ("Insignia swapped to " + _targetInsignia + ".");
 };
 
 [_target, ""] call BIS_fnc_setUnitInsignia;
