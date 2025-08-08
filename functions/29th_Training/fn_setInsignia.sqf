@@ -27,10 +27,10 @@ private _insigniaMap = createHashMapFromArray [
     ["CP1 HQ",   ["CP1drab", "CP1"]],
     ["CP2 HQ",   ["CP2drab", "CP2"]],
     ["CP1S1",    ["CP1S1"]],
-    ["CP1S2",    ["CP1S2"]],
+    ["CP1S2",    ["CP1S2", "CP1S2colour"]],
     ["CP1S3",    ["CP1S3"]],
     ["CP2S1",    ["CP2S1"]],
-    ["CP2S2",    ["CP2S2"]],
+    ["CP2S2",    ["CP2S2drab", "CP2S2"]],
     ["CP2S3",    ["CP2S3"]]
 ];
 
