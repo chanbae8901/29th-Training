@@ -87,6 +87,11 @@ v4.2.0
   - Teleport now kicks player out of spectator box.
   - Heal now also resets ACE Hearing deafness.
 
+* "fn_forceParade.sqf"
+  - Script added as option for admin via !parade command or as an additional option at BLUFOR ACE Arsenal Box. Sets loadouts of players currently in combat loadout
+    near admin or Arsenal box to parade loadout.
+  - Adds checkNonCombatLoadout.sqf, modifies commands.sqf and baseObjectsInit.sqf
+
 * Fixed mission parameters
   - artilleryComputer now properly disables artillery computers. Server side ACE option to block it must be disabled for this param to take full effect. 
   - disabledTI now properly spawns Hill_fnc_noThermals via EH. Infantry NVGs and launchers can no longer use thermals (important for Javelin).

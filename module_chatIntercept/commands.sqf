@@ -42,6 +42,7 @@ pvpfw_chatIntercept_allCommands = [
 				case "!goto": {systemChat "!goto: (ADMIN ONLY) Teleports admin to side spawns. '!goto SIDE' (blufor, opfor, grnfor)"};
 				case "!measure": {systemChat "!measure: (ADMIN ONLY) Measure distances on the map using shift + click markers. Set a reference using '!measure set', then use '!measure' to get distance to your current shift + click marker"};
 				case "!tickets": {systemChat "!tickets: (ADMIN ONLY) Manages tickets and changes tickets for a given side, by the given value (E.G. '!tickets Blufor 5' will add 5 tickets to Blufor). '!tickets reset' sets all tickets to zero. '!tickets' returns the current value of all teams tickets. '!tickets enable' or 'disable' to enable/disable ticket system"};
+				case "!parade": {systemChat "!parade: (ADMIN ONLY) Sets all players' loadout within 125m of your position to parade."};
 				default {systemChat "Can't find the specified command! Make sure to enter the command with the '!'"};
 			};
 		}
@@ -432,6 +433,16 @@ pvpfw_chatIntercept_allCommands = [
 					systemChat "Error: No marker! Place a marker on the map with shift + click"; 
 				};
 			};
+		}
+	],
+	[
+		"parade",
+		{
+			if (!serverCommandAvailable "#lock") exitWith //admin only
+			{
+				systemChat "You must get the logged in admin to do that!";
+			};
+			[player, 125] spawn DOTT_fnc_forceParade;
 		}
 	]
 ];

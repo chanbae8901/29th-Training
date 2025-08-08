@@ -79,13 +79,7 @@ _targetInsignia = _foundInsignias select 0;
 if (count _foundInsignias == 2) then 
 {
 	//BLUFOR parade gear, dress blues, or no weapon
-	private _isNotCombatLoadout = 
-	(
-		(headgear _target == "29th_rhs_patrolcap_ocp_retex" &&
-		primaryWeapon _target == "rhs_weap_m1garand_sa43") ||
-		(uniform _target) find "29th_uniform" == 0 ||
-		primaryWeapon _target == ""
-	);
+	private _isNotCombatLoadout = _target call DOTT_fnc_checkNonCombatLoadout;
 	if (_isNotCombatLoadout) then { //use non-combat version
 		_targetInsignia = _foundInsignias select 1;
 	};

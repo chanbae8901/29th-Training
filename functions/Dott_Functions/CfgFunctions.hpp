@@ -11,5 +11,7 @@ class Dott_Functions
 		class removeWeaponMags {};
 		class fullSetUnitLoadout {};
 		class checkPlayerWeaponState {};
+		class checkNonCombatLoadout {};
+		class forceParade {};
 	};
 };
