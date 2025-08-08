@@ -21,7 +21,7 @@
  * n/a
  *
  * Example:
- * ["Current Loadout",true,getPosASL _pos] spawn DOTT_fnc_flexibleReset;
+ * [resetLoadout,true,getPosASL _pos] spawn DOTT_fnc_flexibleReset;
  * 
  */
 
