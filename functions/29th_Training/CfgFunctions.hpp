@@ -6,12 +6,12 @@ class 29th_Training {
     class exit_spectator {}
     class cleaner {};
     class setInsignia {};
-    class handleInitialInventory {};
     class noThermals {};
     class addRadio {};
     class arsenalClosed {};
     class removeRadio {};
     class assignCurator {};
+    //class handleInitialInventory {};    
     //class randomizeRadioHz {};
     //class removeAllRespawnInventory {};    
   };
