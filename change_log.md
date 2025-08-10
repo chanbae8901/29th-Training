@@ -51,13 +51,9 @@ v4.2.0
 * Improved loadout and arsenal handling
   - Replaced calls to BIS_fnc_loadInventory to prevent one source of inaudible weapon bug
 	  with "functions\Dott_Functions\fn_fullSetUnitLoadout.sqf", which uses setUnitLoadout to prevent the issue
-    where the server thinks your weapon is "Put". 
-  - Function "functions\Dott_Functions\fn_removeWeaponMags.sqf" was created in case a (slightly related but) different desync
-    caused similar issues, but found use in prevent one cause of bug above.
+    where the server thinks your weapon is "Throw" or "Put". 
 	- fn_flexibleReset now use fullSetUnitLoadout, modified fn_flexibleReset params to accomodate.
-  - fn_checkPlayerWeaponState added to check if player weapon state has desynced. Currently checks when leaving ACE Arsenal, after !reset, and on respawn.
-    In some cases will automatically attempt to fix and/or notify players. Liberally used for now to help narrow down what causes the issue and find any 
-    more sources, will likely remove some calls in the future.
+  - fn_resetWeaponState spawn added to fullSetUnitLoadout and arsenalClosed to ensure server currentWeapon is synced correctly.
 
 * Legacy cleanup
 	- fn_addRadio deprecated radios swapped.

@@ -8,9 +8,8 @@ class Dott_Functions
 		class ticketAdd {};
 		class ticketCount {};
 		class flexibleReset {};
-		class removeWeaponMags {};
 		class fullSetUnitLoadout {};
-		class checkPlayerWeaponState {};
+		class resetWeaponState {};
 		class checkNonCombatLoadout {};
 		class forceParade {};
 	};
