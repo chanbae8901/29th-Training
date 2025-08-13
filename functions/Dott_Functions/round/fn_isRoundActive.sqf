@@ -1,0 +1,1 @@
+[true] call BIS_fnc_countdown
