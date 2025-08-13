@@ -54,6 +54,7 @@ v4.2.0
     where the server thinks your weapon is "Throw" or "Put". 
 	- fn_flexibleReset now use fullSetUnitLoadout, modified fn_flexibleReset params to accomodate.
   - fn_resetWeaponState spawn added to fullSetUnitLoadout and arsenalClosed to ensure server currentWeapon is synced correctly.
+  - Arsenal action is now area based inside base instead of looking at ammo box.
 
 * Legacy cleanup
 	- fn_addRadio deprecated radios swapped.
