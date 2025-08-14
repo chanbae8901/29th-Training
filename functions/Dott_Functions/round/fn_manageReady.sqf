@@ -1,7 +1,23 @@
-// By Dott [29th ID]
-// Script checks which sides are occupied, which sides are ready, and starts a timer if conditions are met, defined by "timerLength"
-// Ready status and timerLength defined in fn_init
-
+/*
+ * Name:	fnc_manageReady
+ * Date:	8/14/2025
+ * Version: 1.0
+ * Author:  Bae [29th ID] modified from Dott [29th ID]
+ *
+ * Description:
+ * Changes the ready state of a side and checks if all sides are ready to start the round.
+ *
+ * Parameter(s): 
+ * _side (Side) - what side to change ready state
+ * _isReady (Boolean) - what state to set the side to
+ *
+ * Returns:
+ * false if the round is active, true otherwise.
+ *
+ * Example:
+ * [playerSide, true] call DOTT_round_fnc_manageReady;
+ * 
+ */
 params["_side", "_isReady"];
 
 if (call DOTT_round_fnc_isRoundActive) exitWith {false};

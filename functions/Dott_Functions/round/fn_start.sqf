@@ -1,3 +1,24 @@
+/*
+ * Name:	fnc_start
+ * Date:	8/14/2025
+ * Version: 1.0
+ * Author:  Bae [29th ID] modified from Dott [29th ID]
+ *
+ * Description:
+ * Starts the round with a specified timer length.
+ *
+ * Parameter(s): 
+ * _roundLength (Number) - value to start round timer in seconds
+ *
+ * Returns:
+ * false if round is already active, true otherwise
+ *
+ * Example:
+ * [500] call DOTT_round_fnc_setTimer;
+ * 
+ */
+
+
 //return false if round already active, otherwise return true
 params[["_roundLength", timerLength, [0]]]; // Length of the round in seconds
 if (call DOTT_round_fnc_isRoundActive) exitWith {false};

@@ -1,3 +1,26 @@
+/*
+ * Name:	fnc_roundEvents
+ * Date:	8/14/2025
+ * Version: 1.0
+ * Author:  Bae [29th ID]
+ *
+ * Description:
+ * Stores and manages round events, such as time warnings.
+ * Also handles the end of the round by calling the end function.
+ * Should be remote executed on server and all clients.
+ * 
+ * Parameter(s): 
+ * None
+ *
+ * Returns:
+ * None
+ *
+ * Example:
+ * [] remoteExec ["DOTT_round_fnc_roundEvents"]; 
+ * 
+ */
+
+//[time from end of round, function to call, parameters]
 private _events = [
 	[5*60, DOTT_round_fnc_timeWarning, []],   
     [1*60, DOTT_round_fnc_timeWarning, []]
@@ -28,5 +51,6 @@ while {_eventIndex < count _events} do {
     };
     uiSleep 1; 
 };
+
 if !(call DOTT_round_fnc_isRoundActive) exitWith {}; //don't double call end in case of manual end
-[] call DOTT_round_fnc_end;
+if (isServer) then {[] call DOTT_round_fnc_end;}; //only on server to prevent duplicate calls

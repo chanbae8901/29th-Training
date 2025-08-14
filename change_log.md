@@ -93,6 +93,12 @@ v4.2.0
   - artilleryComputer now properly disables artillery computers. Server side ACE option to block it must be disabled for this param to take full effect. 
   - disabledTI now properly spawns Hill_fnc_noThermals via EH. Infantry NVGs and launchers can no longer use thermals (important for Javelin).
 
+* Round system
+  - Moved as much logic as possible from commands.sqf to functions/Dott_Functions/round
+  - Move was done to simplify possible future GUIing of round system
+  - Replaced timerCheck with roundEvents, which is spawned on demand as needed and also handles time warning notifications.
+  - Moved publicVariable variables to fn_init (called by server)
+
 ---
 v4.1.1
 14 OCT 2024

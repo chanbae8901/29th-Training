@@ -1,3 +1,24 @@
+/*
+ * Name:	fnc_end
+ * Date:	8/14/2025
+ * Version: 1.0
+ * Author:  Bae [29th ID] modified from Dott [29th ID]
+ *
+ * Description:
+ * Transisitions to overtime if applicable, otherwise ends the round with notifications.
+ *
+ * Parameter(s): 
+ * _force (boolean): Manual overriding of round end.
+ *
+ * Returns:
+ * true
+ *
+ * Example:
+ * [true] call DOTT_round_fnc_end;
+ * 
+ */
+
+
 params["_force", false, [false]];
 if (overtimeEnabled && !_force) then
 {
