@@ -51,47 +51,44 @@ pvpfw_chatIntercept_allCommands = [
 		"timer",
 		{
 			_argument = _this select 0;
-			timerLength = abs (parsenumber _argument); //timer can't be negative!
-			publicVariable "timerLength"; //default length defined in scripts\timerCheck.sqf
-			systemChat format["Timer set for %1 Minutes",timerLength];
+			private _minutes = abs (parsenumber _argument);
+			[_minutes * 60] call DOTT_round_fnc_setTimer; 
+			systemChat format["Timer set for %1 Minutes", _minutes];
 		}
 	],
 	[
 		"live",
 		{
-			if ([true] call BIS_fnc_countdown) exitWith //checks if timer is already running (I.E. bool true)
+			if ([] call DOTT_round_fnc_start) then 
+			{
+				systemChat "Starting Round!";
+			} else
 			{
 				systemChat "Error: Timer already running!";
 			};
-			[((timerLength) * 60)] call BIS_fnc_countdown;
-			["<t color='#ffffff' size='4'>LIVE LIVE LIVE</t><br/>%1 Minute Time Limit","PLAIN",0.5, true, timerLength] remoteExec ["DOTT_fnc_displayMsg"];
-			systemChat "Starting Round!";
 		}
 	],
 	[
 		"quicktimer",
 		{
-			if ([true] call BIS_fnc_countdown) exitWith
+			_argument = _this select 0;
+			private _timerQuick = abs (parsenumber _argument);
+			if ([((_timerQuick) * 60)] call DOTT_round_fnc_start) then
+			{
+				systemChat format["Starting %1 Minute round!",_timerQuick];				
+			} else 
 			{
 				systemChat "Error: Timer already running! Use '!addtime' if you want to add time";
 			};
-			_argument = _this select 0;
-			private _timerQuick = abs (parsenumber _argument);
-			[((_timerQuick) * 60)] call BIS_fnc_countdown;
-			["<t color='#ffffff' size='4'>LIVE LIVE LIVE</t><br/>%1 Minute Time Limit","PLAIN",0.5, true, _timerQuick] remoteExec ["DOTT_fnc_displayMsg"];
-			systemChat format["Starting %1 Minute timer!",_timerQuick];
 		}
 	],
 	[
 		"addtime",
 		{
 			_argument = _this select 0;
-			if ([true] call BIS_fnc_countdown) then 
+			private _timeAdd = parsenumber _argument;
+			if ([_timeAdd*60] call DOTT_round_fnc_addTime != -1) then 
 			{
-				private _timeAdd = parsenumber _argument;
-				private _timeLeft = [0] call BIS_fnc_countdown;
-				[(((_timeAdd) * 60) + _timeLeft)] call BIS_fnc_countdown;
-				format ["Added %1 minutes to the time limit!", _timeAdd] remoteExec ["hint"];
 				systemChat format["Adding %1 Minutes to the time limit!",_timeAdd];
 			}
 			else
@@ -103,37 +100,31 @@ pvpfw_chatIntercept_allCommands = [
 	[
 		"game",
 		{
-			private _timerRunning = [true] call BIS_fnc_countdown;
-			if (!_timerRunning) exitWith
+			if !(call DOTT_round_fnc_isRoundActive) then
 			{
-				systemChat "No timer running! Only displaying end game message!";
 				["<t color='#ffffff' size='5'>GAME!</t>","PLAIN",0.4] remoteExec ["DOTT_fnc_displayMsg"];
+				systemChat "No timer running! Only displaying end game message!";
+			} else 
+			{
+				[true] call DOTT_round_fnc_end; 
+				systemChat "Calling Game!";
 			};
-			
-			[-1] call BIS_fnc_countdown;
-			// Below should be handled by scripts\timerCheck.sqf
-			// ["<t color='#ffffff' size='5'>GAME!</t>","PLAIN",0.4] remoteExec ["DOTT_fnc_displayMsg"];
-			overTime = false;
-			publicVariable "overTime";
-			systemChat "Calling Game!";
 		}
 	],
 	[
 		"overtime",
 		{
 			_argument = _this select 0;
-			overTimePeriod = abs (parsenumber _argument); //overtime can't be negative!
-			publicVariable "overTimePeriod";
-			if (overTimePeriod > 0) then 
+			private _minutes = abs (parsenumber _argument); //overtime can't be negative!
+			if (_minutes > 0) then 
 			{
-				overTime = true;
-				publicVariable "overTime";
-				systemChat format["Overtime set for %1 Minutes", _argument];
+				[true] call DOTT_round_fnc_setOvertimeEnabled;
+				[_minutes*60] call DOTT_round_fnc_setOverTimePeriod;
+				systemChat format["Overtime set for %1 Minutes", _minutes];
 			}
 			else 
 			{
-				overTime = false;
-				publicVariable "overTime";
+				[false] call DOTT_round_fnc_setOvertimeEnabled;
 				systemChat "Overtime Disabled";
 			};
 		}
@@ -141,25 +132,25 @@ pvpfw_chatIntercept_allCommands = [
 	[
 		"ready",
 		{	//works based off of local player's side
-			switch (playerSide) do
+			if !([playerSide, true] call DOTT_round_fnc_manageReady) then 
 			{
-				case west: { bluReady = true; publicVariable "bluReady"; "Blufor Ready!" remoteExec ["hint"]; "scripts\readyCheck.sqf" remoteExec ["execVM", 2]; };
-				case east: { opfReady = true; publicVariable "opfReady"; "Opfor Ready!" remoteExec ["hint"]; "scripts\readyCheck.sqf" remoteExec ["execVM", 2]; };
-				case resistance: { grnReady = true; publicVariable "grnReady"; "Grnfor Ready!" remoteExec ["hint"]; "scripts\readyCheck.sqf" remoteExec ["execVM", 2]; };
+				systemChat "Error: Round already started!";
+			} else 
+			{
+				systemChat "Setting side ready!";
 			};
-			systemChat "Setting side ready!"
 		}
 	],
 	[
 		"unready",
 		{
-			switch (playerSide) do
+			if !([playerSide, false] call DOTT_round_fnc_manageReady) then 
 			{
-				case west: { bluReady = false; publicVariable "bluReady"; "Blufor Unready!" remoteExec ["hint"]; };
-				case east: { opfReady = false; publicVariable "opfReady"; "Opfor Unready!" remoteExec ["hint"]; };
-				case resistance: { grnReady = false; publicVariable "grnReady"; "Grnfor Unready!" remoteExec ["hint"]; };
+				systemChat "Error: Round already started!";
+			} else 
+			{			
+				systemChat "Unreadying side!";
 			};
-			systemChat "Unreadying side!"
 		}
 	],
 	[

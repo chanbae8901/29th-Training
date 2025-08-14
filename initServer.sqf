@@ -47,5 +47,4 @@ private _forcedFog      = [0.1, 0.01, 0];
 //publicVariable "removeRadiosFromDead";
 
 execVM "scripts\excludeObjFromZeus.sqf";
-//execVM "scripts\checkCuratorAssignment.sqf";
-execVM "scripts\timerCheck.sqf";
+call DOTT_round_fnc_init;

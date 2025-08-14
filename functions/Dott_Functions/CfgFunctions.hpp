@@ -14,3 +14,26 @@ class Dott_Functions
 		class forceParade {};
 	};
 };
+
+class Dott_Round
+{
+	tag = "DOTT_round";
+	class RoundFunctions
+	{
+		file = "functions\Dott_Functions\round";
+		class init {};
+		class manageReady {};
+		class checkAllSidesReady {};
+		class initSafeStart {};
+		class start {};
+		class end {};
+		class isRoundActive {};
+		class addTime {};
+		class getTime {};
+		class setTimer {};
+		class setOvertimeEnabled {};
+		class setOverTimePeriod {};
+		class timeWarning {};
+		class roundEvents {};
+	};
+};
