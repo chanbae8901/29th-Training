@@ -19,7 +19,7 @@
  */
 
 
-params["_force", false, [false]];
+params[["_force", false, [false]]];
 if (overtimeEnabled && !_force) then
 {
 	["<t color='#ffffff' size='3'><br/>%1 Minute OVERTIME</t>","PLAIN",0.5, true, overTimePeriod/60] remoteExec ["DOTT_fnc_displayMsg"];
@@ -33,6 +33,7 @@ if (overtimeEnabled && !_force) then
 	[-1] call BIS_fnc_countdown;
 	overtimeEnabled = false; //in case manual end was called
 	publicVariable "overtimeEnabled";
+	if (_force) then { [{ terminate roundEventsScript }] remoteExec ["call"]; };
 };
 
 true

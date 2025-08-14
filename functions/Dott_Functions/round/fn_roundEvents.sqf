@@ -8,6 +8,7 @@
  * Stores and manages round events, such as time warnings.
  * Also handles the end of the round by calling the end function.
  * Should be remote executed on server and all clients.
+ * Stored in roundEventsScript to terminate from fn_end if needed.
  * 
  * Parameter(s): 
  * None
@@ -21,36 +22,37 @@
  */
 
 //[time from end of round, function to call, parameters]
-private _events = [
-	[5*60, DOTT_round_fnc_timeWarning, []],   
-    [1*60, DOTT_round_fnc_timeWarning, []]
-];
-private _timeLeft = call DOTT_round_fnc_getTime; 
-private _eventIndex = 0;
+roundEventsScript = [] spawn 
+{
+	private _events = [
+		[5*60, DOTT_round_fnc_timeWarning, []],   
+		[1*60, DOTT_round_fnc_timeWarning, []]
+	];
+	private _timeLeft = call DOTT_round_fnc_getTime; 
+	private _eventIndex = 0;
 
-while {_eventIndex < count _events} do {
-    // Exit if round is no longer active
-	if !(call DOTT_round_fnc_isRoundActive) exitWith {};
+	while {_eventIndex < count _events} do {
+		_timeLeft = call DOTT_round_fnc_getTime; 
 
-    _timeLeft = call DOTT_round_fnc_getTime; 
+		while {(_eventIndex < count _events) && ((_events select _eventIndex) select 0 >= _timeLeft)} do {
+			private _nextEvent = _events select _eventIndex;
+			private _eventTime = _nextEvent select 0;
+			private _fn = _nextEvent select 1;
+			private _params = _nextEvent select 2;
 
-    while {(_eventIndex < count _events) && ((_events select _eventIndex) select 0 >= _timeLeft)} do {
-        private _nextEvent = _events select _eventIndex;
-		private _eventTime = _nextEvent select 0;
-        private _fn = _nextEvent select 1;
-        private _params = _nextEvent select 2;
+			//avoid overlapping due to addTime and skip events before starting time
+			//but do at least one time notification unless end was called
+			if(_eventTime - _timeLeft < 10 || (_eventIndex == count _events - 1 && _timeLeft > 0)) then 
+			{
+				_params call _fn;
+			};
 
-		//avoid overlapping due to addTime and skip events before starting time
-		//but do at least one time notification unless end was called
-        if(_eventTime - _timeLeft < 10 || (_eventIndex == count _events - 1 && _timeLeft > 0)) then 
-		{
-			_params call _fn;
+			_eventIndex = _eventIndex + 1;
 		};
+		uiSleep 1; 
+	};
 
-        _eventIndex = _eventIndex + 1;
-    };
-    uiSleep 1; 
+	if (!isServer) exitWith {}; //only on server to prevent duplicate calls
+	waitUntil {uiSleep 0.5; (call DOTT_round_fnc_getTime == 0)};
+	[] call DOTT_round_fnc_end;
 };
-
-if !(call DOTT_round_fnc_isRoundActive) exitWith {}; //don't double call end in case of manual end
-if (isServer) then {[] call DOTT_round_fnc_end;}; //only on server to prevent duplicate calls

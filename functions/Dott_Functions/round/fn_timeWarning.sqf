@@ -19,4 +19,11 @@
  */
 
 private _minutesLeft = round ((call DOTT_round_fnc_getTime) / 60);
-["TimeWarning", [format ["%1 minutes remaining!", _minutesLeft]]] call BIS_fnc_showNotification;
+if(_minutesLeft == 0) then 
+{
+	["TimeWarning", ["Less than 1 minute remaining!"]] call BIS_fnc_showNotification;
+} else 
+{
+	["TimeWarning", [format ["%1 minutes remaining!", _minutesLeft]]] call BIS_fnc_showNotification;
+};
+
