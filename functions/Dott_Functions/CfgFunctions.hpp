@@ -25,6 +25,7 @@ class Dott_Round
 		class manageReady {};
 		class checkAllSidesReady {};
 		class initSafeStart {};
+		class initSafeStartHelper {};
 		class start {};
 		class end {};
 		class isRoundActive {};
