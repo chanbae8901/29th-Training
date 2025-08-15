@@ -9,7 +9,8 @@
  * Also handles the end of the round by calling the end function.
  * Should be remote executed on server and all clients.
  * Stored in roundEventsScript to terminate from fn_end if needed.
- * 
+ * Lot of things hardcoded to assume its only used for notifications right now. 
+ *
  * Parameter(s): 
  * None
  *
@@ -21,34 +22,36 @@
  * 
  */
 
-//[time from end of round, function to call, parameters]
-roundEventsScript = [] spawn 
-{
-	private _events = [
-		[5*60, DOTT_round_fnc_timeWarning, []],   
-		[1*60, DOTT_round_fnc_timeWarning, []]
-	];
-	private _timeLeft = call DOTT_round_fnc_getTime; 
-	private _eventIndex = 0;
+DOTT_round_timeAdded = false;
+private _events = [
+	[5*60, DOTT_round_fnc_timeWarning, []],   
+	[1*60, DOTT_round_fnc_timeWarning, []]
+];
+private _timeLeft = call DOTT_round_fnc_getTime; 
+private _eventIndex = 0;
 
-	while {_eventIndex < count _events} do {
-		_timeLeft = call DOTT_round_fnc_getTime; 
-
-		while {(_eventIndex < count _events) && ((_events select _eventIndex) select 0 >= _timeLeft)} do {
-			private _nextEvent = _events select _eventIndex;
-			private _eventTime = _nextEvent select 0;
-			private _fn = _nextEvent select 1;
-			private _params = _nextEvent select 2;
-
-			//avoid overlapping due to addTime and skip events before starting time
-			//but do at least one time notification unless end was called
-			if(_eventTime - _timeLeft < 10 || (_eventIndex == count _events - 1 && _timeLeft > 0)) then 
-			{
-				_params call _fn;
-			};
-
-			_eventIndex = _eventIndex + 1;
-		};
-		uiSleep 1; 
+while {_timeLeft > 0} do {
+	//handle addTime increasing time
+	if(DOTT_round_timeAdded) then {
+		_eventIndex = 0;
+		DOTT_round_timeAdded = false;
 	};
+
+	while {(_eventIndex < count _events) && ((_events select _eventIndex) select 0 >= _timeLeft)} do {
+		private _nextEvent = _events select _eventIndex;
+		private _eventTime = _nextEvent select 0;
+		private _fn = _nextEvent select 1;
+		private _params = _nextEvent select 2;
+
+		//avoid overlapping due to addTime and skip events before starting time
+		//but do at least one time notification unless end was called
+		if(_eventTime - _timeLeft < 10 || (_eventIndex == count _events - 1 && _timeLeft > 0)) then 
+		{
+			_params call _fn;
+		};
+
+		_eventIndex = _eventIndex + 1;
+	};
+	uiSleep 1; 
+	_timeLeft = call DOTT_round_fnc_getTime; 		
 };

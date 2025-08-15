@@ -31,8 +31,7 @@ if (overtimeEnabled && !_force) then
 {
 	//let waituntilandexecute in fn_start call end
 	if (call DOTT_round_fnc_isRoundActive) exitWith 
-	{
-		[{ terminate roundEventsScript }] remoteExecCall ["call"]; 		
+	{		
 		[-1] call BIS_fnc_countdown; 
 		true
 	};
