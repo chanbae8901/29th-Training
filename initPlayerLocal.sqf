@@ -81,4 +81,7 @@ _null = [] execVM "scripts\voice_control\voiceControl.sqf";
    };
  };
 
+//Run Curator (Zeus) Setup
+execVM "scripts\init_curators.sqf";
+
 //[_theClient] execVM "scripts\TFAR_eventHandlers.sqf";

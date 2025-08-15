@@ -1,8 +1,5 @@
 diag_log text format ["|=============================   %1: init.sqf Running   =============================|", missionName];
 
-//Run Curator (Zeus) Setup
-execVM "scripts\init_curators.sqf";
-
 //Init chat command system
 [] execVM "module_chatIntercept\init.sqf";
 

@@ -79,6 +79,11 @@ v4.2.0
   - Deleted spectator.sqf from script folder, left over file after it was "moved" to fn_spectator.sqf in 29th_Training.
   - Removed functions\curator folder and files inside, removed include in description.ext
     Functions meant to make sure all placed zeus units are shared between all curators no longer called. ACE Zeus setting on server takes over this functionality.
+  - init_curators.sqf 
+    Call moved from init.sqf to initPlayerLocal.sqf
+    Vehicle modifiers moved to new file init_vehicle_settings.sqf. Player created UAVs will now also have disableTIEquipment called on it. 
+    Vehicle modifiers also now called on vehicles in mission.sqm, if for some reason they exist. (Untested)
+    Deleted other unused event handlers.
 
 * Tweaked "fn_flexibleReset.sqf"
   - Teleport now waits up to 30 seconds for a dead player to respawn before attempting teleport to reduce need for manual teleporting in these situations.
