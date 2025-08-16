@@ -12,7 +12,7 @@
  * _isReady (Boolean) - what state to set the side to
  *
  * Returns:
- * false if the round is active, true otherwise.
+ * 2 if side already ready/unready, 1 if round already started, 0 otherwise
  *
  * Example:
  * [playerSide, true] call DOTT_round_fnc_manageReady;
@@ -20,7 +20,12 @@
  */
 params["_side", "_isReady"];
 
-if (call DOTT_round_fnc_isRoundActive) exitWith {false};
+if (call DOTT_round_fnc_isRoundActive) exitWith {1};
+
+if ((_side == west && bluReady == _isReady) ||
+    (_side == east && opfReady == _isReady) ||
+    (_side == resistance && grnReady == _isReady)) exitWith { 2 };
+
 private _readyStr = "";
 switch (_side) do
 {
@@ -40,4 +45,4 @@ if(call DOTT_round_fnc_checkAllSidesReady) then {
 	call DOTT_round_fnc_initSafeStart;
 };
 
-true
+0

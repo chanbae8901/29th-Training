@@ -132,24 +132,22 @@ pvpfw_chatIntercept_allCommands = [
 	[
 		"ready",
 		{	//works based off of local player's side
-			if !([playerSide, true] call DOTT_round_fnc_manageReady) then 
-			{
-				systemChat "Error: Round already started!";
-			} else 
-			{
-				systemChat "Setting side ready!";
+			private _result = [playerSide, true] call DOTT_round_fnc_manageReady;
+			switch (_result) do {
+				case 0: { systemChat "Setting side ready!"; };
+				case 1: { systemChat "Error: Round already started!"; };
+				case 2: { systemChat "Error: Side is already ready!"; };				
 			};
 		}
 	],
 	[
 		"unready",
 		{
-			if !([playerSide, false] call DOTT_round_fnc_manageReady) then 
-			{
-				systemChat "Error: Round already started!";
-			} else 
-			{			
-				systemChat "Unreadying side!";
+			private _result = [playerSide, false] call DOTT_round_fnc_manageReady;
+			switch (_result) do {
+				case 0: { systemChat "Setting side unready!"; };
+				case 1: { systemChat "Error: Round already started!"; };
+				case 2: { systemChat "Error: Side is already unready!"; };				
 			};
 		}
 	],
