@@ -1,0 +1,3 @@
+#define SECTOR_CAPTURE_NUM 0
+#define ACE_CONSCIOUSNESS_NUM 1
+#define KILL_NUM 2

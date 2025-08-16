@@ -28,18 +28,23 @@ if (overtimeEnabled && !_force) then
 	publicVariable "overtimeEnabled";
 	[] remoteExec ["DOTT_round_fnc_roundEvents"]; 	
 } else
-{
+{	
 	//let waituntilandexecute in fn_start call end
 	if (call DOTT_round_fnc_isRoundActive) exitWith 
 	{		
+		overtimeEnabled = false; //in case manual end was called
+		publicVariable "overtimeEnabled";		
 		[-1] call BIS_fnc_countdown; 
 		true
 	};
 	
+
+	if (_force) exitWith {true}; //implies called when round not running
+
+	//let round naturally end on non-forced case
 	["<t color='#ffffff' size='5'>GAME!</t>","PLAIN",0.4] remoteExecCall ["DOTT_fnc_displayMsg"];
 	[-1] call BIS_fnc_countdown;
-	overtimeEnabled = false; //in case manual end was called
-	publicVariable "overtimeEnabled";
+	["DOTT_round_ended",[]] call CBA_fnc_globalEvent;		
 };
 
 true

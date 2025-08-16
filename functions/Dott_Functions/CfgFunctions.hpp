@@ -38,3 +38,21 @@ class Dott_Round
 		class roundEvents {};
 	};
 };
+
+class Dott_Tracker
+{
+	tag = "DOTT_tracker";
+	class RoundFunctions
+	{
+		file = "functions\Dott_Functions\tracker";
+		class init {};
+		class recordKill {};
+		class sendEvent {};
+		class recordSectorCapture {};
+		class eventToString {};
+		class recordACEConscious {};
+		class findInstigator {};
+		class nameToNum {};
+		class createDiaryEntry {};
+	};
+};
