@@ -1,5 +1,5 @@
 if (!hasInterface) exitWith {};
-waitUntil {sleep 1; !isNil {DOTT_tracker_trackedEvents} && !isNil {DOTT_tracker_names}};
+waitUntil {sleep 1; !isNil {DOTT_tracker_trackedEvents} && !isNil {DOTT_tracker_names} && !isNil {DOTT_tracker_sides}};
 
 private _lines = [];
 
@@ -13,4 +13,5 @@ private _text = _lines joinString "<br />";
 player createDiaryRecord ["RoundEventLog", [format["Round %1", DOTT_tracker_currentRound], _text]];
 
 DOTT_tracker_trackedEvents = nil;
-DOTT_tracker_names = nil;	
+DOTT_tracker_names = nil;
+DOTT_tracker_sides = nil;	

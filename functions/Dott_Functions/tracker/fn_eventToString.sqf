@@ -15,9 +15,13 @@ switch (_eventType) do
 	case KILL_NUM: 
 	{
 		private _unitName = DOTT_tracker_names select (_eventInfo select 0);
+		private _unitSide = DOTT_tracker_sides select (_eventInfo select 0);
+		_unitName = [_unitName, _unitSide] call DOTT_tracker_fnc_colorNameWithSide;
 		if(count _eventInfo > 1) then 
 		{
-			private _instigatorName = 	DOTT_tracker_names select (_eventInfo select 1);
+			private _instigatorName = DOTT_tracker_names select (_eventInfo select 1);
+			private _instigatorSide = DOTT_tracker_sides select (_eventInfo select 1);
+			_instigatorName = [_instigatorName, _instigatorSide] call DOTT_tracker_fnc_colorNameWithSide;			
 			private _distance = _eventInfo select 2;	
 			_eventString = format["%1:%2 - %3 killed by %4 from %5 meters.", _minutes, _secondStr, _unitName, _instigatorName, _distance];
 		} else 
@@ -32,18 +36,23 @@ switch (_eventType) do
 		private _sectorName = _eventInfo select 0;
 		private _newOwner = _eventInfo select 1;
 		private _newOwnerName = _newOwner call BIS_fnc_sideName;
+		_newOwnerName = [_newOwnerName, _newOwner] call DOTT_tracker_fnc_colorNameWithSide;
 		_eventString = format ["%1:%2 - %3 captured by %4.", _minutes, _secondStr, _sectorName, _newOwnerName];
 	};
 
 	case ACE_CONSCIOUSNESS_NUM: 
 	{
 		private _unitName = DOTT_tracker_names select (_eventInfo select 0);
+		private _unitSide = DOTT_tracker_sides select (_eventInfo select 0);
+		_unitName = [_unitName, _unitSide] call DOTT_tracker_fnc_colorNameWithSide;
 		private _state = _eventInfo select 1;
 		if (_state) then 
 		{
 			if(count _eventInfo > 2) then 
 			{ 
-				private _instigatorName = 	DOTT_tracker_names select (_eventInfo select 2);
+				private _instigatorName = DOTT_tracker_names select (_eventInfo select 2);
+				private _instigatorSide = DOTT_tracker_sides select (_eventInfo select 2);
+				_instigatorName = [_instigatorName, _instigatorSide] call DOTT_tracker_fnc_colorNameWithSide;
 				private _distance = _eventInfo select 3;
 				_eventString = format ["%1:%2 - %3 knocked unconscious by %4 from %5 meters.", _minutes, _secondStr, _unitName, _instigatorName, _distance];			
 			};

@@ -2,6 +2,7 @@ if (isServer) then
 {
 	DOTT_tracker_trackedEvents = [];
 	DOTT_tracker_names = [];
+	DOTT_tracker_sides = [];	
 	DOTT_tracker_currentRound = 0;
 
 	DOTT_tracker_startTime = -1;	
@@ -13,7 +14,8 @@ if (isServer) then
 			publicVariable "DOTT_tracker_startTime";	
 
 			DOTT_tracker_trackedEvents = [];
-			DOTT_tracker_names = [];								
+			DOTT_tracker_names = [];	
+			DOTT_tracker_sides = [];							
 		} 
 	] call CBA_fnc_addEventHandler;
 
@@ -27,7 +29,8 @@ if (isServer) then
 
 			publicVariable "DOTT_tracker_trackedEvents";
 			publicVariable "DOTT_tracker_names";
-			
+			publicVariable "DOTT_tracker_sides";
+
 			[] remoteExec ["DOTT_tracker_fnc_createDiaryEntry"];
 		} 
 	] call CBA_fnc_addEventHandler;

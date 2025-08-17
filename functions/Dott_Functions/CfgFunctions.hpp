@@ -54,5 +54,6 @@ class Dott_Tracker
 		class findInstigator {};
 		class nameToNum {};
 		class createDiaryEntry {};
+		class colorNameWithSide {};
 	};
 };
