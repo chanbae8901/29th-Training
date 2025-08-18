@@ -111,6 +111,7 @@ v4.2.0
 
 * Tracker system (Round Event Logging)
   - Tracks deaths (and if possible the killer), unconciousness (if possible who caused it) and sector capture (by team) changes during a round.
+  - Also includes personal events tab that only tracks player related events.
   - Round scoreboard system that tracks (only) player kills and also credits unconscious as kills when possible.
   - Automatically sends the events to players into their map diary at round end. Will not persist across rejoins and player will only have records for rounds they
     were present at the end of.

@@ -33,18 +33,43 @@ if !(player diarySubjectExists "RoundEventLog") then
 {
     player createDiarySubject ["RoundEventLog", "Round Event Log"];	
 };
-	
-private _lines = [];
-for "_i" from ((count _events) - 1) to 0 step -1 do 
-{
-    private _line = ([_events select _i, _names, _sides] call DOTT_tracker_fnc_eventToString);
-    _lines pushBack _line;
-};
-private _title = format["Round %1", _roundNum];
-private _copyButton = format["<execute expression='[""%1"",""%2""] call DOTT_tracker_fnc_copyRecordToClipboard;'>Copy to Clipboard</execute>", "RoundEventLog", _title];
-_lines pushBack _copyButton;
 
-private _text = _lines joinString "<br />";
+//generate all event strings and store from last to first occurance
+private _playerIndex = _names find (name player);
+private _numEvents = (count _events);
+private _eventStrings = [];
+for "_i" from (_numEvents - 1) to 0 step -1 do 
+{
+    private _event = _events select _i;
+    private _eventString = ([_event, _names, _sides] call DOTT_tracker_fnc_eventToString);
+    _eventStrings pushBack _eventString;
+};
+
+//find all player relevant events
+private _playerEventIndexes = [_playerIndex, _events] call DOTT_tracker_fnc_findPlayerEvents;
+
+//"reverse" numbers so they confirm with _eventStrings indexes
+for "_i" from 0 to ((count _playerEventIndexes) - 1) do {
+    _playerEventIndexes set [_i, _numEvents - 1 - (_playerEventIndexes select _i)];
+};
+
+private _playerEventStrings = [];
+for "_i" from (count _playerEventIndexes - 1) to 0 step -1 do 
+{
+    private _playerEventIndex = _playerEventIndexes select _i;
+    _playerEventStrings pushBack (_eventStrings select _playerEventIndex);
+};
+
+private _title = format["Round %1 - Personal Events", _roundNum];
+private _copyButton = format["<execute expression='[""%1"",""%2""] call DOTT_tracker_fnc_copyRecordToClipboard;'>Copy to Clipboard</execute>", "RoundEventLog", _title];
+_playerEventStrings pushBack _copyButton;
+private _text = _playerEventStrings joinString "<br />";
+player createDiaryRecord ["RoundEventLog", [_title, _text]];
+
+_title = format["Round %1 - All Events", _roundNum];
+_copyButton = format["<execute expression='[""%1"",""%2""] call DOTT_tracker_fnc_copyRecordToClipboard;'>Copy to Clipboard</execute>", "RoundEventLog", _title];
+_eventStrings pushBack _copyButton;
+_text = _eventStrings joinString "<br />";
 player createDiaryRecord ["RoundEventLog", [_title, _text]];
 
 
@@ -54,6 +79,7 @@ if !(player diarySubjectExists "RoundScoreboard") then
 };
 
 private _killCounts = [_events, _sides] call DOTT_tracker_fnc_getKillCounts;
+_title = format["Round %1", _roundNum];
 _text = [_killCounts, _names] call DOTT_tracker_fnc_killCountsToString;
 _copyButton = format["<br /><execute expression='[""%1"",""%2""] call DOTT_tracker_fnc_copyRecordToClipboard;'>Copy to Clipboard</execute>", "RoundScoreboard", _title];
 _text = _text + _copyButton;

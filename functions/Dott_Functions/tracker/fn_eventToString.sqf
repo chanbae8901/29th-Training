@@ -50,7 +50,7 @@ switch (_eventType) do
 			_eventString = format["%1:%2 - %3 killed by %4 from %5 meters.", _minutes, _secondStr, _unitName, _instigatorName, _distance];
 		} else 
 		{
-			_eventString = format ["%1:%2 - %3 killed by unknown.", _minutes, _secondStr, _unitName];
+			_eventString = format ["%1:%2 - %3 killed.", _minutes, _secondStr, _unitName];
 		};
 	};
 	//same as infantry
@@ -70,7 +70,7 @@ switch (_eventType) do
 			_eventString = format["%1:%2 - %3 killed by %4 from %5 meters.", _minutes, _secondStr, _unitName, _instigatorName, _distance];
 		} else 
 		{
-			_eventString = format ["%1:%2 - %3 killed by unknown.", _minutes, _secondStr, _unitName];
+			_eventString = format ["%1:%2 - %3 killed.", _minutes, _secondStr, _unitName];
 		};
 	};
 	case SECTOR_CAPTURE_NUM:

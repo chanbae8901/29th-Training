@@ -60,5 +60,6 @@ class Dott_Tracker
 		class copyToClipboard {};
 		class copyRecordToClipboard {};	
 		class getKillCounts {};	
+		class findPlayerEvents {};
 	};
 };
