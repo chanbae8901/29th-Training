@@ -50,13 +50,15 @@ class Dott_Tracker
 		class saveEvent {};
 		class recordSectorCapture {};
 		class eventToString {};
+		class killCountsToString {};
 		class recordACEConscious {};
 		class findInstigator {};
 		class nameToNum {};
-		class createDiaryEntry {};
+		class createDiaryEntries {};
 		class colorNameWithSide {};
-		class getCurrentSide {};
+		class getSideAtTime {};
 		class copyToClipboard {};
-		class copyRoundToClipboard {};		
+		class copyRecordToClipboard {};	
+		class getKillCounts {};	
 	};
 };

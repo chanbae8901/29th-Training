@@ -1,5 +1,5 @@
 /*
- * Name:	fnc_getCurrentSide
+ * Name:	fnc_getSideAtTime
  * Date:	8/18/2025
  * Version: 1.0
  * Author:  Bae [29th ID]
@@ -16,7 +16,7 @@
  * (Side) side of unit at _time 
  *
  * Example:
- * [0, 5, _sides] call DOTT_tracker_fnc_getCurrentSide;
+ * [0, 5, _sides] call DOTT_tracker_fnc_getSideAtTime;
  * 
  */
 

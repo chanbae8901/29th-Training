@@ -59,7 +59,7 @@ if (isServer) then
 				DOTT_tracker_names,
 				DOTT_tracker_sides,	
 				DOTT_tracker_currentRound
-			] remoteExec ["DOTT_tracker_fnc_createDiaryEntry"];
+			] remoteExec ["DOTT_tracker_fnc_createDiaryEntries"];
 
 			DOTT_tracker_currentRound = DOTT_tracker_currentRound + 1;			
 		} 

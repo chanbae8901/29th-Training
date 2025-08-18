@@ -27,7 +27,8 @@ _instigator = [_unit, _killer, _instigator] call DOTT_tracker_fnc_findInstigator
 
 private _timeStamp = round(serverTime - DOTT_tracker_startTime);
 
-private _event = [KILL_NUM, _timeStamp];
+private _eventType = if (_unit isKindOf "Man") then {INFANTRY_KILL_NUM} else {VEHICLE_KILL_NUM};
+private _event = [_eventType, _timeStamp];
 
 private _unitName = "";
 //if unit is not man then name does not work properly
@@ -53,8 +54,8 @@ if !(isNull _instigator) then
 _event pushBack _killInfo;
 
 //_event is now either
-//[[KILL_NUM, _timeStamp, [[name _unit, side _unit], [name _instigator, side _instigator], _distance]]
-//[[KILL_NUM, _timeStamp, [name _unit, side _unit]]
+//[[INFANTRY_KILL_NUM, _timeStamp, [[name _unit, side _unit], [name _instigator, side _instigator], _distance]]
+//[[INFANTRY_KILL_NUM, _timeStamp, [name _unit, side _unit]]
 [_event] remoteExec ["DOTT_tracker_fnc_saveEvent", 2];
 
 true

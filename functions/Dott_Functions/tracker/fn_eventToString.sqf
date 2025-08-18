@@ -5,7 +5,7 @@
  * Author:  Bae [29th ID]
  *
  * Description:
- * Converts array info into string for diary.
+ * Converts event array info into string for diary.
  *
  * Parameter(s): 
  * _event (Array): Event to make string.
@@ -34,17 +34,17 @@ private _eventString = "";
 
 switch (_eventType) do 
 {
-	case KILL_NUM: 
+	case INFANTRY_KILL_NUM: 
 	{
 		private _unitIndex = _eventInfo select 0;
 		private _unitName = _names select _unitIndex;
-		private _unitSide = [_unitIndex, _eventTime, _sides] call DOTT_tracker_fnc_getCurrentSide;
+		private _unitSide = [_unitIndex, _eventTime, _sides] call DOTT_tracker_fnc_getSideAtTime;
 		_unitName = [_unitName, _unitSide] call DOTT_tracker_fnc_colorNameWithSide;
 		if(count _eventInfo > 1) then 
 		{
 			private _instigatorIndex = _eventInfo select 1;
 			private _instigatorName = _names select (_instigatorIndex);
-			private _instigatorSide = [_instigatorIndex, _eventTime, _sides] call DOTT_tracker_fnc_getCurrentSide;
+			private _instigatorSide = [_instigatorIndex, _eventTime, _sides] call DOTT_tracker_fnc_getSideAtTime;
 			_instigatorName = [_instigatorName, _instigatorSide] call DOTT_tracker_fnc_colorNameWithSide;			
 			private _distance = _eventInfo select 2;	
 			_eventString = format["%1:%2 - %3 killed by %4 from %5 meters.", _minutes, _secondStr, _unitName, _instigatorName, _distance];
@@ -52,9 +52,27 @@ switch (_eventType) do
 		{
 			_eventString = format ["%1:%2 - %3 killed by unknown.", _minutes, _secondStr, _unitName];
 		};
-
 	};
-
+	//same as infantry
+	case VEHICLE_KILL_NUM: 
+	{
+		private _unitIndex = _eventInfo select 0;
+		private _unitName = _names select _unitIndex;
+		private _unitSide = [_unitIndex, _eventTime, _sides] call DOTT_tracker_fnc_getSideAtTime;
+		_unitName = [_unitName, _unitSide] call DOTT_tracker_fnc_colorNameWithSide;
+		if(count _eventInfo > 1) then 
+		{
+			private _instigatorIndex = _eventInfo select 1;
+			private _instigatorName = _names select (_instigatorIndex);
+			private _instigatorSide = [_instigatorIndex, _eventTime, _sides] call DOTT_tracker_fnc_getSideAtTime;
+			_instigatorName = [_instigatorName, _instigatorSide] call DOTT_tracker_fnc_colorNameWithSide;			
+			private _distance = _eventInfo select 2;	
+			_eventString = format["%1:%2 - %3 killed by %4 from %5 meters.", _minutes, _secondStr, _unitName, _instigatorName, _distance];
+		} else 
+		{
+			_eventString = format ["%1:%2 - %3 killed by unknown.", _minutes, _secondStr, _unitName];
+		};
+	};
 	case SECTOR_CAPTURE_NUM:
 	{
 		private _sectorName = _eventInfo select 0;
@@ -68,7 +86,7 @@ switch (_eventType) do
 	{
 		private _unitIndex = _eventInfo select 0;
 		private _unitName = _names select _unitIndex;
-		private _unitSide = [_unitIndex, _eventTime, _sides] call DOTT_tracker_fnc_getCurrentSide;
+		private _unitSide = [_unitIndex, _eventTime, _sides] call DOTT_tracker_fnc_getSideAtTime;
 		_unitName = [_unitName, _unitSide] call DOTT_tracker_fnc_colorNameWithSide;
 		private _state = _eventInfo select 1;
 		if (_state) then 
@@ -77,10 +95,13 @@ switch (_eventType) do
 			{ 
 				private _instigatorIndex = _eventInfo select 2;
 				private _instigatorName = _names select (_instigatorIndex);
-				private _instigatorSide = [_instigatorIndex, _eventTime, _sides] call DOTT_tracker_fnc_getCurrentSide;
+				private _instigatorSide = [_instigatorIndex, _eventTime, _sides] call DOTT_tracker_fnc_getSideAtTime;
 				_instigatorName = [_instigatorName, _instigatorSide] call DOTT_tracker_fnc_colorNameWithSide;
 				private _distance = _eventInfo select 3;
 				_eventString = format ["%1:%2 - %3 knocked unconscious by %4 from %5 meters.", _minutes, _secondStr, _unitName, _instigatorName, _distance];			
+			} else
+			{
+				_eventString = format ["%1:%2 - %3 knocked unconscious.", _minutes, _secondStr, _unitName];				
 			};
 		} else
 		{

@@ -21,10 +21,10 @@
 params["_unitName" , "_side"];
 
 private _colorString = switch (_side) do {
-	case west:      { "#155DFC" };
+	case west:       { "#155DFC" };
 	case east:       { "#B40404" };
 	case resistance: { "#088A08" };
-	default             { "#FFFFFF" };
+	default          { "#FFFFFF" };
 };
 
 format ["<font color='%1'>%2</font>", _colorString, _unitName]

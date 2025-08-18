@@ -2,4 +2,5 @@
 //Define values here for readability
 #define SECTOR_CAPTURE_NUM 0
 #define ACE_CONSCIOUSNESS_NUM 1
-#define KILL_NUM 2
+#define INFANTRY_KILL_NUM 2
+#define VEHICLE_KILL_NUM 3
