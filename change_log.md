@@ -2,7 +2,7 @@
 Overall Future Goals
 ---
 * Stats system reintroduction
-	- System surrounding round stats, mostly kills, not persistent accuracy or other 'fluff'
+	- System surrounding round stats, mostly kills, not persistent accuracy or other 'fluff' (Progress made in 4.2.0)
 	- Allows scoreboard to be disabled, but look up the information it provides using an addaction in spawn
 	- Specifically kill stats (player names you've killed). Could also track your killers?
 * "Citadel" game mode
@@ -108,6 +108,16 @@ v4.2.0
   - Move was done to simplify possible future GUIing of round system
   - Replaced timerCheck with roundEvents, which is spawned on demand as needed and also handles time warning notifications.
   - Moved publicVariable variables to fn_init (called by server)
+
+* Tracker system (Round Event Logging)
+  - Tracks deaths (and if possible the killer), unconciousness (if possible who caused it) and sector capture (by team) changes during a round.
+  - Automatically sends the events to players into their map diary at round end. Will not persist across rejoins and player will only have records for rounds they
+    were present at the end of.
+  - Can be disabled if problems arise in params.
+  - Focus has been put on ACE 3 Medical Compatibility, minimizing network load when sending to players, and properly handling players switching side mid round.
+  - When fighting AI, will not record AI infantry deaths due to performance/technical considerations.
+  - Possibly move out of diary in the future to have more features.
+  - All files created in functions/Dott_Functions/tracker, and system initiated by calling tracker init file in init.sqf.
 
 ---
 v4.1.1

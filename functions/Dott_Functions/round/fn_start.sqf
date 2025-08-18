@@ -39,4 +39,6 @@ publicVariable "grnReady";
 
 [] remoteExec ["DOTT_round_fnc_roundEvents"]; 
 
+["DOTT_round_started", []] call CBA_fnc_globalEvent;
+
 true
