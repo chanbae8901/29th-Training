@@ -43,7 +43,7 @@ TBD
 
 ---
 v4.2.0  
-5 AUG 2025
+19 AUG 2025
 
 ---
 
@@ -92,7 +92,7 @@ v4.2.0
     Deleted other unused event handlers.
   - init_vehicle_settings.sqf created
     Uses EntityCreated missionEventHandler instead of curatorObjectPlaced. 
-    One consequence of this is that player created UAVs will now also have disableTIEquipment called on it. 
+    One consequence of this is that player created UAVs and static weapon will now also have disableTIEquipment called on it. 
     Vehicle modifiers also now called on vehicles in mission.sqm, if for some reason they exist.
     Now also will delete initial vehicle inventories (besides rope) if new mission param removeDefaultVehicleInventories == 1 (which is default).
 
@@ -105,6 +105,9 @@ v4.2.0
   - Script added as option for admin via !parade command or as an additional option at BLUFOR ACE Arsenal Box. Sets loadouts of players currently in combat loadout
     near admin or Arsenal box to parade loadout.
   - Adds checkNonCombatLoadout.sqf, modifies commands.sqf and baseObjectsInit.sqf
+
+* "fn_initDefaultLoadouts.sqf"
+  - SOP correct Rifleman kits for each faction and Parade are now in Default Loadouts in ACE Arsenal.
 
 * Fixed mission parameters
   - artilleryComputer now properly disables artillery computers. Server side ACE option to block it must be disabled for this param to take full effect. 
@@ -124,7 +127,7 @@ v4.2.0
     were present at the end of.
   - Can be disabled if problems arise in params.
   - Focus has been put on ACE 3 Medical Compatibility, minimizing network load when sending to players, and properly handling players switching side mid round.
-  - When fighting AI, will not record AI infantry deaths due to performance/technical considerations.
+  - When fighting AI, will not record AI infantry unconscious/deaths due to performance/technical considerations.
   - Possibly move out of diary in the future to have more features.
   - All files created in functions/Dott_Functions/tracker, and system initiated by calling tracker init file in init.sqf.
 

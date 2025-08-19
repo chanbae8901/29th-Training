@@ -88,3 +88,5 @@ _null = [] execVM "scripts\voice_control\voiceControl.sqf";
 
 //Run Curator (Zeus) Setup
 execVM "scripts\init_curators.sqf";
+
+[] spawn DOTT_fnc_initDefaultLoadouts;
