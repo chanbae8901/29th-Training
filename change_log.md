@@ -116,7 +116,9 @@ v4.2.0
   - Moved as much logic as possible from commands.sqf to functions/Dott_Functions/round
   - Move was done to simplify possible future GUIing of round system
   - Replaced timerCheck with roundEvents, which is spawned on demand as needed and also handles time warning notifications.
-  - Checking scoreboard is now disabled during round (unless in spectator). Metagaming still possible with Statistics in Map, might revisit that later.
+  - Checking scoreboard is now disabled during round (unless in spectator or zeus). 
+    Scoreboard is still enabled in respawn screen, couldn't figure out how to disallow there.
+    Metagaming still possible with Statistics in Map, might revisit that later.
   - Moved publicVariable variables to fn_init (called by server)
 
 * Tracker system (Round Event Logging)

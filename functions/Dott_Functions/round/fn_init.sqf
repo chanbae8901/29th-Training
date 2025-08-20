@@ -38,6 +38,7 @@ if (isServer) then
 
 if (hasInterface) then
 {
+	//For JIP players
 	//showScoreTable silently fails if called too early
 	addMissionEventHandler ["PreloadFinished", {
 
@@ -47,16 +48,48 @@ if (hasInterface) then
 		removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
 	}];
 
+	//needs to be readded every life
 	[] spawn 
 	{
 		waitUntil {!isNull player};
 		player addEventHandler ["Respawn", 
 		{
 			if (call DOTT_round_fnc_isRoundActive) then 
+			{	
+			[] spawn 
 			{
+				waitUntil {shownScoreTable == -1};
 				showScoreTable 0;
 			};
+			};
 		}];
+	};
+
+	//allow player in zeus to see scoreboard
+	[] spawn 
+	{
+		waitUntil {!isNull (findDisplay 46)};
+		findDisplay 46 displayAddEventHandler ["KeyDown", {
+			if (inputAction "CuratorInterface" > 0) then
+			{
+				showScoretable -1;
+			};
+
+			[] spawn 
+			{
+				waitUntil {!isNull (findDisplay 312)};				
+				findDisplay 312 displayAddEventHandler ["KeyDown", 
+				{
+					if (inputAction "CuratorInterface" > 0) then
+					{
+						if (call DOTT_round_fnc_isRoundActive) then { showScoretable 0 };
+					};
+					false
+				}];	
+			};
+
+			false
+		}];	
 	};
 
 	[
