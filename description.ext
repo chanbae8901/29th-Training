@@ -19,7 +19,7 @@ OverviewText = "<t align='center'><t size='1.5' color='#2A1ADC'>BLUFOR</t><t siz
 
 respawnOnStart = 0;
 respawn = 3;
-respawnDelay = 15;
+respawnDelay = 5;
 respawnDialog = 0;
 
 respawnTemplates[] = {"Spectator", "MenuPosition", "MenuInventory","Tickets"};
@@ -33,7 +33,7 @@ saving = 0;
 debriefing = 1;
 showGPS = 1;
 showCompas = 1;
-showMap = 0;
+showMap = 1;
 showNotePad = 1;
 showWatch = 1;
 showUAVFeed = 1;

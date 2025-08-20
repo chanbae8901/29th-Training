@@ -70,6 +70,11 @@ private _startPos = getPosATL player;
 	{
 		call Hill_fnc_exit_spectator;
 	};
+	//player respawns while in spectator box for some reason
+	if (!alive player) exitWith 
+	{
+        call Hill_fnc_exit_spectator;
+    };
 }, [_startPos]] call BIS_fnc_addStackedEventHandler;
 
 ["enteredSpectator", []] call CBA_fnc_localEvent;

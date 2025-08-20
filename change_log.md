@@ -91,6 +91,9 @@ v4.2.0
     One consequence of this is that player created UAVs and static weapon will now also have disableTIEquipment called on it. 
     Vehicle modifiers also now called on vehicles in mission.sqm, if for some reason they exist.
     Now also will delete initial vehicle inventories (besides rope) if new mission param removeDefaultVehicleInventories == 1 (which is default).
+  - description.ext
+    showMap now equals 1
+    respawnDelay now 5 from 15
 
 * Tweaked "fn_flexibleReset.sqf"
   - Teleport now waits up to 30 seconds for a dead player to respawn before attempting teleport to reduce need for manual teleporting in these situations.

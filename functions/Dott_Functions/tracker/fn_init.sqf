@@ -88,12 +88,15 @@ if (isServer) then
 if (hasInterface) then 
 {
 	// --- Infantry Kill --- //	
-	waitUntil {!isNull player && isPlayer player};
-	player addEventHandler ["Killed", 
+	[] spawn 
 	{
-		params ["_unit", "_killer", "_instigator"];
-		[_unit, _killer, _instigator] call DOTT_tracker_fnc_recordKill;
-	}];
+		waitUntil {!isNull player};
+		player addEventHandler ["Killed", 
+		{
+			params ["_unit", "_killer", "_instigator"];
+			[_unit, _killer, _instigator] call DOTT_tracker_fnc_recordKill;
+		}];
+	};
 
 	// --- Consciousness --- //	
 	[

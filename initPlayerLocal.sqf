@@ -45,7 +45,7 @@ if(_didJIP) then
     [_theClient] execVM "scripts\checkCuratorAssignment.sqf";
   };
 };
-//[_theClient] spawn Hill_fnc_handleInitialInventory; //redundant as long as init.sqf has set up parade inventories
+
 [_theClient] execVM "scripts\player_arsenal_handlers.sqf";
 
 //maintains a neutral rating in the event of "accidental" team kills

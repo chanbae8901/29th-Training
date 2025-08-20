@@ -47,6 +47,18 @@ if (hasInterface) then
 		removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
 	}];
 
+	[] spawn 
+	{
+		waitUntil {!isNull player};
+		player addEventHandler ["Respawn", 
+		{
+			if (call DOTT_round_fnc_isRoundActive) then 
+			{
+				showScoreTable 0;
+			};
+		}];
+	};
+
 	[
 		"DOTT_round_started",
 		{
