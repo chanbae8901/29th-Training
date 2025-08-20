@@ -39,4 +39,3 @@ private _forcedFog      = [0.1, 0.01, 0];
 
 execVM "scripts\excludeObjFromZeus.sqf";
 execVM "scripts\init_vehicle_settings.sqf";
-call DOTT_round_fnc_init;

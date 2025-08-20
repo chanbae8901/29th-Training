@@ -72,4 +72,6 @@ private _startPos = getPosATL player;
 	};
 }, [_startPos]] call BIS_fnc_addStackedEventHandler;
 
+["enteredSpectator", []] call CBA_fnc_localEvent;
+
 true

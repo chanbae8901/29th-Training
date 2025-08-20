@@ -4,10 +4,6 @@ Overall Future Goals
 * Stats system reintroduction
 	- System surrounding round stats, mostly kills, not persistent accuracy or other 'fluff' 
       Progress made in 4.2.0, number of kills can be seen after end of round in map diary.
-	- Allows scoreboard to be disabled, but look up the information it provides using an addaction in spawn
-      Note: Assuming the scoreboard is on, access can be limited with showScoretable in the middle of the game.
-      Personal stats could still be metagamed with the Statistics tab in the Map Diary.
-      Since we cannot edit the stats itself, only way to prevent this is to delete the tab, but this is non-reversible.
 	- Specifically kill stats (player names you've killed). Could also track your killers?
       Progress made in 4.2.0, kills/killed by can be tracked in events after end of round in map diary.
 * "Citadel" game mode
@@ -117,6 +113,7 @@ v4.2.0
   - Moved as much logic as possible from commands.sqf to functions/Dott_Functions/round
   - Move was done to simplify possible future GUIing of round system
   - Replaced timerCheck with roundEvents, which is spawned on demand as needed and also handles time warning notifications.
+  - Checking scoreboard is now disabled during round (unless in spectator). Metagaming still possible with Statistics in Map, might revisit that later.
   - Moved publicVariable variables to fn_init (called by server)
 
 * Tracker system (Round Event Logging)

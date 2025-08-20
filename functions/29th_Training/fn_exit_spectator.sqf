@@ -31,4 +31,7 @@ if (!(weaponLowered player)) then
 {
 	player action ["WeaponOnBack", player];
 };
+
+["exitedSpectator", []] call CBA_fnc_localEvent;
+
 true
