@@ -88,10 +88,10 @@ if (hasInterface) then
 	{
 		waitUntil {!isNull (findDisplay 46)};
 		findDisplay 46 displayAddEventHandler ["KeyDown", {
-			if (inputAction "CuratorInterface" > 0) then
-			{
-				showScoretable -1;
-			};
+			if (isNull (getAssignedCuratorLogic player)) exitWith {};
+			if (inputAction "CuratorInterface" <= 0) exitWith {};
+			
+			showScoretable -1;
 
 			[] spawn 
 			{
@@ -113,7 +113,8 @@ if (hasInterface) then
 	[
 		"DOTT_round_started",
 		{
-			if (isNil { missionNamespace getVariable "BIS_EGSpectator_initialized" }) then
+			if (isNil { missionNamespace getVariable "BIS_EGSpectator_initialized" } &&
+				isNull (uiNamespace getVariable ["RscDisplayCurator", displayNull])) then
 			{ showScoretable 0 };							
 		} 
 	] call CBA_fnc_addEventHandler;
