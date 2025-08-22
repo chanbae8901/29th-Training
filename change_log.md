@@ -66,6 +66,7 @@ v4.2.0
   - fn_removeRadio now has description, moved _removeRadiosFromDead check to onPlayerKilled
   - fn_setInsignia rewritten with hashmap instead of switch case, different standard for non-combat kits. Cleaned up call to it from onPlayerRespawn.
   - Deleted attempt to prevent respawn showing on old body in onPlayerRespawn.sqf
+    Probably mostly working attempt created in initPlayerLocal.sqf
   - fn_spectator separated into fn_enter_spectator and fn_exit_spectator. Player no longer sits down but will lower weapon upon exiting spectator (prevent accidental discharge).
     Players will also be forced out when manually teleported.
   - scripts/baseObjectsInit.sqf call moved from init.sqf to initPlayerLocal.sqf
@@ -93,6 +94,7 @@ v4.2.0
     Now also will delete initial vehicle inventories (besides rope) if new mission param removeDefaultVehicleInventories == 1 (which is default).
   - description.ext
     showMap now equals 1
+    respawnDelay = 5 from 15;
 
 * Tweaked "fn_flexibleReset.sqf"
   - Teleport now waits up to 30 seconds for a dead player to respawn before attempting teleport to reduce need for manual teleporting in these situations.
@@ -135,7 +137,7 @@ v4.2.0
   - Commands executed by players (except !commands and !help) as defined in pvpfw_chatIntercept_noLogCommands in commands.sqf are now logged server side.
   - Also logged client side under Log in Map Diary.
   - Modified commands.sqf, init.sqf, and executeCommand.sqf in module_chatIntercept folder.
-  = Added fn_diag_log.sqf in Dott_Functions, which is also used to log who entered zeus.
+  - Added fn_diag_log.sqf in Dott_Functions, which is also used to log who entered zeus.
   - Moved chatIntercept init call from init.sqf to initPlayerLocal.sqf
   - Moved admin check to executeCommand.sqf, which checks if a command is admin restricted from pvpfw_chatIntercept_adminCommands in commands.sqf
 

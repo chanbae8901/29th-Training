@@ -93,3 +93,13 @@ execVM "scripts\init_curators.sqf";
 [] execVM "module_chatIntercept\init.sqf";
 
 [] spawn DOTT_fnc_initDefaultLoadouts;
+
+//Prevent respawn showing up on old unit for split second.
+//Might be inconsistent if bad network conditions (theory)
+addMissionEventHandler ["EntityCreated", 
+{
+	params["_entity"];
+	if (!(_entity isKindOf "Man") || local _entity) exitWith {};
+	_entity hideObject true;
+	[{ (_this select 0) hideObject false }, [_entity], 0.2] call CBA_fnc_waitAndExecute;
+}];
