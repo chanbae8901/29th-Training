@@ -13,30 +13,38 @@ params ["_theClient","_didJIP"];
 
 enableSentences false;
 enableEnvironment [false, true];
-
-[] spawn {
-  if (isNil "artilleryComputer") then {
-    waitUntil {!isNil "artilleryComputer"};
-    if (artilleryComputer == 0) then {
-      enableEngineArtillery false;
-    };
-  };
-//restrict thermals
-  if (isNil "disabledTI") then {
-    waitUntil {!isNil "disabledTI"};
-    if (disabledTI == 0) then {
-      ["visionMode", {
-        [_this] spawn Hill_fnc_noThermals;
-      }] call CBA_fnc_addPlayerEventHandler;
-    };
-  };
+// ==============================================================================
+[] spawn 
+{
+	waitUntil {!isNil "artilleryComputer"};
+	if (artilleryComputer == 0) then 
+	{
+		enableEngineArtillery false;
+	};
 };
 
-[_theClient] spawn Hill_fnc_handleInitialInventory;
-
-//sleep 1;
+[] spawn 
+{
+	waitUntil {!isNil "disabledTI"};
+	if (disabledTI == 0) then 
+	{
+		["visionMode", 
+		{
+			[] spawn Hill_fnc_noThermals;
+		}] call CBA_fnc_addPlayerEventHandler;
+	};
+};
 
 // ==============================================================================
+if(_didJIP) then 
+{
+	[_theClient] spawn 
+	{
+		params ["_theClient"];
+		waitUntil { sleep 1; !isNull _theClient }; //most reliable way to call script early without it breaking
+		[_theClient] execVM "scripts\checkCuratorAssignment.sqf";
+	};
+};
 
 [_theClient] execVM "scripts\player_arsenal_handlers.sqf";
 
@@ -44,14 +52,20 @@ enableEnvironment [false, true];
 _theClient addEventHandler ["HandleRating", {0}];
 
 //If the respawn menu button is active
-if (!isNumber (missionConfigFile >> "respawnButton") || {getNumber (missionConfigFile >> "respawnButton") > 0}) then {
-  _respawnMenu = [] spawn {
-    waitUntil {!isNull (uiNamespace getVariable ["RscDisplayMPInterrupt", displayNull])};
-    uiNamespace getVariable "RscDisplayMPInterrupt" displayCtrl 1010 ctrlAddEventHandler ["ButtonClick", {
-      missionNamespace setVariable ["menuRespawn", true];
+if (!isNumber (missionConfigFile >> "respawnButton") || {getNumber (missionConfigFile >> "respawnButton") > 0}) then 
+{
+	_respawnMenu = [] spawn 
+	{
+		waitUntil {!isNull (uiNamespace getVariable ["RscDisplayMPInterrupt", displayNull])};
+		uiNamespace getVariable "RscDisplayMPInterrupt" displayCtrl 1010 ctrlAddEventHandler ["ButtonClick", 
+		{
+			missionNamespace setVariable ["menuRespawn", true];
 		}];
 	};
 };
+
+//Add actions to spectator terminals, garbage cans, and ammo boxes
+execVM "scripts\baseObjectsInit.sqf";
 
 // ==============================================================================
 
@@ -61,16 +75,31 @@ _theClient call BIS_fnc_drawCuratorDeaths;
 // Runs the in-game VOIP restriction script
 _null = [] execVM "scripts\voice_control\voiceControl.sqf";
 
-//Works with curatorObjectPlaced EH in scripts\init_curators.sqf
+[_theClient] spawn 
+{
+	private ["_theMan"];
+	_theMan = _this select 0;
+	waitUntil {currentWeapon _theMan != ""};
+	if (!(weaponLowered _theMan)) then 
+	{
+		_theMan action ["WeaponOnBack", _theMan];
+	};
+};
 
-[_theClient] spawn {
-  private ["_theMan"];
-  _theMan = _this select 0;
-  waitUntil {currentWeapon _theMan != ""};
-  sleep 3;
-  if (!(weaponLowered _theMan)) then {
-    _theMan action ["WeaponOnBack", _theMan];
-   };
- };
+//Run Curator (Zeus) Setup
+execVM "scripts\init_curators.sqf";
 
-//[_theClient] execVM "scripts\TFAR_eventHandlers.sqf";
+//Init chat command system
+[] execVM "module_chatIntercept\init.sqf";
+
+[] spawn DOTT_fnc_initDefaultLoadouts;
+
+//Prevent respawn showing up on old unit for split second.
+//Might be inconsistent if bad network conditions (theory)
+addMissionEventHandler ["EntityCreated", 
+{
+	params["_entity"];
+	if (!(_entity isKindOf "Man") || local _entity) exitWith {};
+	_entity hideObject true;
+	[{ (_this select 0) hideObject false }, [_entity], 0.2] call CBA_fnc_waitAndExecute;
+}];

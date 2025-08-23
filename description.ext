@@ -3,11 +3,11 @@ dev = "Rellikplug/29th Engineers";
 class Header {
   gameType = SANDBOX;
   minPlayers = 1;
-  maxPlayers = 180; //Total number of playable units placed in the editor including virtual entities
+  maxPlayers = 182; //Total number of playable units placed in the editor including virtual entities
 };
 
-OnLoadName = "29th Training V4.1.1";
-briefingName = "29th Training V4.1.1";
+OnLoadName = "29th Training V4.2.0";
+briefingName = "29th Training V4.2.0";
 // =========================== Loading Screen
 Author = "29th Engineers";
 loadScreen =  "Pictures\116Inf InsigniaAlpha.paa";
@@ -19,7 +19,7 @@ OverviewText = "<t align='center'><t size='1.5' color='#2A1ADC'>BLUFOR</t><t siz
 
 respawnOnStart = 0;
 respawn = 3;
-respawnDelay = 15;
+respawnDelay = 5;
 respawnDialog = 0;
 
 respawnTemplates[] = {"Spectator", "MenuPosition", "MenuInventory","Tickets"};
@@ -33,7 +33,7 @@ saving = 0;
 debriefing = 1;
 showGPS = 1;
 showCompas = 1;
-showMap = 0;
+showMap = 1;
 showNotePad = 1;
 showWatch = 1;
 showUAVFeed = 1;
@@ -43,7 +43,6 @@ taskManagement_propagate = 1;
 allowFunctionsRecompile = 1;
 class CfgFunctions 
 {
-	#include "functions\curator\CfgFunctions.hpp"  // Curator sync https://forums.bistudio.com/topic/166808-making-placed-units-be-editable-for-every-zeus/#entry2607581
 	#include "functions\29th_Training\CfgFunctions.hpp"
 	#include "functions\Dott_Functions\CfgFunctions.hpp"
 };

@@ -1,79 +1,95 @@
-if (!hasInterface) exitWith {};
-waitUntil {!isNull player};
-waitUntil {player == player};
-waitUntil {alive player};
+/*
+ * Name:	fnc_setInsignia
+ * Date:	7/26/2025
+ * Version: 1.1
+ * Author:  Bae [29th ID] modified from Hill [29th ID]
+ *
+ * Description:
+ * If unit matches parameter requirements and has 29th squad.xml set up properly, 
+ * applies insignia to uniform. 
+ * Applies non-drab/combat version to HQ members if not in combat loadout.
+ *
+ * Parameter(s): 
+ * _target: local unit that is wearing a uniform
+ *
+ * Returns:
+ * true if function applies insignia, false otherwise
+ *
+ * Example:
+ * player spawn Hill_fnc_setInsignia
+ */
 
-private ["_theClient","_sqdParams","_theClientSquad"];
+// === Insignia Map ===
+//alternate non-combat version as second element in value 
+private _insigniaMap = createHashMapFromArray [
+    ["Bn. HQ",   ["BnHQ"]],
+    ["C HQ",     ["CoHQdrab", "CoHQ"]],
+    ["CP1 HQ",   ["CP1drab", "CP1"]],
+    ["CP2 HQ",   ["CP2drab", "CP2"]],
+    ["CP1S1",    ["CP1S1"]],
+    ["CP1S2",    ["CP1S2", "CP1S2colour"]],
+    ["CP1S3",    ["CP1S3"]],
+    ["CP2S1",    ["CP2S1"]],
+    ["CP2S2",    ["CP2S2drab", "CP2S2"]],
+    ["CP2S3",    ["CP2S3"]]
+];
 
-_theClient = _this;
+params[["_target", objNull, [objNull]]];
 
-// [[squadNick,squadName,squadEmail,squadWeb,squadPicture,squadTitle],[memberId,memberNick,memberName,memberEmail,memberIcq,memberRemark]]
-_sqdParams = squadParams _theClient;
-if !(count _sqdParams == 0) then {
-	_theClientSquad = ((_sqdParams select 1) select 4);
+if (isNull _target) exitWith 
+{
+	["Invalid parameters."] call BIS_fnc_error; 
+	false;
 };
 
-_insigTrue = isClass (configFile >> "CfgPatches" >> "29th_Insignias");
+if (!local _target) exitWith 
+{
+	["%1 must be local.", _target] call BIS_fnc_error; 
+	false;
+};
 
-if (_insigTrue && !(count _sqdParams == 0)) then {
-	switch (_theClientSquad) do {
-		case ("Bn. HQ"): {
-      [_theClient, ""] call BIS_fnc_setUnitInsignia;
-			[_theClient, "BnHQ"] call BIS_fnc_setUnitInsignia; // apply _theClient's insignia
-		};
-		case ("C HQ"): {
-      if ((primaryWeapon player == "rhs_weap_m4a1" && count (primaryWeaponItems player) == 0) || primaryWeapon player == "") then {
-        [_theClient, ""] call BIS_fnc_setUnitInsignia;
-        [_theClient, "CoHQ"] call BIS_fnc_setUnitInsignia;
-			} else {
-        [_theClient, ""] call BIS_fnc_setUnitInsignia;
-				[_theClient, "CoHQdrab"] call BIS_fnc_setUnitInsignia;
-			};
-		};
-		case ("CP1 HQ"): {
-			if ((primaryWeapon player == "rhs_weap_m4a1" && count (primaryWeaponItems player) == 0) || primaryWeapon player == "") then {
-				[_theClient, ""] call BIS_fnc_setUnitInsignia;
-        [_theClient, "CP1"] call BIS_fnc_setUnitInsignia;
-			} else {
-        [_theClient, ""] call BIS_fnc_setUnitInsignia;
-				[_theClient, "CP1drab"] call BIS_fnc_setUnitInsignia;
-			};
-		};
-		case ("CP1S1"): {
-      [_theClient, ""] call BIS_fnc_setUnitInsignia;
-			[_theClient, "CP1S1"] call BIS_fnc_setUnitInsignia;
-		};
-		case ("CP1S2"): {
-      [_theClient, ""] call BIS_fnc_setUnitInsignia;
-			[_theClient, "CP1S2"] call BIS_fnc_setUnitInsignia;
-		};
-		case ("CP1S3"): {
-			[_theClient, "CP1S3"] call BIS_fnc_setUnitInsignia;
-		};
-		case ("CP2 HQ"): {
-			if ((primaryWeapon player == "rhs_weap_m4a1" && count (primaryWeaponItems player) == 0) || primaryWeapon player == "") then {
-				[_theClient, ""] call BIS_fnc_setUnitInsignia;
-        [_theClient, "CP2"] call BIS_fnc_setUnitInsignia;
-			} else {
-        [_theClient, ""] call BIS_fnc_setUnitInsignia;
-				[_theClient, "CP2drab"] call BIS_fnc_setUnitInsignia;
-			};
-		};
-		case ("CP2S1"): {
-      [_theClient, ""] call BIS_fnc_setUnitInsignia;
-			[_theClient, "CP2S1"] call BIS_fnc_setUnitInsignia;
-		};
-		case ("CP2S2"): {
-      [_theClient, ""] call BIS_fnc_setUnitInsignia;
-			[_theClient, "CP2S2"] call BIS_fnc_setUnitInsignia;
-		};
-		case ("CP2S3"): {
-      [_theClient, ""] call BIS_fnc_setUnitInsignia;
-			[_theClient, "CP2S3"] call BIS_fnc_setUnitInsignia;
-		};
-		default {};
+if(!isClass (configFile >> "CfgPatches" >> "29th_Insignias")) exitWith 
+{
+	["29th Insignias not found."] call BIS_fnc_error; 
+	false;
+};
+
+waitUntil {sleep .5; !isNull _target && _target == _target && alive _target};
+
+private ["_sqdParams", "_targetSquad", "_foundInsignias", "_targetInsignia", "_curInsignia"];
+
+_sqdParams = squadParams _target;
+if (count _sqdParams == 0) exitWith 
+{
+	["squad.xml info not found."] call BIS_fnc_error; false;
+};
+// get squad string stored in membericq
+_targetSquad = ((_sqdParams select 1) select 4);
+_foundInsignias = _insigniaMap getOrDefault [_targetSquad,[]];
+
+if (count _foundInsignias == 0) exitWith
+{
+    ["Insignia matching %1 not found", _targetSquad] call BIS_fnc_error;
+    false;
+};
+//default to only/combat variant
+_targetInsignia = _foundInsignias select 0;
+
+//non-combat variant exists
+if (count _foundInsignias == 2) then 
+{
+	//BLUFOR parade gear, dress blues, or no weapon
+	private _isNotCombatLoadout = _target call DOTT_fnc_checkNonCombatLoadout;
+	if (_isNotCombatLoadout) then { //use non-combat version
+		_targetInsignia = _foundInsignias select 1;
 	};
 };
 
-_theClient_Insig = _theClient call BIS_fnc_getUnitInsignia;
-_theClient_Insig
+_curInsignia = _target call BIS_fnc_getUnitInsignia;
+if(_curInsignia != _targetInsignia && _curInsignia != "") then 
+{
+	systemChat ("Insignia swapped to " + _targetInsignia + ".");
+};
+
+[_target, ""] call BIS_fnc_setUnitInsignia;
+[_target, _targetInsignia] call BIS_fnc_setUnitInsignia;

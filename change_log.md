@@ -2,14 +2,14 @@
 Overall Future Goals
 ---
 * Stats system reintroduction
-	- System surrounding round stats, mostly kills, not persistent accuracy or other 'fluff'
-	- Allows scoreboard to be disabled, but look up the information it provides using an addaction in spawn
+	- System surrounding round stats, mostly kills, not persistent accuracy or other 'fluff' 
+      Progress made in 4.2.0, number of kills can be seen after end of round in map diary.
 	- Specifically kill stats (player names you've killed). Could also track your killers?
+      Progress made in 4.2.0, kills/killed by can be tracked in events after end of round in map diary.
 * "Citadel" game mode
 	- Instead of regular cap zone, instead proximity to center adds more weight
 	- Not really for training... but events
 	- Could define area with polygon instead of circle or rectangle
-* Fix inconsistent thermals
 * Check if player in zone (inPolygon? Also marker rectangle or circles)
 * Random mortars in area defined by admin
 * Teleport pole that teleports you inside a radius, or into an area, or along a circle edge (COULD USE POLY TOO)
@@ -24,8 +24,6 @@ Overall Future Goals
 		- Player profile string reading for Cpl, Sgt, etc?
 	- Wave system for team leaders to call in player waves
 		- Could also use timer
-	- ! chat command printing to logs
-	- Artillery computer is broken
 	- Deploy area. Allow a side to deploy within or outside of a designated circle.
 
 ---
@@ -37,6 +35,111 @@ TBD
 	- Included new class "FlagTaken"
 	- Included new class "FlagCaptured"
 	- Included new class "FlagReturned"
+
+---
+v4.2.0  
+21 AUG 2025
+
+---
+
+* Parade loadout
+	- Combined PARADE_WEST, PARADE_EAST, and PARADE_INDEPENDENT roles into a single PARADE role in cfgRoles and cfgInventories
+  - Deprecated radios in loadout swapped.
+  - fn_handleInitalInventory.sqf fixed, but also no longer called due to redundancy. First time players should now join with parade
+    and not naked.
+
+* Improved loadout and arsenal handling
+  - Replaced calls to BIS_fnc_loadInventory to prevent one source of inaudible weapon bug
+	  with "functions\Dott_Functions\fn_fullSetUnitLoadout.sqf", which uses setUnitLoadout to prevent the issue
+    where the server thinks your weapon is "Throw" or "Put". 
+	- fn_flexibleReset now use fullSetUnitLoadout, modified fn_flexibleReset params to accomodate.
+  - fn_resetWeaponState spawn added to fullSetUnitLoadout and arsenalClosed to ensure server currentWeapon is synced correctly.
+  - Arsenal action is now area based inside base instead of looking at ammo box.
+
+* Legacy cleanup
+	- fn_addRadio deprecated radios swapped.
+  - fn_assignCurator, checkCuratorAssignment rewritten, checkCuratorAssignment call moved to initPlayerLocal from initServer (might revisit this later)
+    Now properly lets JIP Zeus slots access it without respawn.
+    Known issue NOT related to this change: If mission is started without an admin, #adminLogged zeus module does not properly give zeus to admin when they log in after.
+  - fn_cleaner now properly cleans up items in base, added description, returns boolean
+  - fn_noThermals cleaned up with descriptions, defines, param change
+  - fn_removeRadio now has description, moved _removeRadiosFromDead check to onPlayerKilled
+  - fn_setInsignia rewritten with hashmap instead of switch case, different standard for non-combat kits. Cleaned up call to it from onPlayerRespawn.
+  - Deleted attempt to prevent respawn showing on old body in onPlayerRespawn.sqf
+    Probably mostly working attempt created in initPlayerLocal.sqf
+  - fn_spectator separated into fn_enter_spectator and fn_exit_spectator. Player no longer sits down but will lower weapon upon exiting spectator (prevent accidental discharge).
+    Players will also be forced out when manually teleported.
+  - scripts/baseObjectsInit.sqf call moved from init.sqf to initPlayerLocal.sqf
+  - Parade loadout setup moved from init.sqf to initServer.sqf
+  - Unused functions randomizeRadioHz and removeAllRespawnInventories moved to archives folder and calls (TFAR_eventHandlers and init_curators respectively) commented out.
+    Now unused file scripts/TFAR_eventHandlers.sqf deleted.
+  - dateAndWeather function greatly simplified, moved completely server side. Call moved from init.sqf to initServer.sqf. 
+    Numeric values moved from script to initServer, now passed as params.
+  - excludeObjFromZeus now uses a flag to check for removal instead of comparing against all listed editor placed objects.
+    initPlayerServer will now not add player to curator editable objects if they are a headless client.
+  - Disabled most Headless Client "functionality" due to nonfunctional behavior.
+    init_hc deleted.
+    Headless Client-related code in init_curators has been commented out.
+  - Deleted spectator.sqf from script folder, left over file after it was "moved" to fn_spectator.sqf in 29th_Training.
+  - Removed functions\curator folder and files inside, removed include in description.ext
+    Functions meant to make sure all placed zeus units are shared between all curators no longer called. ACE Zeus setting on server takes over this functionality.
+  - init_curators.sqf 
+    Call moved from init.sqf to initPlayerLocal.sqf
+    Vehicle modifiers moved to new file init_vehicle_settings.sqf. 
+    Deleted other unused event handlers.
+  - init_vehicle_settings.sqf created
+    Uses EntityCreated missionEventHandler instead of curatorObjectPlaced. 
+    One consequence of this is that player created UAVs and static weapon will now also have disableTIEquipment called on it. 
+    Vehicle modifiers also now called on vehicles in mission.sqm, if for some reason they exist.
+    Now also will delete initial vehicle inventories (besides rope) if new mission param removeDefaultVehicleInventories == 1 (which is default).
+  - description.ext
+    showMap now equals 1
+    respawnDelay = 5 from 15;
+
+* Tweaked "fn_flexibleReset.sqf"
+  - Teleport now waits up to 30 seconds for a dead player to respawn before attempting teleport to reduce need for manual teleporting in these situations.
+  - Teleport now kicks player out of spectator box.
+  - Heal now also resets ACE Hearing deafness.
+
+* "fn_forceParade.sqf"
+  - Script added as option for admin via !parade command or as an additional option at BLUFOR ACE Arsenal Box. Sets loadouts of players currently in combat loadout
+    near admin or Arsenal box to parade loadout.
+  - Adds checkNonCombatLoadout.sqf, modifies commands.sqf and baseObjectsInit.sqf
+
+* "fn_initDefaultLoadouts.sqf"
+  - SOP correct Rifleman kits for each faction and Parade are now in Default Loadouts in ACE Arsenal.
+
+* Fixed mission parameters
+  - artilleryComputer now properly disables artillery computers. Server side ACE option to block it must be disabled for this param to take full effect. 
+  - disabledTI now properly spawns Hill_fnc_noThermals via EH. Infantry NVGs and launchers can no longer use thermals (important for Javelin).
+
+* Round system
+  - Moved as much logic as possible from commands.sqf to functions/Dott_Functions/round
+  - Move was done to simplify possible future GUIing of round system
+  - Replaced timerCheck with roundEvents, which is spawned on demand as needed and also handles time warning notifications.
+  - Checking scoreboard is now disabled during round (unless in spectator or zeus). 
+  - Moved publicVariable variables to fn_init
+
+* Tracker system (Round Event Logging)
+  - Tracks deaths (and if possible the killer), unconciousness (if possible who caused it) and sector capture (by team) changes during a round.
+  - Also includes personal events tab that only tracks player related events.
+  - Round scoreboard system that tracks (only) player kills and also credits unconscious as kills when possible.
+  - Automatically sends the events to players into their map diary at round end. Will not persist across rejoins and player will only have records for rounds they
+    were present at the end of.
+  - Tracker init.sqf also removes Statistics in Map permanently, could not get it to be shown only between rounds.    
+  - Can be disabled if problems arise in params.
+  - Focus has been put on ACE 3 Medical Compatibility, minimizing network load when sending to players, and properly handling players switching side mid round.
+  - When fighting AI, will not record AI infantry unconscious/deaths due to performance/technical considerations.
+  - Possibly move out of diary in the future to have more features.
+  - All files created in functions/Dott_Functions/tracker, and system initiated by calling tracker init file in init.sqf.
+
+* Commands & Logging
+  - Commands executed by players (except !commands and !help) as defined in pvpfw_chatIntercept_noLogCommands in commands.sqf are now logged server side.
+  - Also logged client side under Log in Map Diary.
+  - Modified commands.sqf, init.sqf, and executeCommand.sqf in module_chatIntercept folder.
+  - Added fn_diag_log.sqf in Dott_Functions, which is also used to log who entered zeus.
+  - Moved chatIntercept init call from init.sqf to initPlayerLocal.sqf
+  - Moved admin check to executeCommand.sqf, which checks if a command is admin restricted from pvpfw_chatIntercept_adminCommands in commands.sqf
 
 ---
 v4.1.1

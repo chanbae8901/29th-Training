@@ -28,3 +28,19 @@
 		texts[] = {"No","Yes (Default)"};
 		default = 1;
   };
+
+    class removeDefaultVehicleInventories 
+  {
+		title = "Remove default inventories from vehicles?";
+		values[] = {0,1};
+		texts[] = {"No","Yes (Default)"};
+		default = 1;
+  };
+
+      class enableRoundEventLog 
+  {
+		title = "Enable Round Event Logging?";
+		values[] = {0,1};
+		texts[] = {"No","Yes (Default)"};
+		default = 1;
+  };

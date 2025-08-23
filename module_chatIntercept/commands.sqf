@@ -4,6 +4,10 @@
 // E.G. !commands, !COMMANDS, and !CoMmAnDs will all work, but '!help !COMMANDS' will not (unless argument is 'toLower' before hand is the command code)
 // systemChat is the best way to give feedback to the local player executing commands
 
+pvpfw_chatIntercept_noLogCommands = ["commands", "help"];
+//remember to change !help if you edit this
+pvpfw_chatIntercept_adminCommands = ["arsenal", "heal", "rearm", "reset", "debrief", "goto", "measure", "tickets", "parade"];
+
 pvpfw_chatIntercept_allCommands = [
 	[
 		"commands",
@@ -42,6 +46,7 @@ pvpfw_chatIntercept_allCommands = [
 				case "!goto": {systemChat "!goto: (ADMIN ONLY) Teleports admin to side spawns. '!goto SIDE' (blufor, opfor, grnfor)"};
 				case "!measure": {systemChat "!measure: (ADMIN ONLY) Measure distances on the map using shift + click markers. Set a reference using '!measure set', then use '!measure' to get distance to your current shift + click marker"};
 				case "!tickets": {systemChat "!tickets: (ADMIN ONLY) Manages tickets and changes tickets for a given side, by the given value (E.G. '!tickets Blufor 5' will add 5 tickets to Blufor). '!tickets reset' sets all tickets to zero. '!tickets' returns the current value of all teams tickets. '!tickets enable' or 'disable' to enable/disable ticket system"};
+				case "!parade": {systemChat "!parade: (ADMIN ONLY) Sets all players' loadout within 125m of your position to parade."};
 				default {systemChat "Can't find the specified command! Make sure to enter the command with the '!'"};
 			};
 		}
@@ -50,47 +55,44 @@ pvpfw_chatIntercept_allCommands = [
 		"timer",
 		{
 			_argument = _this select 0;
-			timerLength = abs (parsenumber _argument); //timer can't be negative!
-			publicVariable "timerLength"; //default length defined in scripts\timerCheck.sqf
-			systemChat format["Timer set for %1 Minutes",timerLength];
+			private _minutes = abs (parsenumber _argument);
+			[_minutes * 60] call DOTT_round_fnc_setTimer; 
+			systemChat format["Timer set for %1 Minutes", _minutes];
 		}
 	],
 	[
 		"live",
 		{
-			if ([true] call BIS_fnc_countdown) exitWith //checks if timer is already running (I.E. bool true)
+			if ([] call DOTT_round_fnc_start) then 
+			{
+				systemChat "Starting Round!";
+			} else
 			{
 				systemChat "Error: Timer already running!";
 			};
-			[((timerLength) * 60)] call BIS_fnc_countdown;
-			["<t color='#ffffff' size='4'>LIVE LIVE LIVE</t><br/>%1 Minute Time Limit","PLAIN",0.5, true, timerLength] remoteExec ["DOTT_fnc_displayMsg"];
-			systemChat "Starting Round!";
 		}
 	],
 	[
 		"quicktimer",
 		{
-			if ([true] call BIS_fnc_countdown) exitWith
+			_argument = _this select 0;
+			private _timerQuick = abs (parsenumber _argument);
+			if ([((_timerQuick) * 60)] call DOTT_round_fnc_start) then
+			{
+				systemChat format["Starting %1 Minute round!",_timerQuick];				
+			} else 
 			{
 				systemChat "Error: Timer already running! Use '!addtime' if you want to add time";
 			};
-			_argument = _this select 0;
-			private _timerQuick = abs (parsenumber _argument);
-			[((_timerQuick) * 60)] call BIS_fnc_countdown;
-			["<t color='#ffffff' size='4'>LIVE LIVE LIVE</t><br/>%1 Minute Time Limit","PLAIN",0.5, true, _timerQuick] remoteExec ["DOTT_fnc_displayMsg"];
-			systemChat format["Starting %1 Minute timer!",_timerQuick];
 		}
 	],
 	[
 		"addtime",
 		{
 			_argument = _this select 0;
-			if ([true] call BIS_fnc_countdown) then 
+			private _timeAdd = parsenumber _argument;
+			if ([_timeAdd*60] call DOTT_round_fnc_addTime != -1) then 
 			{
-				private _timeAdd = parsenumber _argument;
-				private _timeLeft = [0] call BIS_fnc_countdown;
-				[(((_timeAdd) * 60) + _timeLeft)] call BIS_fnc_countdown;
-				format ["Added %1 minutes to the time limit!", _timeAdd] remoteExec ["hint"];
 				systemChat format["Adding %1 Minutes to the time limit!",_timeAdd];
 			}
 			else
@@ -102,37 +104,31 @@ pvpfw_chatIntercept_allCommands = [
 	[
 		"game",
 		{
-			private _timerRunning = [true] call BIS_fnc_countdown;
-			if (!_timerRunning) exitWith
+			if !(call DOTT_round_fnc_isRoundActive) then
 			{
-				systemChat "No timer running! Only displaying end game message!";
 				["<t color='#ffffff' size='5'>GAME!</t>","PLAIN",0.4] remoteExec ["DOTT_fnc_displayMsg"];
+				systemChat "No timer running! Only displaying end game message!";
+			} else 
+			{
+				[true] call DOTT_round_fnc_end; 
+				systemChat "Calling Game!";
 			};
-			
-			[-1] call BIS_fnc_countdown;
-			// Below should be handled by scripts\timerCheck.sqf
-			// ["<t color='#ffffff' size='5'>GAME!</t>","PLAIN",0.4] remoteExec ["DOTT_fnc_displayMsg"];
-			overTime = false;
-			publicVariable "overTime";
-			systemChat "Calling Game!";
 		}
 	],
 	[
 		"overtime",
 		{
 			_argument = _this select 0;
-			overTimePeriod = abs (parsenumber _argument); //overtime can't be negative!
-			publicVariable "overTimePeriod";
-			if (overTimePeriod > 0) then 
+			private _minutes = abs (parsenumber _argument); //overtime can't be negative!
+			if (_minutes > 0) then 
 			{
-				overTime = true;
-				publicVariable "overTime";
-				systemChat format["Overtime set for %1 Minutes", _argument];
+				[true] call DOTT_round_fnc_setOvertimeEnabled;
+				[_minutes*60] call DOTT_round_fnc_setOverTimePeriod;
+				systemChat format["Overtime set for %1 Minutes", _minutes];
 			}
 			else 
 			{
-				overTime = false;
-				publicVariable "overTime";
+				[false] call DOTT_round_fnc_setOvertimeEnabled;
 				systemChat "Overtime Disabled";
 			};
 		}
@@ -140,35 +136,28 @@ pvpfw_chatIntercept_allCommands = [
 	[
 		"ready",
 		{	//works based off of local player's side
-			switch (playerSide) do
-			{
-				case west: { bluReady = true; publicVariable "bluReady"; "Blufor Ready!" remoteExec ["hint"]; "scripts\readyCheck.sqf" remoteExec ["execVM", 2]; };
-				case east: { opfReady = true; publicVariable "opfReady"; "Opfor Ready!" remoteExec ["hint"]; "scripts\readyCheck.sqf" remoteExec ["execVM", 2]; };
-				case resistance: { grnReady = true; publicVariable "grnReady"; "Grnfor Ready!" remoteExec ["hint"]; "scripts\readyCheck.sqf" remoteExec ["execVM", 2]; };
+			private _result = [playerSide, true] call DOTT_round_fnc_manageReady;
+			switch (_result) do {
+				case 0: { systemChat "Setting side ready!"; };
+				case 1: { systemChat "Error: Round already started!"; };
+				case 2: { systemChat "Error: Side is already ready!"; };				
 			};
-			systemChat "Setting side ready!"
 		}
 	],
 	[
 		"unready",
 		{
-			switch (playerSide) do
-			{
-				case west: { bluReady = false; publicVariable "bluReady"; "Blufor Unready!" remoteExec ["hint"]; };
-				case east: { opfReady = false; publicVariable "opfReady"; "Opfor Unready!" remoteExec ["hint"]; };
-				case resistance: { grnReady = false; publicVariable "grnReady"; "Grnfor Unready!" remoteExec ["hint"]; };
+			private _result = [playerSide, false] call DOTT_round_fnc_manageReady;
+			switch (_result) do {
+				case 0: { systemChat "Setting side unready!"; };
+				case 1: { systemChat "Error: Round already started!"; };
+				case 2: { systemChat "Error: Side is already unready!"; };				
 			};
-			systemChat "Unreadying side!"
 		}
 	],
 	[
 		"tickets",
 		{
-			if (!serverCommandAvailable "#lock") exitWith //admin only
-			{
-				systemChat "You must get the logged in admin to do that!";
-			};
-			
 			_argument = _this select 0;
 			_argument = toLower _argument;
 			
@@ -221,11 +210,6 @@ pvpfw_chatIntercept_allCommands = [
 	[
 		"arsenal",
 		{
-			if (!serverCommandAvailable "#lock") exitWith
-			{
-				systemChat "You must be the logged in admin to do that!";
-			};
-			
 			//arsenal object array (Fun!)
 			private _arsenalArr = ["Land_ToiletBox_F", "Land_FieldToilet_F"];
 			//select object
@@ -256,22 +240,18 @@ pvpfw_chatIntercept_allCommands = [
 	[
 		"heal",
 		{
-			if (!serverCommandAvailable "#lock") exitWith
-			{
-				systemChat "You must be the logged in admin to do that!";
-			};
 			_argument = _this select 0;
 			if (_argument isEqualTo "") exitWith //empty arg means heal all players
 			{
-				[["", true], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
+				[[[], true], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
 				systemChat "Healing all players!"
 			};
 			_argument = toLower _argument; //otherwise select team and heal
 			switch (_argument) do
 			{
-				case "blufor": { [{ ["", true] spawn DOTT_fnc_flexibleReset} ] remoteExec ["call", west]; systemChat "Healing Blufor players!"; };
-				case "opfor": { [{ ["", true] spawn DOTT_fnc_flexibleReset} ] remoteExec ["call", east]; systemChat "Healing Opfor players!";  };
-				case "grnfor": { [{ ["", true] spawn DOTT_fnc_flexibleReset} ] remoteExec ["call", resistance]; systemChat "Healing Grnfor players!";  };
+				case "blufor": { [{ [[], true] spawn DOTT_fnc_flexibleReset} ] remoteExec ["call", west]; systemChat "Healing Blufor players!"; };
+				case "opfor": { [{ [[], true] spawn DOTT_fnc_flexibleReset} ] remoteExec ["call", east]; systemChat "Healing Opfor players!";  };
+				case "grnfor": { [{ [[], true] spawn DOTT_fnc_flexibleReset} ] remoteExec ["call", resistance]; systemChat "Healing Grnfor players!";  };
 				default {systemChat "Error: Invalid input! Must be 'blufor', 'opfor', or 'grnfor'"};
 			};
 		}
@@ -279,22 +259,18 @@ pvpfw_chatIntercept_allCommands = [
 		[
 		"rearm",
 		{
-			if (!serverCommandAvailable "#lock") exitWith
-			{
-				systemChat "You must be the logged in admin to do that!";
-			};
 			_argument = _this select 0;
 			if (_argument isEqualTo "") exitWith
 			{
-				[["Current Inventory"], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
+				[[resetLoadout], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
 				systemChat "Rearming all players!";
 			};
 			_argument = toLower _argument;
 			switch (_argument) do
 			{
-				case "blufor": { [{ ["Current Inventory"] spawn DOTT_fnc_flexibleReset }] remoteExec ["call", west]; systemChat "Rearming Blufor players!"; };
-				case "opfor": { [{ ["Current Inventory"] spawn DOTT_fnc_flexibleReset }] remoteExec ["call", east]; systemChat "Rearming Opfor players!"; };
-				case "grnfor": { [{ ["Current Inventory"] spawn DOTT_fnc_flexibleReset }] remoteExec ["call", resistance]; systemChat "Rearming Grnfor players!"; };
+				case "blufor": { [{ [resetLoadout] spawn DOTT_fnc_flexibleReset }] remoteExec ["call", west]; systemChat "Rearming Blufor players!"; };
+				case "opfor": { [{ [resetLoadout] spawn DOTT_fnc_flexibleReset }] remoteExec ["call", east]; systemChat "Rearming Opfor players!"; };
+				case "grnfor": { [{ [resetLoadout] spawn DOTT_fnc_flexibleReset }] remoteExec ["call", resistance]; systemChat "Rearming Grnfor players!"; };
 				default {systemChat "Error: Invalid input! Must be 'blufor', 'opfor', 'grnfor'"};
 			};
 		}
@@ -302,17 +278,13 @@ pvpfw_chatIntercept_allCommands = [
 	[
 		"reset",
 		{
-			if (!serverCommandAvailable "#lock") exitWith
-			{
-				systemChat "You must be the logged in admin to do that!";
-			};
 			_argument = _this select 0;
 			//blank argument means reset and teleport everybody
 			if (_argument isEqualTo "") exitWith
 			{
-				[{["Current Inventory",true, getPosASL res_blu] spawn DOTT_fnc_flexibleReset}] remoteExec ["call", west];
-				[{["Current Inventory",true, getPosASL res_red] spawn DOTT_fnc_flexibleReset}] remoteExec ["call", east];
-				[{["Current Inventory",true, getPosASL res_grn] spawn DOTT_fnc_flexibleReset}] remoteExec ["call", resistance];
+				[{[resetLoadout,true, getPosASL res_blu] spawn DOTT_fnc_flexibleReset}] remoteExec ["call", west];
+				[{[resetLoadout,true, getPosASL res_red] spawn DOTT_fnc_flexibleReset}] remoteExec ["call", east];
+				[{[resetLoadout,true, getPosASL res_grn] spawn DOTT_fnc_flexibleReset}] remoteExec ["call", resistance];
 				systemChat "Rearming, healing, and teleporting all players to spawn!"
 			};
 			//toLower case to reduce user error
@@ -326,7 +298,7 @@ pvpfw_chatIntercept_allCommands = [
 				//if just stay rearm/heal everybody
 				if (count _argArr isEqualTo 1) exitWith 
 				{ 
-					[["Current Inventory",true], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
+					[[resetLoadout,true], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
 					systemChat "Rearming and healing all players!";
 				};
 				//simple math determines position of side argument
@@ -335,18 +307,18 @@ pvpfw_chatIntercept_allCommands = [
 				//otherwise select side and rearm/heal them
 				switch (_argArr select _sideArg) do
 				{
-					case "blufor": { [{["Current Inventory",true] spawn DOTT_fnc_flexibleReset}] remoteExec ["call", west]; systemChat "Rearming and healing Blufor players!"; };
-					case "opfor": { [{["Current Inventory",true] spawn DOTT_fnc_flexibleReset}] remoteExec ["call", east]; systemChat "Rearming and healing Opfor players!"; };
-					case "grnfor": { [{["Current Inventory",true] spawn DOTT_fnc_flexibleReset}] remoteExec ["call", resistance]; systemChat "Rearming and healing Grnfor players!"; };
+					case "blufor": { [{[resetLoadout,true] spawn DOTT_fnc_flexibleReset}] remoteExec ["call", west]; systemChat "Rearming and healing Blufor players!"; };
+					case "opfor": { [{[resetLoadout,true] spawn DOTT_fnc_flexibleReset}] remoteExec ["call", east]; systemChat "Rearming and healing Opfor players!"; };
+					case "grnfor": { [{[resetLoadout,true] spawn DOTT_fnc_flexibleReset}] remoteExec ["call", resistance]; systemChat "Rearming and healing Grnfor players!"; };
 					default {systemChat "Error: Invalid input(s)! Must be 'stay', 'blufor', 'opfor', 'grnfor'"};
 				};
 			};
 			//if no stay, then rearm/heal/teleport that side
 			switch (_argument) do
 			{
-				case "blufor": { [{ ["Current Inventory", true, getPosASL res_blu] spawn DOTT_fnc_flexibleReset }] remoteExec ["call", west]; systemChat "Rearming, healing, and teleporting Blufor players to spawn!"; };
-				case "opfor": { [{ ["Current Inventory", true, getPosASL res_red] spawn DOTT_fnc_flexibleReset }] remoteExec ["call", east]; systemChat "Rearming, healing, and teleporting Opfor players to spawn!"; };
-				case "grnfor": { [{ ["Current Inventory", true, getPosASL res_grn] spawn DOTT_fnc_flexibleReset }] remoteExec ["call", resistance]; systemChat "Rearming, healing, and teleporting Grnfor players to spawn!"; };
+				case "blufor": { [{ [resetLoadout, true, getPosASL res_blu] spawn DOTT_fnc_flexibleReset }] remoteExec ["call", west]; systemChat "Rearming, healing, and teleporting Blufor players to spawn!"; };
+				case "opfor": { [{ [resetLoadout, true, getPosASL res_red] spawn DOTT_fnc_flexibleReset }] remoteExec ["call", east]; systemChat "Rearming, healing, and teleporting Opfor players to spawn!"; };
+				case "grnfor": { [{ [resetLoadout, true, getPosASL res_grn] spawn DOTT_fnc_flexibleReset }] remoteExec ["call", resistance]; systemChat "Rearming, healing, and teleporting Grnfor players to spawn!"; };
 				default {systemChat "Error: Invalid input(s)! Must be 'stay', 'blufor', 'opfor', 'grnfor'"};
 			};
 		}	
@@ -354,16 +326,12 @@ pvpfw_chatIntercept_allCommands = [
 	[
 		"debrief",
 		{
-			if (!serverCommandAvailable "#lock") exitWith
-			{
-				systemChat "You must be the logged in admin to do that!";
-			};
 			_argument = _this select 0;
 			//blank argument means debrief in blufor base
 			if (_argument isEqualTo "") then
 			{
 				private _pos = getPosASL res_blu;
-				[["", true, _pos], DOTT_fnc_flexibleReset ] remoteExec ["spawn"];
+				[[[], true, _pos], DOTT_fnc_flexibleReset ] remoteExec ["spawn"];
 				systemChat "Healing and teleporting all players to Blufor base!";
 			}
 			else //teleport all players to 15 meters in front of admin
@@ -375,7 +343,7 @@ pvpfw_chatIntercept_allCommands = [
 				//use offset x/y but player z (satisfies ASL requirement)
 				private _telePos = [_offset select 0, _offset select 1, _pos select 2];
 				
-				[["", true, _telePos], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
+				[[[], true, _telePos], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
 				systemChat "Healing and teleporting all players to you!";
 			};
 		}
@@ -383,17 +351,13 @@ pvpfw_chatIntercept_allCommands = [
 	[
 		"goto", //teleport admin only to specified spawn
 		{
-			if (!serverCommandAvailable "#lock") exitWith
-			{
-				systemChat "You must be the logged in admin to do that!";
-			};
 			_argument = _this select 0;
 			_argument = toLower _argument;
 			switch (_argument) do
 			{
-				case "blufor": { ["",false,getPosASL blu_ammo] spawn DOTT_fnc_flexibleReset; systemChat "Teleporting to Blufor spawn!"; };
-				case "opfor": { ["",false,getPosASL red_ammo] spawn DOTT_fnc_flexibleReset; systemChat "Teleporting to Opfor spawn!"; };
-				case "grnfor": { ["",false,getPosASL grn_ammo] spawn DOTT_fnc_flexibleReset; systemChat "Teleporting to Grnfor spawn!"; };
+				case "blufor": { [[],false,getPosASL blu_ammo] spawn DOTT_fnc_flexibleReset; systemChat "Teleporting to Blufor spawn!"; };
+				case "opfor": { [[],false,getPosASL red_ammo] spawn DOTT_fnc_flexibleReset; systemChat "Teleporting to Opfor spawn!"; };
+				case "grnfor": { [[],false,getPosASL grn_ammo] spawn DOTT_fnc_flexibleReset; systemChat "Teleporting to Grnfor spawn!"; };
 				default {systemChat "Error: Invalid input! Must be 'blufor', 'opfor', or 'grnfor'"};
 			};
 		}
@@ -401,11 +365,6 @@ pvpfw_chatIntercept_allCommands = [
 	[
 		"measure",
 		{
-			if (!serverCommandAvailable "#lock") exitWith
-			{
-				systemChat "You must be the logged in admin to do that!";
-			};
-			
 			_argument = _this select 0;
 			if (_argument == "") then //blank argument for actual measurement
 			{
@@ -432,6 +391,12 @@ pvpfw_chatIntercept_allCommands = [
 					systemChat "Error: No marker! Place a marker on the map with shift + click"; 
 				};
 			};
+		}
+	],
+	[
+		"parade",
+		{
+			[player, 125] spawn DOTT_fnc_forceParade;
 		}
 	]
 ];

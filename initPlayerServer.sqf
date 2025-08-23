@@ -4,6 +4,9 @@ Executed only on server when a player joins mission (includes both mission start
 diag_log text format ["|=============================   %1: initPlayerServer.sqf Running   =============================|", missionName];
 params ["_theClient"];
 
+if (!(_theClient isKindOf "HeadlessClient_F")) then 
 {
-	_x addCuratorEditableObjects [[_theClient],true];
-} forEach allCurators;
+	{
+		_x addCuratorEditableObjects [[_theClient], true];
+	} forEach allCurators;
+};

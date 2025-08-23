@@ -44,7 +44,7 @@ true
   systemChat format ["%1",_unit];
   switch (side (group _unit)) do {
     case (WEST): {
-      if (_newSWRadio == "tf_fadak" || _newSWRadio == "tf_anprc148jem") then {
+      if (_newSWRadio == "TFAR_fadak" || _newSWRadio == "TFAR_anprc148jem") then {
       private _SwRadio = _this call TFAR_fnc_activeSwRadio;
       private _SwChannels = [1,2,3,4,5,6,7,8,9];
         {
@@ -54,7 +54,7 @@ true
       };
     };
     case (EAST): {
-      if (_newSWRadio == "tf_anprc152" || _newSWRadio == "tf_anprc148jem") then {
+      if (_newSWRadio == "TFAR_anprc152" || _newSWRadio == "TFAR_anprc148jem") then {
       private _SwRadio = _this call TFAR_fnc_activeSwRadio;
       private _SwChannels = [1,2,3,4,5,6,7,8,9];
         {
@@ -64,7 +64,7 @@ true
       };
     };
     case (INDEPENDENT): {
-      if (_newSWRadio == "tf_fadak" || _newSWRadio == "tf_anprc152") then {
+      if (_newSWRadio == "TFAR_fadak" || _newSWRadio == "TFAR_anprc152") then {
       private _SwRadio = _this call TFAR_fnc_activeSwRadio;
       private _SwChannels = [1,2,3,4,5,6,7,8,9];
         {

@@ -29,7 +29,23 @@ _command = toString _command;
 _argument = toString _argument;
 
 {
-	if (_command == (_x select 0))exitWith{
+	if (_command == (_x select 0)) exitWith 
+	{
+		private _isAdmin = serverCommandAvailable "#lock";
+		if (pvpfw_chatIntercept_adminCommands find _command != -1 && !_isAdmin) exitWith 
+		{
+			systemChat "You must be the logged in admin to do that!";
+		};
+
 		[_argument] call (_x select 1);
+		if (pvpfw_chatIntercept_noLogCommands find _command == -1) then 
+		{
+			private _msg = format ["%1 executed command !%2 %3", name player, _command, _argument];
+			_msg remoteExec ["DOTT_fnc_diag_log",2];
+			["Log", ["Commands", _msg]] remoteExec ["DOTT_fnc_addDiaryRecord"];
+		};		
 	};
-}forEach pvpfw_chatIntercept_allCommands;
+} forEach pvpfw_chatIntercept_allCommands;
+
+
+

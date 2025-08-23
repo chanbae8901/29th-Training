@@ -1,14 +1,24 @@
-/*===============================================================================================
-		\/RP		by: Rellikplug		AKA: Hill [29th ID]\/RP																									=
-	this addAction ["<img image='\A3\Ui_f\data\IGUI\Cfg\simpleTasks\types\repair_ca.paa'/><t color='#FF0080'>Clean-Up</t>","call Hill_fnc_cleaner","blu",1,false,true,"","((_target distance _this) < 2)"];	=
-===============================================================================================*/
+/*
+ * Name:	fnc_cleaner
+ * Date:	7/26/2025
+ * Version: 1.1
+ * Author:  Rellikplug	AKA: Hill [29th ID]
+ *
+ * Description:
+ * Removes all dead bodies along with items (ex. weapons, magazines) around 250 meters from 
+ * the base garbage cans (which should have this function attached with addAction).
+ *
+ * Parameter(s): None
+ *
+ * Returns:
+ * false if no objects deleted, true otherwise
+ *
+ * Example:
+ * call Hill_fnc_cleaner;
+ * 
+ */
 
-private ["_target","_caller","_id","_dead","_posBlu","_posRed","_posGreen","_all_garbages","_near_objects","_countObjects","_countDead","_countAllNear"];
-
-//_target = _this select 0;
-//_caller = _this select 1;
-//_id = _this select 2;
-// Why is this here? Commented out for now - Dott
+private ["_dead","_posBlu","_posRed","_posGreen","_all_garbages","_near_objects","_countObjects","_countDead","_countAllNear"];
 
 _dead = allDeadMen;
 
@@ -18,14 +28,18 @@ _posRed = getPosATL red_garbage;
 _posGreen = getPosATL green_garbage;
 _all_garbages = [_posBlu,_posRed,_posGreen];
 
-	//  get nearest objs around each object
-_near_objects =  { nearestObjects [_x,["WeaponHolder","GroundWeaponHolder"],250]; } forEach _all_garbages;
-	//  count the strings in each array
+	//  get items around trash cans
+_near_objects =  [];
+{
+    _near_objects append (nearestObjects [_x, ["WeaponHolder", "GroundWeaponHolder"], 250]);
+} forEach _all_garbages;
+
 _countObjects = count _near_objects;
 _countDead = count _dead;
 _countAllNear = _countObjects + _countDead;
 
-if (_countAllNear < 1) exitWith {
+if (_countAllNear < 1) exitWith 
+{
 	hintSilent "Nothing to delete.";
 	false
 };
@@ -34,4 +48,4 @@ if (_countAllNear < 1) exitWith {
 { deleteVehicle _x; } forEach _near_objects;
 _text = format ["Cleaned:\n%1 Objects\n%2 Dead Bodies",_countObjects,_countDead];
 hintSilent _text;
-_text
+true

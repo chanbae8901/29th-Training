@@ -24,7 +24,7 @@
 		description = "%1";
 		iconPicture = "\a3\Modules_F_Curator\Data\portraitCountdown_ca.paa";
 		color[] = {1, 0.81, 0.06, 1};
-		duration = 5;
+		duration = 3;
 		priority = 2;
 	};
 	class Reset

@@ -36,8 +36,6 @@ pvpfw_chatIntercept_handle = [] spawn {
 				closeDialog 0;
 				(findDisplay 24) closeDisplay 1;
 				
-				//can check local player here - Dott
-				if (serverCommandAvailable "#lock") then { playerIsAdmin = true; } else { playerIsAdmin = true; };
 				[_chatArr] call pvpfw_chatIntercept_executeCommand;
 			};
 			
