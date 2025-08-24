@@ -32,7 +32,7 @@ params["_events", "_names", "_sides", "_roundNum"];
 if !(player diarySubjectExists "RoundEventLog") then 
 {
     player createDiarySubject ["RoundEventLog", "Round Event Log"];
-    private _infoLines = ["All Events show every recorded event for each round."];
+    private _infoLines = ["All Events show every recorded event for each round. (Kills, Unconscious, Sector Captures)"];
     _infoLines pushBack "Personal Events shows events relevant to you, including if the people you knock unconscious regain consciousness or are killed.";
     _infoLines pushBack "Information is updated at the end of the round and is lost when aborting/disconnecting.";
     private _infoText = _infoLines joinString "<br />";

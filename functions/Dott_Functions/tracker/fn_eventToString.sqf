@@ -67,10 +67,10 @@ switch (_eventType) do
 			private _instigatorSide = [_instigatorIndex, _eventTime, _sides] call DOTT_tracker_fnc_getSideAtTime;
 			_instigatorName = [_instigatorName, _instigatorSide] call DOTT_tracker_fnc_colorNameWithSide;			
 			private _distance = _eventInfo select 2;	
-			_eventString = format["%1:%2 - %3 killed by %4 from %5 meters.", _minutes, _secondStr, _unitName, _instigatorName, _distance];
+			_eventString = format["%1:%2 - %3 destroyed by %4 from %5 meters.", _minutes, _secondStr, _unitName, _instigatorName, _distance];
 		} else 
 		{
-			_eventString = format ["%1:%2 - %3 killed.", _minutes, _secondStr, _unitName];
+			_eventString = format ["%1:%2 - %3 destroyed.", _minutes, _secondStr, _unitName];
 		};
 	};
 	case SECTOR_CAPTURE_NUM:
