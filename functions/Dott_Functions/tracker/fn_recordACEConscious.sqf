@@ -37,6 +37,8 @@ if (_state) then
 		_eventInfo pushBack [name _instigator, side (group _instigator)];
 		private _distance = round (_unit distance _instigator);
 		_eventInfo pushBack _distance;
+
+		DOTT_tracker_backupInstigatorName = name _instigator;
 	};
 };
 

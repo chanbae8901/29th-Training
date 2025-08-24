@@ -52,6 +52,12 @@ if !(isNull _instigator) then
 	if (_instigator isKindOf "Man") then 
 	{
 		_instigatorName = name _instigator;
+
+		//if name fails due to instigator being dead too long, pull out backup
+		if (_instigatorName == "" && !(isNull DOTT_tracker_backupInstigatorName)) then 
+		{
+			_instigatorName = DOTT_tracker_backupInstigatorName;
+		};
 	} else 
 	{
 		_instigatorName = getText (configFile >> "CfgVehicles" >> typeOf _instigator >> "displayName");
