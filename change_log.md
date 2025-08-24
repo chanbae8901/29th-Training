@@ -43,7 +43,7 @@ v4.2.1
 ---
 
 - Insignia now only overwritten for Clerk or Sniper if they don't have one
-
+- Javelin can now lock on without thermal if thermals are disabled (looks a bit weird while doing so).
 ---
 v4.2.0  
 21 AUG 2025

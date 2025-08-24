@@ -32,6 +32,7 @@ enableEnvironment [false, true];
 		{
 			[] spawn Hill_fnc_noThermals;
 		}] call CBA_fnc_addPlayerEventHandler;
+		ace_javelin_ignoreVisionMode = true;
 	};
 };
 
