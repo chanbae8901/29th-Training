@@ -47,6 +47,9 @@ if(_didJIP) then
 	};
 };
 
+//sometimes parade respawn loadout not set fast enough for initial join
+if(!_didJIP) then { [_theClient] call Hill_fnc_handleInitialInventory };
+
 [_theClient] execVM "scripts\player_arsenal_handlers.sqf";
 
 //maintains a neutral rating in the event of "accidental" team kills
