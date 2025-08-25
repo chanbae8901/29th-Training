@@ -55,7 +55,7 @@ if (isServer) then
 			publicVariable "DOTT_tracker_startTime";
 
 			//can be out of order due to delaying ACE Unconsious send or due to latency
-			[DOTT_tracker_events, [], {_x select 1}] call BIS_fnc_sortBy;
+			DOTT_tracker_events = [DOTT_tracker_events, [], {_x select 1}] call BIS_fnc_sortBy;
 
 			[
 				DOTT_tracker_events,
@@ -91,6 +91,9 @@ if (isServer) then
 if (hasInterface) then 
 {
 	// --- Infantry Kill --- //	
+	DOTT_tracker_backupInstigatorName = "Unknown";
+	DOTT_tracker_lastNonNullDamage = nil;
+
 	[] spawn 
 	{
 		waitUntil {!isNull player};
@@ -99,6 +102,17 @@ if (hasInterface) then
 			params ["_unit", "_killer", "_instigator"];
 			[_unit, _killer, _instigator] call DOTT_tracker_fnc_recordKill;
 		}];
+		player addEventHandler ["Respawn", 
+		{
+			DOTT_tracker_backupInstigatorName = "Unknown";
+			DOTT_tracker_lastNonNullDamage = nil;
+		}];	
+		player addEventHandler ["HandleDamage", 
+		{
+			private _instigator = _this select 6;
+			if (!isNull _instigator) then { DOTT_tracker_lastNonNullDamage = _instigator };	
+		}];		
+
 	};
 
 	// --- Consciousness --- //	
@@ -113,20 +127,6 @@ if (hasInterface) then
 		player removeDiarySubject "Statistics";
 		removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
 	}];
-
-	// --- //
-	//Used in kill logging
-	DOTT_tracker_backupInstigatorName = "Unknown";
-
-	[] spawn 
-	{
-		waitUntil {!isNull player};
-		player addEventHandler ["HandleDamage", 
-		{
-			private _instigator = _this select 6;
-			if (!isNull _instigator) then { DOTT_tracker_lastNonNullDamage = _instigator };	
-		}];
-	};	
 };
 
 
