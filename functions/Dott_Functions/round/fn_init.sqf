@@ -34,6 +34,9 @@ if (isServer) then
 	publicVariable "timerLength";
 	publicVariable "overtimeEnabled";
 	publicVariable "overtimePeriod";
+	
+	//prevent scores showing up on right side UI, least used faction used
+	independent addScoreSide -9999; 
 };
 
 if (hasInterface) then

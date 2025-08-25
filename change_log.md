@@ -46,6 +46,7 @@ v4.2.1
 - Javelin can now lock on without thermal if thermals are disabled.
 - Some changes to wording in Tracker Diary Records.
 - Fix kill not being credited if the instigator died before the unit finally died (typically from bleeding out or respawning).
+- Team scores should no longer show up on UI. (Independent side start with -9999 score now).
 
 ---
 v4.2.0  
