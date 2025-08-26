@@ -12,7 +12,7 @@
  * _weaponName (String): Name of weapon to check/store
  *
  * Returns:
- * Index where weapon name is in DOTT_tracker_weapons
+ * (Number) Index where weapon name is in DOTT_tracker_weapons
  *
  * Example:
  * ["AK-74M"] call DOTT_tracker_fnc_weaponToNum;

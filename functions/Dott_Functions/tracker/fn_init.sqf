@@ -20,6 +20,7 @@
 
 if (isServer) then
 {
+	DOTT_tracker_previous = [];
 	DOTT_tracker_events = [];
 	DOTT_tracker_names = [];
 	DOTT_tracker_sides = [];
@@ -68,6 +69,14 @@ if (isServer) then
 					DOTT_tracker_weapons,
 					DOTT_tracker_currentRound
 				] remoteExec ["DOTT_tracker_fnc_createDiaryEntries"];
+
+				DOTT_tracker_previous pushBack 
+				[	
+					+DOTT_tracker_events,
+					+DOTT_tracker_names,
+					+DOTT_tracker_sides,
+					+DOTT_tracker_weapons
+				];
 
 				DOTT_tracker_currentRound = DOTT_tracker_currentRound + 1;	
 			}
@@ -135,9 +144,10 @@ if (hasInterface) then
 	]
 	call CBA_fnc_addEventHandler;
 
-	// --- Remove Statistics from Map --- //	
+	// --- Remove Statistics from Map, Send All Round Histories --- //	
 	addMissionEventHandler ["PreloadFinished", {
 		player removeDiarySubject "Statistics";
+		[player] remoteExec ["DOTT_tracker_fnc_sendAll", 2];
 		removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
 	}];
 

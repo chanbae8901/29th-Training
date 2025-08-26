@@ -11,7 +11,7 @@
  * [_projectile, _instigator] reference HandleDamage event.
  *
  * Returns:
- * Best guess of the weapon/vehicle that was used by the instigator. 
+ * (String) Best guess of the weapon/vehicle that was used by the instigator. 
  *
  * Example:
  * [_projectile, _instigator] call DOTT_tracker_fnc_getWeapon;

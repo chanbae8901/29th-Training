@@ -66,5 +66,6 @@ class Dott_Tracker
 		class getKillCounts {};	
 		class findPlayerEvents {};
 		class getWeapon {};
+		class sendAll {};
 	};
 };
