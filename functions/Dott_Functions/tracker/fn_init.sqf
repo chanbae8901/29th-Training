@@ -1,7 +1,7 @@
 /*
  * Name:	fnc_init
- * Date:	8/18/2025
- * Version: 1.0
+ * Date:	8/26/2025
+ * Version: 1.1
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -141,8 +141,8 @@ if (hasInterface) then
 		removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
 	}];
 
-	//SOP Grenade Launchers
-	DOTT_tracker_attachedGLs = ["M203", "M320", "GP-25", "PBG", "AG36", "VHS-BG"];
+	//Vanilla + SOP Grenade Launchers
+	DOTT_tracker_attachedGLs = ["M203", "M320", "GP-25", "PBG", "AG36", "VHS-BG", "3GL", "EGLM", "KGL"];
 };
 
 

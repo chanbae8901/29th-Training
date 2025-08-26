@@ -38,14 +38,15 @@ TBD
 
 ---
 v4.2.1  
-24 AUG 2025
+26 AUG 2025
 
 ---
 
 - Insignia now only overwritten for Clerk or Sniper if they don't have one
 - Fixed incorrect xml check for Company and Battalion unit.
 - Javelin can now lock on without thermal if thermals are disabled.
-- Weapon/vehicle used will now show up in Event Log. Adds fn_getWeapon and fn_weaponToNum.
+- Weapon/vehicle used will now show up in Event Log. Names may be simplified and SOP GLs are explicitly shown as weapons.
+  Adds fn_getWeapon and fn_weaponToNum.
 - Fix kill not being credited if the instigator died before the unit finally died (typically from bleeding out or respawning).
 - Team scores should no longer show up on UI. (Independent side start with -9999 score now).
 - Fix initial joiners sometimes not spawning in with parade kit. (Return of handleInitialInventory from archives)

@@ -1,7 +1,7 @@
 /*
  * Name:	fnc_setInsignia
- * Date:	7/26/2025
- * Version: 1.1
+ * Date:	8/26/2025
+ * Version: 1.2
  * Author:  Bae [29th ID] modified from Hill [29th ID]
  *
  * Description:

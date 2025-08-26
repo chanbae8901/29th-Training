@@ -1,3 +1,23 @@
+/*
+ * Name:	fnc_getWeapon
+ * Date:	8/26/2025
+ * Version: 1.0
+ * Author:  Bae [29th ID]
+ *
+ * Description:
+ * Attempts to find the weapon/vehicle that was used by the instigator.
+ *
+ * Parameter(s): 
+ * [_projectile, _instigator] reference HandleDamage event.
+ *
+ * Returns:
+ * Best guess of the weapon/vehicle that was used by the instigator. 
+ *
+ * Example:
+ * [_projectile, _instigator] call DOTT_tracker_fnc_getWeapon;
+ * 
+ */
+
 params["_projectile", "_instigator"];
 if (_projectile == "") exitWith { DOTT_tracker_lastInstigatorWeapon };
 //not in vehicle
