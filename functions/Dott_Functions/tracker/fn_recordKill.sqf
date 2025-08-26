@@ -69,7 +69,8 @@ if !(isNull _instigator) then
 	_killInfo pushBack [_instigatorName, side (group _instigator)];
 	private _distance = round (_unit distance _instigator);
 	_killInfo pushBack _distance;
-	_killInfo pushBack DOTT_tracker_lastInstigatorWeapon;
+	if(_unit isKindOf "Man") then { _killInfo pushBack DOTT_tracker_lastInstigatorWeapon }
+	else { _killInfo pushBack (["B_20mm", _instigator] call DOTT_tracker_fnc_getWeapon) };
 };
 
 _event pushBack _killInfo;
