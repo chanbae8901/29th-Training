@@ -34,12 +34,14 @@ if (_state) then
 	private _instigator = [_unit, _unit, objNull] call DOTT_tracker_fnc_findInstigator;
 	if (!isNull _instigator) then 
 	{
-		_eventInfo pushBack [name _instigator, side (group _instigator)];
-		private _distance = round (_unit distance _instigator);
-		_eventInfo pushBack _distance;
-		_eventInfo pushBack DOTT_tracker_lastInstigatorWeapon;
-
-		DOTT_tracker_backupInstigatorName = name _instigator;
+		private _instigatorName = _unit getVariable ["DOTT_tracker_backupInstigatorName", nil];
+		if (!isNil {_instigatorName}) then 
+		{		
+			_eventInfo pushBack [_instigatorName, side (group _instigator)];
+			private _distance = _unit getVariable ["DOTT_tracker_lastDistance", 0];
+			_eventInfo pushBack _distance;
+			_eventInfo pushBack (_unit getVariable ["DOTT_tracker_lastInstigatorWeapon", "Unknown"]);
+		};
 	};
 };
 

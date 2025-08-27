@@ -8,18 +8,18 @@
  * Attempts to find the weapon/vehicle that was used by the instigator.
  *
  * Parameter(s): 
- * [_projectile, _instigator] reference HandleDamage event.
+ * [_unit, _projectile, _instigator] reference HandleDamage event.
  *
  * Returns:
  * (String) Best guess of the weapon/vehicle that was used by the instigator. 
  *
  * Example:
- * [_projectile, _instigator] call DOTT_tracker_fnc_getWeapon;
+ * [_unit, _projectile, _instigator] call DOTT_tracker_fnc_getWeapon;
  * 
  */
 
-params["_projectile", "_instigator"];
-if (_projectile == "") exitWith { DOTT_tracker_lastInstigatorWeapon };
+params["_unit", "_projectile", "_instigator"];
+if (_projectile == "") exitWith { _unit getVariable "DOTT_tracker_lastInstigatorWeapon" };
 //not in vehicle
 if (vehicle _instigator isEqualTo _instigator) then 
 {
@@ -52,5 +52,7 @@ if (vehicle _instigator isEqualTo _instigator) then
 	};
 } else
 {
-	getText(configFile >> "CfgVehicles" >> typeOf (vehicle _instigator) >> "displayName")
+	private _vicText = getText(configFile >> "CfgVehicles" >> typeOf (vehicle _instigator) >> "displayName");
+	if (_vicText == "") then {_vicText = typeOf (vehicle _instigator)};
+	_vicText
 };

@@ -42,21 +42,14 @@ if (isServer) then
 		} 
 	] call CBA_fnc_addEventHandler;
 
-	// --- Vehicle Kill --- //	
-	addMissionEventHandler ["EntityKilled", 
-	{
-		params ["_unit", "_killer", "_instigator"];
-		if (!(_unit isKindOf "AllVehicles") || (_unit isKindOf "Man")) exitWith {};
-		[_unit, _killer, _instigator] call DOTT_tracker_fnc_recordKill;
-	}];
-
 	// --- Tracker Diary --- //
 	[
 		"DOTT_round_ended",
 		{
 			DOTT_tracker_startTime = -1;
 			publicVariable "DOTT_tracker_startTime";
-			[] spawn {
+			[] spawn 
+			{
 				uiSleep 3; //wait for last events to arrive
 
 				//can be out of order due to delaying ACE Unconsious send or due to latency
@@ -106,10 +99,6 @@ if (isServer) then
 if (hasInterface) then 
 {
 	// --- Infantry Kill --- //	
-	DOTT_tracker_backupInstigatorName = "Unknown";
-	DOTT_tracker_lastNonNullInstigator = nil;
-	DOTT_tracker_lastInstigatorWeapon = "Unknown";
-
 	[] spawn 
 	{
 		waitUntil {!isNull player};
@@ -120,19 +109,43 @@ if (hasInterface) then
 		}];
 		player addEventHandler ["Respawn", 
 		{
-			DOTT_tracker_backupInstigatorName = "Unknown";
-			DOTT_tracker_lastNonNullInstigator = nil;	
-			DOTT_tracker_lastInstigatorWeapon = "Unknown";					
+			params ["_unit", "_corpse"];
+			_unit setVariable ["DOTT_tracker_backupInstigatorName", nil];
+			_unit setVariable ["DOTT_tracker_lastNonNullInstigator", nil];	
+			_unit setVariable ["DOTT_tracker_lastInstigatorWeapon", nil];
+			_unit setVariable ["DOTT_tracker_lastDistance", nil];												
 		}];	
 		player addEventHandler ["HandleDamage", 
 		{
+			private _unit = _this select 0;
 			private _projectile = _this select 4;
 			private _instigator = _this select 6;
+
+			if (player != _unit) exitWith 
+			{
+				_unit removeEventHandler ["HandleDamage", _thisEventHandler];
+				nil
+			}; 
+
 			if (!isNull _instigator) then 
-			{ 
-				DOTT_tracker_lastNonNullInstigator =  _instigator;
-				DOTT_tracker_lastInstigatorWeapon = [_projectile, _instigator] call DOTT_tracker_fnc_getWeapon;
+			{
+				private _instigatorName = "";
+				//if unit is not man then name does not work properly
+				if (_instigator isKindOf "Man") then 
+				{
+					_instigatorName = name _instigator;
+				} else 
+				{
+					_instigatorName = getText (configFile >> "CfgVehicles" >> typeOf _instigator >> "displayName");
+					if (_instigatorName == "") then {_instigatorName = "Vehicle"}; 
+				};
+				_unit setVariable ["DOTT_tracker_backupInstigatorName", _instigatorName];					 
+				_unit setVariable ["DOTT_tracker_lastNonNullInstigator", _instigator];
+				_unit setVariable ["DOTT_tracker_lastInstigatorWeapon", [_unit, _projectile, _instigator] call DOTT_tracker_fnc_getWeapon];
+				_unit setVariable ["DOTT_tracker_lastDistance", round (_unit distance _instigator)];
 			};	
+
+			nil
 		}];		
 
 	};
@@ -154,6 +167,150 @@ if (hasInterface) then
 	//Vanilla + SOP Grenade Launchers
 	DOTT_tracker_attachedGLs = ["M203", "M320", "GP-25", "PBG", "AG36", "VHS-BG", "3GL", "EGLM", "KGL"];
 };
+
+//Both server and client
+
+// --- Vehicle Kill --- //	
+addMissionEventHandler ["EntityKilled", 
+{
+	params ["_unit", "_killer", "_instigator"];
+	if (!local _unit) exitWith {};
+	if (!(_unit isKindOf "AllVehicles") || (_unit isKindOf "Man")) exitWith {};
+	[_unit, _killer, _instigator] call DOTT_tracker_fnc_recordKill;
+}];
+
+
+addMissionEventHandler ["EntityCreated", 
+{
+	params ["_entity"];
+	if (_entity isKindOf "AllVehicles" && !(_entity isKindOf "Man")) then 
+	{
+		_entity addEventHandler ["HandleDamage", 
+		{
+			private _unit = _this select 0;
+			private _projectile = _this select 4;
+			private _instigator = _this select 6;
+
+			if (!alive _unit) exitWith 
+			{
+				_unit removeEventHandler ["HandleDamage", _thisEventHandler];
+				nil
+			}; 
+
+			if (!isNull _instigator) then 
+			{
+				private _instigatorName = "";
+				//if unit is not man then name does not work properly
+				if (_instigator isKindOf "Man") then 
+				{
+					_instigatorName = name _instigator;
+				} else 
+				{
+					_instigatorName = getText (configFile >> "CfgVehicles" >> typeOf _instigator >> "displayName");
+					if (_instigatorName == "") then {_instigatorName = "Vehicle"}; 
+				};
+				_unit setVariable ["DOTT_tracker_backupInstigatorName", _instigatorName];					 
+				_unit setVariable ["DOTT_tracker_lastNonNullInstigator", _instigator];
+				_unit setVariable ["DOTT_tracker_lastInstigatorWeapon", [_unit, _projectile, _instigator] call DOTT_tracker_fnc_getWeapon];
+				_unit setVariable ["DOTT_tracker_lastDistance", round (_unit distance _instigator)];				
+			};		
+			nil
+		}];	
+		_entity addEventHandler ["Local", {
+			params ["_entity", "_isLocal"];
+			if (_isLocal) exitWith {};
+
+			private _backupName = _entity getVariable ["DOTT_tracker_backupInstigatorName", nil];
+			if (!isNil "_backupName") then
+			{
+				_entity setVariable ["DOTT_tracker_backupInstigatorName", _backupName, owner _entity];
+			};
+
+			private _lastInstigator = _entity getVariable ["DOTT_tracker_lastNonNullInstigator", nil];
+			if (!isNil "_lastInstigator") then 
+			{
+				_entity setVariable ["DOTT_tracker_lastNonNullInstigator", _lastInstigator, owner _entity];
+			};
+
+			private _lastWeapon = _entity getVariable ["DOTT_tracker_lastInstigatorWeapon", nil];
+			if (!isNil "_lastWeapon") then
+			{
+				_entity setVariable ["DOTT_tracker_lastInstigatorWeapon", _lastWeapon, owner _entity];
+			};		
+
+			private _lastDistance = _entity getVariable ["DOTT_tracker_lastDistance", nil];
+			if (!isNil "_lastDistance") then
+			{
+				_entity setVariable ["DOTT_tracker_lastDistance", _lastDistance, owner _entity];	
+			};			
+		}];				
+	};
+}];
+
+{
+	if !(_x isKindOf "Man") then 
+	{
+		_x addEventHandler ["HandleDamage", 
+		{
+			private _unit = _this select 0;
+			private _projectile = _this select 4;
+			private _instigator = _this select 6;
+
+			if (!alive _unit) exitWith 
+			{
+				_unit removeEventHandler ["HandleDamage", _thisEventHandler];
+				nil
+			}; 
+
+			if (!isNull _instigator) then 
+			{
+				private _instigatorName = "";
+				//if unit is not man then name does not work properly
+				if (_instigator isKindOf "Man") then 
+				{
+					_instigatorName = name _instigator;
+				} else 
+				{
+					_instigatorName = getText (configFile >> "CfgVehicles" >> typeOf _instigator >> "displayName");
+					if (_instigatorName == "") then {_instigatorName = "Vehicle"}; 
+				};
+				_unit setVariable ["DOTT_tracker_backupInstigatorName", _instigatorName];					 
+				_unit setVariable ["DOTT_tracker_lastNonNullInstigator", _instigator];
+				_unit setVariable ["DOTT_tracker_lastInstigatorWeapon", [_unit, _projectile, _instigator] call DOTT_tracker_fnc_getWeapon];
+				_unit setVariable ["DOTT_tracker_lastDistance", round (_unit distance _instigator)];
+			};	
+			nil
+		}];		
+		_x addEventHandler ["Local", {
+			params ["_entity", "_isLocal"];
+			if (_isLocal) exitWith {};
+
+			private _backupName = _entity getVariable ["DOTT_tracker_backupInstigatorName", nil];
+			if (!isNil "_backupName") then
+			{
+				_entity setVariable ["DOTT_tracker_backupInstigatorName", _backupName, owner _entity];
+			};
+
+			private _lastInstigator = _entity getVariable ["DOTT_tracker_lastNonNullInstigator", nil];
+			if (!isNil "_lastInstigator") then 
+			{
+				_entity setVariable ["DOTT_tracker_lastNonNullInstigator", _lastInstigator, owner _entity];
+			};
+
+			private _lastWeapon = _entity getVariable ["DOTT_tracker_lastInstigatorWeapon", nil];
+			if (!isNil "_lastWeapon") then
+			{
+				_entity setVariable ["DOTT_tracker_lastInstigatorWeapon", _lastWeapon, owner _entity];
+			};
+
+			private _lastDistance = _entity getVariable ["DOTT_tracker_lastDistance", nil];
+			if (!isNil "_lastDistance") then
+			{
+				_entity setVariable ["DOTT_tracker_lastDistance", _lastDistance, owner _entity];	
+			};
+		}];
+	};
+} forEach allMissionObjects "AllVehicles";
 
 
 
