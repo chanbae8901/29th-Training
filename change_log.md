@@ -56,6 +56,7 @@ v4.2.1
 - Fixed bug where !rearm would apply admin loadout to all players.
 - Fix for countdown timer not showing up until a sector has been placed down.
 - Fix weapon being pulled out after leaving arsenal after delay. (For the officers)
+- To prevent things breaking, player now invincible until fully loaded in when joining.
 
 ---
 v4.2.0  

@@ -48,7 +48,7 @@ if(_didJIP) then
 };
 
 //sometimes parade respawn loadout not set fast enough for initial join
-if(!_didJIP) then { [_theClient] call Hill_fnc_handleInitialInventory };
+if(!_didJIP) then { [_theClient] spawn Hill_fnc_handleInitialInventory };
 
 [_theClient] execVM "scripts\player_arsenal_handlers.sqf";
 
@@ -97,6 +97,13 @@ execVM "scripts\init_curators.sqf";
 [] execVM "module_chatIntercept\init.sqf";
 
 [] spawn DOTT_fnc_initDefaultLoadouts;
+
+//things break if player dies before load in finished
+player allowDamage false;
+addMissionEventHandler ["PreloadFinished", {
+	player allowDamage true;
+	removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
+}];
 
 //Prevent respawn showing up on old unit for split second.
 //Might be inconsistent if bad network conditions (theory)

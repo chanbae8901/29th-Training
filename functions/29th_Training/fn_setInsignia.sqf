@@ -54,7 +54,7 @@ if(!isClass (configFile >> "CfgPatches" >> "29th_Insignias")) exitWith
 	false;
 };
 
-waitUntil {sleep .5; !isNull _target && _target == _target && alive _target};
+waitUntil {sleep .5; !isNull _target && alive _target};
 
 private ["_sqdParams", "_targetRole", "_targetSquad", "_foundInsignias", "_targetInsignia", "_curInsignia"];
 
