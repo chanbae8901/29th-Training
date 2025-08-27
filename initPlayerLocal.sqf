@@ -105,5 +105,5 @@ addMissionEventHandler ["EntityCreated",
 	params["_entity"];
 	if (!(_entity isKindOf "Man") || local _entity) exitWith {};
 	_entity hideObject true;
-	[{ (_this select 0) hideObject false }, [_entity], 0.2] call CBA_fnc_waitAndExecute;
+	[{ (_this select 0) hideObject false }, [_entity], 0.5] call CBA_fnc_waitAndExecute; //.2 was too short sometimes
 }];

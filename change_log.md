@@ -53,6 +53,7 @@ v4.2.1
 - Unconscious events close to death events will no longer be reported.
 - New method to find out last damage source. Should help credit explosive uncon/kills better.
 - Round histories are no longer lost when going back to lobby/disconnecting. Adds fn_sendAll.
+- Fixed bug where !rearm would apply admin loadout to all players.
 
 ---
 v4.2.0  
