@@ -40,7 +40,7 @@ switch (_damageType) do
 		//ace fragmentation can come from many sources, so default to last known weapon
 		if ((_projectile find "ace_frag") == 0) exitWith { _weaponText = _unit getVariable "DOTT_tracker_lastInstigatorWeapon" };
 
-		if (count (getArray (_cfg >> "ace_grenades_pullPinSound")) > 0) then { "Grenade" }
+		if (count (getArray (_cfg >> "ace_grenades_pullPinSound")) > 0) then { _weaponText = "Grenade" }
 		else 
 		{ 
 			_weaponText = getText (configFile >> "CfgWeapons" >> currentWeapon _instigator >> "displayName");
@@ -49,7 +49,7 @@ switch (_damageType) do
 			}
 			forEach DOTT_tracker_attachedGLs;
 
-			_weaponText = _weaponText + " GL";
+			if (_weaponText find "GL" == -1) then {_weaponText = _weaponText + " GL"};
 		}
 	};
 	case "explosive":
@@ -115,6 +115,8 @@ switch (_damageType) do
 				_weaponText = getText (configFile >> "CfgWeapons" >> currentWeapon _instigator >> "displayName");
 				private _pos = _weaponText find " (";
 				if (_pos != -1) then { _weaponText = _weaponText select [0, _pos] };
+				_pos = _weaponText find " GL";
+				if (_pos != -1) then { _weaponText = _weaponText select [0, _pos] };				
 			};				
 		}
 	};		
@@ -126,6 +128,8 @@ switch (_damageType) do
 		_weaponText = getText (configFile >> "CfgWeapons" >> currentWeapon _instigator >> "displayName");
 		private _pos = _weaponText find " (";
 		if (_pos != -1) then { _weaponText = _weaponText select [0, _pos] };
+		_pos = _weaponText find " GL";
+		if (_pos != -1) then { _weaponText = _weaponText select [0, _pos] };		
 	};
 };
 

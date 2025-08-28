@@ -168,7 +168,7 @@ if (hasInterface) then
 	}];
 
 	//Vanilla + SOP Grenade Launchers
-	DOTT_tracker_attachedGLs = ["M203", "M320", "GP-25", "PBG", "AG36", "VHS-BG", "3GL", "EGLM", "KGL"];
+	DOTT_tracker_attachedGLs = ["M203", "M320", "GP-25", "PBG", "AG36", "VHS-BG", "3GL", "EGLM", "KGL", "GL"];
 };
 
 //Both server and client
