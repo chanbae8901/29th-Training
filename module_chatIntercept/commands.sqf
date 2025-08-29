@@ -262,7 +262,7 @@ pvpfw_chatIntercept_allCommands = [
 			_argument = _this select 0;
 			if (_argument isEqualTo "") exitWith
 			{
-				[[resetLoadout], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
+				[{ [resetLoadout] spawn DOTT_fnc_flexibleReset }] remoteExec ["call"];
 				systemChat "Rearming all players!";
 			};
 			_argument = toLower _argument;
@@ -396,7 +396,7 @@ pvpfw_chatIntercept_allCommands = [
 	[
 		"parade",
 		{
-			[player, 125] spawn DOTT_fnc_forceParade;
+			[player, 125] spawn DOTT_fnc_forceParadeAll;
 		}
 	]
 ];

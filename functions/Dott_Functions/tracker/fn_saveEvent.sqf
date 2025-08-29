@@ -39,7 +39,9 @@ switch (_eventType) do
 			private _instigator = _eventInfo select 2;
 			private _instigatorName = _instigator select 0;
 			private _instigatorSide = _instigator select 1;
+			private _weaponName = _eventInfo select 4;			
 			_eventInfo set [2, [_instigatorName, _instigatorSide, _eventTime] call DOTT_tracker_fnc_nameToNum];
+			_eventInfo set [4, [_weaponName] call DOTT_tracker_fnc_weaponToNum];			
 		};
 	};
 	
@@ -54,7 +56,9 @@ switch (_eventType) do
 			private _instigator = _eventInfo select 1;
 			private _instigatorName = _instigator select 0;
 			private _instigatorSide = _instigator select 1;
+			private _weaponName = _eventInfo select 3;
 			_eventInfo set [1, [_instigatorName, _instigatorSide, _eventTime] call DOTT_tracker_fnc_nameToNum];
+			_eventInfo set [3, [_weaponName] call DOTT_tracker_fnc_weaponToNum];			
 		};
 	};
 	case VEHICLE_KILL_NUM: 
@@ -68,7 +72,9 @@ switch (_eventType) do
 			private _instigator = _eventInfo select 1;
 			private _instigatorName = _instigator select 0;
 			private _instigatorSide = _instigator select 1;
+			private _weaponName = _eventInfo select 3;			
 			_eventInfo set [1, [_instigatorName, _instigatorSide, _eventTime] call DOTT_tracker_fnc_nameToNum];
+			_eventInfo set [3, [_weaponName] call DOTT_tracker_fnc_weaponToNum];			
 		};
 	};
 };

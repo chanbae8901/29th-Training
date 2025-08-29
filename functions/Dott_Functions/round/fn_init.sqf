@@ -34,6 +34,39 @@ if (isServer) then
 	publicVariable "timerLength";
 	publicVariable "overtimeEnabled";
 	publicVariable "overtimePeriod";
+	
+	// --- Fix to have countdown ui always show up --- //
+	[] spawn {
+		private _moduleGroup = createGroup sideLogic; 
+		private _sector =  _moduleGroup createUnit [ "ModuleSector_F",
+			[0,0,0], [], 0, "NONE" ];
+		[_sector] call BIS_fnc_moduleSector;
+		_sector setVariable ["sides", [west, east, resistance], true];
+		["BIS_fnc_moduleSector_nameID",-1] call bis_fnc_counter; 
+		waituntil {!isnil "bis_fnc_init"};
+		sleep 2;
+		deleteVehicle _sector;
+		deleteGroup _moduleGroup;
+	}; 
+
+	//prevent scores showing up on right side UI
+	[
+		"DOTT_round_started",
+		{
+			west addScoreSide -9999;
+			east addScoreSide -9999;
+			independent addScoreSide -9999;							
+		} 
+	] call CBA_fnc_addEventHandler;	
+
+	[
+		"DOTT_round_ended",
+		{
+			west addScoreSide 9999;
+			east addScoreSide 9999;
+			independent addScoreSide 9999;							
+		} 
+	] call CBA_fnc_addEventHandler;	
 };
 
 if (hasInterface) then

@@ -32,6 +32,7 @@ enableEnvironment [false, true];
 		{
 			[] spawn Hill_fnc_noThermals;
 		}] call CBA_fnc_addPlayerEventHandler;
+		ace_javelin_ignoreVisionMode = true;
 	};
 };
 
@@ -45,6 +46,9 @@ if(_didJIP) then
 		[_theClient] execVM "scripts\checkCuratorAssignment.sqf";
 	};
 };
+
+
+[_theClient] spawn Hill_fnc_handleInitialInventory;
 
 [_theClient] execVM "scripts\player_arsenal_handlers.sqf";
 
@@ -94,6 +98,13 @@ execVM "scripts\init_curators.sqf";
 
 [] spawn DOTT_fnc_initDefaultLoadouts;
 
+//things break if player dies before load in finished
+player allowDamage false;
+addMissionEventHandler ["PreloadFinished", {
+	player allowDamage true;
+	removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
+}];
+
 //Prevent respawn showing up on old unit for split second.
 //Might be inconsistent if bad network conditions (theory)
 addMissionEventHandler ["EntityCreated", 
@@ -101,5 +112,5 @@ addMissionEventHandler ["EntityCreated",
 	params["_entity"];
 	if (!(_entity isKindOf "Man") || local _entity) exitWith {};
 	_entity hideObject true;
-	[{ (_this select 0) hideObject false }, [_entity], 0.2] call CBA_fnc_waitAndExecute;
+	[{ (_this select 0) hideObject false }, [_entity], 0.5] call CBA_fnc_waitAndExecute; //.2 was too short sometimes
 }];

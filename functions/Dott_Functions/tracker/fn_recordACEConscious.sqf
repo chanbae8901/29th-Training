@@ -1,7 +1,7 @@
 /*
  * Name:	fnc_recordACEConscious
- * Date:	8/18/2025
- * Version: 1.0
+ * Date:	8/26/2025
+ * Version: 1.1
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -34,13 +34,27 @@ if (_state) then
 	private _instigator = [_unit, _unit, objNull] call DOTT_tracker_fnc_findInstigator;
 	if (!isNull _instigator) then 
 	{
-		_eventInfo pushBack [name _instigator, side (group _instigator)];
-		private _distance = round (_unit distance _instigator);
-		_eventInfo pushBack _distance;
+		private _instigatorName = _unit getVariable ["DOTT_tracker_backupInstigatorName", nil];
+		if (!isNil {_instigatorName}) then 
+		{		
+			_eventInfo pushBack [_instigatorName, side (group _instigator)];
+			private _distance = _unit getVariable ["DOTT_tracker_lastDistance", 0];
+			_eventInfo pushBack _distance;
+			_eventInfo pushBack (_unit getVariable ["DOTT_tracker_lastInstigatorWeapon", "Unknown"]);
+		};
 	};
 };
 
 private _event = [ACE_CONSCIOUSNESS_NUM, _timeStamp, _eventInfo];
-[_event] remoteExec ["DOTT_tracker_fnc_saveEvent", 2]; 
+
+//don't report unconscious close to death to reduce events
+DOTT_tracker_deathCloseToUnconscious = false;
+[_event] spawn {
+	params["_event"];
+	uisleep 2;
+	if (DOTT_tracker_deathCloseToUnconscious) exitWith {}; 
+	[_event] remoteExec ["DOTT_tracker_fnc_saveEvent", 2]; 
+};
+
 
 true

@@ -1,7 +1,7 @@
 /*
  * Name:	fnc_setInsignia
- * Date:	7/26/2025
- * Version: 1.1
+ * Date:	8/26/2025
+ * Version: 1.2
  * Author:  Bae [29th ID] modified from Hill [29th ID]
  *
  * Description:
@@ -22,16 +22,16 @@
 // === Insignia Map ===
 //alternate non-combat version as second element in value 
 private _insigniaMap = createHashMapFromArray [
-    ["Bn. HQ",   ["BnHQ"]],
-    ["C HQ",     ["CoHQdrab", "CoHQ"]],
-    ["CP1 HQ",   ["CP1drab", "CP1"]],
-    ["CP2 HQ",   ["CP2drab", "CP2"]],
-    ["CP1S1",    ["CP1S1"]],
-    ["CP1S2",    ["CP1S2", "CP1S2colour"]],
-    ["CP1S3",    ["CP1S3"]],
-    ["CP2S1",    ["CP2S1"]],
-    ["CP2S2",    ["CP2S2drab", "CP2S2"]],
-    ["CP2S3",    ["CP2S3"]]
+    ["1st Bn. HQ",     ["BnHQ"]],
+    ["Charlie Co. HQ", ["CoHQdrab", "CoHQ"]],
+    ["CP1 HQ",         ["CP1drab", "CP1"]],
+    ["CP2 HQ",         ["CP2drab", "CP2"]],
+    ["CP1S1",          ["CP1S1"]],
+    ["CP1S2",          ["CP1S2", "CP1S2colour"]],
+    ["CP1S3",          ["CP1S3"]],
+    ["CP2S1",          ["CP2S1"]],
+    ["CP2S2",          ["CP2S2drab", "CP2S2"]],
+    ["CP2S3",          ["CP2S3"]]
 ];
 
 params[["_target", objNull, [objNull]]];
@@ -54,22 +54,23 @@ if(!isClass (configFile >> "CfgPatches" >> "29th_Insignias")) exitWith
 	false;
 };
 
-waitUntil {sleep .5; !isNull _target && _target == _target && alive _target};
+waitUntil {sleep .5; !isNull _target && alive _target};
 
-private ["_sqdParams", "_targetSquad", "_foundInsignias", "_targetInsignia", "_curInsignia"];
+private ["_sqdParams", "_targetRole", "_targetSquad", "_foundInsignias", "_targetInsignia", "_curInsignia"];
 
 _sqdParams = squadParams _target;
 if (count _sqdParams == 0) exitWith 
 {
 	["squad.xml info not found."] call BIS_fnc_error; false;
 };
+
 // get squad string stored in membericq
 _targetSquad = ((_sqdParams select 1) select 4);
 _foundInsignias = _insigniaMap getOrDefault [_targetSquad,[]];
 
 if (count _foundInsignias == 0) exitWith
 {
-    ["Insignia matching %1 not found", _targetSquad] call BIS_fnc_error;
+    //["Insignia matching %1 not found", _targetSquad] call BIS_fnc_error; //Can be from other company, don't throw error
     false;
 };
 //default to only/combat variant
@@ -86,6 +87,13 @@ if (count _foundInsignias == 2) then
 };
 
 _curInsignia = _target call BIS_fnc_getUnitInsignia;
+
+//don't replace Clerk or Sniper Insignia if they already have one, so they can use their squad insignia
+_targetRole = ((_sqdParams select 1) select 5);
+if (_targetRole find "Clerk" != -1 || _targetRole find "Sniper" != -1) then {
+	if (_curInsignia != "") exitWith {}; 
+};
+
 if(_curInsignia != _targetInsignia && _curInsignia != "") then 
 {
 	systemChat ("Insignia swapped to " + _targetInsignia + ".");

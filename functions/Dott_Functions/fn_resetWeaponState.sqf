@@ -27,18 +27,18 @@ if (_bino == "") then
 {
 	private _defaultBino = "Binocular"; 
 	
-	_unit addWeapon _defaultBino;
+	_unit addWeapon [_defaultBino, false];
 	uiSleep 0.05;
 	
-	_unit removeWeapon _defaultBino;
+	_unit removeWeapon [_defaultBino, false];
 } else 
 {
 	private _attachments = binocularItems _unit;
 	private _binoMags = binocularMagazine _unit;
 
-	_unit removeWeapon _bino;
+	_unit removeWeapon [_bino, false];
 	waitUntil { uiSleep 0.1; !isSwitchingWeapon _unit };
-	_unit addWeapon _bino;
+	_unit addWeapon [_bino, false];
 
 	{
 		_unit addBinocularItem _x;

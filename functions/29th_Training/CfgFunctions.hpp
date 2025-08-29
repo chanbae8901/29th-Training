@@ -11,7 +11,7 @@ class 29th_Training {
     class arsenalClosed {};
     class removeRadio {};
     class assignCurator {};
-    //class handleInitialInventory {};    
+    class handleInitialInventory {};    
     //class randomizeRadioHz {};
     //class removeAllRespawnInventory {};    
   };

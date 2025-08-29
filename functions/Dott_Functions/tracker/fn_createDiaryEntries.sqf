@@ -1,7 +1,7 @@
 /*
  * Name:	fnc_createDiaryEntries
- * Date:	8/18/2025
- * Version: 1.0
+ * Date:	8/26/2025
+ * Version: 1.1
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -27,12 +27,14 @@
  */
 #include "eventNumbers.hpp"
 if (!hasInterface) exitWith {};
-params["_events", "_names", "_sides", "_roundNum"];
+params["_events", "_names", "_sides", "_weapons", "_roundNum"];
+
+waitUntil {DOTT_tracker_last_round_Recorded == (_roundNum - 1)};
 
 if !(player diarySubjectExists "RoundEventLog") then 
 {
     player createDiarySubject ["RoundEventLog", "Round Event Log"];
-    private _infoLines = ["All Events show every recorded event for each round."];
+    private _infoLines = ["All Events show every recorded event for each round. (Kills, Unconscious, Sector Captures)"];
     _infoLines pushBack "Personal Events shows events relevant to you, including if the people you knock unconscious regain consciousness or are killed.";
     _infoLines pushBack "Information is updated at the end of the round and is lost when aborting/disconnecting.";
     private _infoText = _infoLines joinString "<br />";
@@ -46,7 +48,7 @@ private _eventStrings = [];
 for "_i" from (_numEvents - 1) to 0 step -1 do 
 {
     private _event = _events select _i;
-    private _eventString = ([_event, _names, _sides] call DOTT_tracker_fnc_eventToString);
+    private _eventString = ([_event, _names, _sides, _weapons] call DOTT_tracker_fnc_eventToString);
     _eventStrings pushBack _eventString;
 };
 
@@ -95,5 +97,7 @@ _text = [_killCounts, _names] call DOTT_tracker_fnc_killCountsToString;
 _copyButton = format["<br /><execute expression='[""%1"",""%2""] call DOTT_tracker_fnc_copyRecordToClipboard;'>Copy to Clipboard</execute>", "RoundScoreboard", _title];
 _text = _text + _copyButton;
 player createDiaryRecord ["RoundScoreboard", [_title, _text]];
+
+DOTT_tracker_last_round_Recorded = _roundNum;
 
 true

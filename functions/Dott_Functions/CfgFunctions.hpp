@@ -12,6 +12,7 @@ class Dott_Functions
 		class resetWeaponState {};
 		class checkNonCombatLoadout {};
 		class forceParade {};
+		class forceParadeAll {};
 		class initDefaultLoadouts {};
 		class diag_log {};
 		class addDiaryRecord {};
@@ -57,6 +58,7 @@ class Dott_Tracker
 		class recordACEConscious {};
 		class findInstigator {};
 		class nameToNum {};
+		class weaponToNum {};
 		class createDiaryEntries {};
 		class colorNameWithSide {};
 		class getSideAtTime {};
@@ -64,5 +66,7 @@ class Dott_Tracker
 		class copyRecordToClipboard {};	
 		class getKillCounts {};	
 		class findPlayerEvents {};
+		class getWeapon {};
+		class sendAll {};
 	};
 };

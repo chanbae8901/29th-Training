@@ -37,6 +37,29 @@ TBD
 	- Included new class "FlagReturned"
 
 ---
+v4.2.1  
+26 AUG 2025
+
+---
+- Custom parade loadouts (mainly for officers) can be saved under ACE Arsenal as "Forced Parade". 
+  Player will load into this when joining instead and when Force Parade is used. Adds fn_forceParadeAll.
+- Weapon/vehicle used will now show up in Event Log. Names may be simplified and SOP GLs are explicitly shown as weapons.
+  Adds fn_getWeapon and fn_weaponToNum. 
+- Team scores should no longer show up on UI during round. (All sides have -9999 score added at beginning of round, reverted at end).
+- Round histories are no longer lost when going back to lobby/disconnecting. Adds fn_sendAll.   
+- Javelin can now lock on without thermal if thermals are disabled.
+- Unconscious events close to death events will no longer be reported.
+- Insignia now only overwritten for Clerk or Sniper if they don't have one
+- Fixed incorrect xml check for Company and Battalion unit.
+- Fix kill not being credited if the instigator died before the unit finally died (typically from bleeding out or respawning).
+- Fix initial joiners sometimes not spawning in with parade kit. (Return of handleInitialInventory from archives)
+- New method to find out last damage source. Should help credit explosive uncon/kills better.
+- Fixed bug where !rearm would apply admin loadout to all players.
+- Fix for countdown timer not showing up until a sector has been placed down.
+- Fix weapon being pulled out after leaving arsenal after delay.
+- To prevent things breaking, player now invincible until fully loaded in when joining.
+
+---
 v4.2.0  
 21 AUG 2025
 

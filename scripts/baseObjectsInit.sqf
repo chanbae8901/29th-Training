@@ -67,7 +67,7 @@ blu_ammo addAction [
     "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#3f8eff'>  Force Parade</t>", 
     {
         params ["_target"];
-        [_target, 125] call DOTT_fnc_forceParade;
+        [_target, 125] call DOTT_fnc_forceParadeAll;
     }, 
     nil, 
     1.4, 
