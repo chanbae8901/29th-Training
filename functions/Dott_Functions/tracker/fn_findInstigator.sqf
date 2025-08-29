@@ -45,9 +45,9 @@ if (_instigator isKindOf "AllVehicles") then
 	_instigator = [_instigator] call 
 	{
 		params["_instigator"];
-		if(alive(gunner _instigator))exitWith{gunner _instigator};
-		if(alive(commander _instigator))exitWith{commander _instigator};
-		if(alive(driver _instigator))exitWith{driver _instigator};
+		if(alive (gunner _instigator)) exitWith{ gunner _instigator };
+		if(alive (commander _instigator) )exitWith { commander _instigator };
+		if(alive (driver _instigator)) exitWith { driver _instigator };
 		effectiveCommander _instigator //if not in vehicle returns player unit
 	};
 };

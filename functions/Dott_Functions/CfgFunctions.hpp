@@ -57,6 +57,7 @@ class Dott_Tracker
 		class killCountsToString {};
 		class recordACEConscious {};
 		class findInstigator {};
+		class getInstigatorName {};
 		class nameToNum {};
 		class weaponToNum {};
 		class createDiaryEntries {};
@@ -67,6 +68,7 @@ class Dott_Tracker
 		class getKillCounts {};	
 		class findPlayerEvents {};
 		class getWeapon {};
+		class handleDamage {};
 		class sendAll {};
 	};
 };

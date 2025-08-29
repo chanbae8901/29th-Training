@@ -37,6 +37,16 @@ TBD
 	- Included new class "FlagReturned"
 
 ---
+v4.2.2  
+29 AUG 2025
+
+* Fixes for things that broke between 4.2.0 and 4.2.1
+  - Fix insignia not applying on join
+TODO:
+- Move gls to both server and client
+- Better ace vehicle death support
+- Manual respawning not crediting last attacker with kill
+---
 v4.2.1  
 26 AUG 2025
 

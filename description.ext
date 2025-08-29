@@ -6,8 +6,8 @@ class Header {
   maxPlayers = 182; //Total number of playable units placed in the editor including virtual entities
 };
 
-OnLoadName = "29th Training V4.2.1";
-briefingName = "29th Training V4.2.1";
+OnLoadName = "29th Training V4.2.2";
+briefingName = "29th Training V4.2.2";
 // =========================== Loading Screen
 Author = "29th Engineers";
 loadScreen =  "Pictures\116Inf InsigniaAlpha.paa";

@@ -119,36 +119,7 @@ if (hasInterface) then
 		}];	
 		player addEventHandler ["HandleDamage", 
 		{
-			private _unit = _this select 0;
-			private _source = _this select 3;
-			private _projectile = _this select 4;
-			private _instigator = _this select 6;
-
-			if (player != _unit) exitWith 
-			{
-				_unit removeEventHandler ["HandleDamage", _thisEventHandler];
-				nil
-			}; 
-			_instigator = [_unit, _source, _instigator] call DOTT_tracker_fnc_findInstigator;
-			if (!isNull _instigator) then 
-			{
-				private _instigatorName = "";
-				//if unit is not man then name does not work properly
-				if (_instigator isKindOf "Man") then 
-				{
-					_instigatorName = name _instigator;
-				} else 
-				{
-					_instigatorName = getText (configFile >> "CfgVehicles" >> typeOf _instigator >> "displayName");
-					if (_instigatorName == "") then {_instigatorName = "Vehicle"}; 
-				};
-				_unit setVariable ["DOTT_tracker_backupInstigatorName", _instigatorName];					 
-				_unit setVariable ["DOTT_tracker_lastNonNullInstigator", _instigator];
-				_unit setVariable ["DOTT_tracker_lastDistance", round (_unit distance _instigator)];
-			};	
-			_unit setVariable ["DOTT_tracker_lastInstigatorWeapon", [_unit, _projectile, _instigator] call DOTT_tracker_fnc_getWeapon];
-
-			nil
+			_this call DOTT_tracker_fnc_handleDamage;
 		}];		
 
 	};
@@ -190,37 +161,7 @@ addMissionEventHandler ["EntityCreated",
 	{
 		_entity addEventHandler ["HandleDamage", 
 		{
-			private _unit = _this select 0;
-			private _source = _this select 3;			
-			private _projectile = _this select 4;
-			private _instigator = _this select 6;
-
-			if (!alive _unit) exitWith 
-			{
-				_unit removeEventHandler ["HandleDamage", _thisEventHandler];
-				nil
-			}; 
-
-			_instigator = [_unit, _source, _instigator] call DOTT_tracker_fnc_findInstigator;
-			if (!isNull _instigator) then 
-			{
-				private _instigatorName = "";
-				//if unit is not man then name does not work properly
-				if (_instigator isKindOf "Man") then 
-				{
-					_instigatorName = name _instigator;
-				} else 
-				{
-					_instigatorName = getText (configFile >> "CfgVehicles" >> typeOf _instigator >> "displayName");
-					if (_instigatorName == "") then {_instigatorName = "Vehicle"}; 
-				};
-				_unit setVariable ["DOTT_tracker_backupInstigatorName", _instigatorName];					 
-				_unit setVariable ["DOTT_tracker_lastNonNullInstigator", _instigator];
-				_unit setVariable ["DOTT_tracker_lastDistance", round (_unit distance _instigator)];				
-			};
-			_unit setVariable ["DOTT_tracker_lastInstigatorWeapon", [_unit, _projectile, _instigator] call DOTT_tracker_fnc_getWeapon];
-
-			nil
+			_this call DOTT_tracker_fnc_handleDamage;
 		}];	
 		_entity addEventHandler ["Local", {
 			params ["_entity", "_isLocal"];
@@ -258,37 +199,7 @@ addMissionEventHandler ["EntityCreated",
 	{
 		_x addEventHandler ["HandleDamage", 
 		{
-			private _unit = _this select 0;
-			private _source = _this select 3;			
-			private _projectile = _this select 4;
-			private _instigator = _this select 6;
-
-			if (!alive _unit) exitWith 
-			{
-				_unit removeEventHandler ["HandleDamage", _thisEventHandler];
-				nil
-			}; 
-
-			_instigator = [_unit, _source, _instigator] call DOTT_tracker_fnc_findInstigator;
-			if (!isNull _instigator) then 
-			{
-				private _instigatorName = "";
-				//if unit is not man then name does not work properly
-				if (_instigator isKindOf "Man") then 
-				{
-					_instigatorName = name _instigator;
-				} else 
-				{
-					_instigatorName = getText (configFile >> "CfgVehicles" >> typeOf _instigator >> "displayName");
-					if (_instigatorName == "") then {_instigatorName = "Vehicle"}; 
-				};
-				_unit setVariable ["DOTT_tracker_backupInstigatorName", _instigatorName];					 
-				_unit setVariable ["DOTT_tracker_lastNonNullInstigator", _instigator];
-				_unit setVariable ["DOTT_tracker_lastDistance", round (_unit distance _instigator)];
-			};
-			_unit setVariable ["DOTT_tracker_lastInstigatorWeapon", [_unit, _projectile, _instigator] call DOTT_tracker_fnc_getWeapon];			
-
-			nil
+			_this call DOTT_tracker_fnc_handleDamage;
 		}];		
 		_x addEventHandler ["Local", {
 			params ["_entity", "_isLocal"];
