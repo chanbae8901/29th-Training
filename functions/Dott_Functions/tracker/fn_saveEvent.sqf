@@ -1,7 +1,7 @@
 /*
  * Name:	fnc_saveEvent
- * Date:	8/18/2025
- * Version: 1.0
+ * Date:	8/30/2025
+ * Version: 1.1
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -59,6 +59,24 @@ switch (_eventType) do
 			private _weaponName = _eventInfo select 3;
 			_eventInfo set [1, [_instigatorName, _instigatorSide, _eventTime] call DOTT_tracker_fnc_nameToNum];
 			_eventInfo set [3, [_weaponName] call DOTT_tracker_fnc_weaponToNum];			
+		};
+		//Remove unconscious close to death
+		private _afterTime = _eventTime - 2;
+		private _unitNum = _eventInfo select 0;
+		for "_i" from (count DOTT_tracker_events - 1) to 0 step -1 do 
+		{
+			private _pastEvent = DOTT_tracker_events select _i;
+			private _pastTime = _pastEvent select 1;
+			if (_pastTime < _afterTime) exitWith {};
+			private _pastType = _pastEvent select 0;
+			if (_pastType == ACE_CONSCIOUSNESS_NUM) then
+			{
+				private _pastUnitNum = (_pastEvent select 2) select 0;
+				if(_unitNum == _pastUnitNum) exitWith 
+				{
+					DOTT_tracker_events deleteAt _i;
+				};
+			};
 		};
 	};
 	case VEHICLE_KILL_NUM: 

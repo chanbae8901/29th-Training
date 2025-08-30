@@ -1,7 +1,7 @@
 /*
  * Name:	fnc_recordKill
- * Date:	8/26/2025
- * Version: 1.1
+ * Date:	8/30/2025
+ * Version: 1.2
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -23,49 +23,57 @@
 params ["_unit", "_killer", "_instigator"];
 if (DOTT_tracker_startTime == -1) exitWith { false };
 
-_instigator = [_unit, _killer, _instigator] call DOTT_tracker_fnc_findInstigator;
-
 private _timeStamp = round(serverTime - DOTT_tracker_startTime);
-
-if (_unit isKindOf "Man") then 
-{ DOTT_tracker_deathCloseToUnconscious = true };
 
 private _eventType = if (_unit isKindOf "Man") then {INFANTRY_KILL_NUM} else {VEHICLE_KILL_NUM};
 private _event = [_eventType, _timeStamp];
 
-private _unitName = "";
-//if unit is not man then name does not work properly
-if (_unit isKindOf "Man") then 
-{
-    _unitName = name _unit;
-} else 
-{
-	_unitName = getText (configFile >> "CfgVehicles" >> typeOf _unit >> "displayName");
-	if (_unitName == "") then {_unitName = "Vehicle"}; 
-};
+private _unitName = [_unit] call DOTT_tracker_fnc_getName;
 
 private _unitSide = side (group _unit); //need group since ACE3? sets dead men to CIV but not the group
 
 private _killInfo = [[_unitName, _unitSide]]; 
 
-if !(isNull _instigator) then 
+//[name, side, pos, weapon];
+private _instigatorInfo = _unit getVariable "DOTT_lastHit";
+
+//Player manual respawned without taking known damage
+if (isNil {_instigatorInfo} && _killer == _unit && isNull _instigator) exitWith { false }; 
+
+if !(isNil {_instigatorInfo}) then 
 {
-	private _instigatorName = name _instigator;
-	if (_instigatorName == "") then {_unit getVariable ["DOTT_tracker_backupInstigatorName", nil]};
-	if (!isNil {_instigatorName}) then 
+	_killInfo pushBack [_instigatorInfo select 0, _instigatorInfo select 1];
+	private _distance = round (_unit distance (_instigatorInfo select 2));		
+	_killInfo pushBack _distance;
+	_killInfo pushBack (_instigatorInfo select 3);
+} else 
+{
+	//Road kill check
+	if (isNull _instigator) then { _instigator = UAVControl objectParent _killer select 0 }; 
+	if (isNull _instigator) then { _instigator = _killer }; 
+	if (_instigator isKindOf "AllVehicles") then 
 	{
-		_killInfo pushBack [_instigatorName, side (group _instigator)];
-		private _distance = _unit getVariable ["DOTT_tracker_lastDistance", 0];
+		_instigator = [_instigator] call 
+		{
+			params["_instigator"];
+			if(alive (driver _instigator)) exitWith { driver _instigator };
+			effectiveCommander _instigator //if not in vehicle returns player unit
+		};
+	};
+	if (isPlayer [_instigator] && _unit != _instigator && !isNull (objectParent _instigator)) then
+	{
+		_killInfo pushBack [name _instigator, side (group _instigator)];
+		private _distance = round (_unit distance _instigator);		
 		_killInfo pushBack _distance;
-		_killInfo pushBack (_unit getVariable ["DOTT_tracker_lastInstigatorWeapon", "Unknown"]);
+		_killInfo pushBack "Roadkill";
 	};
 };
 
 _event pushBack _killInfo;
 
 //_event is now either
-//[[INFANTRY_KILL_NUM, _timeStamp, [[name _unit, side _unit], [name _instigator, side _instigator], _distance]]
+//[[INFANTRY_KILL_NUM, _timeStamp, [[name _unit, side _unit], [name _instigator, side _instigator], _distance, _weapon]]
 //[[INFANTRY_KILL_NUM, _timeStamp, [name _unit, side _unit]]
-[_event] remoteExec ["DOTT_tracker_fnc_saveEvent", 2];
+[_event] spawn DOTT_tracker_fnc_saveEvent;
 
 true

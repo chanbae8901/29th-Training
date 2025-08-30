@@ -1,7 +1,7 @@
 /*
  * Name:	fnc_recordACEConscious
- * Date:	8/26/2025
- * Version: 1.1
+ * Date:	8/30/2025
+ * Version: 1.2
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -25,36 +25,26 @@
 #include "eventNumbers.hpp"
 params["_unit", "_state"];
 if (DOTT_tracker_startTime == -1) exitWith { false };
-if (player != _unit) exitWith { false }; //we want this to run local to the unit
+if (!isPlayer _unit) exitWith { false };
 private _timeStamp = round(serverTime - DOTT_tracker_startTime);
 //need group since ACE3? sets unconscious men to CIV but not the group
 private _eventInfo = [[name _unit, side (group _unit)], _state];
 if (_state) then 
 {
-	private _instigator = [_unit, _unit, objNull] call DOTT_tracker_fnc_findInstigator;
-	if (!isNull _instigator) then 
+	//roadkill uncon not checked here, probably not worth the effort
+	//[name, side, pos, weapon];	
+	private _instigatorInfo = _unit getVariable "DOTT_lastHit";
+	if !(isNil {_instigatorInfo}) then 
 	{
-		private _instigatorName = _unit getVariable ["DOTT_tracker_backupInstigatorName", nil];
-		if (!isNil {_instigatorName}) then 
-		{		
-			_eventInfo pushBack [_instigatorName, side (group _instigator)];
-			private _distance = _unit getVariable ["DOTT_tracker_lastDistance", 0];
-			_eventInfo pushBack _distance;
-			_eventInfo pushBack (_unit getVariable ["DOTT_tracker_lastInstigatorWeapon", "Unknown"]);
-		};
+		_eventInfo pushBack [_instigatorInfo select 0, _instigatorInfo select 1];
+		private _distance = round (_unit distance (_instigatorInfo select 2));		
+		_eventInfo pushBack _distance;
+		_eventInfo pushBack (_instigatorInfo select 3);
 	};
 };
 
 private _event = [ACE_CONSCIOUSNESS_NUM, _timeStamp, _eventInfo];
 
-//don't report unconscious close to death to reduce events
-DOTT_tracker_deathCloseToUnconscious = false;
-[_event] spawn {
-	params["_event"];
-	uisleep 2;
-	if (DOTT_tracker_deathCloseToUnconscious) exitWith {}; 
-	[_event] remoteExec ["DOTT_tracker_fnc_saveEvent", 2]; 
-};
-
+[_event] spawn DOTT_tracker_fnc_saveEvent;
 
 true
