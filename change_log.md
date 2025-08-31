@@ -54,8 +54,9 @@ v4.2.2
 - Fix for when manually calling live during safe start countdown (when all teams are ready) 
   caused Timer Aborted to appear on screen.
 
-TODO:
-- Use that mission event handler to give zues back after logging out
+- Fix for when logging out of admin removed zeus even when in zeus slot. 
+  Moves checkCuratorAssignment from scripts folder to 29th_Training.
+
 ---
 v4.2.1  
 26 AUG 2025

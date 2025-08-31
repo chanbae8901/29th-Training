@@ -43,7 +43,7 @@ if(_didJIP) then
 	{
 		params ["_theClient"];
 		waitUntil { sleep 1; !isNull _theClient }; //most reliable way to call script early without it breaking
-		[_theClient] execVM "scripts\checkCuratorAssignment.sqf";
+		[_theClient] spawn Hill_fnc_checkCuratorAssignment;
 	};
 };
 
