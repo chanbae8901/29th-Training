@@ -38,9 +38,9 @@ private _killInfo = [[_unitName, _unitSide]];
 private _instigatorInfo = _unit getVariable "DOTT_lastHit";
 
 //Player manual respawned without taking known damage
-if (isNil {_instigatorInfo} && _killer == _unit && isNull _instigator) exitWith { false }; 
+if (isNil "_instigatorInfo" && _killer == _unit && isNull _instigator) exitWith { false }; 
 
-if !(isNil {_instigatorInfo}) then 
+if !(isNil "_instigatorInfo") then 
 {
 	_killInfo pushBack [_instigatorInfo select 0, _instigatorInfo select 1];
 	private _distance = round (_unit distance (_instigatorInfo select 2));		

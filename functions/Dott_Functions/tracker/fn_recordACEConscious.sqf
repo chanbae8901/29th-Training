@@ -34,7 +34,7 @@ if (_state) then
 	//roadkill uncon not checked here, probably not worth the effort
 	//[name, side, pos, weapon];	
 	private _instigatorInfo = _unit getVariable "DOTT_lastHit";
-	if !(isNil {_instigatorInfo}) then 
+	if !(isNil "_instigatorInfo") then 
 	{
 		_eventInfo pushBack [_instigatorInfo select 0, _instigatorInfo select 1];
 		private _distance = round (_unit distance (_instigatorInfo select 2));		

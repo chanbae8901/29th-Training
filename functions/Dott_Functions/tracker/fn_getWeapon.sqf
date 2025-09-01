@@ -9,16 +9,15 @@
  *
  * Parameter(s): 
  * [_weapon, _muzzle, _magazine, _ammo, _vehicle] reference FiredMan event.
+ * NOTE: For optimization, these are assumed to be assigned by the caller (assumed FiredMan event).
  *
  * Returns:
  * String
  *
  * Example:
- * [_weapon, _muzzle, _magazine, _ammo, _vehicle] call DOTT_tracker_fnc_getWeapon;
+ * call DOTT_tracker_fnc_getWeapon;
  * 
  */
-
-params["_weapon", "_muzzle", "_magazine", "_ammo", "_vehicle"];
 
 private _weaponName = "";
 
