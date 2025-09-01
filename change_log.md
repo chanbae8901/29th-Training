@@ -42,22 +42,23 @@ v4.2.2
 * Reworked Tracker System
   - Now entirely server side, and should accurately get weapon names without hardcoding needed.
   - Kills from vehicle weapon now have the weapon used alongside the vehicle.
-  - Kills from infantry weapons that use explosives now have the round used as well.
+    Also will have the ammo used if multiple available.
+  - Kills from infantry weapons that use explosives now have the round used as well. (Except RHS disposables)
   - Manual player respawns without taking known damage will no longer be recorded. 
   - AI killing players will no longer be recorded.
   - Removes findInstigator, handleDamage, renames getInstigatorName to getName
+  - Adds addEventHandlersUnit and projectileHit functions
 
 * Fixes for things that broke between 4.2.0 and 4.2.1
   - Fix insignia not applying on join
   - Fix manual respawning not crediting last attacker with kill 
 
-- Fix for when manually calling live during safe start countdown (when all teams are ready) 
-  caused Timer Aborted to appear on screen.
-
+- Fix for when manually calling live during safe start countdown (when all teams are ready) caused Timer Aborted to appear on screen.
 - Fix for when logging out of admin removed zeus even when in zeus slot. 
   Moves checkCuratorAssignment from scripts folder to 29th_Training.
-
+- Fix for admin login not properly granting Zeus if mission started without an admin.
 - Removed all remaining archive files.
+
 ---
 v4.2.1  
 26 AUG 2025

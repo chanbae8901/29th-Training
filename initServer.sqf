@@ -42,8 +42,14 @@ execVM "scripts\init_vehicle_settings.sqf";
 
 addMissionEventHandler ["OnUserAdminStateChanged", {
 	params ["_networkId", "_loggedIn"];
-	if (_loggedIn) exitWith {};
-	private _unit = (getUserInfo _networkId) select 10;
+	private _unit = (getUserInfo _networkId) select 10;	
+	if (_loggedIn) exitWith 
+	{
+		if (isNull getAssignedCuratorLogic _unit) then 
+		{ 
+			_unit assignCurator zeus_admin; 
+		};
+	};
 	[_unit] spawn {
 		params ["_unit"];
 		if (getAssignedCuratorLogic _unit == zeus_admin) then
