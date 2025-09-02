@@ -43,6 +43,7 @@ execVM "scripts\init_vehicle_settings.sqf";
 addMissionEventHandler ["OnUserAdminStateChanged", {
 	params ["_networkId", "_loggedIn"];
 	private _unit = (getUserInfo _networkId) select 10;	
+	if (isNil "_unit") exitWith {};
 	if (_loggedIn) exitWith 
 	{
 		if (isNull getAssignedCuratorLogic _unit) then 
