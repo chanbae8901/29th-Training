@@ -50,10 +50,9 @@ if (isNull _vehicle && _weapon == _muzzle) then
 	if (_pos != -1) then { _weaponName = _weaponName select [0, _pos] };
 };
 
-//if used explosive ammo also add that (ex. GL, AT)
-//or if vehicle weapon has multiple ammo choices
-if (getNumber (configFile >> "CfgAmmo" >> _ammo >> "explosive") > 0 ||
-	(!isNull _vehicle && count getArray(_weaponCfg >> "magazineWell") > 1)) then 
+if (getNumber (configFile >> "CfgAmmo" >> _ammo >> "explosive") > 0 || 
+	getText (configFile >> "CfgAmmo" >> _ammo >> "simulation") != "shotBullet" ||
+	getText (configFile >> "CfgAmmo" >> _ammo >> "weaponType") == "cannon") then 
 {
 	private _shortName = getText (configFile >> "CfgMagazines" >> _magazine >> "displayNameShort");
 	private _longName = getText (configFile >> "CfgMagazines" >> _magazine >> "displayName");
@@ -61,7 +60,8 @@ if (getNumber (configFile >> "CfgAmmo" >> _ammo >> "explosive") > 0 ||
 	_weaponName = _weaponName + " - " + _ammoName; 
 };
 
-if (!isNull _vehicle && !(_vehicle isKindOf "StaticWeapon")) then {
+if (!isNull _vehicle && !(_vehicle isKindOf "StaticWeapon")) then 
+{
 	private _vehicleName = getText (configFile >> "CfgVehicles" >> typeOf _vehicle >> "displayName");
 	private _pos = _vehicleName find " (";
 	if (_pos != -1) then { _vehicleName = _vehicleName select [0, _pos] };	

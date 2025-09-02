@@ -9,4 +9,8 @@ if (_hitEntity isKindOf "Man") exitWith { _hitEntity setVariable ["DOTT_lastHit"
 private _hitHull = _hitEntity getHitPointDamage "hitHull";
 if ((_hitEntity isKindOf "Car") && _hitHull >= 1) exitWith {};
 if (_hitHull >= .889) exitWith {};
+
+{ if (alive _x) then { _x setVariable ["DOTT_lastHit", _instigatorInfo] } }
+forEach (crew _hitEntity);
+
 _hitEntity setVariable ["DOTT_lastHit", _instigatorInfo];

@@ -40,7 +40,8 @@ TBD
 v4.2.2  
 29 AUG 2025
 * Reworked Tracker System
-  - Now entirely server side, and should accurately get weapon names without hardcoding needed.
+  - More server side, and should accurately get weapon names without hardcoding needed.
+    Except for explosions, which are client side. No check for info reaching the server in time and therefore may not be recorded properly.
   - Kills from vehicle weapon now have the weapon used alongside the vehicle.
     Also will have the ammo used if multiple available.
   - Kills from infantry weapons that use explosives now have the round used as well. (Except RHS disposables)

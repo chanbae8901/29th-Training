@@ -68,7 +68,9 @@ class Dott_Tracker
 		class findPlayerEvents {};
 		class getWeapon {};
 		class sendAll {};
-		class addEventHandlersUnit {};
-		class projectileHit {};
+		class addEventHandlersClient {};
+		class addEventHandlersServer {};		
+		class hitPart {};
+		class hitExplosion {};
 	};
 };
