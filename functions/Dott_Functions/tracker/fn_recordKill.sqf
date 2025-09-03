@@ -36,7 +36,6 @@ private _killInfo = [[_unitName, _unitSide]];
 
 //[name, side, pos, weapon];
 private _instigatorInfo = _unit getVariable "DOTT_lastHit";
-
 //Player manual respawned without taking known damage
 if (isNil "_instigatorInfo" && _killer == _unit && isNull _instigator) exitWith { false }; 
 
@@ -49,6 +48,7 @@ if !(isNil "_instigatorInfo") then
 } else 
 {
 	//Road kill check
+	if !(_unit isKindOf "Man") exitWith {}; 
 	if (isNull _instigator) then { _instigator = (UAVControl (vehicle _killer)) select 0 }; 
 	if (isNull _instigator) then { _instigator = _killer }; 
 	if (_instigator isKindOf "AllVehicles") then 

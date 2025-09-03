@@ -68,6 +68,7 @@ class Dott_Tracker
 		class getKillCounts {};	
 		class findPlayerEvents {};
 		class getWeapon {};
+		class getWeaponVehicle {};
 		class sendAll {};
 		class addEventHandlersClient {};
 		class hitPart {};

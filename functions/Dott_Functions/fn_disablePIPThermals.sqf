@@ -5,14 +5,15 @@
  * Author:  Bae [29th ID]
  *
  * Description:
- * Checks every RenderTarget's camera of player vehicle and disables any that have thermal vision.
+ * Checks every RenderTarget's camera of player vehicle and disables any that have thermal vision
+ * that isn't attached to gunner turret.
  * Must be called every time player enters a vehicle.
  *
  * Parameter(s): 
  * None
  *
  * Returns:
- * true if at least one PiP camera disabled, false otherwise
+ * true if at least one PIP camera disabled, false otherwise
  *
  * Example:
  * call DOTT_fnc_disablePIPThermals;
@@ -27,8 +28,8 @@ private _disabledSomething = false;
     { 
         private _camCfg = _x;                   
         private _visionMode = getNumber (_camCfg >> "renderVisionMode");  
- 
-        if (_visionMode == 2) exitWith 
+        private _turret = getArray (_camCfg >> "turret");   
+        if (_visionMode == 2 && (count _turret == 0 || {_turret select 0 != 0})) exitWith 
 		{ 
 			_veh CameraEffect ["terminate","back", _rtName];
 			_disabledSomething = true; 
@@ -37,6 +38,6 @@ private _disabledSomething = false;
 
 } forEach (configProperties [configFile >> "CfgVehicles" >> typeOf _veh >> "RenderTargets", "isClass _x", true]);
 
-if (_disabledSomething) then { systemChat "EXPERIMENTAL: Disabled PiP Thermals" };
+if (_disabledSomething) then { systemChat "Disabled PIP Thermals" };
 
 _disabledSomething

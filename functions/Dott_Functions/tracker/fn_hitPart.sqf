@@ -23,7 +23,9 @@
  * 
  */
 params ["_projectile", "_hitEntity"];
-if !(alive _hitEntity) exitWith {};
+//things like buildings are considered alive
+//if they go through server will get spammed with errors 
+if !(alive _hitEntity && _hitEntity isKindOf "AllVehicles") exitWith {};
 private _instigatorInfo = _projectile getVariable "DOTT_instigatorInfo";
 
 if (_hitEntity isKindOf "Man") exitWith { _hitEntity setVariable ["DOTT_lastHit", _instigatorInfo, 2] };
