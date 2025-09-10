@@ -37,6 +37,20 @@ TBD
 	- Included new class "FlagReturned"
 
 ---
+v4.2.3  
+09 SEP 2025
+
+---
+TODO:
+Fix radio resetting on reset
+Cache weapon info in tracker for performance gains (optional)
+Consolidate files (hitExplosion/hitPart and getWeapon/getWeaponVehicle)
+If player respawned after taking damage/bled out, state it so those deaths are not misleading in tracker.
+On !debrief give admin Force Parade setting for 10ish seconds so he doesn't have to run all the way to box
+Fix height from ground being used for tracker distance calc instead of absolute
+Maybe change timer show sector workaround so it doesnt show up in init map briefing 
+
+---
 v4.2.2  
 02 SEP 2025
 
@@ -51,7 +65,7 @@ v4.2.2
   - AI killing players will no longer be recorded.
   - Removes findInstigator, handleDamage, renames getInstigatorName to getName
   - Splits getWeapon into itself and getWeaponVehicle.
-  - Adds addEventHandlersClient, addEventHandlersServer, hitExplosion and hitPart functions
+  - Adds addEventHandlersClient, hitExplosion and hitPart functions
 
 * Fixes for things that broke between 4.2.0 and 4.2.1
   - Fix insignia not applying on join

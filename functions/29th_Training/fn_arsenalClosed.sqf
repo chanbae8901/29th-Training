@@ -25,7 +25,7 @@ resetLoadout = getUnitLoadout player;
 
 [] spawn 
 {
-	sleep 3;
+	sleep 1; //previously 3
 	[player] spawn DOTT_fnc_resetWeaponState;
 };
 

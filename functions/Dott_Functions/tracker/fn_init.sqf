@@ -47,8 +47,7 @@ if (isServer) then
 		} 
 	] call CBA_fnc_addEventHandler;
 
-	// --- Kill --- //
-	//wont catch road kills	
+	// --- Kill --- //	
 	addMissionEventHandler ["EntityKilled", 
 	{
 		params ["_unit", "_killer", "_instigator"];

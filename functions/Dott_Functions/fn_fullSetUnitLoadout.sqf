@@ -5,8 +5,8 @@
  * Author:  Bae [29th ID]
  *
  * Description:
- * Wrapper function that ensures other functions are called with setUnitLoadout, such as
- * Should spawn this function over setUnitLoadout
+ * Wrapper function that ensures other functions are called with setUnitLoadout.
+ * Should spawn this function over setUnitLoadout when applicable.
  *
  * Parameter(s): 
  * ["_unit","_loadout", "_fullMagazines"]
@@ -27,15 +27,15 @@ if (!local _unit) exitWith {["Unit %1 must be local.", _unit] call BIS_fnc_error
 
 _unit setUnitLoadout [_loadout, _fullMagazines];
 //don't pull out weapon if no primary 
-if (primaryWeapon player == "") then 
+if (primaryWeapon _unit == "") then 
 {
-	player action ["SwitchWeapon", player, player, -1] 
+	_unit action ["SwitchWeapon", _unit, _unit, -1] 
 };
 _unit spawn Hill_fnc_setInsignia;
 
 //prevents incorrect weapon state when called on unit that respawned
 //but did not set a loadout in arsenal in current life
-sleep 2; //previously 3
+sleep 1; //previously 3, 2
 [_unit] spawn DOTT_fnc_resetWeaponState;
 
 true
