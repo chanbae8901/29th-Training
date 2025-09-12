@@ -62,7 +62,7 @@ for "_i" from 0 to ((count _ammo_boxes) - 1) do
 
 player addEventHandler ["Respawn", { arsenalActionId = -1; }];
 //-----------------------------//
-
+lastDebriefTime = -10;
 blu_ammo addAction [
     "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#3f8eff'>  Force Parade</t>", 
     {
@@ -74,8 +74,8 @@ blu_ammo addAction [
     true, 
     true, 
     "", 
-    "serverCommandAvailable '#lock'", 
-    3
+    "serverCommandAvailable '#lock' && ((player distance blu_ammo) < 5 || (time - lastDebriefTime) < 10)", 
+    50
 ];
 
 {

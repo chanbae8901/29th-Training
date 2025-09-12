@@ -42,16 +42,15 @@ v4.2.3
 
 ---
 - Leaving arsenal with a loadout with no primary will no longer put weapon away. (Partial revert change from 4.2.2)
-
+- !debrief now causes the Force Parade action at BLUFOR ammo box to be selectable from 50 meters away for 10 seconds.
 TODO:
 Fix radio resetting on reset (Med)
 Cache weapon info in tracker for performance gains (Very Low - optional)
 Consolidate files hitExplosion/hitPart and getWeapon/getWeaponVehicle (Very Low - related to caching)
 If player respawned after taking damage/bled out, state it so those deaths are not misleading in tracker. (Low - Med)
-On !debrief give admin Force Parade setting for 10ish seconds so he doesn't have to run all the way to box (Low - Med)
 Fix height from ground being used for tracker distance calc instead of absolute (Low)
 Maybe change timer show sector workaround so it doesnt show up in init map briefing (Very Low)
-
+Kick players out of arsenal if force parade is done on them (Low)
 ---
 v4.2.2  
 02 SEP 2025

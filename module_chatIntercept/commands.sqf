@@ -346,6 +346,7 @@ pvpfw_chatIntercept_allCommands = [
 				[[[], true, _telePos], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
 				systemChat "Healing and teleporting all players to you!";
 			};
+			lastDebriefTime = time; //for baseObjectsInit Force Parade
 		}
 	],
 	[
