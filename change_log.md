@@ -41,14 +41,16 @@ v4.2.3
 09 SEP 2025
 
 ---
+- Leaving arsenal with a loadout with no primary will no longer put weapon away. (Partial revert change from 4.2.2)
+
 TODO:
-Fix radio resetting on reset
-Cache weapon info in tracker for performance gains (optional)
-Consolidate files (hitExplosion/hitPart and getWeapon/getWeaponVehicle)
-If player respawned after taking damage/bled out, state it so those deaths are not misleading in tracker.
-On !debrief give admin Force Parade setting for 10ish seconds so he doesn't have to run all the way to box
-Fix height from ground being used for tracker distance calc instead of absolute
-Maybe change timer show sector workaround so it doesnt show up in init map briefing 
+Fix radio resetting on reset (Med)
+Cache weapon info in tracker for performance gains (Very Low - optional)
+Consolidate files hitExplosion/hitPart and getWeapon/getWeaponVehicle (Very Low - related to caching)
+If player respawned after taking damage/bled out, state it so those deaths are not misleading in tracker. (Low - Med)
+On !debrief give admin Force Parade setting for 10ish seconds so he doesn't have to run all the way to box (Low - Med)
+Fix height from ground being used for tracker distance calc instead of absolute (Low)
+Maybe change timer show sector workaround so it doesnt show up in init map briefing (Very Low)
 
 ---
 v4.2.2  

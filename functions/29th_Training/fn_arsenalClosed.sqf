@@ -36,12 +36,6 @@ if (!(weaponLowered player)) then
 	player action ["WeaponOnBack", player];
 };
 
-//don't pull out weapon if no primary
-if (primaryWeapon player == "") then 
-{
-	player action ["SwitchWeapon", player, player, -1] 
-};
-
 systemChat "Your gear has been saved.";
 hintSilent "Your gear has been saved.";
 true
