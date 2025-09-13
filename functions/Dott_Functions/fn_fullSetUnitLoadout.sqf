@@ -10,22 +10,21 @@
  *
  * Parameter(s): 
  * ["_unit","_loadout", "_fullMagazines"]
- * Reference Syntax 2 of https://community.bistudio.com/wiki/setUnitLoadout
+ * Reference https://cbateam.github.io/CBA_A3/docs/files/loadout/fnc_setLoadout-sqf.html
  *
  * Returns:
  * false if _unit not local, true otherwise
  *
  * Example:
- * [player, _inventory, true] spawn DOTT_fn_fullSetUnitLoadout;
+ * [player, _inventory, true] spawn DOTT_fnc_fullSetUnitLoadout;
  * 
  */
 
 params["_unit", "_loadout", "_fullMagazines"];
 
-//setUnitLoadout as of 2.20 temporarily does not work non-local
 if (!local _unit) exitWith {["Unit %1 must be local.", _unit] call BIS_fnc_error; false;};
 
-_unit setUnitLoadout [_loadout, _fullMagazines];
+[_unit, _loadout, _fullMagazines] call CBA_fnc_setLoadout;
 //don't pull out weapon if no primary 
 if (primaryWeapon _unit == "") then 
 {

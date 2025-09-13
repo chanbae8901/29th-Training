@@ -47,7 +47,9 @@ v4.2.3
   Modifies commands.sqf and baseObjectsInit.sqf
 - Now kicks players out of arsenal if force parade is done on them
   Modifies handleInitialInventory, forceParadeAll, forceParade is now loadParade.
-  
+- Replaced setUnitLoadout with CBA_fnc_setLoadout, getUnitLoadout with CBA_fnc_getLoadout for resetLoadout/fullSetUnitLoadout.
+  Gets rid of an error related to setInsignia.
+
 TODO:
 Fix radio resetting on reset (Med)
 Cache weapon info in tracker for performance gains (Very Low - optional)

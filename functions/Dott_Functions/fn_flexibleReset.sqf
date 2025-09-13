@@ -9,7 +9,7 @@
  * Must be spawned on client
  *
  * Parameter(s) (All Optional): 
- * _inventory (Array): Unit Loadout Array (default: empty array)
+ * _inventory (Array): Extended Loadout ARRAY (CBA) (default: empty array)
  * _heal (Bool): True if players should be healed (default: false)
  * _point (Array): Point to be returned to, if empty array then doesn't teleport (Position ASL) (default: [])
  * _pointRad (Number): Will skip teleport if player is within specified distance of point (default: 50)

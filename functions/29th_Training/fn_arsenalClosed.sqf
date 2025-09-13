@@ -21,7 +21,7 @@ if (!hasInterface) exitWith {};
 [player, [missionNamespace, "Current Inventory"]] call BIS_fnc_saveInventory;
 [player, ["missionNamespace:Current Inventory"]] call BIS_fnc_setRespawnInventory;
 
-resetLoadout = getUnitLoadout player;
+resetLoadout = [player] call CBA_fnc_getLoadout;
 
 [] spawn 
 {
