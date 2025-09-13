@@ -17,6 +17,7 @@ class Dott_Functions
 		class diag_log {};
 		class addDiaryRecord {};
 		class disablePIPThermals {};
+		class copyOldSwSettings {};
 	};
 };
 

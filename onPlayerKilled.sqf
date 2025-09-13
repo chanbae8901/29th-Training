@@ -3,7 +3,7 @@
 */
 
 params ["_dead"];
-
+oldSwRadioSettings = (call TFAR_fnc_activeSwRadio) call TFAR_fnc_getSwSettings;
 _removeRadiosFromDead = "removeRadiosFromDead" call BIS_fnc_getParamValue;
 if (_removeRadiosFromDead == 1) then
 {

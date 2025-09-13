@@ -49,9 +49,11 @@ v4.2.3
   Modifies handleInitialInventory, forceParadeAll, forceParade is now loadParade.
 - Replaced setUnitLoadout with CBA_fnc_setLoadout, getUnitLoadout with CBA_fnc_getLoadout for resetLoadout/fullSetUnitLoadout.
   Gets rid of an error related to setInsignia.
+- When loadout reset or when respawning, if player did not save their SW radio settings by revisiting ACE Arsenal, frequencies on newly 
+  given radio will be the same as right before reset/death. LR radios unaffected.
+  Modifies fullSetunitLoadout, onPlayerKilled, onPlayerRespawn, adds copyOldSwSettings.
 
 TODO:
-Fix radio resetting on reset (Med)
 Cache weapon info in tracker for performance gains (Very Low - optional)
 Consolidate files hitExplosion/hitPart and getWeapon/getWeaponVehicle (Very Low - related to caching)
 If player respawned after taking damage/bled out, state it so those deaths are not misleading in tracker. (Low - Med)
