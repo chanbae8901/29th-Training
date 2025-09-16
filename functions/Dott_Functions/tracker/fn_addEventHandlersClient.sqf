@@ -28,17 +28,17 @@ player addEventHandler ["FiredMan",
 	
 	private _data = [name _unit, side (group _unit), getPosATL _unit, _realWeapon];
 	_projectile setVariable ["DOTT_instigatorInfo", _data];
-	_projectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hitPart }];	
-	_projectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hitExplosion }];	
+	_projectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];	
+	_projectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];	
 
 	//shotguns
 	_projectile addEventHandler ["SubmunitionCreated", 
 	{
 		params ["_projectile", "_submunitionProjectile"];
 		_submunitionProjectile setVariable ["DOTT_instigatorInfo", _projectile getVariable "DOTT_instigatorInfo"];	
-		_submunitionProjectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hitPart }];
-		_submunitionProjectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hitExplosion }];						
-	}];					
+		_submunitionProjectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];
+		_submunitionProjectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];						
+	}];
 }];
 
 ["ace_advanced_throwing_throwFiredXEH", 
@@ -49,15 +49,15 @@ player addEventHandler ["FiredMan",
 	private _realWeapon = call DOTT_tracker_fnc_getWeapon;
 	private _data = [name _unit, side (group _unit), getPosATL _unit, _realWeapon];
 	_projectile setVariable ["DOTT_instigatorInfo", _data];
-	_projectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hitPart }];	
-	_projectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hitExplosion }];	
+	_projectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];	
+	_projectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];	
 
 	_projectile addEventHandler ["SubmunitionCreated", 
 	{
 		params ["_projectile", "_submunitionProjectile"];
 		_submunitionProjectile setVariable ["DOTT_instigatorInfo", _projectile getVariable "DOTT_instigatorInfo"];	
-		_submunitionProjectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hitPart }];
-		_submunitionProjectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hitExplosion }];						
+		_submunitionProjectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];
+		_submunitionProjectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];						
 	}];					
 }] call CBA_fnc_addEventHandler;
 
@@ -69,16 +69,16 @@ player addEventHandler ["FiredMan",
 	if (_explosiveName == "") then {_explosiveName = "Placed Explosive"};
 	private _data = [name _unit, side (group _unit), getPosATL _unit, _explosiveName];
 	_explosive setVariable ["DOTT_instigatorInfo", _data];
-	_explosive addEventHandler ["HitPart", { call DOTT_tracker_fnc_hitPart }];	
-	_explosive addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hitExplosion }];	
+	_explosive addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];	
+	_explosive addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];	
 
 	//bouncing mines
 	_explosive addEventHandler ["SubmunitionCreated", 
 	{
 		params ["_projectile", "_submunitionProjectile"];
 		_submunitionProjectile setVariable ["DOTT_instigatorInfo", _projectile getVariable "DOTT_instigatorInfo"];	
-		_submunitionProjectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hitPart }];
-		_submunitionProjectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hitExplosion }];						
+		_submunitionProjectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];
+		_submunitionProjectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];						
 	}];		
 }] call CBA_fnc_addEventHandler;
 

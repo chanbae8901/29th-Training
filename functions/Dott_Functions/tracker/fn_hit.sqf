@@ -1,16 +1,16 @@
 /*
- * Name:	DOTT_tracker_fnc_hitExplosion
+ * Name:	DOTT_tracker_fnc_hit
  * Date:	9/2/2025
  * Version: 1.0
  * Author:  Bae [29th ID]
  *
  * Description:
- * Function to be used in "HitExplosion" projectile event for tracker system.
+ * Function to be used in "HitExplosion" and "HitPart" projectile event for tracker system.
  * Transfers weapon/killer info from the projectile to the unit hit if conditions are met.
  * Should only be run client side.
  *
  * NOTE: There is no check to ensure that the information is transferred to server fast enough before kill/uncon 
- * events are processed there, it is assumed it will be (which may be wrong).
+ * events are processed there, it is assumed it will be (which seems to be working).
  *
  * Parameter(s): 
  * [_projectile, _hitEntity] reference "HitExplosion" projectile event.
@@ -19,7 +19,7 @@
  * true
  *
  * Example:
- * player call DOTT_tracker_fnc_hitExplosion;
+ * player call DOTT_tracker_fnc_hit;
  * 
  */
 

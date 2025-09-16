@@ -72,7 +72,6 @@ class Dott_Tracker
 		class getWeaponVehicle {};
 		class sendAll {};
 		class addEventHandlersClient {};
-		class hitPart {};
-		class hitExplosion {};
+		class hit {};
 	};
 };
