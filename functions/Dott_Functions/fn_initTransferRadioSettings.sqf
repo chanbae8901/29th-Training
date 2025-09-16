@@ -1,0 +1,150 @@
+/*
+ * Name:	DOTT_fnc_initTransferRadioSettings
+ * Date:	9/18/2025
+ * Version: 1.0
+ * Author:  Bae [29th ID]
+ *
+ * Description:
+ * Sets up automatic radio settings transfer when loadouts are switched such as arsenal or respawn.
+ * Fixes some bugs related to TFAR encryption.
+ *
+ * Parameter(s): 
+ * None
+ *
+ * Returns:
+ * Nothing
+ *
+ * Example:
+ * call DOTT_fnc_initTransferRadioSettings;
+ * 
+ */
+
+if (hasInterface) then {
+	private _fn_saveSwSettings = 
+	{
+		params ["_unit"];
+		if (_unit != player) exitWith {}; //don't do in remote control case		
+		private _sw = call TFAR_fnc_activeSwRadio;
+		if (isNil "_sw") exitWith {};
+		TFAR_core_saved_active_sr_settings = _sw call TFAR_fnc_getSwSettings;
+	};
+
+	private _fn_saveLrSettings = 
+	{
+		params ["_unit"];
+		if (_unit != player) exitWith {}; 	
+		private _lr = player call TFAR_fnc_backpackLr;
+		if (isNil "_lr") exitWith {};
+		TFAR_core_saved_active_lr_settings = _lr call TFAR_fnc_getLrSettings;
+	};
+
+	{[_x, _fn_saveSwSettings] call CBA_fnc_addEventHandler} forEach [
+		"TFAR_event_OnSWchannelSet",
+		"TFAR_event_OnSWstereoSet",
+		"TFAR_event_OnSWvolumeSet",
+		"TFAR_event_OnSWChange",
+		"TFAR_event_OnSWspeakersSet"	
+	];
+
+	{[_x, _fn_saveLrSettings] call CBA_fnc_addEventHandler} forEach [
+		"TFAR_event_OnLRchannelSet",
+		"TFAR_event_OnLRstereoSet",
+		"TFAR_event_OnLRvolumeSet",
+		"TFAR_event_OnLRChange",
+		"TFAR_event_OnLRspeakersSet"
+	];
+
+	[
+		"TFAR_event_OnFrequencyChanged",
+		{
+			params ["_unit","_radio"];
+			if (_unit != player) exitWith {};
+
+			private _sw = call TFAR_fnc_activeSwRadio;
+			if (_sw isEqualTo _radio) exitWith {
+				TFAR_core_saved_active_sr_settings = _sw call TFAR_fnc_getSwSettings;
+			};
+
+			private _lr = call TFAR_fnc_activeLrRadio;
+			if (_lr isEqualTo _radio) exitWith {
+				TFAR_core_saved_active_lr_settings = _lr call TFAR_fnc_getLrSettings;
+			};
+		}
+	] call CBA_fnc_addEventHandler;
+
+	/*Check if after radio settings configured by TFAR that side encryption is correct, as even though we need to check anyway due to code in this file,
+	TFAR has a bug that it will set the wrong side in certain conditions regardless. */
+
+	//Code in event handler referenced from
+	//https://github.com/michail-nikolaev/task-force-arma-3-radio/blob/878f98e67496ccd278f39b9bd7c092fe9b7be449/addons/core/functions/fnc_getDefaultRadioSettings.sqf#L62
+	[
+		"fixCode",
+		"OnRadiosReceived",
+		{
+			params ["_unit","_radios"];
+			if (_unit != player) exitWith {}; 
+			{
+				private _correctCode = [_x, "tf_encryptionCode", ""] call TFAR_fnc_getWeaponConfigProperty;
+				if (_correctCode == "tf_guer_radio_code") then {_correctCode = "tf_independent_radio_code"}; //doesn't look like its needed anymore 
+				_correctCode = missionNamespace getVariable [_correctCode, ""];
+
+				private _currentCode = _x call TFAR_fnc_getSwRadioCode; //OnRadiosReceived for Sw radios only
+				if (_currentCode != _correctCode) then 
+				{
+					[_x, _correctCode] call TFAR_fnc_setSwRadioCode;
+				};
+			} forEach _radios;
+		}
+	] call TFAR_fnc_addEventHandler;
+
+	["loadout", 
+	{
+		private _lr = player call TFAR_fnc_backpackLr;
+		if (isNil "_lr") exitWith {};
+		private _correctCode = [typeOf (_lr select 0), "tf_encryptionCode", ""] call TFAR_fnc_getVehicleConfigProperty;
+		if (_correctCode == "tf_guer_radio_code") then {_correctCode = "tf_independent_radio_code"}; //doesn't look like its needed anymore 
+		_correctCode = missionNamespace getVariable [_correctCode, ""];
+
+		private _currentCode = _lr call TFAR_fnc_getLrRadioCode;
+		if (_currentCode != _correctCode) then 
+		{
+			[_lr, _correctCode] call TFAR_fnc_setLrRadioCode;
+		};
+	}] call CBA_fnc_addPlayerEventHandler;
+};
+
+if (isServer) then {
+	//fix bug entering a unentered vehicle with different faction backpack lr set causes vehicle to have wrong side encrpyption LR
+	private _fn_fixVehicleRadio = 
+	{
+		private _vehicle = _this;
+		if !(_vehicle isKindOf "AllVehicles" && !(_vehicle isKindOf "Man")) exitWith {};
+
+		private _correctSide = _vehicle call TFAR_fnc_getVehicleSide;
+		private _encryptionCode = "";
+		switch (_correctSide) do 
+		{
+			case west: 
+			{
+				_encryptionCode = "tf_west_radio_code";
+			};
+			case east: 
+			{
+				_encryptionCode = "tf_east_radio_code";
+			};
+			default 
+			{
+				_encryptionCode = "tf_independent_radio_code";
+			};
+		};		
+		_encryptionCode = missionNamespace getVariable [_encryptionCode, ""];
+		
+		private _radios = _vehicle call TFAR_fnc_getVehicleRadios;
+    	{
+      		[_x, _encryptionCode] call TFAR_fnc_setLrRadioCode;
+    	} forEach _radios;
+	};
+
+	addMissionEventHandler ["EntityCreated", { _this call (_thisArgs select 0) }, [_fn_fixVehicleRadio]];
+	{ _x call _fn_fixVehicleRadio } forEach allMissionObjects "AllVehicles";
+};

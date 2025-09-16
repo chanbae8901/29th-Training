@@ -8,12 +8,6 @@ params ["_newUnit", "_oldUnit"];
 
 _newUnit spawn Hill_fnc_setInsignia;
 
-[_newUnit] spawn 
-{
-	waitUntil {TFAR_currentUnit == _this select 0};
-	call DOTT_fnc_copyOldSwSettings;
-};
-
 
 if (!isNull _oldUnit) then {
 	if (missionNamespace getVariable ["menuRespawn", true]) then 

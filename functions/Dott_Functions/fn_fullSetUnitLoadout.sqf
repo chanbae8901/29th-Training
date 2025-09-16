@@ -21,14 +21,10 @@
  */
 
 params["_unit", "_loadout", "_fullMagazines"];
+
 if (!local _unit) exitWith {["Unit %1 must be local.", _unit] call BIS_fnc_error; false;};
 
-oldSwRadioSettings = (call TFAR_fnc_activeSwRadio) call TFAR_fnc_getSwSettings;
-
 [_unit, _loadout, _fullMagazines] call CBA_fnc_setLoadout;
-
-call DOTT_fnc_copyOldSwSettings;
-
 //don't pull out weapon if no primary 
 if (primaryWeapon _unit == "") then 
 {

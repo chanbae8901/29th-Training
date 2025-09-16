@@ -12,3 +12,5 @@ if (isNil "DOTT_ticketGUER") then { DOTT_ticketGUER = 0; };
 call DOTT_round_fnc_init;
 
 if (("enableRoundEventLog" call BIS_fnc_getParamValue) == 1) then {call DOTT_tracker_fnc_init};
+
+call DOTT_fnc_initTransferRadioSettings;

@@ -49,9 +49,11 @@ v4.2.3
   Modifies handleInitialInventory, forceParadeAll, forceParade is now loadParade.
 - Replaced setUnitLoadout with CBA_fnc_setLoadout, getUnitLoadout with CBA_fnc_getLoadout for resetLoadout/fullSetUnitLoadout.
   Gets rid of an error related to setInsignia.
-- When loadout reset or when respawning, if player did not save their SW radio settings by revisiting ACE Arsenal, frequencies on newly 
-  given radio will be the same as right before reset/death. LR radios unaffected.
-  Modifies fullSetunitLoadout, onPlayerKilled, onPlayerRespawn, adds copyOldSwSettings.
+- When loadout reset or when respawning, if player did not save their SW radio settings by revisiting ACE Arsenal, 
+  frequencies on newly given radio will be the same as right before reset/death.
+  Fixed likely cause of radios not working when swapping between faction different radios in arsenal. 
+  Fixed vehicle LR having wrong encrpytion code if player with wrong side back LR entered first.
+  Adds fn_initTransferRadioSettings.sqf.
 - Consolidated hitExplosion and hitPart files into one hit file in tracker. Consolidated getWeaponVehicle back into getWeapon again.
 - Weapon string for tracker is now cached for future retrieval instead of repeatedly generating the same string (4x faster, but not much absolute cost anyways).
 
@@ -59,6 +61,7 @@ TODO:
 If player respawned after taking damage/bled out, state it so those deaths are not misleading in tracker. (Low - Med)
 Fix height from ground being used for tracker distance calc instead of absolute (Low)
 Maybe change timer show sector workaround so it doesnt show up in init map briefing (Very Low)
+Last line of defense checks on round start.
 
 ---
 v4.2.2  
