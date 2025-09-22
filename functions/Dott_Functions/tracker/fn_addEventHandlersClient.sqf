@@ -24,7 +24,7 @@ player addEventHandler ["FiredMan",
 	params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_vehicle"];
 	private _realWeapon = DOTT_weaponNameCache getOrDefaultCall [[_weapon, _muzzle, _magazine, _ammo, _vehicle], {call DOTT_tracker_fnc_getWeapon}, true];
 	
-	private _data = [name _unit, side (group _unit), getPosATL _unit, _realWeapon];
+	private _data = [name _unit, side (group _unit), getPosASL _unit, _realWeapon];
 	_projectile setVariable ["DOTT_instigatorInfo", _data];
 	_projectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];	
 	_projectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];	
@@ -45,7 +45,7 @@ player addEventHandler ["FiredMan",
 	if (!local _unit) exitWith {}; //this EH is global so only execute on client who placed
 	private _vehicle = objNull;
 	private _realWeapon = call DOTT_tracker_fnc_getWeapon;
-	private _data = [name _unit, side (group _unit), getPosATL _unit, _realWeapon];
+	private _data = [name _unit, side (group _unit), getPosASL _unit, _realWeapon];
 	_projectile setVariable ["DOTT_instigatorInfo", _data];
 	_projectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];	
 	_projectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];	
@@ -65,7 +65,7 @@ player addEventHandler ["FiredMan",
 	if (!local _unit) exitWith {}; //this EH is global so only execute on client who placed
 	private _explosiveName = getText (configFile >> "CfgMagazines" >> getText (configFile >> "CfgAmmo" >> typeOf _explosive >> "defaultMagazine") >> "displayName");
 	if (_explosiveName == "") then {_explosiveName = "Placed Explosive"};
-	private _data = [name _unit, side (group _unit), getPosATL _unit, _explosiveName];
+	private _data = [name _unit, side (group _unit), getPosASL _unit, _explosiveName];
 	_explosive setVariable ["DOTT_instigatorInfo", _data];
 	_explosive addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];	
 	_explosive addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];	

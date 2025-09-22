@@ -44,7 +44,7 @@ if !(isNil "_lastHit") then
 	private _instigatorInfo = _lastHit select 0;
 	private _hitTime = _lastHit select 1;	
 	_killInfo pushBack [_instigatorInfo select 0, _instigatorInfo select 1];
-	private _distance = round (_unit distance (_instigatorInfo select 2));		
+	private _distance = round ((getPosASL _unit) distance (_instigatorInfo select 2));		
 	_killInfo pushBack _distance;
 	_killInfo pushBack (_instigatorInfo select 3);
 
@@ -72,7 +72,7 @@ if !(isNil "_lastHit") then
 	if (isPlayer [_instigator] && _unit != _instigator && !isNull (objectParent _instigator)) then
 	{
 		_killInfo pushBack [name _instigator, side (group _instigator)];
-		private _distance = round (_unit distance _instigator);		
+		private _distance = round ((getPosASL _unit) distance _instigator);		
 		_killInfo pushBack _distance;
 		_killInfo pushBack ([objectParent _instigator] call DOTT_tracker_fnc_getName) + " - Roadkill";
 	};

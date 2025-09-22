@@ -61,9 +61,9 @@ v4.2.3
   This "shouldn't" be triggered at all if current checks or code are adequate/correct, so displaying a message might be useful to find and remove causes in the future. 
 - Kills/unconscious 10 seconds after getting hit now show the last time the player was hit.
   Kind of a patch job, but don't really see the internals being expanded in the future so should be fine.
+- Fixed height from ground being used for tracker distance calculation instead of absolute (from sea level)
 
 TODO:
-Fix height from ground being used for tracker distance calc instead of absolute (Low)
 Maybe change timer show sector workaround so it doesnt show up in init map briefing (Very Low)
 
 ---
