@@ -29,20 +29,29 @@ if (!isPlayer _unit) exitWith { false };
 private _timeStamp = round(serverTime - DOTT_tracker_startTime);
 //need group since ACE3? sets unconscious men to CIV but not the group
 private _eventInfo = [[name _unit, side (group _unit)], _state];
+private _eventType = ACE_CONSCIOUSNESS_NUM;
 if (_state) then 
 {
-	//try to find roadkill, blame any vehicle nearby
-	//[name, side, pos, weapon];	
-	private _instigatorInfo = _unit getVariable "DOTT_lastHit";
-	if !(isNil "_instigatorInfo") then 
+	private _lastHit = _unit getVariable "DOTT_lastHit";
+
+	if !(isNil "_lastHit") then 
 	{
+		//[name, side, pos, weapon];	
+		private _instigatorInfo = _lastHit select 0;
+		private _hitTime = _lastHit select 1;		
 		_eventInfo pushBack [_instigatorInfo select 0, _instigatorInfo select 1];
-		private _distance = round (_unit distance (_instigatorInfo select 2));		
+		private _distance = round (_unit distance (_instigatorInfo select 2));
 		_eventInfo pushBack _distance;
 		_eventInfo pushBack (_instigatorInfo select 3);
+		if (_timeStamp - _hitTime > DELAY_TIME) then 
+		{ 
+			_eventType = DELAY_ACE_CONSCIOUSNESS_NUM;
+			_timeStamp = [_timeStamp, _hitTime];
+		};
 	} else
 	{
-		private _nearbyVehicles = _unit nearEntities ["LandVehicle", 7];
+		//try to find roadkill, blame any vehicle nearby
+		private _nearbyVehicles = _unit nearEntities ["LandVehicle", 7]; //7 meters
 		if (count _nearbyVehicles == 0) exitWith {}; 
 		private _vehicle = _nearbyVehicles select 0;
 		private _instigator = driver _vehicle;
@@ -55,8 +64,7 @@ if (_state) then
 	};
 };
 
-private _event = [ACE_CONSCIOUSNESS_NUM, _timeStamp, _eventInfo];
-
+private _event = [_eventType, _timeStamp, _eventInfo];
 [_event] spawn DOTT_tracker_fnc_saveEvent;
 
 true

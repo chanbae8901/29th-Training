@@ -26,7 +26,6 @@ if (DOTT_tracker_startTime == -1) exitWith { false };
 private _timeStamp = round(serverTime - DOTT_tracker_startTime);
 
 private _eventType = if (_unit isKindOf "Man") then {INFANTRY_KILL_NUM} else {VEHICLE_KILL_NUM};
-private _event = [_eventType, _timeStamp];
 
 private _unitName = [_unit] call DOTT_tracker_fnc_getName;
 
@@ -34,17 +33,27 @@ private _unitSide = side (group _unit); //need group since ACE3? sets dead men t
 
 private _killInfo = [[_unitName, _unitSide]]; 
 
-//[name, side, pos, weapon];
-private _instigatorInfo = _unit getVariable "DOTT_lastHit";
-//Player manual respawned without taking known damage
-if (isNil "_instigatorInfo" && _killer == _unit && isNull _instigator) exitWith { false }; 
+private _lastHit = _unit getVariable "DOTT_lastHit";
 
-if !(isNil "_instigatorInfo") then 
+//Player manual respawned without taking known damage
+if (isNil "_lastHit" && _killer == _unit && isNull _instigator) exitWith { false }; 
+
+if !(isNil "_lastHit") then 
 {
+	//[name, side, pos, weapon];
+	private _instigatorInfo = _lastHit select 0;
+	private _hitTime = _lastHit select 1;	
 	_killInfo pushBack [_instigatorInfo select 0, _instigatorInfo select 1];
 	private _distance = round (_unit distance (_instigatorInfo select 2));		
 	_killInfo pushBack _distance;
 	_killInfo pushBack (_instigatorInfo select 3);
+
+	//Player respawns after taking damage or bleeds out
+	if ((_timeStamp - _hitTime > DELAY_TIME) && _eventType == INFANTRY_KILL_NUM) then
+	{
+		_eventType = DELAY_KILL_NUM;
+		_timeStamp = [_timeStamp, _hitTime];
+	};
 } else 
 {
 	//Road kill check
@@ -68,12 +77,8 @@ if !(isNil "_instigatorInfo") then
 		_killInfo pushBack ([objectParent _instigator] call DOTT_tracker_fnc_getName) + " - Roadkill";
 	};
 };
+private _event = [_eventType, _timeStamp, _killInfo];
 
-_event pushBack _killInfo;
-
-//_event is now either
-//[[INFANTRY_KILL_NUM, _timeStamp, [[name _unit, side _unit], [name _instigator, side _instigator], _distance, _weapon]]
-//[[INFANTRY_KILL_NUM, _timeStamp, [name _unit, side _unit]]
 [_event] spawn DOTT_tracker_fnc_saveEvent;
 
 true
