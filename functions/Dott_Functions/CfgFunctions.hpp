@@ -72,5 +72,6 @@ class Dott_Tracker
 		class sendAll {};
 		class addEventHandlersClient {};
 		class hit {};
+		class sendHit {};
 	};
 };

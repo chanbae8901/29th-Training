@@ -64,6 +64,8 @@ v4.2.3
   - Kind of a patch job, but don't really see the internals being expanded in the future so should be fine.
 - Fixed height from ground being used for tracker distance calculation instead of absolute (from sea level)
 - Sector no longer shows up at the bottom left when starting mission
+- Fix (hopefully) cases where tracker kills are credited incorrectly due to dying entity being alive on client but dead server side.
+  Now checks alive state server side as well and discards any hits on dead units.
 
 ---
 v4.2.2  
