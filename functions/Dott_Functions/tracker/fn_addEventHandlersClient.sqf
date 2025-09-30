@@ -80,4 +80,20 @@ player addEventHandler ["FiredMan",
 	}];		
 }] call CBA_fnc_addEventHandler;
 
+["ace_medical_woundReceived", 
+	{
+		params ["_unit", "_allDamages", "_instigator", "_ammo"];
+		if (_ammo == "collision") then 
+		{
+			private _driver = driver _instigator;
+			if (isNull _driver) then { _driver = effectiveCommander _instigator };
+			private _weapon = ([_instigator] call DOTT_tracker_fnc_getName) + " - Roadkill"; //seems no need to use vehicle/objectParent
+			private _instigatorInfo = [name _driver, side (group _driver), getPosASL _driver, 
+				_weapon, round(serverTime - DOTT_tracker_startTime)];
+			
+			[_unit, _instigatorInfo] remoteExecCall ["DOTT_tracker_fnc_sendHit", 2];
+		};
+	}
+] call CBA_fnc_addEventHandler; 
+
 true

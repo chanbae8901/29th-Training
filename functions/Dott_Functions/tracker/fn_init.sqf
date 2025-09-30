@@ -65,7 +65,19 @@ if (isServer) then
 		{ 
 			_unit setVariable ["DOTT_name", name _unit]; //store name as it gets deleted automatically later
 		};
-		[_unit, _killer, _instigator] call DOTT_tracker_fnc_recordKill;
+		[
+			{
+				params ["_unit", "_killer", "_instigator"];
+				[_unit, _killer, _instigator] call DOTT_tracker_fnc_recordKill;
+			},
+			_this, 2
+		] call CBA_fnc_execAfterNFrames; //remoteExecCall for sending info occurs 1 frame later so wait
+		
+	}];
+
+	addMissionEventHandler ["EntityRespawned", 
+	{
+		params ["_unit"];
 		_unit setVariable ["DOTT_lastHit", nil]; 
 		_unit setVariable ["DOTT_hitMap", nil]; 		
 	}];
@@ -73,16 +85,12 @@ if (isServer) then
 	// --- Consciousness --- //	
 	[
 		"ace_unconscious", 
-		{ _this call DOTT_tracker_fnc_recordACEConscious; }
+		{
+			//remoteExecCall for sending info occurs 1 frame later so wait
+			[{_this call DOTT_tracker_fnc_recordACEConscious}, _this, 2] call CBA_fnc_execAfterNFrames; 
+		}
 	]
 	call CBA_fnc_addEventHandler;
-
-	// --- Attacker Info --- //	
-	addMissionEventHandler ["EntityRespawned", 
-	{
-		params ["_entity"];
-		_entity setVariable ["DOTT_lastHit", nil];		
-	}];
 
 	// --- Tracker Diary --- //
 	[

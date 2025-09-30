@@ -45,19 +45,6 @@ if (_state) then
 			_eventType = DELAY_ACE_CONSCIOUSNESS_NUM;
 			_timeStamp = [_timeStamp, _hitTime];
 		};
-	} else
-	{
-		//try to find roadkill, blame any vehicle nearby
-		private _nearbyVehicles = _unit nearEntities ["LandVehicle", 7]; //7 meters
-		if (count _nearbyVehicles == 0) exitWith {}; 
-		private _vehicle = _nearbyVehicles select 0;
-		private _instigator = driver _vehicle;
-		if (isNull _instigator) then { _instigator = (UAVControl _vehicle) select 0 };
-		if (_vehicle isKindOf "StaticWeapon" || isNull _instigator) exitWith {};
-		_eventInfo pushBack [name _instigator, side (group _instigator)];
-		private _distance = round ((getPosASL _unit) distance _instigator);		
-		_eventInfo pushBack _distance;
-		_eventInfo pushBack ([_vehicle] call DOTT_tracker_fnc_getName) + " - Roadkill";		
 	};
 };
 

@@ -5,11 +5,10 @@
  * Author:  Bae [29th ID]
  *
  * Description:
- * Function to check server side that if player is alive before setting hit info, as 
- * sometimes player may be considered alive client side but dead server side due to latency.
+ * Stores last hit of each player on a unit, as well as the last hit overall.
  *
  * Parameter(s): 
- * _unit: Object to check alive state and set hit info on
+ * _unit: Object to set hit info on
  * _hitInfo: Information about the hit - see fn_addEventHandlersClient and fn_hit
  *
  * Returns:
@@ -21,7 +20,6 @@
  */
 
 params ["_unit", "_instigatorInfo"];
-if !(alive _unit) exitWith {};
 
 private _key = [_instigatorInfo select 0, _instigatorInfo select 1]; //name, side
 private _value = [_instigatorInfo select 2, _instigatorInfo select 3, _instigatorInfo select 4]; //firing pos, weapon, time

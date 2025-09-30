@@ -41,39 +41,28 @@ if !(isNil "_lastHit") then {
 //Player manual respawned without taking known damage
 if (isNil "_lastHit" && _killer == _unit && isNull _instigator) exitWith { false }; 
 
-if !(isNull _instigator) then 
+if !(isNil "_lastHit") then 
 {
-	//"check" for roadkill by assuming conditions that are unlikely to be met otherwise
-	//ACE Medical seems to be good at having instigator non-null for roadkill unlike in vanilla
-	if (_unit isKindOf "Man" && !isNull (objectParent _instigator) && {(driver _killer) == _instigator} && {(_unit distance _instigator) < 10}) then
+	if !(isNull _instigator) then 
 	{
-		_killInfo pushBack [_instigator call DOTT_tracker_fnc_getName, side (group _instigator)];
-		private _distance = round ((getPosASL _unit) distance _instigator);
-		_killInfo pushBack _distance;
-		_killInfo pushBack ([objectParent _instigator] call DOTT_tracker_fnc_getName) + " - Roadkill";
-	} else
-	{
-		if !(isNil "_lastHit") then {
-			_lastHit = [_instigator call DOTT_tracker_fnc_getName, side (group _instigator)];
-			_lastHit append ((_unit getVariable "DOTT_hitMap") get _lastHit);
-			//[name, side, distance, weapon];
-			private _hitTime = _lastHit select 4;	
-			private _distance = round ((getPosASL _unit) distance (_lastHit select 2));
-			_killInfo append [[_lastHit select 0, _lastHit select 1], _distance, _lastHit select 3];
+		_lastHit = [_instigator call DOTT_tracker_fnc_getName, side (group _instigator)];
+		_lastHit append ((_unit getVariable "DOTT_hitMap") get _lastHit);
+		//[name, side, distance, weapon];
+		private _hitTime = _lastHit select 4;	
+		private _distance = round ((getPosASL _unit) distance (_lastHit select 2));
+		_killInfo append [[_lastHit select 0, _lastHit select 1], _distance, _lastHit select 3];
 
-			//Player respawns after taking damage or bleeds out
-			if ((_timeStamp - _hitTime > DELAY_TIME) && _eventType == INFANTRY_KILL_NUM) then
-			{
-				_eventType = DELAY_KILL_NUM;
-				_timeStamp = [_timeStamp, _hitTime];
-			};			
-		};
-	};
-} else 
-{
-	//died to fall damage, burn, ace fragmentation
-	//give kill credit to last projectile hit if exists
-	if !(isNil "_lastHit") then {
+		//Player respawns after taking damage or bleeds out
+		if ((_timeStamp - _hitTime > DELAY_TIME) && _eventType == INFANTRY_KILL_NUM) then
+		{
+			_eventType = DELAY_KILL_NUM;
+			_timeStamp = [_timeStamp, _hitTime];
+		};			
+	}
+	else 
+	{
+		//died to fall damage, burn, ace fragmentation
+		//give kill credit to last projectile hit if exists
 		private _hitTime = _lastHit select 4;	
 		private _distance = round ((getPosASL _unit) distance (_lastHit select 2));		
 		_killInfo append [[_lastHit select 0, _lastHit select 1], _distance, _lastHit select 3];
@@ -83,9 +72,9 @@ if !(isNull _instigator) then
 		{
 			_eventType = DELAY_KILL_NUM;
 			_timeStamp = [_timeStamp, _hitTime];
-		};	
-	};	
-};
+		};		
+	};
+}; 
 private _event = [_eventType, _timeStamp, _killInfo];
 
 [_event] spawn DOTT_tracker_fnc_saveEvent;
