@@ -66,7 +66,7 @@ private _startPos = getPosATL player;
 	{ // Check if "Reload" key is pressed
 		call Hill_fnc_exit_spectator;
 	};
-	if ((player distanceSqr _startPos ) > (5 * 5)) exitWith 
+	if (((getPosATL player) distanceSqr _startPos ) > (5 * 5)) exitWith 
 	{
 		call Hill_fnc_exit_spectator;
 	};
