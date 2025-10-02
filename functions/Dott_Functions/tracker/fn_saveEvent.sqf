@@ -13,7 +13,7 @@
  * _event (Array): Array of event created by other tracker functions.
  * 
  * Returns:
- * true
+ * true if event saved, false otherwise
  *
  * Example:
  * [_event] call DOTT_tracker_fnc_saveEvent;
@@ -26,9 +26,10 @@ private _eventType = _event select 0;
 private _eventTime = _event select 1;
 private _eventInfo = _event select 2;
 
+private _saveEvent = true;
+
 switch (_eventType) do 
 {
-	//Note: sometimes this can be out of order from death (come after) in bad network conditions, too rare to bother fix.
 	case ACE_CONSCIOUSNESS_NUM: 
 	{
 		private _unit = _eventInfo select 0;		
@@ -43,6 +44,23 @@ switch (_eventType) do
 			private _weaponName = _eventInfo select 4;			
 			_eventInfo set [2, [_instigatorName, _instigatorSide, _eventTime] call DOTT_tracker_fnc_nameToNum];
 			_eventInfo set [4, [_weaponName] call DOTT_tracker_fnc_weaponToNum];			
+		};
+		//Remove unconscious if happened after death (bad network rare case)
+		private _afterTime = _eventTime - 2;
+		private _unitNum = _eventInfo select 0;
+		for "_i" from (count DOTT_tracker_events - 1) to 0 step -1 do 
+		{
+			private _pastEvent = DOTT_tracker_events select _i;
+			private _pastType = _pastEvent select 0;	
+			if !(_pastType == INFANTRY_KILL_NUM || _pastType == DELAY_KILL_NUM) then {continue};			
+			private _pastTime = _pastEvent select 1;
+			if (_pastType == DELAY_KILL_NUM) then { _pastTime = _pastTime select 0 };
+			if (_pastTime < _afterTime) exitWith {};
+			private _pastUnitNum = (_pastEvent select 2) select 0;
+			if(_unitNum == _pastUnitNum) exitWith 
+			{
+				_saveEvent = false;
+			};
 		};
 	};
 	
@@ -60,6 +78,23 @@ switch (_eventType) do
 			private _weaponName = _eventInfo select 4;			
 			_eventInfo set [2, [_instigatorName, _instigatorSide, _eventTime select 1] call DOTT_tracker_fnc_nameToNum];
 			_eventInfo set [4, [_weaponName] call DOTT_tracker_fnc_weaponToNum];			
+		};
+		//Remove unconscious if happened after death (bad network rare case)
+		private _afterTime = _eventTime - 2;
+		private _unitNum = _eventInfo select 0;
+		for "_i" from (count DOTT_tracker_events - 1) to 0 step -1 do 
+		{
+			private _pastEvent = DOTT_tracker_events select _i;
+			private _pastType = _pastEvent select 0;	
+			if !(_pastType == INFANTRY_KILL_NUM || _pastType == DELAY_KILL_NUM) then {continue};			
+			private _pastTime = _pastEvent select 1;
+			if (_pastType == DELAY_KILL_NUM) then { _pastTime = _pastTime select 0 };
+			if (_pastTime < _afterTime) exitWith {};
+			private _pastUnitNum = (_pastEvent select 2) select 0;
+			if(_unitNum == _pastUnitNum) exitWith 
+			{
+				_saveEvent = false;
+			};
 		};
 	};
 
@@ -147,6 +182,8 @@ switch (_eventType) do
 		};
 	};
 };
+
+if (!_saveEvent) exitWith { false };
 
 DOTT_tracker_events pushBack _event;
 

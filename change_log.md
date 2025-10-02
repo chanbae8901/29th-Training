@@ -68,6 +68,7 @@ v4.2.3
   - Consolidated hitExplosion and hitPart files into one hit file in tracker. Consolidated getWeaponVehicle back into getWeapon again.
   - Weapon string for tracker is now cached for future retrieval instead of repeatedly generating the same string (4x faster, but not much absolute cost anyways).
   - Better support for detecting roadkill uncon/kills.
+  - Fix rare case in bad network conditions where unconscious event happens after kill event.
 - Sector no longer shows up at the bottom left when starting mission
 - Fixed critical bug where having spectator box be above water (certain maps) caused the spectator function to break.
 
