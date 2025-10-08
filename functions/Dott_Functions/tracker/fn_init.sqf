@@ -61,17 +61,12 @@ if (isServer) then
 	{
 		params ["_unit", "_killer", "_instigator"];
 		if !(isPlayer _unit || (!(_unit isKindOf "Man") && _unit isKindOf "AllVehicles")) exitWith {};
-		if (_unit isKindOf "Man") then 
-		{ 
-			_unit setVariable ["DOTT_name", name _unit]; //store name as it gets deleted automatically later
-		};
 		[
 			{
 				_this call DOTT_tracker_fnc_recordKill;
 			},
 			_this, 5 //2 was good enough, but 5 to be safe
 		] call CBA_fnc_execAfterNFrames; //remoteExecCall for sending info occurs 1 frame later so wait
-		
 	}];
 
 	addMissionEventHandler ["EntityRespawned", 
@@ -144,6 +139,8 @@ if (isServer) then
 if (hasInterface) then 
 {
 	// --- Attacker Info --- //	
+	DOTT_tracker_cookOffs = [];
+	
 	[] spawn {
 		waitUntil { !isNull player };
 		call DOTT_tracker_fnc_addEventHandlersClient;
@@ -159,7 +156,28 @@ if (hasInterface) then
 		player removeDiarySubject "Statistics";	
 		removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
 	}];
+
+	// --- Fire/Burn Related Information --- //	
+	[
+		"DOTT_round_started",
+		{
+			DOTT_tracker_cookOffs = [];
+			player setVariable ["DOTT_burnInstigator", nil];
+			player setVariable ["DOTT_burnWeapon", nil];
+			//burn info of other players locally is not reset, but should be fine
+		} 
+	] call CBA_fnc_addEventHandler;
 };
+
+//Run for both server and client
+addMissionEventHandler ["EntityKilled", 
+{
+	params ["_unit"];
+	if (_unit isKindOf "Man") then 
+	{ 
+		_unit setVariable ["DOTT_name", name _unit]; //store name as it gets deleted automatically later
+	};
+}];
 
 true
 

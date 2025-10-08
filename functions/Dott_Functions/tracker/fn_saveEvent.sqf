@@ -80,7 +80,7 @@ switch (_eventType) do
 			_eventInfo set [4, [_weaponName] call DOTT_tracker_fnc_weaponToNum];			
 		};
 		//Remove unconscious if happened after death (bad network rare case)
-		private _afterTime = _eventTime - 2;
+		private _afterTime = (_eventTime select 0) - 2;
 		private _unitNum = _eventInfo select 0;
 		for "_i" from (count DOTT_tracker_events - 1) to 0 step -1 do 
 		{
