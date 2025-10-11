@@ -74,9 +74,9 @@ v4.2.3
 - Sector no longer shows up at the bottom left when starting mission. (Removed this logic causing this since the countdown/sector ui fix does the same workaround)
 - Fixed critical bug where having spectator box be above water (certain maps) caused the spectator function to break.
 - Fixed bug that removed countdown/sector ui for players that exited zeus.
-
-TODO: 
-Vehicle capturing zones TBD
+* Sector Objective Change
+  - Sectors are no longer capturable in vehicles (including static weapons). 
+  - No in-game information to tell the player they are not contributing to the cap while in vehicle, up to leadership to disseminate information.
 
 ---
 v4.2.2  

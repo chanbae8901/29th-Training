@@ -1,8 +1,5 @@
 diag_log text format ["|=============================   %1: init.sqf Running   =============================|", missionName];
 
-//Prevent tickets/countdown from ending mission
-BIS_fnc_endMission = compileFinal "";
-
 //Ensure JIP client is aware of the status of the ticket system
 if (isNil "DOTT_ticketEnabled") then { DOTT_ticketEnabled = false; };
 if (isNil "DOTT_ticketWEST") then { DOTT_ticketWEST = 0; };

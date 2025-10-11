@@ -45,6 +45,17 @@ class CfgFunctions
 {
 	#include "functions\29th_Training\CfgFunctions.hpp"
 	#include "functions\Dott_Functions\CfgFunctions.hpp"
+	class DOTT
+	{
+		class Override
+		{
+			class overrideFunctions 
+			{
+				file = "scripts\overrideFunctions.sqf";
+				preInit = 1;
+			};
+		}
+	};
 };
 
 class CfgNotifications 
