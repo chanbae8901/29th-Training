@@ -35,20 +35,6 @@ if (isServer) then
 	publicVariable "timerLength";
 	publicVariable "overtimeEnabled";
 	publicVariable "overtimePeriod";
-	
-	// --- Fix to have countdown ui always show up --- //
-	[] spawn {
-		private _moduleGroup = createGroup sideLogic; 
-		private _sector =  _moduleGroup createUnit [ "ModuleSector_F",
-			[99999,99999,0], [], 0, "NONE" ];
-		[_sector] call BIS_fnc_moduleSector;
-		_sector setVariable ["sides", [west, east, resistance], true];
-		["BIS_fnc_moduleSector_nameID",-1] call bis_fnc_counter; 
-		waituntil {!isnil "bis_fnc_init"};
-		sleep 2;
-		deleteVehicle _sector;
-		deleteGroup _moduleGroup;
-	}; 
 
 	//prevent scores showing up on right side UI
 	[
@@ -120,6 +106,7 @@ if (hasInterface) then
 	[] spawn 
 	{
 		waitUntil {!isNull (findDisplay 46)};
+		("RscMPProgress" call bis_fnc_rscLayer) cutrsc ["RscMPProgress","plain"]; //fix countdown not showing up if no sectors ever placed
 		findDisplay 46 displayAddEventHandler ["KeyDown", {
 			if (isNull (getAssignedCuratorLogic player)) exitWith {};
 			if (inputAction "CuratorInterface" <= 0) exitWith {};
@@ -134,6 +121,11 @@ if (hasInterface) then
 					if (inputAction "CuratorInterface" > 0) then
 					{
 						if (call DOTT_round_fnc_isRoundActive) then { showScoretable 0 };
+						[] spawn
+						{
+							sleep 1;
+							("RscMPProgress" call bis_fnc_rscLayer) cutrsc ["RscMPProgress","plain"]; //fix countdown/sector ui not showing up after zeusing
+						};
 					};
 					false
 				}];	

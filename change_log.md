@@ -71,12 +71,12 @@ v4.2.3
   - Better support for fire/burning based deaths. (ACE/RHS AN-M14, Vehicle Fires)
   - Added support for vehicle explosions
   - Fix rare case in bad network conditions where unconscious event happens after kill event.
-- Sector no longer shows up at the bottom left when starting mission
+- Sector no longer shows up at the bottom left when starting mission. (Removed this logic causing this since the countdown/sector ui fix does the same workaround)
 - Fixed critical bug where having spectator box be above water (certain maps) caused the spectator function to break.
+- Fixed bug that removed countdown/sector ui for players that exited zeus.
 
 TODO: 
 Vehicle capturing zones TBD
-Obj ui
 
 ---
 v4.2.2  
