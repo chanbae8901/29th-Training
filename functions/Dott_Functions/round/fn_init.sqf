@@ -123,7 +123,7 @@ if (hasInterface) then
 						if (call DOTT_round_fnc_isRoundActive) then { showScoretable 0 };
 						[] spawn
 						{
-							sleep 1;
+							sleep 0.1;
 							("RscMPProgress" call bis_fnc_rscLayer) cutrsc ["RscMPProgress","plain"]; //fix countdown/sector ui not showing up after zeusing
 						};
 					};

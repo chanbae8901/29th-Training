@@ -78,6 +78,13 @@ if (_eventType == VEHICLE_KILL_NUM && isNull _instigator) then
 			_side = getNumber (configFile >> "CfgVehicles" >> typeOf _instigator >> "side") call BIS_fnc_sideType;
 		};
 		_killInfo append [[_instigator call DOTT_tracker_fnc_getName, _side], _distance, _weapon];
+
+		private _instigatorInfo = [_instigator call DOTT_tracker_fnc_getName, _side, getPosASL _instigator, _weapon, _timeStamp];
+
+		{
+			[_x, _instigatorInfo] call DOTT_tracker_fnc_sendHit;
+		}
+		forEach (crew _unit);
 	};
 };
 
