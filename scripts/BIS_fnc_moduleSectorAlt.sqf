@@ -287,7 +287,7 @@ switch _mode do {
 		//--- No synced triggers found - create a default one
 		if (count _areas == 0) then {
 			_areaTrigger = createtrigger ["emptydetector",position _logic];
-(_logic getvariable ["objectArea",[50,50,0,false]]) call bis_fnc_log;
+			(_logic getvariable ["objectArea",[50,50,0,false]]) call bis_fnc_log;
 			_areaTrigger settriggerarea (_logic getvariable ["objectArea",[50,50,0,false]]);
 			_areaTrigger call _fnc_initArea;
 			_areaTrigger attachto [_logic];
@@ -791,6 +791,7 @@ switch _mode do {
 									case "soldier": {
 										[_x,_costInfantry,true] call _fnc_threat;
 									};
+									// Custom code begin
 									/*
 									case "carx": {
 										[_x,_costWheeled,true] call _fnc_threat;
@@ -814,6 +815,7 @@ switch _mode do {
 										[_x,_costAir,true] call _fnc_threat;
 									};
 									*/
+									// Custom code end
 									default {
 										0
 									};
@@ -887,6 +889,31 @@ switch _mode do {
 		[_logic,[],true,"area"] call bis_fnc_moduleSector;
 
 		("RscMPProgress" call bis_fnc_rscLayer) cutrsc ["RscMPProgress","plain"];
+
+		// Custom code begin
+		if (isNil "DOTT_sectorlastVic") then {DOTT_sectorlastVic = ""};
+
+		[_logic] spawn {
+			params ["_logic"];
+			waitUntil {!isNull player};
+			//Warn when a player is in vehicle in a sector
+			while {sleep 3; !((_logic getvariable ["finalized",false]) || (isnull _logic))} do {
+				private _areas = _logic getVariable ["areas",[]];
+				private _sides = _logic getVariable ["sides",[]];
+				private _vehicle = objectParent player;
+				if !(alive player && {(side group player) in _sides}) then { continue }; //don't show if player not in a side that can capture
+				if (isNull _vehicle || {_vehicle isKindOf "StaticWeapon"}) then { continue };
+				if (typeOf _vehicle == DOTT_sectorlastVic) then { continue };
+
+				{
+					if (player inArea _x) exitWith {
+						systemChat "Warning: You cannot capture or hold a sector while in this vehicle.";
+						DOTT_sectorlastVic = typeOf _vehicle;
+					};
+				} forEach _areas;
+			};
+		};
+		// Custom code end
 
 		waituntil {
 			sleep 0.1;

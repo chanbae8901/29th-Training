@@ -53,7 +53,7 @@ v4.2.3
 * When loadout reset or when respawning, if player did not save their radio settings by revisiting ACE Arsenal, 
   frequencies on newly given radio will be the same as right before reset/death.
   - Fixed likely cause of radios not working when swapping between faction different radios in arsenal. 
-  - Fixed vehicle LR having wrong encrpytion code if player with wrong side backpack LR entered first.
+  - Fixed vehicle LR having wrong encryption code if player with wrong side backpack LR entered first.
   - Adds fn_initTransferRadioSettings.sqf.
 * Added last line of defense checks for player invulnerability and silent weapon bug at beginning of round. 
   - If detected, a message will appear for all players and it will automatically (hopefully) fix the problem. 
@@ -78,7 +78,7 @@ v4.2.3
   - Sectors are no longer capturable in vehicles (excluding static weapons). 
   - Players in static weapons can capture, but the weapon will not contribute extra to capture progress.
   - Dead crew no longer contribute to capture.
-  - No in-game information to tell the player they are not contributing to the cap while in vehicle, up to leadership to disseminate information.
+  - Players will be notified they cannot capture via chat if they are in a vehicle in a otherwise capturable sector.
 
 ---
 v4.2.2  
