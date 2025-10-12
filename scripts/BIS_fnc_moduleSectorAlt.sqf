@@ -372,6 +372,7 @@ switch _mode do {
 
 			if (_scanCrew) then {
 				{
+					if (!alive _x) then {continue};
 					_score = _score + ([_x,_costInfantry,false] call _fnc_threat);
 					if (isplayer _x) then {_score = _score * _costPlayersLocal;};
 				} foreach (crew _veh - [_veh]);
@@ -790,12 +791,19 @@ switch _mode do {
 									case "soldier": {
 										[_x,_costInfantry,true] call _fnc_threat;
 									};
+									/*
 									case "carx": {
 										[_x,_costWheeled,true] call _fnc_threat;
 									};
+									*/
 									case "tankx": {
-										[_x,_costTracked,true] call _fnc_threat;
+										if (_x isKindOf "StaticWeapon") then {
+											[_x,0,true] call _fnc_threat;
+										} else {
+											0 
+										};
 									};
+									/*
 									case "shipx";
 									case "submarinex": {
 										[_x,_costWater,true] call _fnc_threat;
@@ -805,6 +813,7 @@ switch _mode do {
 									case "helicopterx": {
 										[_x,_costAir,true] call _fnc_threat;
 									};
+									*/
 									default {
 										0
 									};

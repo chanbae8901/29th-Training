@@ -75,7 +75,9 @@ v4.2.3
 - Fixed critical bug where having spectator box be above water (certain maps) caused the spectator function to break.
 - Fixed bug that removed countdown/sector ui for players that exited zeus.
 * Sector Objective Change
-  - Sectors are no longer capturable in vehicles (including static weapons). 
+  - Sectors are no longer capturable in vehicles (excluding static weapons). 
+  - Players in static weapons can capture, but the weapon will not contribute extra to capture progress.
+  - Dead crew no longer contribute to capture.
   - No in-game information to tell the player they are not contributing to the cap while in vehicle, up to leadership to disseminate information.
 
 ---
