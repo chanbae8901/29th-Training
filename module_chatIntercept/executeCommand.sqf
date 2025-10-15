@@ -37,6 +37,11 @@ _argument = toString _argument;
 			systemChat "You must be the logged in admin to do that!";
 		};
 
+		if (pvpfw_chatIntercept_restrictedCommands find _command != -1 && !_isAdmin && (call DOTT_round_fnc_isRoundActive)) exitWith 
+		{
+			systemChat "Restricted command! Round has started and you are not admin.";
+		};
+
 		[_argument] call (_x select 1);
 		if (pvpfw_chatIntercept_noLogCommands find _command == -1) then 
 		{

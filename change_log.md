@@ -79,6 +79,11 @@ v4.2.3
   - Players in static weapons can capture, but the weapon will not contribute extra to capture progress.
   - Dead crew no longer contribute to capture.
   - Players will be notified they cannot capture via chat if they are in a vehicle in a otherwise capturable sector.
+* Command changes
+  - !debrief now also resets loadout.
+  - !arsenal, !heal, and !rearm available for non-admin if currently not in a round.
+  - Modifies flexibleReset, commands.sqf, executeCommand.sqf
+  - Arsenal created by !arsenal now editable by Zeus.
 
 ---
 v4.2.2  
