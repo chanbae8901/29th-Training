@@ -71,14 +71,19 @@ v4.2.3
   - Better support for fire/burning based deaths. (ACE/RHS AN-M14, Vehicle Fires)
   - Added support for vehicle explosions
   - Fix rare case in bad network conditions where unconscious event happens after kill event.
-- Sector no longer shows up at the bottom left when starting mission. (Removed this logic causing this since the countdown/sector ui fix does the same workaround)
+- Sector no longer shows up at the bottom left when starting mission. (Removed this logic causing this since the countdown/sector ui fix fixes this too)
 - Fixed critical bug where having spectator box be above water (certain maps) caused the spectator function to break.
 - Fixed bug that removed countdown/sector ui for players that exited zeus.
-* Sector Objective Change
-  - Sectors are no longer capturable in vehicles (excluding static weapons). 
-  - Players in static weapons can capture, but the weapon will not contribute extra to capture progress.
-  - Dead crew no longer contribute to capture.
-  - Players will be notified they cannot capture via chat if they are in a vehicle in a otherwise capturable sector.
+* Sector Objective Settings Now Adjustable
+  - Admin can now change sector parameters by going into Menu -> Configure -> Addon Options -> 29th - Sector Settings.
+    NOTE: Settings must be adjusted under the Server tab, not Client.
+    NOTE: Changed settings will (probably) persist after mission reset, so remember to reset the values back to default if only changing for one drill.
+  - Parameters include changing vehicle weights by type, capture speed, and counting crew inside vehicles.
+  - By default these parameters are changed from vanilla:
+    Vehicles now have a static weight by type, all counting as 1 infantry except for tracked vehicles (2), and air vehicles (0). 
+    Crew inside are not added to the weight.
+  - Note: This change means any sectors placed in Eden editor will not have their values used, and by extension, each sector cannot have unique values.
+
 * Command changes
   - !debrief now also resets loadout.
   - !arsenal, !heal, and !rearm available for non-admin if currently not in a round.
