@@ -6,8 +6,8 @@ class Header {
   maxPlayers = 182; //Total number of playable units placed in the editor including virtual entities
 };
 
-OnLoadName = "29th Training V4.2.2";
-briefingName = "29th Training V4.2.2";
+OnLoadName = "29th Training V4.2.3";
+briefingName = "29th Training V4.2.3";
 // =========================== Loading Screen
 Author = "29th Engineers";
 loadScreen =  "Pictures\116Inf InsigniaAlpha.paa";
@@ -45,6 +45,25 @@ class CfgFunctions
 {
 	#include "functions\29th_Training\CfgFunctions.hpp"
 	#include "functions\Dott_Functions\CfgFunctions.hpp"
+	class DOTT
+	{
+		class Override
+		{
+			class overrideFunctions 
+			{
+				file = "scripts\overrideFunctions.sqf";
+				preInit = 1;
+			};
+		}
+	};
+};
+
+class Extended_PreInit_EventHandlers 
+{
+	class DOTT_MissionSettings
+	{
+		init = "call compile preprocessFileLineNumbers ""XEH_preInit.sqf""";
+	} 
 };
 
 class CfgNotifications 

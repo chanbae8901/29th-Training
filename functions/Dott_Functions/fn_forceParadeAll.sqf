@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_fnc_forceParadeAll
- * Date:	8/27/2025
- * Version: 1.1
+ * Date:	9/30/2025
+ * Version: 1.2
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -28,12 +28,7 @@ private _targets = _allPlayers select
 };
 
 {
-    private _target = _x;
-
-    if !([_target] call DOTT_fnc_checkNonCombatLoadout) then 
-	{
-        [{call DOTT_fnc_forceParade; systemChat "Parade loadout applied."}] remoteExec ["call", _target];
-    };
+    [] remoteExec ["DOTT_fnc_loadParade", _x];
 } forEach _targets;
 
 true

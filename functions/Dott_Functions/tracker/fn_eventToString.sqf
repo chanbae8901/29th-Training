@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_tracker_fnc_eventToString
- * Date:	8/26/2025
- * Version: 1.1
+ * Date:	9/30/2025
+ * Version: 1.2
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -26,9 +26,17 @@ private _eventType = _event select 0;
 private _eventTime = _event select 1;
 private _eventInfo = _event select 2;
 
-private _minutes = floor (_eventTime / 60);
-private _seconds = _eventTime % 60;
-private _secondStr = if (_seconds < 10) then { "0" + str _seconds } else { _seconds };
+private _fn_formatTime = {
+	params["_time"];
+	private _minutes = floor (_time / 60);
+	private _seconds = _time % 60;
+	private _secondStr = if (_seconds < 10) then { "0" + str _seconds } else { _seconds };
+	[_minutes, _secondStr];
+};
+
+
+private _time = if (_eventTime isEqualType []) then {_eventTime select 0} else {_eventTime};
+(_time call _fn_formatTime) params ["_minutes", "_secondStr"];
 
 private _eventString = "";
 
@@ -54,6 +62,25 @@ switch (_eventType) do
 			_eventString = format ["%1:%2 - %3 killed.", _minutes, _secondStr, _unitName];
 		};
 	};
+	case DELAY_KILL_NUM: 
+	{
+		private _unitIndex = _eventInfo select 0;
+		private _unitName = _names select _unitIndex;
+		private _unitSide = [_unitIndex, _eventTime select 0, _sides] call DOTT_tracker_fnc_getSideAtTime; 
+		_unitName = [_unitName, _unitSide] call DOTT_tracker_fnc_colorNameWithSide;
+
+		private _instigatorIndex = _eventInfo select 1;
+		private _instigatorName = _names select (_instigatorIndex);
+		private _instigatorSide = [_instigatorIndex, _eventTime select 1, _sides] call DOTT_tracker_fnc_getSideAtTime; //note we use the hitTime here
+		_instigatorName = [_instigatorName, _instigatorSide] call DOTT_tracker_fnc_colorNameWithSide;	
+
+		private _distance = _eventInfo select 2;
+		private _weapon = _weapons select (_eventInfo select 3);	
+
+		private _time2 = _eventTime select 1;
+		(_time2 call _fn_formatTime) params ["_minutes2", "_secondStr2"];		
+		_eventString = format["%1:%2 - %3 finally killed by %4 [%5] (%6:%7) from %8 meters. ", _minutes, _secondStr, _unitName, _instigatorName, _weapon, _minutes2, _secondStr2, _distance];
+	};	
 	//same as infantry
 	case VEHICLE_KILL_NUM: 
 	{
@@ -100,7 +127,7 @@ switch (_eventType) do
 				private _instigatorSide = [_instigatorIndex, _eventTime, _sides] call DOTT_tracker_fnc_getSideAtTime;
 				_instigatorName = [_instigatorName, _instigatorSide] call DOTT_tracker_fnc_colorNameWithSide;
 				private _distance = _eventInfo select 3;
-			private _weapon = _weapons select (_eventInfo select 4);
+				private _weapon = _weapons select (_eventInfo select 4);
 				_eventString = format ["%1:%2 - %3 unconscious by %4 [%5] from %6 meters.", _minutes, _secondStr, _unitName, _instigatorName, _weapon, _distance];			
 			} else
 			{
@@ -111,6 +138,28 @@ switch (_eventType) do
 			_eventString = format ["%1:%2 - %3 conscious.", _minutes, _secondStr, _unitName];
 		};
 	};
+
+	case DELAY_ACE_CONSCIOUSNESS_NUM: 
+	{
+		private _unitIndex = _eventInfo select 0;
+		private _unitName = _names select _unitIndex;
+		private _unitSide = [_unitIndex, _eventTime select 0, _sides] call DOTT_tracker_fnc_getSideAtTime;
+		_unitName = [_unitName, _unitSide] call DOTT_tracker_fnc_colorNameWithSide;
+
+		private _state = _eventInfo select 1;
+
+		private _instigatorIndex = _eventInfo select 2;
+		private _instigatorName = _names select (_instigatorIndex);
+		private _instigatorSide = [_instigatorIndex, _eventTime select 1, _sides] call DOTT_tracker_fnc_getSideAtTime; //note we use the hitTime here
+		_instigatorName = [_instigatorName, _instigatorSide] call DOTT_tracker_fnc_colorNameWithSide;
+
+		private _distance = _eventInfo select 3;
+		private _weapon = _weapons select (_eventInfo select 4);
+
+		private _time2 = _eventTime select 1;
+		(_time2 call _fn_formatTime) params ["_minutes2", "_secondStr2"];		
+		_eventString = format ["%1:%2 - %3 finally unconscious by %4 [%5] (%6:%7) from %8 meters. ", _minutes, _secondStr, _unitName, _instigatorName, _weapon, _minutes2, _secondStr2, _distance];
+	};	
 };
 
 _eventString

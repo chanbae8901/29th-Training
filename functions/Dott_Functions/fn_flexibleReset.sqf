@@ -9,7 +9,7 @@
  * Must be spawned on client
  *
  * Parameter(s) (All Optional): 
- * _inventory (Array): Unit Loadout Array (default: empty array)
+ * _inventory (Array/Boolean): Extended Loadout ARRAY (CBA) (default: empty array) OR true to use resetLoadout (for remoteExec purposes)
  * _heal (Bool): True if players should be healed (default: false)
  * _point (Array): Point to be returned to, if empty array then doesn't teleport (Position ASL) (default: [])
  * _pointRad (Number): Will skip teleport if player is within specified distance of point (default: 50)
@@ -27,7 +27,7 @@
 
 params 
 [
-	["_inventory", [], [[]]],
+	["_inventory", [], [[], true]],
 	["_heal", false, [false]],
 	["_point", [],[[]]],
 	["_pointRad", 50,[0]],
@@ -40,6 +40,8 @@ if (!hasInterface) exitWith {}; //client only
 
 //if inventory array isn't empty, load specified inventory
 private _resetInventory = false;
+
+if (_inventory isEqualTo true) then { _inventory = missionNamespace getVariable ["resetLoadout", []] };
 
 if (count _inventory != 0) then
 {	

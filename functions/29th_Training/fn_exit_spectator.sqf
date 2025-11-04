@@ -23,7 +23,12 @@ if (isNil {missionNamespace getVariable "BIS_EGSpectator_initialized"}) exitWith
 [player, false] remoteExecCall ["hideObjectGlobal", 2];
 cutText ["","PLAIN DOWN"]; // Clear cutText
 hintSilent ""; // Clear Hint
-player allowDamage true; // Make player vulnerable again
+[] spawn 
+{
+	sleep 1; //wait so player does not take collision damage from other players leaving box
+	player allowDamage true; // Make player vulnerable again
+};
+
 player switchCamera "internal"; // Make sure the camera is returned to the player
 player enableSimulation true;
 ["exitSpectator", "onEachFrame"] call BIS_fnc_removeStackedEventHandler; //  Remove the stackedEventHandler as we no longer need it

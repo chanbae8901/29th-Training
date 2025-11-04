@@ -1,12 +1,11 @@
 /*
  * Name:	DOTT_tracker_fnc_getName
- * Date:	9/1/2025
- * Version: 1.0
+ * Date:	9/30/2025
+ * Version: 1.1
  * Author:  Bae [29th ID]
  *
  * Description:
  * Returns name of infantry or of vehicle.
- * Infantry name may return empty string if dead too long.
  *
  * Parameter(s): 
  * _unit (Object): Player/Vehicle to find name of
@@ -20,12 +19,12 @@
  */
 
 params["_unit"];
-private _name = "";
+private _name = "?"; //placeholder in case of null unit (ex. unit deleted but their placed mine still explodes)
 if (isNull _unit) exitWith { _name };
-//if unit is not man then name does not work properly
 if (_unit isKindOf "Man") then 
 {
-	_name = name _unit;
+	if (alive _unit) then { _name = name _unit } 
+	else { _name = _unit getVariable ["DOTT_name", "?"] };
 } else 
 {
 	_name = getText (configFile >> "CfgVehicles" >> typeOf _unit >> "displayName");

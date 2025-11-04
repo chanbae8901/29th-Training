@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_tracker_fnc_init
- * Date:	8/30/2025
- * Version: 1.2
+ * Date:	9/30/2025
+ * Version: 1.3
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -43,32 +43,48 @@ if (isServer) then
 			DOTT_tracker_events = [];
 			DOTT_tracker_names = [];	
 			DOTT_tracker_sides = [];
-			DOTT_tracker_weapons = [];								
+			DOTT_tracker_weapons = [];			
+
+			//reset all hit info on players at start of round		
+			private _players = allPlayers - entities "HeadlessClient_F";
+			{
+				_x setVariable ["DOTT_lastHit", nil];		
+				_x setVariable ["DOTT_hitMap", createHashMap];
+			}
+			forEach _players;			
+
 		} 
 	] call CBA_fnc_addEventHandler;
 
-	// --- Kill --- //
-	//wont catch road kills	
+	// --- Kill --- //	
 	addMissionEventHandler ["EntityKilled", 
 	{
 		params ["_unit", "_killer", "_instigator"];
 		if !(isPlayer _unit || (!(_unit isKindOf "Man") && _unit isKindOf "AllVehicles")) exitWith {};
-		[_unit, _killer, _instigator] call DOTT_tracker_fnc_recordKill;
+		[
+			{
+				_this call DOTT_tracker_fnc_recordKill;
+			},
+			_this, 5 //2 was good enough, but 5 to be safe
+		] call CBA_fnc_execAfterNFrames; //remoteExecCall for sending info occurs 1 frame later so wait
+	}];
+
+	addMissionEventHandler ["EntityRespawned", 
+	{
+		params ["_unit"];
+		_unit setVariable ["DOTT_lastHit", nil]; 
+		_unit setVariable ["DOTT_hitMap", nil]; 		
 	}];
 
 	// --- Consciousness --- //	
 	[
 		"ace_unconscious", 
-		{ _this call DOTT_tracker_fnc_recordACEConscious; }
+		{
+			//remoteExecCall for sending info occurs 1 frame later so wait
+			[{_this call DOTT_tracker_fnc_recordACEConscious}, _this, 5] call CBA_fnc_execAfterNFrames; 
+		}
 	]
 	call CBA_fnc_addEventHandler;
-
-	// --- Attacker Info --- //	
-	addMissionEventHandler ["EntityRespawned", 
-	{
-		params ["_entity"];
-		_entity setVariable ["DOTT_lastHit", nil];		
-	}];
 
 	// --- Tracker Diary --- //
 	[
@@ -77,7 +93,7 @@ if (isServer) then
 			DOTT_tracker_startTime = -1;
 			[] spawn 
 			{
-				sleep 1; //wait for any last second events from the netwrok
+				sleep 1; //wait for any last second events from the network
 				publicVariable "DOTT_tracker_startTime";
 				[
 					DOTT_tracker_events,
@@ -123,11 +139,14 @@ if (isServer) then
 if (hasInterface) then 
 {
 	// --- Attacker Info --- //	
+	DOTT_tracker_cookOffs = [];
+	
 	[] spawn {
 		waitUntil { !isNull player };
 		call DOTT_tracker_fnc_addEventHandlersClient;
 	};
 
+	DOTT_weaponNameCache = createHashMap;
 	// --- Remove Statistics from Map, Send All Round Histories --- //	
 	DOTT_tracker_last_round_Recorded = 0;
 
@@ -137,7 +156,28 @@ if (hasInterface) then
 		player removeDiarySubject "Statistics";	
 		removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
 	}];
+
+	// --- Fire/Burn Related Information --- //	
+	[
+		"DOTT_round_started",
+		{
+			DOTT_tracker_cookOffs = [];
+			player setVariable ["DOTT_burnInstigator", nil];
+			player setVariable ["DOTT_burnWeapon", nil];
+			//burn info of other players locally is not reset, but should be fine
+		} 
+	] call CBA_fnc_addEventHandler;
 };
+
+//Run for both server and client
+addMissionEventHandler ["EntityKilled", 
+{
+	params ["_unit"];
+	if (_unit isKindOf "Man") then 
+	{ 
+		_unit setVariable ["DOTT_name", name _unit]; //store name as it gets deleted automatically later
+	};
+}];
 
 true
 

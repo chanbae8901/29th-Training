@@ -11,12 +11,13 @@ class Dott_Functions
 		class fullSetUnitLoadout {};
 		class resetWeaponState {};
 		class checkNonCombatLoadout {};
-		class forceParade {};
+		class loadParade {};
 		class forceParadeAll {};
 		class initDefaultLoadouts {};
 		class diag_log {};
 		class addDiaryRecord {};
 		class disablePIPThermals {};
+		class initTransferRadioSettings {};
 	};
 };
 
@@ -68,10 +69,9 @@ class Dott_Tracker
 		class getKillCounts {};	
 		class findPlayerEvents {};
 		class getWeapon {};
-		class getWeaponVehicle {};
 		class sendAll {};
 		class addEventHandlersClient {};
-		class hitPart {};
-		class hitExplosion {};
+		class hit {};
+		class sendHit {};
 	};
 };

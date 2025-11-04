@@ -37,6 +37,61 @@ TBD
 	- Included new class "FlagReturned"
 
 ---
+v4.2.3  
+30 SEP 2025
+
+---
+- Leaving arsenal with a loadout with no primary will no longer put weapon away. (Partial revert change from 4.2.2)
+  Modifies fn_arsenalClosed.sqf
+* Force Parade Changes
+  - !debrief now causes the Force Parade action at BLUFOR ammo box to be selectable from 50 meters away for 10 seconds.
+    Modifies commands.sqf and baseObjectsInit.sqf
+  - Now kicks players out of arsenal if force parade is done on them
+    Modifies handleInitialInventory, forceParadeAll, forceParade is now loadParade.
+- Replaced setUnitLoadout with CBA_fnc_setLoadout, getUnitLoadout with CBA_fnc_getLoadout for resetLoadout/fullSetUnitLoadout.
+  Gets rid of an error related to setInsignia.
+* When loadout reset or when respawning, if player did not save their radio settings by revisiting ACE Arsenal, 
+  frequencies on newly given radio will be the same as right before reset/death.
+  - Fixed likely cause of radios not working when swapping between faction different radios in arsenal. 
+  - Fixed vehicle LR having wrong encryption code if player with wrong side backpack LR entered first.
+  - Adds fn_initTransferRadioSettings.sqf.
+* Added last line of defense checks for player invulnerability and silent weapon bug at beginning of round. 
+  - If detected, a message will appear for all players and it will automatically (hopefully) fix the problem. 
+  - This "shouldn't" be triggered at all if current checks or code are adequate/correct, so displaying a message might be useful to find and remove causes in the future. 
+  - Commented out setting player invulnerable when they load in, seems more trouble than its worth
+* Tracker Changes
+  - Kills/unconscious 10 seconds after getting hit now show the last time the player was hit.
+     Kind of a patch job, but don't really see the internals being expanded in the future so should be fine.
+  - Fixed height from ground being used for tracker distance calculation instead of absolute (from sea level)
+  - Now stores last hits from each player instead of just the last hit, and uses the killed event handler information if viable to determine killer.
+    Hopefully fixes cases where tracker kills are credited incorrectly due to dying entity being alive on client but dead server side.
+  - Consolidated hitExplosion and hitPart files into one hit file in tracker. Consolidated getWeaponVehicle back into getWeapon again.
+  - Weapon string for tracker is now cached for future retrieval instead of repeatedly generating the same string (4x faster, but not much absolute cost anyways).
+  - Better support for detecting roadkill uncon/kills.
+  - Better support for fire/burning based deaths. (ACE/RHS AN-M14, Vehicle Fires)
+  - Added support for vehicle explosions
+  - Fix rare case in bad network conditions where unconscious event happens after kill event.
+- Sector no longer shows up at the bottom left when starting mission. (Removed this logic causing this since the countdown/sector ui fix fixes this too)
+- Fixed critical bug where having spectator box be above water (certain maps) caused the spectator function to break.
+- Fixed bug that removed countdown/sector ui for players that exited zeus.
+* Sector Objective Settings Now Adjustable
+  - Admin can now change sector parameters by going into Menu -> Configure -> Addon Options -> 29th - Sector Settings.
+    NOTE: Settings must be adjusted under the Server tab, not Client.
+    NOTE: Changed settings will (probably) persist after mission reset, so remember to reset the values back to default if only changing for one drill.
+  - Parameters include changing vehicle weights by type, capture speed, and counting crew inside vehicles.
+  - By default these parameters are changed from vanilla:
+    Vehicles now have a static weight by type, all counting as 1 infantry except for tracked vehicles (2), and air vehicles (0). 
+    Crew inside are not added to the weight.
+  - If settings don't allow player to capture in a certain vehicle, they will be warned if they are in that vehicle in a sector.
+  - Note: This change means any sectors placed in Eden editor will not have their values used, and by extension, each sector cannot have unique values.
+* Command changes
+  - !debrief now also resets loadout.
+  - !arsenal, !heal, and !rearm available for non-admin if currently not in a round.
+  - Modifies flexibleReset, commands.sqf, executeCommand.sqf
+  - Arsenal created by !arsenal now editable by Zeus.
+- Players leaving box now have allowDamage = true set 1 second later to prevent damage from other players leaving box at similar time.
+
+---
 v4.2.2  
 02 SEP 2025
 
@@ -51,7 +106,7 @@ v4.2.2
   - AI killing players will no longer be recorded.
   - Removes findInstigator, handleDamage, renames getInstigatorName to getName
   - Splits getWeapon into itself and getWeaponVehicle.
-  - Adds addEventHandlersClient, addEventHandlersServer, hitExplosion and hitPart functions
+  - Adds addEventHandlersClient, hitExplosion and hitPart functions
 
 * Fixes for things that broke between 4.2.0 and 4.2.1
   - Fix insignia not applying on join

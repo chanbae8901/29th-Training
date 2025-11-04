@@ -28,7 +28,7 @@ if (_bino == "") then
 	private _defaultBino = "Binocular"; 
 	
 	_unit addWeapon [_defaultBino, false];
-	uiSleep 0.05;
+	uiSleep 0.5; //from 0.05
 	
 	_unit removeWeapon [_defaultBino, false];
 } else 
@@ -37,7 +37,7 @@ if (_bino == "") then
 	private _binoMags = binocularMagazine _unit;
 
 	_unit removeWeapon [_bino, false];
-	waitUntil { uiSleep 0.1; !isSwitchingWeapon _unit };
+	waitUntil { uiSleep 0.5; !isSwitchingWeapon _unit }; //from 0.1
 	_unit addWeapon [_bino, false];
 
 	{

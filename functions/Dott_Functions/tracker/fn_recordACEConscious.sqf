@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_tracker_fnc_recordACEConscious
- * Date:	8/30/2025
- * Version: 1.2
+ * Date:	9/30/2025
+ * Version: 1.3
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -29,34 +29,26 @@ if (!isPlayer _unit) exitWith { false };
 private _timeStamp = round(serverTime - DOTT_tracker_startTime);
 //need group since ACE3? sets unconscious men to CIV but not the group
 private _eventInfo = [[name _unit, side (group _unit)], _state];
+private _eventType = ACE_CONSCIOUSNESS_NUM;
 if (_state) then 
 {
-	//try to find roadkill, blame any vehicle nearby
-	//[name, side, pos, weapon];	
-	private _instigatorInfo = _unit getVariable "DOTT_lastHit";
-	if !(isNil "_instigatorInfo") then 
+	private _lastHit = _unit getVariable "DOTT_lastHit";
+
+	if !(isNil "_lastHit") then 
 	{
-		_eventInfo pushBack [_instigatorInfo select 0, _instigatorInfo select 1];
-		private _distance = round (_unit distance (_instigatorInfo select 2));		
-		_eventInfo pushBack _distance;
-		_eventInfo pushBack (_instigatorInfo select 3);
-	} else
-	{
-		private _nearbyVehicles = _unit nearEntities ["LandVehicle", 7];
-		if (count _nearbyVehicles == 0) exitWith {}; 
-		private _vehicle = _nearbyVehicles select 0;
-		private _instigator = driver _vehicle;
-		if (isNull _instigator) then { _instigator = (UAVControl _vehicle) select 0 };
-		if (_vehicle isKindOf "StaticWeapon" || isNull _instigator) exitWith {};
-		_eventInfo pushBack [name _instigator, side (group _instigator)];
-		private _distance = round (_unit distance _instigator);		
-		_eventInfo pushBack _distance;
-		_eventInfo pushBack ([_vehicle] call DOTT_tracker_fnc_getName) + " - Roadkill";		
+		_lastHit append ((_unit getVariable "DOTT_hitMap") get _lastHit);
+		//[name, side, distance, weapon, time];	
+		private _hitTime = _lastHit select 4;		
+		_eventInfo append [[_lastHit select 0, _lastHit select 1], round ((getPosASL _unit) distance (_lastHit select 2)), _lastHit select 3];
+		if (_timeStamp - _hitTime > DELAY_TIME) then 
+		{ 
+			_eventType = DELAY_ACE_CONSCIOUSNESS_NUM;
+			_timeStamp = [_timeStamp, _hitTime];
+		};
 	};
 };
 
-private _event = [ACE_CONSCIOUSNESS_NUM, _timeStamp, _eventInfo];
-
-[_event] spawn DOTT_tracker_fnc_saveEvent;
+private _event = [_eventType, _timeStamp, _eventInfo];
+[_event] call DOTT_tracker_fnc_saveEvent;
 
 true

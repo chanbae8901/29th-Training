@@ -6,7 +6,10 @@
 
 pvpfw_chatIntercept_noLogCommands = ["commands", "help"];
 //remember to change !help if you edit this
-pvpfw_chatIntercept_adminCommands = ["arsenal", "heal", "rearm", "reset", "debrief", "goto", "measure", "tickets", "parade"];
+pvpfw_chatIntercept_adminCommands = ["reset", "debrief", "goto", "measure", "tickets", "parade"];
+//admin only IF mid-round, available otherwise
+pvpfw_chatIntercept_restrictedCommands = ["arsenal", "heal", "rearm"];
+
 
 pvpfw_chatIntercept_allCommands = [
 	[
@@ -38,9 +41,9 @@ pvpfw_chatIntercept_allCommands = [
 				case "!ready": {systemChat "!ready: Sets the player's side as ready, and begins the safe start if all player sides are ready"};
 				case "!unready": {systemChat "!unReady: Cancels the ready status for the player's side"};
 				case "!cleanup": {systemChat "!cleanUp: Cleans up bodies (trash can function)"};
-				case "!arsenal": {systemChat "!arsenal: (ADMIN ONLY) Places an ACE arsenal in front of the player"};
-				case "!heal": {systemChat "!heal: (ADMIN ONLY) ACE Heals players. '!heal' for all players, otherwise '!heal SIDE' (blufor, opfor, grnfor)"};
-				case "!rearm": {systemChat "!rearm: (ADMIN ONLY) Rearms players. '!rearm' for all players, otherwise '!rearm SIDE' (blufor, opfor, grnfor)"};
+				case "!arsenal": {systemChat "!arsenal: (RESTRICTED) Places an ACE arsenal in front of the player"};
+				case "!heal": {systemChat "!heal: (RESTRICTED) ACE Heals players. '!heal' for all players, otherwise '!heal SIDE' (blufor, opfor, grnfor)"};
+				case "!rearm": {systemChat "!rearm: (RESTRICTED) Rearms players. '!rearm' for all players, otherwise '!rearm SIDE' (blufor, opfor, grnfor)"};
 				case "!reset": {systemChat "!reset: (ADMIN ONLY) Rearms, heals, and (optionally) teleports players to spawn. !reset' will rearm, heal, and teleport players to spawn. '!reset stay' will rearm and heal them. May also specify side (blufor, opfor, grnfor)"};
 				case "!debrief": {systemChat "!debrief: (ADMIN ONLY) ACE Heals and teleports players for debrief. '!debrief' to teleport all players to Blufor base, '!debrief here' to teleport all players to your position"};
 				case "!goto": {systemChat "!goto: (ADMIN ONLY) Teleports admin to side spawns. '!goto SIDE' (blufor, opfor, grnfor)"};
@@ -229,11 +232,13 @@ pvpfw_chatIntercept_allCommands = [
 			//add ACE arsenal
 			[_arsenal, true] call ace_arsenal_fnc_initBox;
 			
-			//private _playerCurator = getAssignedCuratorLogic player;
-			//{
-			//	_x addCuratorEditableObjects [[_arsenal],true];
-			//}
-			//forEach allCurators;
+			[[_arsenal],
+			{
+				{
+					_x addCuratorEditableObjects [_this, true];
+				}
+				forEach allCurators;
+			}] remoteExec ["spawn", 2];
 
 		}
 	],
@@ -331,8 +336,8 @@ pvpfw_chatIntercept_allCommands = [
 			if (_argument isEqualTo "") then
 			{
 				private _pos = getPosASL res_blu;
-				[[[], true, _pos], DOTT_fnc_flexibleReset ] remoteExec ["spawn"];
-				systemChat "Healing and teleporting all players to Blufor base!";
+				[[true, true, _pos], DOTT_fnc_flexibleReset ] remoteExec ["spawn"];
+				systemChat "Healing, rearming, and teleporting all players to Blufor base!";
 			}
 			else //teleport all players to 15 meters in front of admin
 			{	
@@ -343,9 +348,10 @@ pvpfw_chatIntercept_allCommands = [
 				//use offset x/y but player z (satisfies ASL requirement)
 				private _telePos = [_offset select 0, _offset select 1, _pos select 2];
 				
-				[[[], true, _telePos], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
-				systemChat "Healing and teleporting all players to you!";
+				[[true, true, _telePos], DOTT_fnc_flexibleReset] remoteExec ["spawn"];
+				systemChat "Healing, rearming, and teleporting all players to you!";
 			};
+			lastDebriefTime = time; //for baseObjectsInit Force Parade
 		}
 	],
 	[

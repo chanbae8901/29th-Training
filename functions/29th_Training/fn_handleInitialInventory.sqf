@@ -1,7 +1,7 @@
 /*
  * Name:	Hill_fnc_handleInitialInventory
- * Date:	8/30/2025
- * Version: 1.1
+ * Date:	9/30/2025
+ * Version: 1.2
  * Author:  Hill [29th ID]
  *
  * Description:
@@ -25,7 +25,7 @@ waitUntil {!isNull player};
 
 if (side (group _theClient) == WEST) then {
 	addMissionEventHandler ["PreloadFinished", {
-		call DOTT_fnc_forceParade;
+		[true] call DOTT_fnc_loadParade;
 		removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
 	}];
 };

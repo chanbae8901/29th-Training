@@ -1,12 +1,13 @@
 /*
  * Name:	DOTT_round_fnc_init
- * Date:	8/14/2025
- * Version: 1.0
+ * Date:	9/30/2025
+ * Version: 1.1
  * Author:  Bae [29th ID] modified from Dott [29th ID]
  *
  * Description:
  * Sets up the initial state of the round management system.
  * Sets up scoreboard blocking mid round.
+ * Sets up final checks for player invulnerability and silent weapon bug.
  *
  * Parameter(s): 
  * None
@@ -34,20 +35,6 @@ if (isServer) then
 	publicVariable "timerLength";
 	publicVariable "overtimeEnabled";
 	publicVariable "overtimePeriod";
-	
-	// --- Fix to have countdown ui always show up --- //
-	[] spawn {
-		private _moduleGroup = createGroup sideLogic; 
-		private _sector =  _moduleGroup createUnit [ "ModuleSector_F",
-			[0,0,0], [], 0, "NONE" ];
-		[_sector] call BIS_fnc_moduleSector;
-		_sector setVariable ["sides", [west, east, resistance], true];
-		["BIS_fnc_moduleSector_nameID",-1] call bis_fnc_counter; 
-		waituntil {!isnil "bis_fnc_init"};
-		sleep 2;
-		deleteVehicle _sector;
-		deleteGroup _moduleGroup;
-	}; 
 
 	//prevent scores showing up on right side UI
 	[
@@ -119,6 +106,7 @@ if (hasInterface) then
 	[] spawn 
 	{
 		waitUntil {!isNull (findDisplay 46)};
+		("RscMPProgress" call bis_fnc_rscLayer) cutrsc ["RscMPProgress","plain"]; //fix countdown not showing up if no sectors ever placed
 		findDisplay 46 displayAddEventHandler ["KeyDown", {
 			if (isNull (getAssignedCuratorLogic player)) exitWith {};
 			if (inputAction "CuratorInterface" <= 0) exitWith {};
@@ -133,6 +121,11 @@ if (hasInterface) then
 					if (inputAction "CuratorInterface" > 0) then
 					{
 						if (call DOTT_round_fnc_isRoundActive) then { showScoretable 0 };
+						[] spawn
+						{
+							sleep 0.1;
+							("RscMPProgress" call bis_fnc_rscLayer) cutrsc ["RscMPProgress","plain"]; //fix countdown/sector ui not showing up after zeusing
+						};
 					};
 					false
 				}];	
@@ -173,5 +166,38 @@ if (hasInterface) then
 	] call CBA_fnc_addEventHandler;	
 };
 
+/*---------- Final Checks ---------- */
+if (isServer) then 
+{
+	//check if any player has the silent weapon bug and fix
+	[
+		"DOTT_round_started",
+		{	
+			private _players = allPlayers - entities "HeadlessClient_F";
+			_players = _players select { alive _x }; //only get alive players, probably not needed however
+			{
+				if !(currentWeapon _x == "Throw" || currentWeapon _x == "Put") exitWith {};
+				[_x] remoteExec ["DOTT_fnc_resetWeaponState", _x];
+				private _msg = format ["FIXED: %1 had silent weapon, now fixed.", name _x];
+				[_msg] remoteExec ["systemChat"];
+			}
+			forEach _players;
+		} 
+	] call CBA_fnc_addEventHandler;
+};
+
+if (hasInterface) then 
+{
+	[
+		"DOTT_round_started",
+		{	
+			//the player should not be invulnerable if they are not in spectator
+			if !(!isDamageAllowed player && isNil {missionNamespace getVariable "BIS_EGSpectator_initialized"}) exitWith {};
+			player allowDamage true;
+			private _msg = format ["FIXED: %1 was invulnerable, can now take damage.", name player];
+			[_msg] remoteExec ["systemChat"];
+		} 
+	] call CBA_fnc_addEventHandler;
+};
 
 true

@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_tracker_fnc_getWeapon
- * Date:	9/2/2025
- * Version: 1.1
+ * Date:	9/16/2025
+ * Version: 1.2
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -19,42 +19,69 @@
  * 
  */
 
-//Hand grenade case
-if (_weapon == "Throw") exitWith 
-{
-	//sometimes short is longer than non-short
-	private _fullName = getText (configFile >> "CfgMagazines" >> _magazine >> "displayName");
-	private _shortName = getText (configFile >> "CfgMagazines" >> _magazine >> "displayNameShort");
-
-	if (_shortName isEqualTo "") exitWith { _fullName };
-	[_fullName, _shortName] select (count _shortName < count _fullName);
-};
-
 private _weaponCfg = configFile >> "CfgWeapons" >> _weapon;
-
 _weaponCfg = [_weaponCfg, _weaponCfg >> _muzzle] select (_weapon != _muzzle);
 private _weaponName = getText(_weaponCfg >> "displayName");
 
-//RHS disposable launcher case
-if (getNumber(_weaponCfg >> "rhs_disposable") == 1) exitWith { _weaponName };
+if (isNull _vehicle) then {
+	//Hand grenade case
+	if (_weapon == "Throw") exitWith 
+	{
+		//sometimes short is longer than non-short
+		private _fullName = getText (configFile >> "CfgMagazines" >> _magazine >> "displayName");
+		private _shortName = getText (configFile >> "CfgMagazines" >> _magazine >> "displayNameShort");
 
-//strip unneeded/misleading text if infantry weapon
-if (_weapon == _muzzle) then 
+		if (_shortName isEqualTo "") exitWith { _fullName };
+		[_fullName, _shortName] select (count _shortName < count _fullName);
+	};
+
+	//RHS disposable launcher case
+	if (getNumber(_weaponCfg >> "rhs_disposable") == 1) exitWith { _weaponName };
+
+	//strip unneeded/misleading text if infantry weapon
+	if (_weapon == _muzzle) then 
+	{
+		private _pos = _weaponName find " (";
+		if (_pos != -1) then { _weaponName = _weaponName select [0, _pos] };
+		_pos = _weaponName find " GL";
+		if (_pos != -1) then { _weaponName = _weaponName select [0, _pos] };
+	};
+	private _strs = [_weaponName];
+
+	if (getNumber (configFile >> "CfgAmmo" >> _ammo >> "explosive") > 0) then 
+	{
+		private _shortName = getText (configFile >> "CfgMagazines" >> _magazine >> "displayNameShort");
+		private _longName = getText (configFile >> "CfgMagazines" >> _magazine >> "displayName");
+		private _ammoName = [_shortName, _longName] select (_shortName == "");	
+		_strs pushBack _ammoName; 
+	};
+
+	_strs joinString " - ";
+}
+else 
 {
-	private _pos = _weaponName find " (";
-	if (_pos != -1) then { _weaponName = _weaponName select [0, _pos] };
-	_pos = _weaponName find " GL";
-	if (_pos != -1) then { _weaponName = _weaponName select [0, _pos] };
+	private _strs = [];
+
+	if !(_vehicle isKindOf "StaticWeapon") then 
+	{
+		private _vehicleName = getText (configFile >> "CfgVehicles" >> typeOf _vehicle >> "displayName");
+		private _pos = _vehicleName find " (";
+		if (_pos != -1) then { _vehicleName = _vehicleName select [0, _pos] };	
+		_strs pushBack _vehicleName;
+	};
+
+	_strs pushBack _weaponName;
+
+	if (//getNumber (configFile >> "CfgAmmo" >> _ammo >> "explosive") > 0 || 
+		getText (configFile >> "CfgAmmo" >> _ammo >> "simulation") != "shotBullet" ||
+		//getText (configFile >> "CfgAmmo" >> _ammo >> "weaponType") == "cannon" ||
+		count getArray(_weaponCfg >> "magazineWell") > 0) then 
+	{
+		private _shortName = getText (configFile >> "CfgMagazines" >> _magazine >> "displayNameShort");
+		private _longName = getText (configFile >> "CfgMagazines" >> _magazine >> "displayName");
+		private _ammoName = [_shortName, _longName] select (_shortName == "");	
+		_strs pushBack _ammoName; 
+	};
+
+	_strs joinString " - ";
 };
-private _strs = [_weaponName];
-
-if (getNumber (configFile >> "CfgAmmo" >> _ammo >> "explosive") > 0) then 
-{
-	private _shortName = getText (configFile >> "CfgMagazines" >> _magazine >> "displayNameShort");
-	private _longName = getText (configFile >> "CfgMagazines" >> _magazine >> "displayName");
-	private _ammoName = [_shortName, _longName] select (_shortName == "");	
-	_strs pushBack _ammoName; 
-};
-
-_strs joinString " - ";
-

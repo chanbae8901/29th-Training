@@ -1,8 +1,8 @@
 /*
  * Name:	Hill_fnc_enter_spectator
- * Date:	9/6/2016
- * Version: 1.0
- * Author: Rellikplug AKA: Hill [29th ID]
+ * Date:	9/30/2025
+ * Version: 1.1
+ * Author: Rellikplug AKA: Hill [29th ID] modified by Bae [29th ID]
  *
  * Description: Enters user into spectator mode. 
  * Lets the player leave by pressing reload by calling Hill_fnc_exit_spectator.
@@ -66,7 +66,7 @@ private _startPos = getPosATL player;
 	{ // Check if "Reload" key is pressed
 		call Hill_fnc_exit_spectator;
 	};
-	if ((player distanceSqr _startPos ) > (5 * 5)) exitWith 
+	if (((getPosATL player) distanceSqr _startPos ) > (5 * 5)) exitWith 
 	{
 		call Hill_fnc_exit_spectator;
 	};

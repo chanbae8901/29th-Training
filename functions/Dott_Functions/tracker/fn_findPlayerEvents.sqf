@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_tracker_fnc_findPlayerEvents
- * Date:	8/18/2025
- * Version: 1.0
+ * Date:	9/30/2025
+ * Version: 1.1
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -57,6 +57,16 @@ for "_i" from 0 to (_numEvents - 1) do
                 _knockedUnconscious pushBack _unitIndex;                
             };
         };
+        case DELAY_ACE_CONSCIOUSNESS_NUM: 
+        {
+            private _unitIndex = _eventInfo select 0;
+            if (_unitIndex == _playerIndex) exitWith {_playerEventIndexes pushBack _i};
+
+            private _instigatorIndex = _eventInfo select 2;
+            if (_instigatorIndex != _playerIndex) exitWith {};
+            _playerEventIndexes pushBack _i;
+            _knockedUnconscious pushBack _unitIndex;                
+        };
         case INFANTRY_KILL_NUM: 
         {
             private _unitIndex = _eventInfo select 0;
@@ -74,6 +84,22 @@ for "_i" from 0 to (_numEvents - 1) do
                 if (_instigatorIndex == _playerIndex) exitWith {_playerEventIndexes pushBack _i};                
             };
         };
+
+        case DELAY_KILL_NUM: 
+        {
+            private _unitIndex = _eventInfo select 0;
+            if (_unitIndex == _playerIndex) exitWith {_playerEventIndexes pushBack _i};
+			private _knockedIndex = _knockedUnconscious find _unitIndex;
+			//check if unit was knocked out by player before
+            if (_knockedIndex != -1) exitWith
+            {
+                _playerEventIndexes pushBack _i;
+                _knockedUnconscious deleteAt _knockedIndex;
+            };
+            private _instigatorIndex = _eventInfo select 1;
+            if (_instigatorIndex == _playerIndex) exitWith {_playerEventIndexes pushBack _i};                
+        };
+
         case VEHICLE_KILL_NUM: 
         {
             if (count _eventInfo > 1) then 
