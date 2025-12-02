@@ -65,8 +65,8 @@ if (isServer) then
 			{
 				_this call DOTT_tracker_fnc_recordKill;
 			},
-			_this, 5 //2 was good enough, but 5 to be safe
-		] call CBA_fnc_execAfterNFrames; //remoteExecCall for sending info occurs 1 frame later so wait
+			_this, 0.75 //delay to wait for info from clients
+		] call CBA_fnc_waitAndExecute; //remoteExecCall for sending info occurs 1 frame later so wait
 	}];
 
 	addMissionEventHandler ["EntityRespawned", 

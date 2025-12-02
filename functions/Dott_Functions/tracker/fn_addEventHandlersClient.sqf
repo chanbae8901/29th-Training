@@ -109,7 +109,7 @@ DOTT_lastFireCheck = 0;
 		{
 			private _driver = driver _instigator;
 			private _sideInstigator = _driver call _fn_findSide;
-			if (isNull _driver) exitWith {}; //not sure if this happens but safeguard
+			if (isNull _driver || {_driver isEqualTo _instigator} || {_driver distance _unit > 5}) exitWith {};
 			private _weapon = ([_instigator] call DOTT_tracker_fnc_getName) + " - Roadkill"; //seems no need to use vehicle/objectParent
 			private _instigatorInfo = [_driver call DOTT_tracker_fnc_getName, _sideInstigator, getPosASL _driver, 
 				_weapon, round(serverTime - DOTT_tracker_startTime)];

@@ -32,11 +32,12 @@ TBD
 	- Included new class "FlagReturned"
 
 ---
-v4.2.3  
+v4.2.4  
 1 DEC 2025
 
 ---
 - Removed voice_control script, overwritten by server setting anyways.
+- Fix erronous roadkill in tracker, reduce cases of first shot uncon/kill not being counted.
 
 ---
 v4.2.3  
