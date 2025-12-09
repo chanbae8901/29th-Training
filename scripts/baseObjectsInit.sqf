@@ -70,7 +70,7 @@ blu_ammo addAction [
         [_target, 125] call DOTT_fnc_forceParadeAll;
     }, 
     nil, 
-    1.4, 
+    0.9, 
     true, 
     true, 
     "", 
