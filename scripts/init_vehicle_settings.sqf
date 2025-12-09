@@ -19,29 +19,28 @@ if (isClass (configFile >> "CfgPatches" >> "ace_main")) then
 };
 
 // --- Disable thermal imaging on vehicles ---
-[] spawn 
+addMissionEventHandler ["EntityCreated", 
 {
-	waitUntil {!isNil "disabledTI"};
-
-	if (disabledTI == 0) then 
+	private _objectCreated = _this;
+	if (_objectCreated isKindOf "AllVehicles" && !(_objectCreated isKindOf "Man")) then 
 	{
-		addMissionEventHandler ["EntityCreated", 
-		{
-			private _objectCreated = _this;
-			if (_objectCreated isKindOf "AllVehicles" && !(_objectCreated isKindOf "Man")) then 
-			{
-				_objectCreated disableTIEquipment true;
-			};
-		}];
-
-		{
-			if !(_x isKindOf "Man") then 
-			{
-				_x disableTIEquipment true;
-			};
-		} forEach allMissionObjects "AllVehicles";
+		_objectCreated disableTIEquipment DOTT_disabledTI;
 	};
-};
+}];
+
+{
+	if !(_x isKindOf "Man") then 
+	{
+		_x disableTIEquipment DOTT_disabledTI;
+	};
+} forEach allMissionObjects "AllVehicles";
+
+["DOTT_disablePIPThermalsEvent", "GetInMan", {
+	if !(DOTT_disableTI) exitWith {};
+
+	//some delay is necessary or PiP won't shut off
+	[{ call DOTT_fnc_disablePIPThermals }, [] , 0.1] call CBA_fnc_waitAndExecute;
+}] call CBA_fnc_addBISPlayerEventHandler;
 
 // --- Remove vehicle inventories ---
 addMissionEventHandler ["EntityCreated", 

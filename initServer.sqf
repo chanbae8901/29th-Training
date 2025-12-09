@@ -10,9 +10,6 @@ INDEPENDENT setFriend [WEST, 0];
 [EAST, "29TH_PARADE_EAST"] call BIS_fnc_addRespawnInventory;
 [INDEPENDENT, "29TH_PARADE_INDEPENDENT"] call BIS_fnc_addRespawnInventory;
 
-disabledTI = "disabledTI" call BIS_fnc_getParamValue;
-publicVariable "disabledTI";
-
 artilleryComputer = "artilleryComputer" call BIS_fnc_getParamValue;
 publicVariable "artilleryComputer";
 

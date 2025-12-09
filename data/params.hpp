@@ -1,11 +1,3 @@
-class disabledTI 
-{
-	title = "Allow thermal imaging optics?";
-	values[] = {0,1};
-	texts[] = {"No (Default)","Yes"};
-	default = 0;
-};
-
 class artilleryComputer 
   {
 		title = "Artillery Computer";
