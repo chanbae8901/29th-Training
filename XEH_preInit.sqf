@@ -96,3 +96,12 @@
     true,
 	1
 ] call CBA_fnc_addSetting;
+
+[
+    "DOTT_autoSpectate", 
+    "CHECKBOX", 
+    "Automatic Spectate on Respawn",
+    "29th - General Settings",
+    false,
+	1
+] call CBA_fnc_addSetting;

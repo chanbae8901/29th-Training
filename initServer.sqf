@@ -10,16 +10,6 @@ INDEPENDENT setFriend [WEST, 0];
 [EAST, "29TH_PARADE_EAST"] call BIS_fnc_addRespawnInventory;
 [INDEPENDENT, "29TH_PARADE_INDEPENDENT"] call BIS_fnc_addRespawnInventory;
 
-_autoSpectate = "autoSpectate" call BIS_fnc_getParamValue;
-if (_autoSpectate == 1) then 
-{
-	autoSpectate = true;
-	publicVariable "autoSpectate";
-} else {
-	autoSpectate = false;
-	publicVariable "autoSpectate";
-};
-
 disabledTI = "disabledTI" call BIS_fnc_getParamValue;
 publicVariable "disabledTI";
 
