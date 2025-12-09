@@ -2,7 +2,7 @@ params ["_control"];
 
 private _display = ctrlParent _control;
 
-private _selectedSource = ["server", "mission", "client"] param [[9003, 9002, 9001] find ctrlIDC _control];
+private _selectedSource = "server";
 
 uiNamespace setVariable ["cba_settings_source", _selectedSource];
 

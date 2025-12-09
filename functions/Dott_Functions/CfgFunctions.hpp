@@ -82,9 +82,8 @@ class Dott_Settings
 	class GUIFunctions
 	{
 		file = "functions\Dott_Functions\settings";
-		class openSettingsMenu {};
-		class gui_configure {};
+		class initClient {};
+		class initServer {};		
 		class initDisplayMissionOptions {};
-		class gui_sourceChanged {};
 	};
 };

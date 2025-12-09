@@ -6,7 +6,7 @@
 
 pvpfw_chatIntercept_noLogCommands = ["commands", "help"];
 //remember to change !help if you edit this
-pvpfw_chatIntercept_adminCommands = ["reset", "debrief", "goto", "measure", "tickets", "parade"];
+pvpfw_chatIntercept_adminCommands = ["reset", "debrief", "goto", "measure", "tickets", "parade", "settings"];
 //admin only IF mid-round, available otherwise
 pvpfw_chatIntercept_restrictedCommands = ["arsenal", "heal", "rearm", "cleanup"];
 
@@ -404,5 +404,17 @@ pvpfw_chatIntercept_allCommands = [
 		{
 			[player, 125] spawn DOTT_fnc_forceParadeAll;
 		}
-	]
+	],
+	[
+		"settings",
+		{
+			createDialog ["RscDisplayMissionOptions", true];
+		}
+	],
+	[
+		"showChat",
+		{
+			showChat true;
+		}
+	]	
 ];

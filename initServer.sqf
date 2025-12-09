@@ -60,3 +60,5 @@ addMissionEventHandler ["OnUserAdminStateChanged", {
 		[_unit] spawn Hill_fnc_checkCuratorAssignment;
 	}
 }];
+
+call DOTT_settings_fnc_initServer;
