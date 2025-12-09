@@ -4,8 +4,7 @@
 
 params ["_dead"];
 
-_removeRadiosFromDead = "removeRadiosFromDead" call BIS_fnc_getParamValue;
-if (_removeRadiosFromDead == 1) then
+if (DOTT_removeRadiosOnDeath) then
 {
 	_dead call Hill_fnc_removeRadio;
 };

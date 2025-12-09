@@ -78,3 +78,12 @@
     false,
 	1
 ] call CBA_fnc_addSetting;
+
+[
+    "DOTT_removeRadiosOnDeath", 
+    "CHECKBOX", 
+    "Remove SR radios on death",
+    "29th - Radio Settings",
+    true,
+	1
+] call CBA_fnc_addSetting;
