@@ -37,7 +37,7 @@ v4.2.4
 
 ---
 * Mission Settings Now Adjustable Mid-Mission
-  - Many mission parameters and the sector settings can now be adjusted mid-mission with !settings by the admin.
+  - Many mission parameters and the sector settings can now be adjusted mid-mission with !s or !settings by the admin.
     Settings changed in this GUI will NOT persist between missions, allowing worry-free adjustments of various parameters.
 
 - Removed voice_control script, overwritten by server setting anyways.
