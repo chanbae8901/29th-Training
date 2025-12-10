@@ -47,6 +47,7 @@ v4.2.4
 - !showchat added, which can be used to forcibly show chat in cases where it disappears (ex. bug due to accessing menu).
 - Fix for invulerability conditions changed to if player is visible instead of in spectator.
 - Fix case where swapping kits in arsenal did not cause saved frequencies to be applied on next kit refresh.
+- Removed spectator button from respawn menu.
 
 ---
 v4.2.3  
