@@ -4,7 +4,7 @@
 // E.G. !commands, !COMMANDS, and !CoMmAnDs will all work, but '!help !COMMANDS' will not (unless argument is 'toLower' before hand is the command code)
 // systemChat is the best way to give feedback to the local player executing commands
 
-pvpfw_chatIntercept_noLogCommands = ["commands", "help", "showchat"];
+pvpfw_chatIntercept_noLogCommands = ["commands", "help", "showchat", "radiocheck"];
 //remember to change !help if you edit this
 pvpfw_chatIntercept_adminCommands = ["reset", "debrief", "goto", "measure", "tickets", "parade", "s", "settings"];
 //admin only IF mid-round, available otherwise
@@ -53,6 +53,7 @@ pvpfw_chatIntercept_allCommands = [
 				case "!s";
 				case "!settings": {systemChat "!settings (or !s): (ADMIN ONLY) Opens the settings GUI for global mission settings."};
 				case "!showchat": {systemChat "!showChat: Shows chat display (for bug where chat is hidden after using menu)."};
+				case "!radio": {systemChat "!radioCheck: Checks radio encryption codes for TFAR radios."};
 				default {systemChat "Can't find the specified command! Make sure to enter the command with the '!'"};
 			};
 		}
@@ -424,6 +425,31 @@ pvpfw_chatIntercept_allCommands = [
 		"showChat",
 		{
 			showChat true;
+		}
+	],
+	[
+		"radio",
+		{
+			private _activeSw = call TFAR_fnc_activeSwRadio;
+			if !(isNil "_activeSw") then
+			{
+				private _swCode = _activeSw call TFAR_fnc_getSWRadioCode;
+				player sideChat format ["SW: %1", _swCode];
+			};
+
+			private _activeLr = player call TFAR_fnc_backpackLR;
+			if !(isNil "_activeLr") then
+			{
+				private _lrCode = _activeLr call TFAR_fnc_getLRRadioCode;
+				player sideChat format ["LR: %1", _lrCode];
+			};
+
+			private _vehicleLr = (player call TFAR_fnc_vehicleLr);
+			if !(isNil "_vehicleLr") then
+			{
+				private _vehLrCode = _vehicleLr call TFAR_fnc_getLRRadioCode;
+				player sideChat format ["Vic: %1", _vehLrCode];
+			};
 		}
 	]	
 ];

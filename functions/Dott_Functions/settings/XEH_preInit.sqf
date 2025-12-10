@@ -101,6 +101,15 @@
 	1
 ] call CBA_fnc_addSetting;
 
+[
+    "DOTT_forceSideLRVic", 
+    "CHECKBOX", 
+    ["Force Side LR Vehicle", "Force LR radio in vehicle to be the same side as the player."],
+    RADIO_SETTINGS_CATEGORY,
+    true,
+	1
+] call CBA_fnc_addSetting;
+
 #define GENERAL_SETTINGS_CATEGORY "29th - General Settings"
 
 [

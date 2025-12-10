@@ -40,11 +40,15 @@ v4.2.4
   - Many mission parameters and the sector settings can now be adjusted mid-mission with !s or !settings by the admin.
     Settings changed in this GUI will NOT persist between missions, allowing worry-free adjustments of various parameters.
 
+* Commands
+- !cleanup now a restricted command
+- !showchat added, which can be used to forcibly show chat in cases where it disappears (ex. bug due to accessing menu).
+- !radio added, which can be used to determine if TFAR radio is bugged in cases where people on same frequency cannot hear each other.
 - Removed voice_control script, overwritten by server setting anyways.
 - Fix erronous roadkill in tracker, reduce cases of first shot uncon/kill not being counted.
 - Made arsenal action higher priority to prevent the option being in the middle of teleport options.
-- !cleanup now a restricted command
-- !showchat added, which can be used to forcibly show chat in cases where it disappears (ex. bug due to accessing menu).
+
+
 - Fix for invulerability conditions changed to if player is visible instead of in spectator.
 - Fix case where swapping kits in arsenal did not cause saved frequencies to be applied on next kit refresh.
 - Removed spectator button from respawn menu.

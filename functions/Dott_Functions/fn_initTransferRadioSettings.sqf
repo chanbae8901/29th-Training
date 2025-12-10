@@ -112,16 +112,20 @@ if (hasInterface) then {
 			[_lr, _correctCode] call TFAR_fnc_setLrRadioCode;
 		};
 	}] call CBA_fnc_addPlayerEventHandler;
-};
 
-if (isServer) then {
-	//fix bug entering a unentered vehicle with different faction backpack lr set causes vehicle to have wrong side encrpyption LR
+	//fix bug entering a unentered vehicle with different faction backpack lr set causes vehicle to have wrong side encryption LR
+	//or force vehicle radio to be of same side as player
 	private _fn_fixVehicleRadio = 
 	{
-		private _vehicle = _this;
-		if !(_vehicle isKindOf "AllVehicles" && !(_vehicle isKindOf "Man")) exitWith {};
+		private _radios = player call TFAR_fnc_vehicleLr;
+		if (isNil "_radios") exitWith {};
+		private _vehicle = _radios select 0;
 
-		private _correctSide = _vehicle call TFAR_fnc_getVehicleSide;
+		private _correctSide = switch (DOTT_forceSideLrVic) do
+		{
+			case true: {side group player};
+			case false: {_vehicle call TFAR_fnc_getVehicleSide};
+		};
 		private _encryptionCode = "";
 		switch (_correctSide) do 
 		{
@@ -140,13 +144,9 @@ if (isServer) then {
 		};		
 		_encryptionCode = missionNamespace getVariable [_encryptionCode, ""];
 		
-		private _radios = _vehicle call TFAR_fnc_getVehicleRadios;
-    	{
-      		[_x, _encryptionCode] call TFAR_fnc_setLrRadioCode;
-    	} forEach _radios;
+      	[_radios, _encryptionCode] call TFAR_fnc_setLrRadioCode;
 	};
-	/*
-	addMissionEventHandler ["EntityCreated", { _this call (_thisArgs select 0) }, [_fn_fixVehicleRadio]];
-	{ _x call _fn_fixVehicleRadio } forEach allMissionObjects "AllVehicles";
-	*/
+
+	["DOTT_getInVicRadio", "GetInMan", _fn_fixVehicleRadio] call CBA_fnc_addBISPlayerEventHandler;
+	["DOTT_seatSwitchVicRadio", "SeatSwitchedMan", _fn_fixVehicleRadio] call CBA_fnc_addBISPlayerEventHandler;	
 };
