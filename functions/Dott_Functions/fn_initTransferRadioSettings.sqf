@@ -93,6 +93,7 @@ if (hasInterface) then {
 				{
 					[_x, _correctCode] call TFAR_fnc_setSwRadioCode;
 				};
+				TFAR_core_saved_active_sr_settings = _x call TFAR_fnc_getSwSettings;
 			} forEach _radios;
 		}
 	] call TFAR_fnc_addEventHandler;
