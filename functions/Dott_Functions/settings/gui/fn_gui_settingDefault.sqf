@@ -1,3 +1,5 @@
+#define DEFAULT_INDEX 0
+#define SERVER_TEMP (uiNamespace getVariable "DOTT_settings_serverTemp")
 params ["_controlsGroup", "_setting", "_source", "_currentValue", "_defaultValue"];
 
 private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
@@ -7,8 +9,8 @@ _ctrlDefault ctrlAddEventHandler ["ButtonClick", {
     params ["_ctrlDefault"];
     (_ctrlDefault getVariable "cba_settings_params") params ["_setting", "_source"];
 
-    private _defaultValue = [_setting, "default"] call cba_settings_fnc_get;
-    (uiNamespace getVariable "DOTT_settings_serverTemp") setVariable [_setting, [_defaultValue, ((uiNamespace getVariable "DOTT_settings_serverTemp") getVariable [_setting, [nil, nil]] select 1)]];
+    private _defaultValue = (DOTT_settings_default getVariable _setting) select DEFAULT_INDEX;
+    SERVER_TEMP setVariable [_setting, [_defaultValue, (SERVER_TEMP getVariable [_setting, [nil, nil]] select 1)]];
 
     _ctrlDefault ctrlEnable false;
     ctrlSetFocus (ctrlParent _ctrlDefault displayCtrl 999);

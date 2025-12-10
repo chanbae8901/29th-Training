@@ -1,11 +1,12 @@
+#define SERVER_TEMP (uiNamespace getVariable "DOTT_settings_serverTemp")
+
 {
     private _setting = _x;
 
-
     private _source = "server";
 
-    if (!isNil {uiNamespace getVariable "DOTT_settings_serverTemp" getVariable _setting}) then {
-        (uiNamespace getVariable "DOTT_settings_serverTemp" getVariable _setting) params ["_value", "_priority"];
+    if (!isNil {SERVER_TEMP getVariable _setting}) then {
+        (SERVER_TEMP getVariable _setting) params ["_value", "_priority"];
 
         if (isNil "_value") then {
             _value = [_setting, _source] call cba_settings_fnc_get;

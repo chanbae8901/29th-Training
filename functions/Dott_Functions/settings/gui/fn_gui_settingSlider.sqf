@@ -1,3 +1,4 @@
+#define SERVER_TEMP (uiNamespace getVariable "DOTT_settings_serverTemp")
 
 params ["_controlsGroup", "_setting", "_source", "_currentValue", "_settingData"];
 _settingData params ["_min", "_max", "_trailingDecimals", "_isPercentage"];
@@ -28,7 +29,7 @@ _ctrlSlider ctrlAddEventHandler ["SliderPosChanged", {
     private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl 5121;
     _ctrlSliderEdit ctrlSetText _editText;
 
-    uiNamespace getVariable "DOTT_settings_serverTemp" setVariable [_setting, [_value, ((uiNamespace getVariable "DOTT_settings_serverTemp") getVariable [_setting, [nil, nil]] select 1)]];
+    SERVER_TEMP setVariable [_setting, [_value, (SERVER_TEMP getVariable [_setting, [nil, nil]] select 1)]];
 
 
     private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
@@ -66,7 +67,7 @@ _ctrlSliderEdit ctrlAddEventHandler ["KeyUp", {
     _ctrlSlider sliderSetPosition _value;
     _value = sliderPosition _ctrlSlider;
 
-    uiNamespace getVariable "DOTT_settings_serverTemp" setVariable [_setting, [_value, ((uiNamespace getVariable "DOTT_settings_serverTemp") getVariable [_setting, [nil, nil]] select 1)]];
+    SERVER_TEMP setVariable [_setting, [_value, (SERVER_TEMP getVariable [_setting, [nil, nil]] select 1)]];
 
 
     private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;

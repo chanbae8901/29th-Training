@@ -1,3 +1,5 @@
+#define SERVER_TEMP (uiNamespace getVariable "DOTT_settings_serverTemp")
+
 params ["_control", "_index"];
 
 private _display = ctrlParent _control;
@@ -87,7 +89,7 @@ if !(_display getVariable [_selectedAddon, false]) then {
         {
             private _source = toLower _x;
 
-            private _currentValue = (uiNamespace getVariable "DOTT_settings_serverTemp") getVariable [_setting, [nil, nil]] select 0;
+            private _currentValue = SERVER_TEMP getVariable [_setting, [nil, nil]] select 0;
             private _wasEdited = false;
 
             if (isNil "_currentValue") then {

@@ -1,3 +1,5 @@
+#define SERVER_TEMP (uiNamespace getVariable "DOTT_settings_serverTemp")
+
 params ["_controlsGroup", "_setting", "_source", "_currentValue", "_settingData"];
 _settingData params ["_values", "_labels", "_tooltips"];
 
@@ -39,7 +41,7 @@ _ctrlList ctrlAddEventHandler ["LBSelChanged", {
     (_ctrlList getVariable "cba_settings_params") params ["_setting", "_source", "_lbData"];
 
     private _value = _lbData select _index;
-    uiNamespace getVariable "DOTT_settings_serverTemp" setVariable [_setting, [_value, ((uiNamespace getVariable "DOTT_settings_serverTemp") getVariable [_setting, [nil, nil]] select 1)]];
+    SERVER_TEMP setVariable [_setting, [_value, (SERVER_TEMP getVariable [_setting, [nil, nil]] select 1)]];
 
 
     private _controlsGroup = ctrlParentControlsGroup _ctrlList;

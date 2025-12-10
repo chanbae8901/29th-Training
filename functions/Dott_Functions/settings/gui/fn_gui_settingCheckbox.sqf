@@ -1,3 +1,5 @@
+#define SERVER_TEMP (uiNamespace getVariable "DOTT_settings_serverTemp")
+
 params ["_controlsGroup", "_setting", "_source", "_currentValue", "_settingData"];
 
 private _ctrlCheckbox = _controlsGroup controlsGroupCtrl 5100;
@@ -9,7 +11,7 @@ _ctrlCheckbox ctrlAddEventHandler ["CheckedChanged", {
     (_ctrlCheckbox getVariable "cba_settings_params") params ["_setting", "_source"];
 
     private _value = _state == 1;
-     uiNamespace getVariable "DOTT_settings_serverTemp" setVariable [_setting, [_value, (uiNamespace getVariable "DOTT_settings_serverTemp" getVariable [_setting, [nil, nil]] select 1)]];
+     SERVER_TEMP setVariable [_setting, [_value, (SERVER_TEMP getVariable [_setting, [nil, nil]] select 1)]];
 
 
     private _controlsGroup = ctrlParentControlsGroup _ctrlCheckbox;
