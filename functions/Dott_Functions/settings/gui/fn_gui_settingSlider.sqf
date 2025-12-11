@@ -33,7 +33,7 @@ _ctrlSlider ctrlAddEventHandler ["SliderPosChanged", {
 
 
     private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
-    private _defaultValue = [_setting, "default"] call cba_settings_fnc_get;
+    private _defaultValue = (DOTT_settings_default getVariable _setting) select 0;
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 }];
 
@@ -71,7 +71,7 @@ _ctrlSliderEdit ctrlAddEventHandler ["KeyUp", {
 
 
     private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
-    private _defaultValue = [_setting, "default"] call cba_settings_fnc_get;
+    private _defaultValue = (DOTT_settings_default getVariable _setting) select 0;
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 }];
 
@@ -98,7 +98,7 @@ _ctrlSliderEdit ctrlAddEventHandler ["KillFocus", {
 
 
     private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
-    private _defaultValue = [_setting, "default"] call cba_settings_fnc_get;
+    private _defaultValue = (DOTT_settings_default getVariable _setting) select 0;
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 }];
 
@@ -122,6 +122,6 @@ _controlsGroup setVariable ["cba_settings_fnc_updateUI", {
 
 
     private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
-    private _defaultValue = [_setting, "default"] call cba_settings_fnc_get;
+    private _defaultValue = (DOTT_settings_default getVariable _setting) select 0;
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 }];
