@@ -434,22 +434,25 @@ pvpfw_chatIntercept_allCommands = [
 			private _activeSw = call TFAR_fnc_activeSwRadio;
 			if !(isNil "_activeSw") then
 			{
+				private _radioName = [_activeSw, "tf_parent", "SR"] call TFAR_fnc_getWeaponConfigProperty; 
 				private _swCode = _activeSw call TFAR_fnc_getSWRadioCode;
-				_strs pushBack format ["SW: %1", _swCode];
+				_strs pushBack format ["%1: %2", _radioName, _swCode];
 			};
 
 			private _activeLr = player call TFAR_fnc_backpackLR;
 			if !(isNil "_activeLr") then
 			{
+				private _radioName = [typeOf (_activeLr select 0), "displayName", "LR"] call TFAR_fnc_getVehicleConfigProperty; 
 				private _lrCode = _activeLr call TFAR_fnc_getLRRadioCode;
-				_strs pushBack format ["LR: %1", _lrCode];
+				_strs pushBack format ["%1: %2", _radioName, _lrCode];
 			};
 
 			private _vehicleLr = (player call TFAR_fnc_vehicleLr);
 			if !(isNil "_vehicleLr") then
 			{
+				private _radioName = [typeOf (_vehicleLr select 0), "displayName", "Vic"] call TFAR_fnc_getVehicleConfigProperty; 
 				private _vehLrCode = _vehicleLr call TFAR_fnc_getLRRadioCode;
-				_strs pushBack format ["Vic: %1", _vehLrCode];
+				_strs pushBack format ["%1: %2", _radioName, _vehLrCode];
 			};
 
 			player sideChat (_strs joinString " | ");
