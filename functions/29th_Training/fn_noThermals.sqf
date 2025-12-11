@@ -25,11 +25,11 @@
 if (!hasInterface) exitWith {false};
 private _layer = "Hill_blockThermals"; 
 
-if (currentVisionMode player == 2) then 
+if (currentVisionMode player == 2 && DOTT_disableTI) then 
 {
   _layer	cutText [MESSAGE, "BLACK", FADE_IN_TIME];
   playSound "FD_CP_Not_Clear_F";
-  waituntil {sleep 0.1; currentVisionMode player != 2};
+  waituntil {sleep 0.1; (currentVisionMode player == 2 && DOTT_disableTI)};
   _layer cutText ["", "PLAIN"];
 };
 

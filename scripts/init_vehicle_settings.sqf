@@ -20,14 +20,14 @@ addMissionEventHandler ["EntityCreated",
 	private _objectCreated = _this;
 	if (_objectCreated isKindOf "AllVehicles" && !(_objectCreated isKindOf "Man")) then 
 	{
-		_objectCreated disableTIEquipment DOTT_disabledTI;
+		_objectCreated disableTIEquipment DOTT_disableTI;
 	};
 }];
 
 {
 	if !(_x isKindOf "Man") then 
 	{
-		_x disableTIEquipment DOTT_disabledTI;
+		_x disableTIEquipment DOTT_disableTI;
 	};
 } forEach allMissionObjects "AllVehicles";
 
