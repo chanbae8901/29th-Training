@@ -36,7 +36,7 @@ v4.2.4
 10 DEC 2025
 
 ---
-* Mission Settings Now Adjustable Mid-Mission
+* Mission Settings Now Adjustable Mid-Mission (credit to CBA, modified their files)
   - Many mission parameters and the sector settings can now be adjusted mid-mission with !s or !settings by the admin.
     Settings changed in this GUI will NOT persist between missions, allowing worry-free adjustments of various parameters.
 

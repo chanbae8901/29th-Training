@@ -35,6 +35,9 @@ _ctrlSlider ctrlAddEventHandler ["SliderPosChanged", {
     private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
     private _defaultValue = (DOTT_settings_default getVariable _setting) select 0;
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
+
+    private _ctrlSettingName = _controlsGroup controlsGroupCtrl 5010;
+    _ctrlSettingName ctrlSetTextColor [0.95, 0.95, 0.1, 1];
 }];
 
 private _editText = if (_isPercentage) then {
@@ -73,6 +76,9 @@ _ctrlSliderEdit ctrlAddEventHandler ["KeyUp", {
     private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
     private _defaultValue = (DOTT_settings_default getVariable _setting) select 0;
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
+
+    private _ctrlSettingName = _controlsGroup controlsGroupCtrl 5010;
+    _ctrlSettingName ctrlSetTextColor [0.95, 0.95, 0.1, 1];    
 }];
 
 _ctrlSliderEdit ctrlAddEventHandler ["KillFocus", {
@@ -100,6 +106,9 @@ _ctrlSliderEdit ctrlAddEventHandler ["KillFocus", {
     private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
     private _defaultValue = (DOTT_settings_default getVariable _setting) select 0;
     _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
+
+    private _ctrlSettingName = _controlsGroup controlsGroupCtrl 5010;
+    _ctrlSettingName ctrlSetTextColor [0.95, 0.95, 0.1, 1];
 }];
 
 
