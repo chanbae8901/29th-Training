@@ -107,7 +107,14 @@
     ["Force Side LR Vehicle", "Force LR radio in vehicle to be the same side as the player."],
     RADIO_SETTINGS_CATEGORY,
     true,
-	1
+	1,
+    {
+        if (hasInterface) then 
+        {
+            if (!alive player || isNull (objectParent player)) exitWith {};
+            #include "..\fn_fixVehicleRadio.inc.sqf"
+        };
+    }
 ] call CBA_fnc_addSetting;
 
 #define GENERAL_SETTINGS_CATEGORY "29th - General Settings"
