@@ -92,7 +92,13 @@ if !(isNil "_lastHit" && !_override) then
 {
 	if !(isNull _instigator) then 
 	{
-		_lastHit = [_instigator call DOTT_tracker_fnc_getName, side (group _instigator)];
+		private _side = side (group _instigator);
+		if (_side == sideUnknown) then //dead man
+		{
+			//might work improperly if zeus changed player side
+			_side = getNumber (configFile >> "CfgVehicles" >> typeOf _instigator >> "side") call BIS_fnc_sideType;
+		};
+		_lastHit = [_instigator call DOTT_tracker_fnc_getName, _side];
 		private _hitInfo = (_unit getVariable "DOTT_hitMap") get _lastHit;
 		if (isNil "_hitInfo") then { _hitInfo = [getPosASL _instigator, "?", _timeStamp] }; 
 		_lastHit append (_hitInfo);
