@@ -260,7 +260,7 @@
     {
         if (hasInterface) then
         {
-            if (!_this) exitWith {showScoretable -1};
+            if (!_this) exitWith { removeMissionEventHandler["Draw2D", disableRespawnScoreboard]; showScoretable -1 };
             if !(call DOTT_round_fnc_isRoundActive) exitWith {};
 			if !(isNull (uiNamespace getVariable ["RscDisplayCurator", displayNull])) exitWith {};
 			if (!isNil { missionNamespace getVariable "BIS_EGSpectator_initialized" } && DOTT_limitSpectator == 0) exitWith {};
