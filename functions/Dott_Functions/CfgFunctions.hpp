@@ -1,3 +1,4 @@
+//no #include defines needed, inherited from description.ext
 class Dott_Functions
 {
 	tag = "DOTT";
@@ -7,17 +8,22 @@ class Dott_Functions
 		class displayMsg {};
 		class ticketAdd {};
 		class ticketCount {};
-		class flexibleReset {};
 		class fullSetUnitLoadout {};
 		class resetWeaponState {};
-		class checkNonCombatLoadout {};
-		class loadParade {};
-		class forceParadeAll {};
-		class initDefaultLoadouts {};
 		class diag_log {};
 		class addDiaryRecord {};
 		class disablePIPThermals {};
 		class initTransferRadioSettings {};
+
+		#ifdef DOTT_TRAINING
+
+		class loadParade {};
+		class forceParadeAll {};
+		class initDefaultLoadouts {};
+		class flexibleReset {};
+		class checkNonCombatLoadout {};
+
+		#endif
 	};
 };
 
@@ -44,6 +50,8 @@ class Dott_Round
 		class roundEvents {};
 	};
 };
+
+#ifdef DOTT_TRAINING
 
 class Dott_Tracker
 {
@@ -86,3 +94,24 @@ class Dott_Settings
 		class initDisplayMissionOptions {};
 	};
 };
+
+#endif
+
+#ifdef DOTT_EVENT
+
+class Dott_Event
+{
+	tag = "DOTT_event";
+	class RoundFunctions
+	{
+		file = "functions\Dott_Functions\event";
+		class init {};		
+		class game {};
+		class aliveCheck {};
+		class respawn {};
+		class flagActions {};
+		class checkWinCondition {};
+	};
+};
+
+#endif

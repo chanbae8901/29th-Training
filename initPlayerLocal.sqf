@@ -1,3 +1,4 @@
+#include "data\defines.hpp"
 /*
 Executed locally (only on client) when player joins mission (includes both mission start and JIP)
 */
@@ -31,8 +32,39 @@ if(_didJIP) then
 	};
 };
 
+#ifdef DOTT_TRAINING
 
 [_theClient] spawn Hill_fnc_handleInitialInventory;
+
+//Init chat command system
+[] execVM "module_chatIntercept\init.sqf";
+
+[] spawn DOTT_fnc_initDefaultLoadouts;
+
+//Add actions to spectator terminals, garbage cans, and ammo boxes
+execVM "scripts\baseObjectsInit.sqf";
+
+#endif
+
+#ifdef DOTT_EVENT
+
+//Prevent error
+[player, [missionNamespace, "Current Inventory"]] call BIS_fnc_saveInventory;
+[player, ["missionNamespace:Current Inventory"]] call BIS_fnc_setRespawnInventory;
+
+//EVENT: Hide map markers belonging to opposing sides
+{
+    _x setMarkerAlphaLocal 0
+} count (allMapMarkers select {
+    private _marker = _x;
+    !([east,west,civilian,independent] select {_marker find toLower str _x != -1} isEqualTo []) && 
+    {
+        _x find toLower str playerSide == -1
+    }
+});
+
+//baseobjectsinit moved to init.sqf
+#endif
 
 [_theClient] execVM "scripts\player_arsenal_handlers.sqf";
 
@@ -52,9 +84,6 @@ if (!isNumber (missionConfigFile >> "respawnButton") || {getNumber (missionConfi
 	};
 };
 
-//Add actions to spectator terminals, garbage cans, and ammo boxes
-execVM "scripts\baseObjectsInit.sqf";
-
 // ==============================================================================
 
 //Draw little skulls each time a player dies.  Seen only by Zeus.
@@ -73,11 +102,6 @@ _theClient call BIS_fnc_drawCuratorDeaths;
 
 //Run Curator (Zeus) Setup
 execVM "scripts\init_curators.sqf";
-
-//Init chat command system
-[] execVM "module_chatIntercept\init.sqf";
-
-[] spawn DOTT_fnc_initDefaultLoadouts;
 
 /*
 //things break if player dies before load in finished

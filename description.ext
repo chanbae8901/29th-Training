@@ -1,3 +1,5 @@
+#include "data\defines.hpp"
+
 dev = "Rellikplug/29th Engineers";
 
 class Header {
@@ -40,6 +42,32 @@ showUAVFeed = 1;
 
 taskManagement_propagate = 1;
 
+#include "data\cfgEventHandlers.hpp"
+
+class CfgNotifications 
+{
+	#include "data\cfgNotifications.hpp"
+};
+
+class Params
+{
+	#include "data\params.hpp"
+};
+
+#ifdef DOTT_TRAINING
+
+#include "data\gui.hpp"
+
+class CfgRespawnInventory
+{
+	#include "data\cfgInventories.hpp"
+};
+
+class CfgRoles
+{
+	#include "data\cfgRoles.hpp"
+};
+
 allowFunctionsRecompile = 1;
 class CfgFunctions 
 {
@@ -58,26 +86,12 @@ class CfgFunctions
 	};
 };
 
-#include "data\cfgEventHandlers.hpp"
+#endif
 
-class CfgNotifications 
-{
-	#include "data\cfgNotifications.hpp"
-};
+#include "data\cfgNotifications.hpp"
 
-class Params
-{
-	#include "data\params.hpp"
-};
+#ifdef DOTT_EVENT
 
-class CfgRespawnInventory
-{
-	#include "data\cfgInventories.hpp"
-};
+#include "data\CfgDebriefing.hpp"
 
-class CfgRoles
-{
-	#include "data\cfgRoles.hpp"
-};
-
-#include "data\gui.hpp"
+#endif
