@@ -35,6 +35,10 @@ private _msgText = format [
 	false
 ] remoteExecCall ["DOTT_fnc_displayMsg"];
 
+DOTT_safeStartActive = true;
+publicVariable "DOTT_safeStartActive";
+["DOTT_round_safeStartBegin", []] call CBA_fnc_globalEvent;
+
 [_safeStartTime] call DOTT_round_fnc_initSafeStartHelper;
 
 true

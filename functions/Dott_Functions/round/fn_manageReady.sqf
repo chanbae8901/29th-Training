@@ -33,6 +33,9 @@ switch (_side) do
 	case east: { opfReady = _isReady; publicVariable "opfReady"; _readyStr = "Opfor";};
 	case resistance: { grnReady = _isReady; publicVariable "grnReady"; _readyStr = "Grnfor"; };
 };
+
+["DOTT_round_sideReadyChanged", _this] call CBA_fnc_globalEvent;
+
 if(_isReady) then
 {
 	_readyStr = _readyStr + " ready!";

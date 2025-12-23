@@ -12,45 +12,200 @@ if (isNil "DOTT_event_endingObject") then
 	systemChat "WARNING: Admin object (endingObject) not found!";
 };
 
-if (isNil "DOTT_round_safeStartHappened") then //add ready actions and removal events if safe start didn't happen yet
-{
-	{ 
-		_x addAction ["<t color='#bf3eff'>Side Ready</t>", {(_this select 3) call DOTT_round_fnc_manageReady}, [playerSide, true], 1.5, true, true, "", "true", 8];
-		_x addAction ["<t color='#bf3eff'>Ready All Sides (Admin)</t>", {call DOTT_round_fnc_initSafeStart}, nil, 1.5, true, true, "", "serverCommandAvailable '#lock'", 8];
-	}
-	forEach DOTT_event_timerObjects;
+DOTT_event_currentState = 
+	switch (true) do
+	{
+		case (call DOTT_round_fnc_isRoundActive): {2};
+		case (!isNil "DOTT_round_safeStartHappened"): {1};
+		default {0};
+	};
 
-	[
-		"DOTT_round_sideReady",
+//these may not be needed if we always set state on event calls, but just in case
+["DOTT_round_started", 
+	{
+		DOTT_event_currentState = 2;
+	} 
+] call CBA_fnc_addEventHandler;
+
+["DOTT_round_safeStartBegin", 
+	{
+		DOTT_event_currentState = 1;
+	} 
+] call CBA_fnc_addEventHandler;
+
+["DOTT_round_safeStartAborted", 
+	{
+		DOTT_event_currentState = 0;
+	} 
+] call CBA_fnc_addEventHandler;
+
+
+/*** Side Ready ***/
+private _fnc_addSideReadyActions =
+	{
 		{
-			private _side = _this select 0;
-			if (_side != playerSide) exitWith {};
+			private _actionId = _x addAction ["<t color='#bf3eff'>Side Ready</t>", {(_this select 3) call DOTT_round_fnc_manageReady}, [playerSide, true], 1.5, true, true, "", "true", 8];
+			_x setVariable ["DOTT_sideReadyActionId", _actionId];
+		} forEach DOTT_event_timerObjects;
+	};
+
+private _fnc_removeSideReadyActions =
+	{
+		{
+			private _actionId = _x getVariable ["DOTT_sideReadyActionId", -1];
+			if (_actionId != -1) then
 			{
-				_x removeAction 0; //remove ready action from flags when player's side is ready
-			} forEach DOTT_event_timerObjects;						
-		} 
-	] call CBA_fnc_addEventHandler;
+				_x removeAction _actionId;
+			};
+		} forEach DOTT_event_timerObjects;
+	};
 
-	DOTT_event_endingObject addAction ["<t color='#bf3eff'>Ready All Sides (Admin)</t>", {call DOTT_round_fnc_initSafeStart}, nil, 1.5, true, true, "", "serverCommandAvailable '#lock'", 8];
-
-	[
-		"DOTT_round_safeStartBegin", 
-		{
-			{ removeAllActions _x } forEach DOTT_event_timerObjects;
-			removeAllActions DOTT_event_endingObject; //remove ready all sides
-			DOTT_event_endingObject addAction ["<t color='#bf3eff'>Force End Safestart (Admin)</t>", {[DOTT_event_timerLength] call DOTT_round_fnc_start}, nil, 1.5, true, true, "", "serverCommandAvailable '#lock'", 8];
-		} 
-	] call CBA_fnc_addEventHandler;	
-};
-
-if (!isNil "DOTT_round_safeStartHappened" && !(call DOTT_round_fnc_isRoundActive)) then //if JIP after safestart happened but before round start
+if (DOTT_event_currentState == 0) then
 {
-	DOTT_event_endingObject addAction ["<t color='#bf3eff'>Force End Safestart (Admin)</t>", {[DOTT_event_timerLength] call DOTT_round_fnc_start}, nil, 1.5, true, true, "", "serverCommandAvailable '#lock'", 8];
+	private _playerSideReady = [opfReady, bluReady, grnReady] select (playerSide call BIS_fnc_sideID);
+	if !(_playerSideReady) then { call _fnc_addSideReadyActions };
 };
 
+if (DOTT_event_currentState < 2) then
+{
+	[
+		"DOTT_round_sideReadyChanged",
+		{
+			params ["_side", "_isReady"];
+			_thisArgs params ["_fnc_addSideReadyActions", "_fnc_removeSideReadyActions"];
+			if (_side != playerSide) exitWith {};
+			if (_isReady) then 
+			{ 
+				call _fnc_removeSideReadyActions; 
+			} else 
+			{ 
+				call _fnc_addSideReadyActions; 
+			};				
+		}, [_fnc_addSideReadyActions, _fnc_removeSideReadyActions]
+	] call CBA_fnc_addEventHandlerArgs;
+};
+
+/*** Ready All Sides (Admin) ***/
+private _fnc_addAllReadyActions =
+{
+	private _fnc_readyAllSides = 
+	{
+		[west, true] call DOTT_round_fnc_manageReady;
+		[east, true] call DOTT_round_fnc_manageReady;
+		[resistance, true] call DOTT_round_fnc_manageReady;
+	};
+
+	{
+		private _actionId = _x addAction ["<t color='#bf3eff'>Ready All Sides (Admin)</t>", _this select 3, _fnc_readyAllSides, 1.5, true, true, "", "serverCommandAvailable '#lock'", 8];
+		_x setVariable ["DOTT_allReadyActionId", _actionId];
+	} forEach DOTT_event_timerObjects;
+
+	private _actionId = DOTT_event_endingObject addAction ["<t color='#bf3eff'>Ready All Sides (Admin)</t>", _this select 3, _fnc_readyAllSides, 1.5, true, true, "", "serverCommandAvailable '#lock'", 8];
+	DOTT_event_endingObject setVariable ["DOTT_allReadyActionId", _actionId];
+};
+
+private _fnc_removeAllReadyActions =
+{
+	{
+		private _actionId = _x getVariable ["DOTT_allReadyActionId", -1];
+		if (_actionId != -1) then
+		{
+			_x removeAction _actionId;
+		};
+	} forEach DOTT_event_timerObjects;
+
+	private _actionId = DOTT_event_endingObject getVariable ["DOTT_allReadyActionId", -1];
+	if (_actionId != -1) then
+	{
+		DOTT_event_endingObject removeAction _actionId;
+	};
+};
+
+if (DOTT_event_currentState == 0) then
+{
+	call _fnc_addAllReadyActions;
+};
+
+[
+	"DOTT_round_safeStartBegin", 
+	_fnc_removeAllReadyActions
+] call CBA_fnc_addEventHandler;
+
+[
+	"DOTT_round_safeStartAborted", 
+	_fnc_addAllReadyActions
+] call CBA_fnc_addEventHandler;
+
+/*** Cancel Safestart (Admin) ***/
+private _fnc_unreadyAllSides = 
+{
+	[west, false] call DOTT_round_fnc_manageReady;
+	[east, false] call DOTT_round_fnc_manageReady;
+	[resistance, false] call DOTT_round_fnc_manageReady;
+};
+#define ADD_CANCEL_SAFESTART_ACTION (DOTT_cancelSafeStartId = DOTT_event_endingObject addAction ["<t color='#bf3eff'>Cancel Safestart (Admin)</t>", _this select 3, _fnc_unreadyAllSides, 1.5, true, true, "", "serverCommandAvailable '#lock'", 8])
+#define REMOVE_CANCEL_SAFESTART_ACTION (DOTT_event_endingObject removeAction DOTT_cancelSafeStartId)
+
+if (DOTT_event_currentState == 1) then
+{
+	ADD_CANCEL_SAFESTART_ACTION;
+};
+
+[
+	"DOTT_round_safeStartBegin", 
+	{
+		private _fnc_unreadyAllSides = _thisArgs;
+		ADD_CANCEL_SAFESTART_ACTION;
+	}, _fnc_unreadyAllSides
+] call CBA_fnc_addEventHandlerArgs;
+
+[
+	"DOTT_round_safeStartAborted", 
+	{
+		REMOVE_CANCEL_SAFESTART_ACTION;
+	} 
+] call CBA_fnc_addEventHandler;
+
+[
+	"DOTT_round_started", 
+	{
+		REMOVE_CANCEL_SAFESTART_ACTION;
+	}
+] call CBA_fnc_addEventHandler;
+
+/*** Force End Safestart (Admin) ***/
+#define ADD_FORCE_END_SAFESTART_ACTION (DOTT_forceEndSafeStartId = DOTT_event_endingObject addAction ["<t color='#bf3eff'>Force End Safestart (Admin)</t>", {[DOTT_event_timerLength] call DOTT_round_fnc_start}, nil, 1.5, true, true, "", "serverCommandAvailable '#lock'", 8])
+#define REMOVE_FORCE_END_SAFESTART_ACTION (DOTT_event_endingObject removeAction DOTT_forceEndSafeStartId)
+
+if (DOTT_event_currentState == 1) then
+{
+	ADD_FORCE_END_SAFESTART_ACTION;
+};
+
+[
+	"DOTT_round_safeStartBegin", 
+	{
+		ADD_FORCE_END_SAFESTART_ACTION;
+	} 
+] call CBA_fnc_addEventHandler;
+
+[
+	"DOTT_round_safeStartAborted", 
+	{
+		REMOVE_FORCE_END_SAFESTART_ACTION;
+	} 
+] call CBA_fnc_addEventHandler;
+
+[
+	"DOTT_round_started", 
+	{
+		REMOVE_FORCE_END_SAFESTART_ACTION;
+	}
+] call CBA_fnc_addEventHandler;
+
+/*** Ending Actions (Admin) ***/
 private _fnc_addEndingActions = 
 {
-	removeAllActions DOTT_event_endingObject;
 	DOTT_event_endingObject addAction ["<t color='#bf3eff'>Neutral Ending (Admin)</t>", 
 	{ 
 		[true] call DOTT_event_fnc_game; 
@@ -76,7 +231,7 @@ private _fnc_addEndingActions =
 	forEach _sides; 			
 };
 
-if (call DOTT_round_fnc_isRoundActive) then //if JIP after round start
+if (DOTT_event_currentState == 2) then //if JIP after round start
 {
 	call _fnc_addEndingActions;
 } else
