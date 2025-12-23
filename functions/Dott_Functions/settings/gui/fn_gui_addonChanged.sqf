@@ -135,6 +135,9 @@ if !(_display getVariable [_selectedAddon, false]) then {
                 case "SLIDER": {
                     _display ctrlCreate ["DOTT_settings_Row_Slider", 5000, _ctrlOptionsGroup]
                 };
+                case "TIME": {
+                    _display ctrlCreate ["DOTT_settings_Row_Time", 5000, _ctrlOptionsGroup]
+                };                
                 default {controlNull};
             };
 
@@ -157,6 +160,9 @@ if !(_display getVariable [_selectedAddon, false]) then {
                     } else {
                         _defaultValue
                     };
+                };
+                case "TIME": {
+                    _defaultValue call CBA_fnc_formatElapsedTime
                 };
                 default {_defaultValue};
             };

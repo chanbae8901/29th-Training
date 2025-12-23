@@ -5,7 +5,7 @@
 		uiNamespace setVariable [_scriptName, compile preprocessFile _filePath];
 	};
 }
-forEach ["gui_settingCheckbox", "gui_settingSlider", "gui_settingList"];
+forEach ["gui_settingCheckbox", "gui_settingSlider", "gui_settingList", "gui_settingTime"];
 
 {
 	private _scriptName = format ["DOTT_settings_fnc_%1", _x];
