@@ -26,7 +26,7 @@ if (hasInterface) then {
 		if (_unit != player) exitWith {}; //don't do in remote control case		
 		private _sw = call TFAR_fnc_activeSwRadio;
 		if (isNil "_sw") exitWith {};
-		TFAR_core_saved_active_sr_settings = _sw call TFAR_fnc_getSwSettings;
+		DOTT_saved_active_sr_settings = _sw call TFAR_fnc_getSwSettings;
 	};
 
 	private _fn_saveLrSettings = 
@@ -35,7 +35,7 @@ if (hasInterface) then {
 		if (_unit != player) exitWith {}; 	
 		private _lr = player call TFAR_fnc_backpackLr;
 		if (isNil "_lr") exitWith {};
-		TFAR_core_saved_active_lr_settings = _lr call TFAR_fnc_getLrSettings;
+		DOTT_saved_active_lr_settings = _lr call TFAR_fnc_getLrSettings;
 	};
 
 	{[_x, _fn_saveSwSettings] call CBA_fnc_addEventHandler} forEach [
@@ -62,28 +62,34 @@ if (hasInterface) then {
 
 			private _sw = call TFAR_fnc_activeSwRadio;
 			if (_sw isEqualTo _radio) exitWith {
-				TFAR_core_saved_active_sr_settings = _sw call TFAR_fnc_getSwSettings;
+				DOTT_saved_active_sr_settings = _sw call TFAR_fnc_getSwSettings;
 			};
 
 			private _lr = call TFAR_fnc_activeLrRadio;
 			if (_lr isEqualTo _radio) exitWith {
-				TFAR_core_saved_active_lr_settings = _lr call TFAR_fnc_getLrSettings;
+				DOTT_saved_active_lr_settings = _lr call TFAR_fnc_getLrSettings;
 			};
 		}
 	] call CBA_fnc_addEventHandler;
 
-	/*Check if after radio settings configured by TFAR that side encryption is correct, as even though we need to check anyway due to code in this file,
+	/* Also check if after radio settings configured by TFAR that side encryption is correct, as even though we need to check anyway due to code in this file,
 	TFAR has a bug that it will set the wrong side in certain conditions regardless. */
 
 	//Code in event handler referenced from
 	//https://github.com/michail-nikolaev/task-force-arma-3-radio/blob/878f98e67496ccd278f39b9bd7c092fe9b7be449/addons/core/functions/fnc_getDefaultRadioSettings.sqf#L62
+	#define TFAR_CODE_OFFSET 4
+
 	[
-		"fixCode",
+		"loadSwSettings",
 		"OnRadiosReceived",
 		{
 			params ["_unit","_radios"];
 			if (_unit != player) exitWith {}; 
+
 			{
+				private _settings = DOTT_saved_active_sr_settings;
+				if (isNil "_settings") then { _settings = _x call TFAR_fnc_getSwSettings };
+
 				private _correctCode = [_x, "tf_encryptionCode", ""] call TFAR_fnc_getWeaponConfigProperty;
 				if (_correctCode == "tf_guer_radio_code") then {_correctCode = "tf_independent_radio_code"}; //doesn't look like its needed anymore 
 				_correctCode = missionNamespace getVariable [_correctCode, ""];
@@ -91,9 +97,10 @@ if (hasInterface) then {
 				private _currentCode = _x call TFAR_fnc_getSwRadioCode; //OnRadiosReceived for Sw radios only
 				if (_currentCode != _correctCode) then 
 				{
-					[_x, _correctCode] call TFAR_fnc_setSwRadioCode;
+					_settings set [TFAR_CODE_OFFSET, _correctCode];
 				};
-				TFAR_core_saved_active_sr_settings = _x call TFAR_fnc_getSwSettings;
+
+				[_x, _settings] call TFAR_fnc_setSwSettings;
 			} forEach _radios;
 		}
 	] call TFAR_fnc_addEventHandler;
@@ -102,6 +109,10 @@ if (hasInterface) then {
 	{
 		private _lr = player call TFAR_fnc_backpackLr;
 		if (isNil "_lr") exitWith {};
+
+		private _settings = DOTT_saved_active_lr_settings;
+		if (isNil "_settings") then { _settings = _lr call TFAR_fnc_getLrSettings };
+
 		private _correctCode = [typeOf (_lr select 0), "tf_encryptionCode", ""] call TFAR_fnc_getVehicleConfigProperty;
 		if (_correctCode == "tf_guer_radio_code") then {_correctCode = "tf_independent_radio_code"}; //doesn't look like its needed anymore 
 		_correctCode = missionNamespace getVariable [_correctCode, ""];
@@ -109,8 +120,10 @@ if (hasInterface) then {
 		private _currentCode = _lr call TFAR_fnc_getLrRadioCode;
 		if (_currentCode != _correctCode) then 
 		{
-			[_lr, _correctCode] call TFAR_fnc_setLrRadioCode;
+			_settings set [TFAR_CODE_OFFSET, _correctCode];
 		};
+
+		[_lr, _settings] call TFAR_fnc_setLrSettings;
 	}] call CBA_fnc_addPlayerEventHandler;
 
 	private _fn_fixVehicleRadio = 
