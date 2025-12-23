@@ -167,6 +167,20 @@ if (hasInterface) then
 	] call CBA_fnc_addEventHandler;	
 };
 
+/*---------- Safestart Countdown Timer ---------- */
+[
+	"DOTT_round_safeStartBegin",
+	{
+		[DOTT_safeStartTime] call BIS_fnc_countdown;
+	}
+] call CBA_fnc_addEventHandler;
+
+[
+	"DOTT_round_safeStartAborted",
+	{
+		[-1] call BIS_fnc_countdown;
+	}
+] call CBA_fnc_addEventHandler;
 /*---------- Final Checks ---------- */
 if (isServer) then 
 {
