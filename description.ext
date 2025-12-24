@@ -1,23 +1,39 @@
 #include "data\defines.hpp"
 
-dev = "Rellikplug/29th Engineers";
+#ifdef DOTT_EVENT
+
+OnLoadName = "YOUR MISSION NAME HERE"; //CHANGE THIS
+briefingName = "YOUR MISSION NAME HERE"; //CHANGE THIS
+// =========================== Loading Screen
+Author = "YOUR NAME HERE"; //CHANGE THIS
+OnLoadMission = "YOUR DESCRIPTION HERE"; //CHANGE THIS
+OverviewText = "YOUR DESCRIPTION HERE"; //CHANGE THIS
+
+#endif
+
+/***** IGNORE BELOW THIS LINE FOR EVENT UNLESS YOU KNOW WHAT YOU ARE DOING *****/
+
+#ifdef DOTT_TRAINING
+
+OnLoadName = "29th Training V4.2.5";
+briefingName = "29th Training V4.2.5";
+// =========================== Loading Screen
+Author = "29th Engineers";
+OnLoadMission = "<t align='center'><t size='1.5' color='#2A1ADC'>BLUFOR</t><t size='1.5' color='#FFFFFF'> | </t><t size='1.5' color='#B40404'>OPFOR</t><t size='1.5' color='#FFFFFF'> | </t><t size='1.5' color='#088A08'>GRNFOR</t><br/><t size='1.25' color='#A09FAB'> Training Sandbox</t><br/>Ever Forward!</t>";
+OverviewText = "<t align='center'><t size='1.5' color='#2A1ADC'>BLUFOR</t><t size='1.5' color='#FFFFFF'> | </t><t size='1.5' color='#B40404'>OPFOR</t><t size='1.5' color='#FFFFFF'> | </t><t size='1.5' color='#088A08'>GRNFOR</t><br/><t size='1.25' color='#A09FAB'> Training Sandbox</t><br/>Ever Forward!</t>";
+
+#endif
+
+dev = "29th Engineers";
+OnLoadMissionTime = 1;
+loadScreen =  "Pictures\116Inf InsigniaAlpha.paa";
+//OverviewPicture = "Pictures\116Inf InsigniaAlpha.paa"; //doesn't work on a dedicated server
 
 class Header {
   gameType = SANDBOX;
   minPlayers = 1;
   maxPlayers = 182; //Total number of playable units placed in the editor including virtual entities
 };
-
-OnLoadName = "29th Training V4.2.5";
-briefingName = "29th Training V4.2.5";
-// =========================== Loading Screen
-Author = "29th Engineers";
-loadScreen =  "Pictures\116Inf InsigniaAlpha.paa";
-OnLoadMission = "<t align='center'><t size='1.5' color='#2A1ADC'>BLUFOR</t><t size='1.5' color='#FFFFFF'> | </t><t size='1.5' color='#B40404'>OPFOR</t><t size='1.5' color='#FFFFFF'> | </t><t size='1.5' color='#088A08'>GRNFOR</t><br/><t size='1.25' color='#A09FAB'> Training Sandbox</t><br/>Ever Forward!</t>";
-OnLoadMissionTime = 1;
-OverviewText = "<t align='center'><t size='1.5' color='#2A1ADC'>BLUFOR</t><t size='1.5' color='#FFFFFF'> | </t><t size='1.5' color='#B40404'>OPFOR</t><t size='1.5' color='#FFFFFF'> | </t><t size='1.5' color='#088A08'>GRNFOR</t><br/><t size='1.25' color='#A09FAB'> Training Sandbox</t><br/>Ever Forward!</t>";
-//OverviewPicture = "Pictures\116Inf InsigniaAlpha.paa"; //doesn't work on a dedicated server
-
 
 respawnOnStart = 0;
 respawn = 3;
