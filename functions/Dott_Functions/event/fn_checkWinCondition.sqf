@@ -4,25 +4,47 @@ private _endChecks = [[{ false }], [{ false }], [{ false }]];
 {
 	private _pointValue = _x getVariable ["DOTT_pointValue", 0];
 	if (_pointValue == 0) then { continue };
-	[_x, "ownerChanged", 
-		{
-			params ["_sector", "_newOwner", "_oldOwner"];
-			private _pointValue = _sector getVariable ["DOTT_pointValue", 0];
-			private _newOwnerId = _newOwner call BIS_fnc_sideId;
-			private _oldOwnerId = _oldOwner call BIS_fnc_sideId;
 
-			if (_newOwnerId <= 2) then {DOTT_event_score set [_newOwnerId, (DOTT_event_score select _newOwnerId) + _pointValue]};
-			if (_oldOwnerId <= 2) then {DOTT_event_score set [_oldOwnerId, (DOTT_event_score select _oldOwnerId) - _pointValue]};
-		}
-	] call BIS_fnc_addScriptedEventHandler;
-
-	private _owner = _x getVariable ["owner", sideUnknown];
-	private _idx = _owner call BIS_fnc_sideID;
-	if (_idx <= 2) then 
+	switch (typeOf _x) do
 	{
-		DOTT_event_score set [_idx, (DOTT_event_score select _idx) + _pointValue];
+		case "ModuleSector_F": 
+		{
+			[_x, "ownerChanged", 
+				{
+					params ["_sector", "_newOwner", "_oldOwner"];
+					private _pointValue = _sector getVariable ["DOTT_pointValue", 0];
+					private _newOwnerId = _newOwner call BIS_fnc_sideId;
+					private _oldOwnerId = _oldOwner call BIS_fnc_sideId;
+
+					if (_newOwnerId <= 2) then {DOTT_event_score set [_newOwnerId, (DOTT_event_score select _newOwnerId) + _pointValue]};
+					if (_oldOwnerId <= 2) then {DOTT_event_score set [_oldOwnerId, (DOTT_event_score select _oldOwnerId) - _pointValue]};
+				}
+			] call BIS_fnc_addScriptedEventHandler;
+
+			private _owner = _x getVariable ["owner", sideUnknown];
+			private _idx = _owner call BIS_fnc_sideID;
+			if (_idx <= 2) then 
+			{
+				DOTT_event_score set [_idx, (DOTT_event_score select _idx) + _pointValue];
+			};
+		}; 
+		default 
+		{
+			_x addEventHandler ["Killed", 
+			{
+				params ["_unit", "_killer", "_instigator"];
+				private _pointValue = _unit getVariable ["DOTT_pointValue", 0];
+				private _awardTeam = _unit getVariable ["DOTT_awardTeam", sideUnknown];
+				private _idx = _awardTeam call BIS_fnc_sideID;
+				if (_idx <= 2) then 
+				{
+					DOTT_event_score set [_idx, (DOTT_event_score select _idx) + _pointValue];
+				};
+			}];
+		}; 
 	};
-} forEach (allMissionObjects "ModuleSector_F");
+
+} forEach (allMissionObjects "all");
 
 fn_numPoints = 
 {

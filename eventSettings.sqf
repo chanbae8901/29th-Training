@@ -38,9 +38,19 @@ Available Win Condition Functions:
 		Put example code below in the init field of the relevant object
 
 		Sector Example (gives _pointValue points to whoever is currently holding the sector):
+
 		if !(isServer) exitWith {};
 		private _pointValue = 1;
 		this setVariable ["DOTT_pointValue", _pointValue];
+
+		Kill/Destroy Example (gives _pointValue points to _awardTeam (in example BLUFOR) when object is killed/destroyed):
+
+		if !(isServer) exitWith {};
+		private _pointValue = 1;
+		private _awardTeam = west;
+
+		this setVariable ["DOTT_pointValue", _pointValue];
+		this setVariable ["DOTT_awardTeam", _awardTeam];
 
 	NOTE: If multiple teams meet their win conditions at the same time, the tiebreaker will be OPFOR, BLUFOR, then GRNFOR.
 	Win conditions should be designed to avoid this where possible.
