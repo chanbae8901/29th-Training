@@ -1,3 +1,7 @@
+#include "..\..\..\data\defines.hpp"
+
+#ifdef DOTT_TRAINING
+
 #define SECTOR_SETTINGS_CATEGORY "29th - Sector Settings"
 
 [
@@ -80,6 +84,8 @@
     false,
 	1
 ] call CBA_fnc_addSetting;
+
+#endif // DOTT_TRAINING
 
 #define RADIO_SETTINGS_CATEGORY "29th - Radio Settings"
 
