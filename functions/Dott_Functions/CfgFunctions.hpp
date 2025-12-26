@@ -113,6 +113,7 @@ class Dott_Event
 		class flagActions {};
 		class checkWinCondition {};
 		class gui_setSafeStartTime {};
+		class markEditorPlacedObjects {};
 	};
 };
 

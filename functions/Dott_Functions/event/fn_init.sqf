@@ -57,6 +57,7 @@ if (DOTT_event_numberOfLives > 0) then
 	};
 };
 
+/******* Time Accleration ********/
 if (isServer) then
 {
 	[
@@ -65,4 +66,13 @@ if (isServer) then
 			setTimeMultiplier DOTT_event_timeAcc;
 		} 
 	] call CBA_fnc_addEventHandler;
-}
+};
+
+/******* Auto Mark Editor Objects ********/
+if (hasInterface) then
+{
+	if (DOTT_event_autoMarkObjects) then
+	{
+		call DOTT_event_fnc_markEditorPlacedObjects;
+	};
+};

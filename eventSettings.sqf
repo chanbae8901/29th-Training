@@ -17,6 +17,8 @@ DOTT_event_hasAliveCheck = true; //Automatically end mission if only one side ha
 
 DOTT_event_arsenalRadius = 20; //Radius around arsenal object where players can access the arsenal
 
+DOTT_event_autoMarkObjects = true;
+
 //Win conditions
 //Leave "" for no win condition for that side
 DOTT_event_score = [0, 0, 0]; //Starting score for each side [OPFOR, BLUFOR, GRNFOR]
