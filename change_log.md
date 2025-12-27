@@ -64,6 +64,7 @@ v4.3.0
 - fn_manageready now has additional parameter to not display notification.
 - Rewrite of Zeus related round code. No longer need to check every key press to check if entering/exiting Zeus.
 - Swap event handlers waiting for player to be nonnull with CBA equivalent to reduce unnecessary spawns.
+- Replaced all CBA setting tags from DOTT to TN.
 
 ---
 v4.2.4  

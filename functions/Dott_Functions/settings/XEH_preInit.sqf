@@ -5,7 +5,7 @@
 #define SECTOR_SETTINGS_CATEGORY "29th - Sector Settings"
 
 [
-    "DOTT_costInfantry", // Internal setting name, should always contain a tag! This will be the global variable which takes the value of the setting.
+    "TN_costInfantry", // Internal setting name, should always contain a tag! This will be the global variable which takes the value of the setting.
     "SLIDER", // setting type
     ["Infantry Weight", "Capture Weight of Infantry"], // Pretty name shown inside the ingame settings menu. Can be stringtable entry.
     SECTOR_SETTINGS_CATEGORY, // Pretty name of the category where the setting can be found. Can be stringtable entry.
@@ -14,7 +14,7 @@
 ] call CBA_fnc_addSetting;
 
 [
-    "DOTT_costWheeled", 
+    "TN_costWheeled", 
     "SLIDER", 
     ["Wheeled Weight", "Capture Weight of Wheeled Vehicles"], 
     SECTOR_SETTINGS_CATEGORY,
@@ -23,7 +23,7 @@
 ] call CBA_fnc_addSetting;
 
 [
-    "DOTT_costTracked", 
+    "TN_costTracked", 
     "SLIDER", 
     ["Tracked Weight", "Capture Weight of Tracked Vehicles"],
     SECTOR_SETTINGS_CATEGORY,
@@ -32,7 +32,7 @@
 ] call CBA_fnc_addSetting;
 
 [
-    "DOTT_costStatic", 
+    "TN_costStatic", 
     "SLIDER", 
     ["Static Weight", "Capture Weight of Static Weapons"], 
     SECTOR_SETTINGS_CATEGORY,
@@ -41,7 +41,7 @@
 ] call CBA_fnc_addSetting;
 
 [
-    "DOTT_costWater", 
+    "TN_costWater", 
     "SLIDER", 
     ["Water Weight", "Capture Weight of Naval Vehicles"], 
     SECTOR_SETTINGS_CATEGORY,
@@ -50,7 +50,7 @@
 ] call CBA_fnc_addSetting;
 
 [
-    "DOTT_costAir", 
+    "TN_costAir", 
     "SLIDER", 
     ["Air Weight", "Capture Weight of Air Vehicles"], 
     SECTOR_SETTINGS_CATEGORY,
@@ -59,7 +59,7 @@
 ] call CBA_fnc_addSetting;
 
 [
-    "DOTT_captureCoef", 
+    "TN_captureCoef", 
     "SLIDER", 
     "Capture Speed", 
     SECTOR_SETTINGS_CATEGORY,
@@ -68,7 +68,7 @@
 ] call CBA_fnc_addSetting;
 
 [
-    "DOTT_checkCrew", 
+    "TN_checkCrew", 
     "LIST", 
     ["Count Vehicle Crew Weight", "Units inside vehicle types contribute weight towards capture"], 
     SECTOR_SETTINGS_CATEGORY,
@@ -77,7 +77,7 @@
 ] call CBA_fnc_addSetting;
 
 [
-    "DOTT_useThreat", 
+    "TN_useThreat", 
     "CHECKBOX", 
     ["Use Vehicle Threat Value", "Vehicle capture weight is further modified by config threat values."], 
     SECTOR_SETTINGS_CATEGORY,
@@ -90,7 +90,7 @@
 #define RADIO_SETTINGS_CATEGORY "29th - Radio Settings"
 
 [
-    "DOTT_addRadio", 
+    "TN_addRadio", 
     "LIST", 
     ["Add SR Radio", "Add Side Correct SR Radio to loadout when leaving arsenal"], 
     RADIO_SETTINGS_CATEGORY,
@@ -99,7 +99,7 @@
 ] call CBA_fnc_addSetting;
 
 [
-    "DOTT_removeRadiosOnDeath", 
+    "TN_removeRadiosOnDeath", 
     "CHECKBOX", 
     "Remove radios on death",
     RADIO_SETTINGS_CATEGORY,
@@ -108,7 +108,7 @@
 ] call CBA_fnc_addSetting;
 
 [
-    "DOTT_forceSideLRVic", 
+    "TN_forceSideLRVic", 
     "CHECKBOX", 
     ["Force Side LR Vehicle", "Force LR radio in vehicle to be the same side as the player."],
     RADIO_SETTINGS_CATEGORY,
@@ -126,7 +126,7 @@
 #define GENERAL_SETTINGS_CATEGORY "29th - General Settings"
 
 [
-    "DOTT_setInsignia", 
+    "TN_setInsignia", 
     "CHECKBOX", 
     "Automatically set 29th Insignia",
     GENERAL_SETTINGS_CATEGORY,
@@ -137,7 +137,7 @@
 #define VEHICLE_SUBCATEGORY "Vehicle"
 
 [
-    "DOTT_removeDefaultVehicleInventories", 
+    "TN_removeDefaultVehicleInventories", 
     "CHECKBOX", 
     "Remove default inventories from vehicles",
     [GENERAL_SETTINGS_CATEGORY, VEHICLE_SUBCATEGORY],
@@ -146,7 +146,7 @@
 ] call CBA_fnc_addSetting;
 
 [
-    "DOTT_disableRHSEngineWarmup", 
+    "TN_disableRHSEngineWarmup", 
     "CHECKBOX", 
     ["Disable RHS engine warmup", "Disable RHS startup delay on some vehicles. Useful for preventing teleport bug."],
     [GENERAL_SETTINGS_CATEGORY, VEHICLE_SUBCATEGORY],
@@ -162,7 +162,7 @@
 ] call CBA_fnc_addSetting;
 
 [
-    "DOTT_autoAddFRIES", 
+    "TN_autoAddFRIES", 
     "CHECKBOX", 
     ["Auto add FRIES", "Automatically equip FRIES to helicopters when they are created."],
     [GENERAL_SETTINGS_CATEGORY, VEHICLE_SUBCATEGORY],
@@ -173,7 +173,7 @@
 #define SPECTATOR_SUBCATEGORY "Spectator"
 
 [
-    "DOTT_autoSpectate", 
+    "TN_autoSpectate", 
     "CHECKBOX", 
     "Automatic Spectate on Respawn",
     [GENERAL_SETTINGS_CATEGORY, SPECTATOR_SUBCATEGORY],
@@ -182,7 +182,7 @@
 ] call CBA_fnc_addSetting;
 
 [
-    "DOTT_limitSpectator", 
+    "TN_limitSpectator", 
     "LIST", 
     "Limit Spectator Features",
     [GENERAL_SETTINGS_CATEGORY, SPECTATOR_SUBCATEGORY],
@@ -201,7 +201,7 @@
 #define RESTRICTIONS_SUBCATEGORY "Restrictions"
 
 [
-    "DOTT_disableTI", 
+    "TN_disableTI", 
     "CHECKBOX", 
     "Disable thermal imaging optics",
     [GENERAL_SETTINGS_CATEGORY, RESTRICTIONS_SUBCATEGORY],
@@ -235,7 +235,7 @@
 ] call CBA_fnc_addSetting;
 
 [
-    "DOTT_artilleryComputer", 
+    "TN_artilleryComputer", 
     "CHECKBOX", 
     "Enable Artillery Computer",
     [GENERAL_SETTINGS_CATEGORY, RESTRICTIONS_SUBCATEGORY],
@@ -257,7 +257,7 @@
 
 #define ROUND_SUBCATEGORY "Round"
 [
-    "DOTT_disableScoreboard", 
+    "TN_disableScoreboard", 
     "CHECKBOX", 
     ["Disable Scoreboard", "Disable the scoreboard during the round, except while in Zeus or non-limited spectator."],
     [GENERAL_SETTINGS_CATEGORY, ROUND_SUBCATEGORY],
@@ -268,15 +268,15 @@
         {
             if (!_this) exitWith { removeMissionEventHandler["Draw2D", disableRespawnScoreboard]; showScoretable -1 };
             if !(call DOTT_round_fnc_isRoundActive) exitWith {};
-			if !(isNull (uiNamespace getVariable ["RscDisplayCurator", displayNull])) exitWith {};
-			if (!isNil { missionNamespace getVariable "BIS_EGSpectator_initialized" } && DOTT_limitSpectator == 0) exitWith {};
+            if !(isNull (uiNamespace getVariable ["RscDisplayCurator", displayNull])) exitWith {};
+            if (!isNil { missionNamespace getVariable "BIS_EGSpectator_initialized" } && TN_limitSpectator == 0) exitWith {};
 			showScoretable 0; 
             if (alive player) exitWith {};
             disableRespawnScoreboard = addMissionEventHandler 
 			[
 				"Draw2D", 
 				{
-					if(visibleScoretable && call DOTT_round_fnc_isRoundActive && DOTT_disableScoreboard) then { showScoretable 0 };
+                    if (visibleScoretable && call DOTT_round_fnc_isRoundActive && TN_disableScoreboard) then { showScoretable 0 };
 				}
 			];   
         };   
@@ -285,7 +285,7 @@
 
 
 [
-    "DOTT_safeStartTime", 
+    "TN_safeStartTime", 
     "TIME", 
     "Safe Start Time",
     [GENERAL_SETTINGS_CATEGORY, ROUND_SUBCATEGORY],
@@ -294,7 +294,7 @@
 ] call CBA_fnc_addSetting;
 
 [
-    "DOTT_notifyFinalCheck", 
+    "TN_notifyFinalCheck", 
     "CHECKBOX", 
     ["Final Check Notification", "DEBUG: Notify players if final checks detected any issues before starting the round."],
     [GENERAL_SETTINGS_CATEGORY, ROUND_SUBCATEGORY],

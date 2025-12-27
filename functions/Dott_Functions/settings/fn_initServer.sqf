@@ -1,5 +1,5 @@
 #define DEFAULT_INDEX 0
-#define MISSION_ADDON "dott"
+#define MISSION_ADDON "tn"
 if (isServer) then
 {
 	missionNamespace setVariable ["DOTT_settings_default", true call CBA_fnc_createNamespace, true];

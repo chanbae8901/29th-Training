@@ -125,16 +125,16 @@ switch _mode do {
 		_useDefaultSides = !isnil {_logic getvariable "sides"};
 
 		//backup default values - ex. CBA not used
-		if (isNil "DOTT_costStatic") then {
-			DOTT_costInfantry = 1;
-			DOTT_costWheeled = 1;
-			DOTT_costTracked = 2;
-			DOTT_costStatic = 1;
-			DOTT_CostWater = 1;
-			DOTT_costAir = 1;
-			DOTT_captureCoef = 0.05;
-			DOTT_checkCrew = [false, false]; //[Land/Naval, Air]
-			DOTT_useThreat = false;
+		if (isNil "TN_costStatic") then {
+			TN_costInfantry = 1;
+			TN_costWheeled = 1;
+			TN_costTracked = 2;
+			TN_costStatic = 1;
+			TN_costWater = 1;
+			TN_costAir = 1;
+			TN_captureCoef = 0.05;
+			TN_checkCrew = [false, false]; //[Land/Naval, Air]
+			TN_useThreat = false;
 		}; //Custom code
 
 		//--- Register the expression as a scripted event handler
@@ -379,14 +379,14 @@ switch _mode do {
 			_threat = getarray (configfile >> "cfgvehicles" >> typeof _veh >> "threat");
 
 			_score = 0.1; //--- Use non-zero value, so even objects with threat[]={0,0,0} can capture
-			if (DOTT_useThreat) then {{_score = _score + _x} foreach _threat} else {_score = 1};
+			if (TN_useThreat) then {{_score = _score + _x} foreach _threat} else {_score = 1};
 			_score = _score * _coef;
 			if (isplayer _veh) then {_score = _score * _costPlayersLocal;};
 
 			if (_scanCrew) then {
 				{
 					if (!alive _x) then {continue};
-					_score = _score + ([_x,DOTT_costInfantry,false] call _fnc_threat); //custom change
+					_score = _score + ([_x,TN_costInfantry,false] call _fnc_threat); //custom change
 					if (isplayer _x) then {_score = _score * _costPlayersLocal;};
 				} foreach (crew _veh - [_veh]);
 			};
@@ -577,7 +577,7 @@ switch _mode do {
 
 			//--- Detect leading side
 			_owner = sideUnknown;
-			_timeCoef = DOTT_captureCoef * (time - _time); //Custom code change
+			_timeCoef = TN_captureCoef * (time - _time); //Custom code change
 
 			_sectorScore = [_sectorScore,1] call _fnc_conversion;
 			_sectorScoreSorted = _sectorScore call _fnc_sort;
@@ -802,27 +802,27 @@ switch _mode do {
 
 								_xScore = switch (tolower _simulation) do {
 									case "soldier": {
-										[_x,DOTT_costInfantry,false] call _fnc_threat;
+										[_x,TN_costInfantry,false] call _fnc_threat;
 									};
 									// Custom code begin
 									case "carx": {
-										[_x,DOTT_costWheeled,DOTT_checkCrew#0] call _fnc_threat;
+										[_x,TN_costWheeled,TN_checkCrew#0] call _fnc_threat;
 									};
 									case "tankx": {
 										if (_x isKindOf "StaticWeapon") then {
-											[_x,DOTT_costStatic,DOTT_checkCrew#0] call _fnc_threat;
+											[_x,TN_costStatic,TN_checkCrew#0] call _fnc_threat;
 										} else {
-											[_x,DOTT_costTracked,DOTT_checkCrew#0] call _fnc_threat; 
+											[_x,TN_costTracked,TN_checkCrew#0] call _fnc_threat; 
 										};
 									};
 									case "shipx";
 									case "submarinex": {
-										[_x,DOTT_costWater,DOTT_checkCrew#0] call _fnc_threat;
+										[_x,TN_costWater,TN_checkCrew#0] call _fnc_threat;
 									};
 									case "helicopterrtd";
 									case "airplanex";
 									case "helicopterx": {
-										[_x,DOTT_costAir,DOTT_checkCrew#1] call _fnc_threat;
+										[_x,TN_costAir,TN_checkCrew#1] call _fnc_threat;
 									};
 									// Custom code end
 									default {
@@ -922,12 +922,12 @@ switch _mode do {
 					case "tankx";
 					case "shipx";
 					case "submarinex": {
-						!(DOTT_checkCrew#0)
+						!(TN_checkCrew#0)
 					};
 					case "helicopterrtd";
 					case "airplanex";
 					case "helicopterx": {
-						!(DOTT_checkCrew#1)
+						!(TN_checkCrew#1)
 					};
 					default {
 						false;
@@ -935,29 +935,29 @@ switch _mode do {
 				};
 
 				//case where infantry cost is 0, player weight in vehicle doesn't matter
-				_checkWarning = _checkWarning || (DOTT_costInfantry == 0);
+				_checkWarning = _checkWarning || (TN_costInfantry == 0);
 				if !(_checkWarning) then { continue };
 
 				//check vehicle costs
 				_checkWarning = switch (_simulation) do {
 					case "carx": {
-						DOTT_costWheeled == 0; 
+						TN_costWheeled == 0; 
 					};
 					case "tankx": {
 						if (_vehicle isKindOf "StaticWeapon") then {
-							DOTT_costStatic == 0; 
+							TN_costStatic == 0; 
 						} else {
-							DOTT_costTracked == 0; 
+							TN_costTracked == 0; 
 						};
 					};
 					case "shipx";
 					case "submarinex": {
-						DOTT_costWater == 0; 
+						TN_costWater == 0; 
 					};
 					case "helicopterrtd";
 					case "airplanex";
 					case "helicopterx": {
-						DOTT_costAir == 0; 
+						TN_costAir == 0; 
 					};
 					default {
 						false;

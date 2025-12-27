@@ -61,7 +61,7 @@ if (hasInterface) then
 	//For JIP players
 	//showScoreTable silently fails if called too early
 	addMissionEventHandler ["PreloadFinished", {
-		if (call DOTT_round_fnc_isRoundActive && DOTT_disableScoreboard) then {
+		if (call DOTT_round_fnc_isRoundActive && TN_disableScoreboard) then {
 			showScoreTable 0;
 		};
 		removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
@@ -74,7 +74,7 @@ if (hasInterface) then
 			[
 				"Draw2D", 
 				{
-					if(visibleScoretable && call DOTT_round_fnc_isRoundActive && DOTT_disableScoreboard) then { showScoretable 0 };
+					if(visibleScoretable && call DOTT_round_fnc_isRoundActive && TN_disableScoreboard) then { showScoretable 0 };
 				}
 			];
 		}
@@ -84,7 +84,7 @@ if (hasInterface) then
 	//needs to be readded every life
 	["DOTT_round_scoreboardRespawnMenuEnd",	"Respawn",
 		{
-			if (call DOTT_round_fnc_isRoundActive && DOTT_disableScoreboard) then 
+			if (call DOTT_round_fnc_isRoundActive && TN_disableScoreboard) then 
 			{	
 				[] spawn 
 				{
@@ -109,29 +109,29 @@ if (hasInterface) then
 
 	//allow player in zeus to see scoreboard
 	["DOTT_enteredZeus", {showScoretable -1}] call CBA_fnc_addEventHandler;
-	["DOTT_exitedZeus", {if (call DOTT_round_fnc_isRoundActive && DOTT_disableScoreboard) then { showScoretable 0 }}] call CBA_fnc_addEventHandler;
+	["DOTT_exitedZeus", {if (call DOTT_round_fnc_isRoundActive && TN_disableScoreboard) then { showScoretable 0 }}] call CBA_fnc_addEventHandler;
 
 	[
 		"DOTT_round_started",
 		{
-			if !(DOTT_disableScoreboard) exitWith {};
+			if !(TN_disableScoreboard) exitWith {};
 			if !(isNull (uiNamespace getVariable ["RscDisplayCurator", displayNull])) exitWith {};
-			if (!isNil { missionNamespace getVariable "BIS_EGSpectator_initialized" } && DOTT_limitSpectator == 0) exitWith {};
-			showScoretable 0;							
+			if (!isNil { missionNamespace getVariable "BIS_EGSpectator_initialized" } && TN_limitSpectator == 0) exitWith {};
+			showScoretable 0;
 		} 
 	] call CBA_fnc_addEventHandler;
 
 	[
 		"exitedSpectator",
 		{
-			if (call DOTT_round_fnc_isRoundActive && DOTT_disableScoreboard) then { showScoretable 0 };							
+			if (call DOTT_round_fnc_isRoundActive && TN_disableScoreboard) then { showScoretable 0 };                            
 		} 
 	] call CBA_fnc_addEventHandler;
 
 	[
 		"enteredSpectator",
 		{
-			if (DOTT_limitSpectator == 0) then {showScoretable -1};							
+			if (TN_limitSpectator == 0) then {showScoretable -1};                            
 		} 
 	] call CBA_fnc_addEventHandler;
 
@@ -155,7 +155,7 @@ if (isServer) then
 			{
 				if !(currentWeapon _x == "Throw" || currentWeapon _x == "Put") exitWith {};
 				[_x] remoteExec ["DOTT_fnc_resetWeaponState", _x];
-				if (DOTT_notifyFinalCheck) then
+				if (TN_notifyFinalCheck) then
 				{
 					private _msg = format ["FIXED: %1 had silent weapon, now fixed.", name _x];
 					[_msg] remoteExec ["systemChat"];
@@ -174,7 +174,7 @@ if (hasInterface) then
 			//the player should not be invulnerable if they are not hidden (spectator or zeus option)
 			if (isDamageAllowed player || isObjectHidden player) exitWith {};
 			player allowDamage true;
-			if (DOTT_notifyFinalCheck) then
+			if (TN_notifyFinalCheck) then
 			{
 				private _msg = format ["FIXED: %1 was invulnerable, can now take damage.", name player];
 				[_msg] remoteExec ["systemChat"];

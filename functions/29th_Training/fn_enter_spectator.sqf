@@ -41,7 +41,7 @@ Then look up the IDC of the spectate button and add from there
 
 if (isDedicated || !hasInterface) exitWith {["Player must be not be dedicated server or HC."] call BIS_fnc_error; false};
 
-if (DOTT_limitSpectator == 2) exitWith { hint "Spectator Disabled"; false }; // Spectator Disabled
+if (TN_limitSpectator == 2) exitWith { hint "Spectator Disabled"; false }; // Spectator Disabled
 
 hintSilent "SPECTATOR\n----------\nPress RELOAD to exit";  // Tell player they are spectating
 
@@ -58,7 +58,7 @@ hintSilent "SPECTATOR\n----------\nPress RELOAD to exit";  // Tell player they a
 player enableSimulation false;
 player allowDamage false;
 
-private _params = switch (DOTT_limitSpectator) do
+private _params = switch (TN_limitSpectator) do
 {
 	case 0: { [player, [], false] }; // No limits
 	case 1: { [player, [side player], false, false, false, false] }; // 1PP Team Only

@@ -4,7 +4,7 @@
 
 params ["_dead"];
 
-if (DOTT_removeRadiosOnDeath) then
+if (TN_removeRadiosOnDeath) then
 {
 	_dead call Hill_fnc_removeRadio;
 };

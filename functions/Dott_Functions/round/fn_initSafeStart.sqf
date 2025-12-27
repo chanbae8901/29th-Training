@@ -21,7 +21,7 @@
 
 if (!isServer) exitWith {remoteExec ["DOTT_round_fnc_initSafeStart", 2];}; //server should be in charge of this waitAndExecute
 
-private _safeStartTime = DOTT_safeStartTime; // time between all sides ready and automatic live call (default 10)
+private _safeStartTime = TN_safeStartTime; // time between all sides ready and automatic live call (default 10)
 
 private _msgText = format [
 	"<t color='#ffffff' size='3'>Live in %1!</t>",

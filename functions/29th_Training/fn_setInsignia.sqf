@@ -19,7 +19,7 @@
  * player spawn Hill_fnc_setInsignia
  */
 
-if !(DOTT_setInsignia) exitWith { false };
+if !(TN_setInsignia) exitWith { false };
 
 // === Insignia Map ===
 //alternate non-combat version as second element in value 
