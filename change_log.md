@@ -32,8 +32,8 @@ TBD
 	- Included new class "FlagReturned"
 
 ---
-v4.2.5  
-24 DEC 2025
+v4.3.0  
+27 DEC 2025
 
 ---
 * Fixes
