@@ -102,38 +102,19 @@ if (hasInterface) then
 		}];
 	};
 
-	//allow player in zeus to see scoreboard
-	[] spawn 
+	//fix countdown not showing up if no sectors placed down
+	[] spawn
 	{
 		waitUntil {!isNull (findDisplay 46)};
-		("RscMPProgress" call bis_fnc_rscLayer) cutrsc ["RscMPProgress","plain"]; //fix countdown not showing up if no sectors ever placed
-		findDisplay 46 displayAddEventHandler ["KeyDown", {
-			if (isNull (getAssignedCuratorLogic player)) exitWith {};
-			if (inputAction "CuratorInterface" <= 0) exitWith {};
-			
-			showScoretable -1;
-
-			[] spawn 
-			{
-				waitUntil {!isNull (findDisplay 312)};				
-				findDisplay 312 displayAddEventHandler ["KeyDown", 
-				{
-					if (inputAction "CuratorInterface" > 0) then
-					{
-						if (call DOTT_round_fnc_isRoundActive && DOTT_disableScoreboard) then { showScoretable 0 };
-						[] spawn
-						{
-							sleep 0.1;
-							("RscMPProgress" call bis_fnc_rscLayer) cutrsc ["RscMPProgress","plain"]; //fix countdown/sector ui not showing up after zeusing
-						};
-					};
-					false
-				}];	
-			};
-
-			false
-		}];	
+		("RscMPProgress" call bis_fnc_rscLayer) cutrsc ["RscMPProgress","plain"]
 	};
+
+	//fix countdown not showing up when leaving curator interface
+	["DOTT_exitedZeus", {[] spawn {sleep 0.1; ("RscMPProgress" call bis_fnc_rscLayer) cutrsc ["RscMPProgress","plain"]}}] call CBA_fnc_addEventHandler;
+
+	//allow player in zeus to see scoreboard
+	["DOTT_enteredZeus", {showScoretable -1}] call CBA_fnc_addEventHandler;
+	["DOTT_exitedZeus", {if (call DOTT_round_fnc_isRoundActive && DOTT_disableScoreboard) then { showScoretable 0 }}] call CBA_fnc_addEventHandler;
 
 	[
 		"DOTT_round_started",

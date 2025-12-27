@@ -62,6 +62,7 @@ v4.2.5
 - Round/safestart time display messages better support a wider range of times (display hour/minute/seconds) instead of just minute or second.
 - Safestart now uses the countdown UI to display how much safestart time is remaining. Might potentially cause confusion with LIVE on very long safestart times.
 - fn_manageready now has additional parameter to not display notification.
+- Rewrite of Zeus related round code. No longer need to check every key press to check if entering/exiting Zeus.
   
 
 ---
