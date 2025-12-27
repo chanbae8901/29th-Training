@@ -19,6 +19,7 @@
  * 
  */
 
+//modification from https://github.com/gruppe-adler/Shoot_and_Scoot.Tanoa/blob/4c7e5a7187c199d216228832329803c5c79543e8/scripts/tfar-persistence/functions/fn_transferRadiosAcrossRespawn.sqf
 if (hasInterface) then {
 	private _fn_saveSwSettings = 
 	{

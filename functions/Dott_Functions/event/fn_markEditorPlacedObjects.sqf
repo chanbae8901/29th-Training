@@ -1,5 +1,6 @@
 /*
 	Author: Mallen [FNF] small modifications by Bae [29th ID]
+	https://github.com/FridayNightFight/FNF/blob/35d5e5fdef9bebe666846ec5d7cf0ec69e6c43f4/FNF_Mission_Template.VR/Client/UI/fn_markEditorPlacedObjects.sqf
 
 	Description:
 		Marks custom placed objects on the map provided they aren't excluded
