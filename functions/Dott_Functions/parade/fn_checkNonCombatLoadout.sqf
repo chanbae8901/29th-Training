@@ -1,5 +1,5 @@
 /*
- * Name:	DOTT_fnc_checkNonCombatLoadout
+ * Name:	DOTT_parade_fnc_checkNonCombatLoadout
  * Date:	8/8/2025
  * Version: 1.0
  * Author:  Bae [29th ID]
@@ -14,7 +14,7 @@
  * true if the unit is in a non-combat loadout, false otherwise.
  *
  * Example:
- * [player] call DOTT_fnc_checkNonCombatLoadout;
+ * [player] call DOTT_parade_fnc_checkNonCombatLoadout;
  * 
  */
 

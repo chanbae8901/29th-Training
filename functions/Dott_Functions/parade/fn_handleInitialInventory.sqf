@@ -1,5 +1,5 @@
 /*
- * Name:	Hill_fnc_handleInitialInventory
+ * Name:	DOTT_parade_fnc_handleInitialInventory
  * Date:	9/30/2025
  * Version: 1.2
  * Author:  Hill [29th ID]
@@ -14,7 +14,7 @@
  * n/a
  *
  * Example:
- * [player] spawn Hill_fnc_handleInitialInventory
+ * [player] spawn DOTT_parade_fnc_handleInitialInventory
  */
 
 if (!hasInterface) exitWith {};
@@ -25,7 +25,7 @@ waitUntil {!isNull player};
 
 if (side (group _theClient) == WEST) then {
 	addMissionEventHandler ["PreloadFinished", {
-		[true] call DOTT_fnc_loadParade;
+		[true] call DOTT_parade_fnc_load;
 		removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
 	}];
 };

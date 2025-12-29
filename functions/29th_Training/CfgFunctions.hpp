@@ -7,8 +7,7 @@ class 29th_Training {
     class setInsignia {};
     class noThermals {};
     class arsenalClosed {};
-    class assignCurator {};
-    class handleInitialInventory {}; 
+    class assignCurator {}; 
     class checkCuratorAssignment {};    
 
     #ifdef DOTT_TRAINING

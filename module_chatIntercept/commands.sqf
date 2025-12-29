@@ -406,7 +406,7 @@ pvpfw_chatIntercept_allCommands = [
 	[
 		"parade",
 		{
-			[player, 125] spawn DOTT_fnc_forceParadeAll;
+			[player, 125] spawn DOTT_parade_fnc_forceAll;
 		}
 	],
 	[

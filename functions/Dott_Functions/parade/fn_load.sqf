@@ -1,5 +1,5 @@
 /*
- * Name:	DOTT_fnc_loadParade
+ * Name:	DOTT_parade_fnc_load
  * Date:	8/27/2025
  * Version: 1.0
  * Author:  Bae [29th ID]
@@ -14,7 +14,7 @@
  * true
  *
  * Example:
- * call DOTT_fnc_loadParade;
+ * call DOTT_parade_fnc_load;
  * 
  */
 params [["_force", false, [true]]];
@@ -22,7 +22,7 @@ params [["_force", false, [true]]];
 (findDisplay 1127002) closeDisplay 1; //close loadouts first
 (findDisplay 1127001) closeDisplay 1; //close ace arsenal
 
-if !(_force || !([player] call DOTT_fnc_checkNonCombatLoadout)) exitWith {};
+if !(_force || !([player] call DOTT_parade_fnc_checkNonCombatLoadout)) exitWith {};
 private _savedLoadouts = profileNamespace getVariable ["ace_arsenal_saved_loadouts", []];
 private _customParadeIdx = _savedLoadouts findIf {_x select 0 == "Forced Parade"};
 if (_customParadeIdx == -1) then

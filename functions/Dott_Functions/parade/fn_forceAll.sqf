@@ -1,5 +1,5 @@
 /*
- * Name:	DOTT_fnc_forceParadeAll
+ * Name:	DOTT_parade_fnc_forceAll
  * Date:	9/30/2025
  * Version: 1.2
  * Author:  Bae [29th ID]
@@ -15,7 +15,7 @@
  * true
  *
  * Example:
- * [blu_ammo, 125] call DOTT_fnc_forceParadeAll;
+ * [blu_ammo, 125] call DOTT_parade_fnc_forceAll;
  * 
  */
 params ["_obj", "_radius"];
@@ -28,7 +28,7 @@ private _targets = _allPlayers select
 };
 
 {
-    [] remoteExec ["DOTT_fnc_loadParade", _x];
+    [] remoteExec ["DOTT_parade_fnc_load", _x];
 } forEach _targets;
 
 true

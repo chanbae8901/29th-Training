@@ -83,7 +83,7 @@ _targetInsignia = _foundInsignias select 0;
 if (count _foundInsignias == 2) then 
 {
 	//BLUFOR parade gear, dress blues, or no weapon
-	private _isNotCombatLoadout = _target call DOTT_fnc_checkNonCombatLoadout;
+	private _isNotCombatLoadout = _target call DOTT_parade_fnc_checkNonCombatLoadout;
 	if (_isNotCombatLoadout) then { //use non-combat version
 		_targetInsignia = _foundInsignias select 1;
 	};

@@ -17,11 +17,8 @@ class Dott_Functions
 
 		#ifdef DOTT_TRAINING
 
-		class loadParade {};
-		class forceParadeAll {};
 		class initDefaultLoadouts {};
 		class flexibleReset {};
-		class checkNonCombatLoadout {};
 
 		#endif
 	};
@@ -105,6 +102,19 @@ class Dott_Settings
 		file = "functions\Dott_Functions\settings";
 		class initServer {};		
 		class initDisplayMissionOptions {};
+	};
+};
+
+class Dott_Parade
+{
+	tag = "DOTT_parade";
+	class ParadeFunctions
+	{
+		file = "functions\Dott_Functions\parade";
+    	class handleInitialInventory {};
+		class forceAll {};
+		class load {};
+		class checkNonCombatLoadout {};
 	};
 };
 

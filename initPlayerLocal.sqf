@@ -34,7 +34,7 @@ if(_didJIP) then
 
 #ifdef DOTT_TRAINING
 
-[_theClient] spawn Hill_fnc_handleInitialInventory;
+[_theClient] spawn DOTT_parade_fnc_handleInitialInventory;
 
 //Init chat command system
 [] execVM "module_chatIntercept\init.sqf";
