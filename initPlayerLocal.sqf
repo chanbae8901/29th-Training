@@ -17,8 +17,6 @@ enableEnvironment [false, true];
 
 #ifdef DOTT_TRAINING
 
-[_theClient] spawn DOTT_parade_fnc_handleInitialInventory;
-
 //Init chat command system
 [] execVM "module_chatIntercept\init.sqf";
 

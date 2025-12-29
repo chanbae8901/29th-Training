@@ -4,7 +4,11 @@ diag_log text format ["|=============================   %1: init.sqf Running   =
 call DOTT_round_fnc_init;
 
 #ifdef DOTT_TRAINING
+
 if (("enableRoundEventLog" call BIS_fnc_getParamValue) == 1) then {call DOTT_tracker_fnc_init};
+
+call DOTT_parade_fnc_init;
+
 #endif
 
 #ifdef DOTT_EVENT

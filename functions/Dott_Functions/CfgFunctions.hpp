@@ -178,6 +178,7 @@ class Dott_Parade
 	class ParadeFunctions
 	{
 		file = "functions\Dott_Functions\parade";
+		class init {};
     	class handleInitialInventory {};
 		class forceAll {};
 		class load {};

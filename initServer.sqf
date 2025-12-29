@@ -8,11 +8,6 @@ diag_log text format ["|=============================   %1: initServer.sqf Runni
 
 INDEPENDENT setFriend [WEST, 0];
 
-//set-up Parade Inventories
-[WEST, "29TH_PARADE_WEST"] call BIS_fnc_addRespawnInventory;
-[EAST, "29TH_PARADE_EAST"] call BIS_fnc_addRespawnInventory;
-[INDEPENDENT, "29TH_PARADE_INDEPENDENT"] call BIS_fnc_addRespawnInventory;
-
 //set-up default date and weather
 private _forcedDate     = [2018, 3, 30, 12, 0]; 
 private _forcedOvercast = 0.1;
