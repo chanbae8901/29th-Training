@@ -5,7 +5,7 @@ if (hasInterface) then
 	//Init chat command system
 	[] execVM "module_chatIntercept\init.sqf";
 
-	[] spawn DOTT_fnc_initDefaultLoadouts;
+	[] spawn DOTT_training_fnc_initDefaultLoadouts;
 };
 
 if (isServer) then

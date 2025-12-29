@@ -10,7 +10,6 @@ class Dott_Functions
 
 		#ifdef DOTT_TRAINING
 
-		class initDefaultLoadouts {};
 		class flexibleReset {};
 
 		#endif
@@ -129,6 +128,7 @@ class DOTT_Training
 		class initBaseObjects {};
 		class cleaner {};
 		class initDateAndWeather {};
+		class initDefaultLoadouts {};
 	};
 }
 
