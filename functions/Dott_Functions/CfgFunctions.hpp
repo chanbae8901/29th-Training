@@ -74,6 +74,7 @@ class Dott_Ticket
 	class TicketFunctions
 	{
 		file = "functions\Dott_Functions\ticket";
+		class init {};
 		class add {};
 		class count {};
 	};

@@ -19,10 +19,3 @@ if (!isNull _oldUnit) then {
 		};
 	};
 };
-
-//Dott tickets management
-if (DOTT_ticketEnabled) then
-{
-	private _playerSide = playerSide;
-	[_playerSide] remoteExec ["DOTT_ticket_fnc_count", 2];
-};
