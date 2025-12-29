@@ -5,7 +5,6 @@ class 29th_Training {
     class enter_spectator {};
     class exit_spectator {};
     class setInsignia {};
-    class noThermals {};
     class arsenalClosed {};
     class assignCurator {}; 
     class checkCuratorAssignment {};    

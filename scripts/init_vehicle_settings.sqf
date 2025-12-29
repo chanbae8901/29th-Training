@@ -35,7 +35,7 @@ addMissionEventHandler ["EntityCreated",
 	if !(TN_disableTI) exitWith {};
 
 	//some delay is necessary or PiP won't shut off
-	[{ call DOTT_fnc_disablePIPThermals }, [] , 0.1] call CBA_fnc_waitAndExecute;
+	[{ call DOTT_thermals_fnc_disablePIP }, [] , 0.1] call CBA_fnc_waitAndExecute;
 }] call CBA_fnc_addBISPlayerEventHandler;
 
 // --- Remove vehicle inventories ---

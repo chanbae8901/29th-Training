@@ -10,8 +10,6 @@ class Dott_Functions
 		class resetWeaponState {};
 		class diag_log {};
 		class addDiaryRecord {};
-		class disablePIPThermals {};
-
 
 		#ifdef DOTT_TRAINING
 
@@ -56,6 +54,17 @@ class Dott_Radio
 		class initTransferSettings {};
 		class addRadio {};
 		class removeRadio {};
+	};
+};
+
+class Dott_Thermals
+{
+	tag = "DOTT_thermals";
+	class ThermalFunctions
+	{
+		file = "functions\Dott_Functions\thermals";
+		class disablePIP {};
+		class blackScreen {};
 	};
 };
 

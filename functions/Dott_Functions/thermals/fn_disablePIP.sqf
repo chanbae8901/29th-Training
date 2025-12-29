@@ -1,5 +1,5 @@
 /*
- * Name:	DOTT_fnc_disablePIPThermals
+ * Name:	DOTT_thermals_fnc_disablePIP
  * Date:	9/2/2025
  * Version: 1.0
  * Author:  Bae [29th ID]
@@ -16,7 +16,7 @@
  * true if at least one PIP camera disabled, false otherwise
  *
  * Example:
- * call DOTT_fnc_disablePIPThermals;
+ * call DOTT_thermals_fnc_disablePIP;
  * 
  */
 private _veh = vehicle player; 

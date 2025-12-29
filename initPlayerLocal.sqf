@@ -18,7 +18,7 @@ enableEnvironment [false, true];
 ["visionMode", 
 {
 	if !(TN_disableTI) exitWith {};
-	[] spawn Hill_fnc_noThermals;
+	[] spawn DOTT_thermals_fnc_blackScreen;
 }] call CBA_fnc_addPlayerEventHandler;
 
 // ==============================================================================

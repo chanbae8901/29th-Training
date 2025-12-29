@@ -1,5 +1,5 @@
 /*
- * Name:	Hill_fnc_noThermals
+ * Name:	DOTT_thermals_fnc_blackScreen
  * Date:	12/11/2025
  * Version: 1.2
  * Author: Rellikplug AKA: Hill [29th ID]
@@ -15,7 +15,7 @@
  * false if !hasInterface, true otherwise
  *
  * Example:
- * [] spawn Hill_fnc_noThermals
+ * [] spawn DOTT_thermals_fnc_blackScreen
  */
 
 #define MESSAGE "FLIR Mode is disallowed. Please Turn off Thermals."
