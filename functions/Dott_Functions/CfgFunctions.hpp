@@ -6,8 +6,6 @@ class Dott_Functions
 	{
 		file = "functions\Dott_Functions";
 		class displayMsg {};
-		class ticketAdd {};
-		class ticketCount {};
 		class fullSetUnitLoadout {};
 		class resetWeaponState {};
 		class diag_log {};
@@ -58,6 +56,17 @@ class Dott_Radio
 		class initTransferSettings {};
 		class addRadio {};
 		class removeRadio {};
+	};
+};
+
+class Dott_Ticket
+{
+	tag = "DOTT_ticket";
+	class TicketFunctions
+	{
+		file = "functions\Dott_Functions\ticket";
+		class add {};
+		class count {};
 	};
 };
 

@@ -1,5 +1,5 @@
 /*
- * Name:	DOTT_fnc_ticketCount
+ * Name:	DOTT_ticket_fnc_count
  * Date:	3/3/2024
  * Version:	1.1
  * Author:	Dott [29th ID]
@@ -17,7 +17,7 @@
  * Example (in onPlayerRespawn.sqf):
  * 
  *	private _playerSide = playerSide;
- *  [_playerSide] remoteExec ["DOTT_fnc_ticketCount", 2];
+ *  [_playerSide] remoteExec ["DOTT_ticket_fnc_count", 2];
  *	
  * 
  */

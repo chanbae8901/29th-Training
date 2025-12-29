@@ -1,5 +1,5 @@
 /*
- * Name:	DOTT_fnc_ticketAdd
+ * Name:	DOTT_ticket_fnc_add
  * Date:	2/19/2024
  * Version:	1.0
  * Author:	Dott [29th ID]

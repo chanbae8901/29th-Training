@@ -190,10 +190,10 @@ pvpfw_chatIntercept_allCommands = [
 			private _ticketAmount = parsenumber _filterAmount;
 			switch (_filterArg) do
 			{
-				case "blufor": { systemChat format["Changing Blufor tickets by %1",_ticketAmount]; ["WEST", _ticketAmount] call DOTT_fnc_ticketAdd };
-				case "opfor": { systemChat format["Changing Opfor tickets by %1",_ticketAmount]; ["EAST", _ticketAmount] call DOTT_fnc_ticketAdd };
-				case "grnfor": { systemChat format["Changing Grnfor tickets by %1",_ticketAmount]; ["GUER", _ticketAmount] call DOTT_fnc_ticketAdd };
-				case "reset": { systemChat "Resetting tickets to zero!"; ["reset"] call DOTT_fnc_ticketAdd };
+				case "blufor": { systemChat format["Changing Blufor tickets by %1",_ticketAmount]; ["WEST", _ticketAmount] call DOTT_ticket_fnc_add };
+				case "opfor": { systemChat format["Changing Opfor tickets by %1",_ticketAmount]; ["EAST", _ticketAmount] call DOTT_ticket_fnc_add };
+				case "grnfor": { systemChat format["Changing Grnfor tickets by %1",_ticketAmount]; ["GUER", _ticketAmount] call DOTT_ticket_fnc_add };
+				case "reset": { systemChat "Resetting tickets to zero!"; ["reset"] call DOTT_ticket_fnc_add };
 				case "disable": 
 				{	
 					//case for disable at the end
