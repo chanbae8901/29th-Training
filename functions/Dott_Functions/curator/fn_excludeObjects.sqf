@@ -1,5 +1,5 @@
 /*
- * Name:	excludeObjFromZeus.sqf
+ * Name:	DOTT_curator_fnc_excludeObjects
  * Date:	7/27/2025
  * Version: 1.1
  * Author:  Bae [29th ID] modified from Hill [29th ID]
@@ -15,7 +15,7 @@
  * None
  *
  * Example:
- * execVM "scripts\excludeObjFromZeus.sqf";
+ * [] spawn DOTT_curator_fnc_excludeObjects;
  */
 
 if (!isServer) exitWith {};

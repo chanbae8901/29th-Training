@@ -28,7 +28,7 @@ if(_didJIP) then
 	{
 		params ["_theClient"];
 		waitUntil { sleep 1; !isNull _theClient }; //most reliable way to call script early without it breaking
-		[_theClient] spawn Hill_fnc_checkCuratorAssignment;
+		[_theClient] spawn DOTT_curator_fnc_checkAssignment;
 	};
 };
 
@@ -101,7 +101,7 @@ _theClient call BIS_fnc_drawCuratorDeaths;
 };
 
 //Run Curator (Zeus) Setup
-execVM "scripts\init_curators.sqf";
+call DOTT_curator_fnc_init;
 
 /*
 //things break if player dies before load in finished

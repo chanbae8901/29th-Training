@@ -21,13 +21,13 @@ private _forcedFog      = [0.1, 0.01, 0];
 
 call DOTT_settings_fnc_initServer;
 
-execVM "scripts\excludeObjFromZeus.sqf";
+[] spawn DOTT_curator_fnc_excludeObjects;
 
 #endif
 
 #ifdef DOTT_EVENT
 
-execVM "scripts\excludeObjFromZeusEvent.sqf";
+[] spawn DOTT_curator_fnc_eventExcludeObjects;
 
 #endif
 
@@ -51,7 +51,7 @@ addMissionEventHandler ["OnUserAdminStateChanged", {
 		{
 			waitUntil { isNull (getAssignedCuratorLogic _unit) };
 		};  
-		[_unit] spawn Hill_fnc_checkCuratorAssignment;
+		[_unit] spawn DOTT_curator_fnc_checkAssignment;
 	}
 }];
 

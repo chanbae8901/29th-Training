@@ -4,9 +4,7 @@ class 29th_Training {
     file = "functions\29th_Training";
     class setInsignia {};
     class arsenalClosed {};
-    class assignCurator {}; 
-    class checkCuratorAssignment {};    
-
+  
     #ifdef DOTT_TRAINING
     class cleaner {};
     #endif

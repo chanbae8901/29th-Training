@@ -1,5 +1,5 @@
 /*
- * Name:	Hill_fnc_checkCuratorAssignment
+ * Name:	DOTT_curator_fnc_checkAssignment
  * Date:	7/23/2025
  * Version: 1.0
  * Author:  Bae [29th ID]
@@ -14,7 +14,7 @@
  * n/a
  *
  * Example:
- * [player] spawn Hill_fnc_checkCuratorAssignment
+ * [player] spawn DOTT_curator_fnc_checkAssignment
  */
 
 private _unitName = str (_this select 0);
@@ -44,4 +44,4 @@ if (_logicName == "") exitWith {};
 private _unit = missionNamespace getVariable _unitName;
 private _logic = missionNamespace getVariable _logicName;
 
-[_unit, _logic] spawn Hill_fnc_assignCurator;
+[_unit, _logic] spawn DOTT_curator_fnc_fixAssignment;

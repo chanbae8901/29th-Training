@@ -90,6 +90,20 @@ class Dott_Spectator
 	};
 };
 
+class DOTT_Curator
+{
+	tag = "DOTT_curator";
+	class CuratorFunctions
+	{
+		file = "functions\Dott_Functions\curator";
+		class init {};
+		class fixAssignment {};
+		class checkAssignment {};
+		class excludeObjects {};
+		class eventExcludeObjects {};
+	};
+};
+
 #ifdef DOTT_TRAINING
 
 class Dott_Tracker
