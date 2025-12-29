@@ -20,7 +20,16 @@ Overall Future Goals
 	- Wave system for team leaders to call in player waves
 		- Could also use timer
 	- Deploy area. Allow a side to deploy within or outside of a designated circle.
-
+  - mission.sqm
+    - When/if it becomes worth it, update mission.sqm to
+    - Merge baseObjectsInit w/ event version
+    - Merge excludeObjFromZeus w/ event version
+    - Merge cleaner w/ event version (this might not require sqm change)
+    - Add trigger zone for arsenal instead of just getting the middle of respawn and box
+  - New hint system
+    - Using vanilla hint is limiting due to potential overwrites from different systems, 
+      which can also make how long we want a message to stay up inconsistent.
+    - Potentially take FNF notification system and tweak it.
 ---
 TBD
 
