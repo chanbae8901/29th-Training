@@ -22,4 +22,4 @@ if (hasInterface) then {execVM "scripts\baseObjectsInitEvent.sqf"};
 
 #endif
 
-call DOTT_fnc_initTransferRadioSettings;
+call DOTT_radio_fnc_initTransferSettings;

@@ -13,7 +13,7 @@ class Dott_Functions
 		class diag_log {};
 		class addDiaryRecord {};
 		class disablePIPThermals {};
-		class initTransferRadioSettings {};
+
 
 		#ifdef DOTT_TRAINING
 
@@ -49,6 +49,16 @@ class Dott_Round
 		class timeWarning {};
 		class roundEvents {};
 		class formatTime {};
+	};
+};
+
+class Dott_Radio
+{
+	tag = "DOTT_radio";
+	class RadioFunctions
+	{
+		file = "functions\Dott_Functions\radio";
+		class initTransferSettings {};
 	};
 };
 

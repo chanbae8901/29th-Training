@@ -1,5 +1,5 @@
 /*
- * Name:	DOTT_fnc_initTransferRadioSettings
+ * Name:	DOTT_radio_fnc_initTransferSettings
  * Date:	12/24/2025
  * Version: 1.2
  * Author:  Bae [29th ID]
@@ -15,7 +15,7 @@
  * Nothing
  *
  * Example:
- * call DOTT_fnc_initTransferRadioSettings;
+ * call DOTT_radio_fnc_initTransferSettings;
  * 
  */
 

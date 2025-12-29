@@ -75,6 +75,7 @@ v4.3.0
 - Swap event handlers waiting for player to be nonnull with CBA equivalent to reduce unnecessary spawns.
 - Replaced all CBA setting tags from DOTT to TN.
 - Grenade throws now also cached for tracker system.
+- Moved relevant functions into radio folder in DOTT_Functions.
 
 ---
 v4.2.4  
