@@ -1,5 +1,5 @@
 /*
- * Name:	DOTT_fnc_addDiaryRecord
+ * Name:	DOTT_common_fnc_addDiaryRecord
  * Date:	8/21/2025
  * Version:	1.0
  * Author:	Bae [29th ID]

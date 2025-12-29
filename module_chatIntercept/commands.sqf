@@ -113,7 +113,7 @@ pvpfw_chatIntercept_allCommands = [
 		{
 			if !(call DOTT_round_fnc_isRoundActive) then
 			{
-				["<t color='#ffffff' size='5'>GAME!</t>","PLAIN",0.4] remoteExec ["DOTT_fnc_displayMsg"];
+				["<t color='#ffffff' size='5'>GAME!</t>","PLAIN",0.4] remoteExec ["DOTT_common_fnc_displayMsg"];
 				systemChat "No timer running! Only displaying end game message!";
 			} else 
 			{

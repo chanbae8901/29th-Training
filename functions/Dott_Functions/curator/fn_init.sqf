@@ -16,7 +16,7 @@ if (hasInterface) then
 		{
 			private _curatorName = name player;
 			private _msg = format ["CURATOR INTERFACE OPENED: %1", _curatorName];
-			_msg remoteExec ["DOTT_fnc_diag_log",2];
+			_msg remoteExec ["DOTT_common_fnc_diag_log",2];
 		}
 	] call CBA_fnc_addEventHandler;
 

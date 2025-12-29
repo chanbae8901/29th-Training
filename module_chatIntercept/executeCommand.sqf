@@ -50,8 +50,8 @@ private _foundCommand = false;
 		if (pvpfw_chatIntercept_noLogCommands find _command == -1) then 
 		{
 			private _msg = format ["%1 executed command !%2 %3", name player, _command, _argument];
-			_msg remoteExec ["DOTT_fnc_diag_log",2];
-			["Log", ["Commands", _msg]] remoteExec ["DOTT_fnc_addDiaryRecord"];
+			_msg remoteExec ["DOTT_common_fnc_diag_log",2];
+			["Log", ["Commands", _msg]] remoteExec ["DOTT_common_fnc_addDiaryRecord"];
 		};		
 	};
 } forEach pvpfw_chatIntercept_allCommands;

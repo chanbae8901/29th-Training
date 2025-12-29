@@ -1,5 +1,5 @@
 /*
- * Name:	DOTT_fnc_diag_log
+ * Name:	DOTT_common_fnc_diag_log
  * Date:	8/20/2025
  * Version:	1.0
  * Author:	Bae [29th ID]
@@ -15,7 +15,7 @@
  * true
  *
  * Example:
- * "Something Happened" remoteExec ["DOTT_fnc_diag_log", 2];
+ * "Something Happened" remoteExec ["DOTT_common_fnc_diag_log", 2];
  * 
  */
 

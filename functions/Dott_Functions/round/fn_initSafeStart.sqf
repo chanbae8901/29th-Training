@@ -33,7 +33,7 @@ private _msgText = format [
 	"PLAIN",
 	0.5,
 	false
-] remoteExecCall ["DOTT_fnc_displayMsg"];
+] remoteExecCall ["DOTT_common_fnc_displayMsg"];
 
 DOTT_safeStartActive = true;
 publicVariable "DOTT_safeStartActive";

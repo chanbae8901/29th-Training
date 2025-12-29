@@ -22,7 +22,7 @@
 params[["_force", false, [false]]];
 if (overtimeEnabled && !_force) then
 {
-	["<t color='#ffffff' size='3'><br/>%1 Minute OVERTIME</t>","PLAIN",0.5, true, overTimePeriod/60] remoteExecCall ["DOTT_fnc_displayMsg"];
+	["<t color='#ffffff' size='3'><br/>%1 Minute OVERTIME</t>","PLAIN",0.5, true, overTimePeriod/60] remoteExecCall ["DOTT_common_fnc_displayMsg"];
 	[overtimePeriod] call BIS_fnc_countdown;
 	overtimeEnabled = false; //Prevents overtime from repeating forever
 	publicVariable "overtimeEnabled";
@@ -44,7 +44,7 @@ if (overtimeEnabled && !_force) then
 	if (_force) exitWith {true}; //implies called when round not running
 
 	//let round naturally end on non-forced case
-	["<t color='#ffffff' size='5'>GAME!</t>","PLAIN",0.4] remoteExecCall ["DOTT_fnc_displayMsg"];
+	["<t color='#ffffff' size='5'>GAME!</t>","PLAIN",0.4] remoteExecCall ["DOTT_common_fnc_displayMsg"];
 	[-1] call BIS_fnc_countdown;
 	["DOTT_round_ended",[]] call CBA_fnc_globalEvent;		
 };

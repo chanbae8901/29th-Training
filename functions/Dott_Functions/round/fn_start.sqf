@@ -35,7 +35,7 @@ private _msgText = format [
 	"PLAIN",
 	0.5,
 	false
-] remoteExecCall ["DOTT_fnc_displayMsg"];
+] remoteExecCall ["DOTT_common_fnc_displayMsg"];
 
 [{
 	[{(call DOTT_round_fnc_getTime) <= 0}, { call DOTT_round_fnc_end }, []] call CBA_fnc_waitUntilAndExecute;

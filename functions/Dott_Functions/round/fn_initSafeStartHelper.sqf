@@ -24,7 +24,7 @@ if (isNil "DOTT_safeStartActive") exitWith { true };
 if (!_allSidesReady) exitWith 
 {
 	// Display aborted message if someone unready mid-countdown			
-	["<t color='#ffffff' size='4'>Timer Aborted!</t>","PLAIN",0.5] remoteExec ["DOTT_fnc_displayMsg"];
+	["<t color='#ffffff' size='4'>Timer Aborted!</t>","PLAIN",0.5] remoteExec ["DOTT_common_fnc_displayMsg"];
 	DOTT_safeStartActive = nil; publicVariable DOTT_safeStartActive;
 	[-1] call BIS_fnc_countdown;
 	["DOTT_round_safeStartAborted", []] call CBA_fnc_globalEvent;

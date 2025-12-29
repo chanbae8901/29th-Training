@@ -1,5 +1,5 @@
 /*
- * Name:	DOTT_fnc_displayMsg
+ * Name:	DOTT_common_fnc_displayMsg
  * Date:	2/16/2024
  * Version:	1.0
  * Author:	Dott [29th ID]
@@ -18,7 +18,7 @@
  * n/a
  *
  * Example:
- * ["<t color='#ffffff' size='4'>Timer Started!</t><br/>%1 Minute Time Limit","PLAIN",0.5, true, timerLength] remoteExec ["DOTT_fnc_displayMsg"];
+ * ["<t color='#ffffff' size='4'>Timer Started!</t><br/>%1 Minute Time Limit","PLAIN",0.5, true, timerLength] remoteExec ["DOTT_common_fnc_displayMsg"];
  * 
  */
 

@@ -5,11 +5,8 @@ class Dott_Functions
 	class DottsFunctions 
 	{
 		file = "functions\Dott_Functions";
-		class displayMsg {};
 		class fullSetUnitLoadout {};
 		class resetWeaponState {};
-		class diag_log {};
-		class addDiaryRecord {};
 
 		#ifdef DOTT_TRAINING
 
@@ -17,6 +14,19 @@ class Dott_Functions
 		class flexibleReset {};
 
 		#endif
+	};
+};
+
+class Dott_Common
+{
+	tag = "DOTT_common";
+	class CommonFunctions
+	{
+		file = "functions\Dott_Functions\common";
+		class addDiaryRecord {};
+		class diag_log {};
+		class displayMsg {};
+		//class selectPosArea {};
 	};
 };
 
