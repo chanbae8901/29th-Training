@@ -1,3 +1,5 @@
+#ifdef DOTT_TRAINING
+
 class enableRoundEventLog 
 {
 	title = "Enable Round Event Logging?";
@@ -5,3 +7,5 @@ class enableRoundEventLog
 	texts[] = {"No","Yes (Default)"};
 	default = 1;
 };
+
+#endif

@@ -118,6 +118,7 @@ class DOTT_Training
 		class init {};
 		class initBaseObjects {};
 		class cleaner {};
+		class initDateAndWeather {};
 	};
 }
 

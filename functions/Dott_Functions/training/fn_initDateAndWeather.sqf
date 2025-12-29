@@ -1,5 +1,5 @@
 /*
- * Name:	"scripts\dateAndWeather.sqf"
+ * Name:	DOTT_training_fnc_initDateAndWeather
  * Date:	7/24/2025
  * Version: 1.0
  * Author:  Bae [29th ID]
@@ -21,7 +21,7 @@
  * private _forcedDate     = [2018, 3, 30, 12, 0]; 
  *  private _forcedOvercast = 0.1;
  * private _forcedFog      = [0.1, 0.01, 0];
- * [_forcedDate, _forcedOvercast, _forcedFog] execVM "scripts\dateAndWeather.sqf";
+ * [_forcedDate, _forcedOvercast, _forcedFog] call DOTT_training_fnc_initDateAndWeather;
  * 
  */
 

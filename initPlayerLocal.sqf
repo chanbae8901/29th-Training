@@ -15,15 +15,6 @@ params ["_theClient","_didJIP"];
 enableSentences false;
 enableEnvironment [false, true];
 
-#ifdef DOTT_TRAINING
-
-//Init chat command system
-[] execVM "module_chatIntercept\init.sqf";
-
-[] spawn DOTT_fnc_initDefaultLoadouts;
-
-#endif
-
 [_theClient] execVM "scripts\player_arsenal_handlers.sqf";
 
 //maintains a neutral rating in the event of "accidental" team kills

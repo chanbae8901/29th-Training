@@ -7,10 +7,6 @@ call DOTT_round_fnc_init;
 
 call DOTT_training_fnc_init;
 
-if (("enableRoundEventLog" call BIS_fnc_getParamValue) == 1) then {call DOTT_tracker_fnc_init};
-
-call DOTT_parade_fnc_init;
-
 #endif
 
 #ifdef DOTT_EVENT
