@@ -107,28 +107,19 @@ class DOTT_Curator
 	};
 };
 
-class DOTT_base
-{
-	tag = "DOTT_base";
-	class BaseFunctions
-	{
-		file = "functions\Dott_Functions\base";
-
-		class init {};
-		#ifdef DOTT_TRAINING
-		class initObjects {};
-		class cleaner {};
-		#endif
-
-		#ifdef DOTT_EVENT
-		class initObjectsEvent {};
-		class cleanerEvent {};
-		#endif
-
-	};
-};
-
 #ifdef DOTT_TRAINING
+
+class DOTT_Training
+{
+	tag = "DOTT_training";
+	class TrainingFunctions
+	{
+		file = "functions\Dott_Functions\training";
+		class init {};
+		class initBaseObjects {};
+		class cleaner {};
+	};
+}
 
 class Dott_Tracker
 {
@@ -204,6 +195,8 @@ class Dott_Event
 		class checkWinCondition {};
 		class gui_setSafeStartTime {};
 		class markEditorPlacedObjects {};
+		class initBaseObjects {};
+		class cleaner {};
 	};
 };
 

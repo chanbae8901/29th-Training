@@ -5,6 +5,8 @@ call DOTT_round_fnc_init;
 
 #ifdef DOTT_TRAINING
 
+call DOTT_training_fnc_init;
+
 if (("enableRoundEventLog" call BIS_fnc_getParamValue) == 1) then {call DOTT_tracker_fnc_init};
 
 call DOTT_parade_fnc_init;
@@ -25,5 +27,3 @@ call DOTT_curator_fnc_init;
 call DOTT_ticket_fnc_init;
 
 call DOTT_thermals_fnc_init;
-
-call DOTT_base_fnc_init;

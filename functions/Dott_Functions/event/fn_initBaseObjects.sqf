@@ -128,5 +128,5 @@ player addEventHandler ["Respawn", { arsenalActionId = -1; }];
 //-----------------------------//
 
 {
-  _x addAction ["<img image='\A3\Ui_f\data\IGUI\Cfg\simpleTasks\types\repair_ca.paa'/><t color='#FF0080'>  Clean-Up</t>", "call DOTT_base_fnc_cleanerEvent", nil, 1, false, true, "", "true", 2];
+  _x addAction ["<img image='\A3\Ui_f\data\IGUI\Cfg\simpleTasks\types\repair_ca.paa'/><t color='#FF0080'>  Clean-Up</t>", "call DOTT_event_fnc_cleaner", nil, 1, false, true, "", "true", 2];
 } forEach DOTT_garbages;

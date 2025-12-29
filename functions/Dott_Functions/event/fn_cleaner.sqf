@@ -1,5 +1,5 @@
 /*
- * Name:	DOTT_base_fnc_cleanerEvent
+ * Name:	DOTT_event_fnc_cleaner
  * Date:	12/24/2025
  * Version: 2.0
  * Author:  Rellikplug	AKA: Hill [29th ID]
@@ -14,7 +14,7 @@
  * false if no objects deleted, true otherwise
  *
  * Example:
- * call DOTT_base_fnc_cleanerEvent;
+ * call DOTT_event_fnc_cleaner;
  * 
  */
 

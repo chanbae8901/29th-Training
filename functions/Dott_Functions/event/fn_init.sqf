@@ -73,6 +73,8 @@ if (hasInterface) then
 /******* Everything else ********/
 if (hasInterface) then
 {
+	call DOTT_event_fnc_initBaseObjects;
+
 	//Prevent error due to no saved respawn inventory
 	[player, [missionNamespace, "Current Inventory"]] call BIS_fnc_saveInventory;
 	[player, ["missionNamespace:Current Inventory"]] call BIS_fnc_setRespawnInventory;
