@@ -6,5 +6,5 @@ params ["_dead"];
 
 if (TN_removeRadiosOnDeath) then
 {
-	_dead call Hill_fnc_removeRadio;
+	_dead call DOTT_radio_fnc_removeRadio;
 };

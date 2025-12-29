@@ -1,5 +1,5 @@
 /*
- * Name:	Hill_fnc_removeRadio
+ * Name:	DOTT_radio_fnc_removeRadio
  * Date:	9/10/2018
  * Version: 1.0
  * Author: Rellikplug	AKA: Hill [29th ID]
@@ -13,7 +13,7 @@
  * Array in format [removed SR, removed LR]
  *
  * Example:
- * [player] call Hill_fnc_removeRadio;
+ * [player] call DOTT_radio_fnc_removeRadio;
  * 
  */
 

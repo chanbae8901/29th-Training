@@ -6,9 +6,7 @@ class 29th_Training {
     class exit_spectator {};
     class setInsignia {};
     class noThermals {};
-    class addRadio {};
     class arsenalClosed {};
-    class removeRadio {};
     class assignCurator {};
     class handleInitialInventory {}; 
     class checkCuratorAssignment {};    
