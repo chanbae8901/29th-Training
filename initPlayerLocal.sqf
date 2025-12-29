@@ -36,26 +36,6 @@ execVM "scripts\baseObjectsInit.sqf";
 
 #endif
 
-#ifdef DOTT_EVENT
-
-//Prevent error
-[player, [missionNamespace, "Current Inventory"]] call BIS_fnc_saveInventory;
-[player, ["missionNamespace:Current Inventory"]] call BIS_fnc_setRespawnInventory;
-
-//EVENT: Hide map markers belonging to opposing sides
-{
-    _x setMarkerAlphaLocal 0
-} count (allMapMarkers select {
-    private _marker = _x;
-    !([east,west,civilian,independent] select {_marker find toLower str _x != -1} isEqualTo []) && 
-    {
-        _x find toLower str playerSide == -1
-    }
-});
-
-//baseobjectsinit moved to init.sqf
-#endif
-
 [_theClient] execVM "scripts\player_arsenal_handlers.sqf";
 
 //maintains a neutral rating in the event of "accidental" team kills

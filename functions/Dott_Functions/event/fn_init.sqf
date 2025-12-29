@@ -69,3 +69,30 @@ if (hasInterface) then
 		call DOTT_event_fnc_markEditorPlacedObjects;
 	};
 };
+
+/******* Everything else ********/
+if (hasInterface) then
+{
+	//Add actions to spectator terminals, garbage cans, and ammo boxes 
+	execVM "scripts\baseObjectsInitEvent.sqf";
+
+	//Prevent error due to no saved respawn inventory
+	[player, [missionNamespace, "Current Inventory"]] call BIS_fnc_saveInventory;
+	[player, ["missionNamespace:Current Inventory"]] call BIS_fnc_setRespawnInventory;
+
+	//Hide map markers belonging to opposing sides
+	{
+		_x setMarkerAlphaLocal 0
+	} count (allMapMarkers select {
+		private _marker = _x;
+		!([east,west,civilian,independent] select {_marker find toLower str _x != -1} isEqualTo []) && 
+		{
+			_x find toLower str playerSide == -1
+		}
+	});	
+};
+
+if (isServer) then
+{
+
+};

@@ -17,9 +17,6 @@ if (("enableRoundEventLog" call BIS_fnc_getParamValue) == 1) then {call DOTT_tra
 
 call DOTT_event_fnc_init;
 
-//Add actions to spectator terminals, garbage cans, and ammo boxes - Moved here from initPlayerLocal due to variable from event init needed
-if (hasInterface) then {execVM "scripts\baseObjectsInitEvent.sqf"};
-
 #endif
 
 call DOTT_radio_fnc_initTransferSettings;
