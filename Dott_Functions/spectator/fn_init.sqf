@@ -1,3 +1,23 @@
+/*
+ * Name:	DOTT_spectator_fnc_init
+ * Date:	12/30/2025
+ * Version: 1.0
+ * Author:  Bae [29th ID]
+ *
+ * Description:
+ * Initalizes spectator module.
+ *
+ * Parameter(s): 
+ * None
+ *
+ * Returns:
+ * n/a
+ *
+ * Example:
+ * call DOTT_spectator_fnc_init;
+ * 
+ */
+
 //Only autospectate init here right now
 if (hasInterface) then
 {

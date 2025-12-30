@@ -1,3 +1,24 @@
+/*
+ * Name:	DOTT_event_fnc_init
+ * Date:	12/30/2025
+ * Version: 1.0
+ * Author:  Bae [29th ID]
+ *
+ * Description:
+ * Initalizes event variation of mission template.
+ * Should be initialized after round.
+ *
+ * Parameter(s): 
+ * None
+ *
+ * Returns:
+ * n/a
+ *
+ * Example:
+ * call DOTT_event_fnc_init;
+ * 
+ */
+
 /******** CONFIG ********/
 call compile preprocessFileLineNumbers "eventSettings.sqf";
 

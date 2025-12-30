@@ -1,3 +1,23 @@
+/*
+ * Name:	DOTT_thermals_fnc_init
+ * Date:	12/30/2025
+ * Version: 1.0
+ * Author:  Bae [29th ID]
+ *
+ * Description:
+ * Initalizes thermal restriction module.
+ *
+ * Parameter(s): 
+ * None
+ *
+ * Returns:
+ * n/a
+ *
+ * Example:
+ * call DOTT_thermals_fnc_init;
+ * 
+ */
+
 if (hasInterface) then 
 {
 	["visionMode", 

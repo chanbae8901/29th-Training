@@ -1,3 +1,24 @@
+/*
+ * Name:	DOTT_training_fnc_init
+ * Date:	12/30/2025
+ * Version: 1.0
+ * Author:  Bae [29th ID]
+ *
+ * Description:
+ * Initalizes training variation of mission template.
+ * Should be initialized after round.
+ *
+ * Parameter(s): 
+ * None
+ *
+ * Returns:
+ * n/a
+ *
+ * Example:
+ * call DOTT_training_fnc_init;
+ * 
+ */
+
 if (hasInterface) then
 {
 	call DOTT_training_fnc_initBaseObjects;
