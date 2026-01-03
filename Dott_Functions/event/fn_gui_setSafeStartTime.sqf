@@ -62,9 +62,9 @@ _bg ctrlSetBackgroundColor [0,0,0,0.7];
 
 
 //modified gui_settingTime 
-private _min = 0; 
+private _min = 10;
 private _max = 3600; 
-private _currentValue = 0; 
+private _currentValue = (floor ([0] call BIS_fnc_countdown)) max _min;
  
 private _ctrlSlider = _timeCtrl controlsGroupCtrl 5140; 
  
@@ -122,3 +122,10 @@ _timeCtrl setVariable ["cba_settings_fnc_updateUI", {
     (_timeCtrl controlsGroupCtrl 5143) ctrlSetText ([floor (_value % 60), 2] call CBA_fnc_formatNumber); 
 }]; 
 
+//Prevent enter key from closing display and setting new time
+_display displayAddEventHandler ["KeyDown", {
+	params ["_display", "_key", "_shift", "_ctrl", "_alt"];
+
+	// DIK_RETURN = 28, DIK_NUMPADENTER = 156
+	(_key in [28, 156]);
+}];
