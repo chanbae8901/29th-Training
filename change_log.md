@@ -50,6 +50,18 @@ TBD
 	- Included new class "FlagReturned"
 
 ---
+v4.3.1  
+5 JAN 2026
+
+---
+
+* OCAP Integration
+  - Mission automatically starts recording on safestart/live and pauses recording on round end.
+  - Safe start begin/abort and round start/end shown as events in OCAP recording.
+  - Adds cba_settings.sqf and cba_settings_hasSettingsFile = 1 in description.ext.
+
+
+---
 v4.3.0  
 27 DEC 2025
 

@@ -131,6 +131,16 @@ class DOTT_Vehicle
 	};
 };
 
+class DOTT_OCAP
+{
+	tag = "DOTT_ocap";
+	class OCAPFunctions
+	{
+		file = "Dott_Functions\ocap";
+		class init {};
+	};
+};
+
 #ifdef DOTT_TRAINING
 
 class DOTT_Commands

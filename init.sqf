@@ -36,3 +36,5 @@ call DOTT_loadout_fnc_init;
 call DOTT_spectator_fnc_init;
 
 call DOTT_vehicle_fnc_init;
+
+call DOTT_ocap_fnc_init;
