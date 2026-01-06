@@ -4,7 +4,7 @@
     "TN_addRadio", 
     "LIST", 
     ["Add SR Radio", "Add Side Correct SR Radio to loadout when leaving arsenal"], 
-    RADIO_SETTINGS_CATEGORY,
+    [GENERAL_SETTINGS_CATEGORY, RADIO_SUBCATEGORY],
     [[0, 1, 2],["No", "Only When No SR Radio Equipped", "Force Side Radio"], 2],
 	1
 ] call CBA_fnc_addSetting;
@@ -13,7 +13,7 @@
     "TN_removeRadiosOnDeath", 
     "CHECKBOX", 
     "Remove radios on death",
-    RADIO_SETTINGS_CATEGORY,
+    [GENERAL_SETTINGS_CATEGORY, RADIO_SUBCATEGORY],
     true,
 	1
 ] call CBA_fnc_addSetting;
@@ -22,7 +22,7 @@
     "TN_forceSideLRVic", 
     "CHECKBOX", 
     ["Force Side LR Vehicle", "Force LR radio in vehicle to be the same side as the player."],
-    RADIO_SETTINGS_CATEGORY,
+    [GENERAL_SETTINGS_CATEGORY, RADIO_SUBCATEGORY],
     true,
 	1,
     {
