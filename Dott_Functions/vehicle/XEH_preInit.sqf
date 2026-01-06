@@ -1,6 +1,4 @@
-#define GENERAL_SETTINGS_CATEGORY "29th - General Settings"
-
-#define VEHICLE_SUBCATEGORY "Vehicle"
+#include "..\..\data\settingCategories.hpp"
 
 [
     "TN_removeDefaultVehicleInventories", 
@@ -36,12 +34,11 @@
 	1
 ] call CBA_fnc_addSetting;
 
-#define RESTRICTIONS_SUBCATEGORY "Restrictions"
 [
     "TN_artilleryComputer", 
     "CHECKBOX", 
     "Enable Artillery Computer",
-    [GENERAL_SETTINGS_CATEGORY, RESTRICTIONS_SUBCATEGORY],
+    [GENERAL_SETTINGS_CATEGORY, VEHICLE_SUBCATEGORY],
     false,
 	1,
     {

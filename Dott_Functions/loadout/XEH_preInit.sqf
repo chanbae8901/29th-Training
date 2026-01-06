@@ -1,4 +1,4 @@
-#define GENERAL_SETTINGS_CATEGORY "29th - General Settings"
+#include "..\..\data\settingCategories.hpp"
 
 [
     "TN_setInsignia", 

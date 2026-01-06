@@ -1,5 +1,4 @@
-#define GENERAL_SETTINGS_CATEGORY "29th - General Settings"
-#define ROUND_SUBCATEGORY "Round"
+#include "..\..\data\settingCategories.hpp"
 
 [
     "TN_disableScoreboard", 

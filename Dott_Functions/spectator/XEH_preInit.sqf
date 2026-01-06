@@ -1,6 +1,4 @@
-#define GENERAL_SETTINGS_CATEGORY "29th - General Settings"
-
-#define SPECTATOR_SUBCATEGORY "Spectator"
+#include "..\..\data\settingCategories.hpp"
 
 [
     "TN_autoSpectate", 

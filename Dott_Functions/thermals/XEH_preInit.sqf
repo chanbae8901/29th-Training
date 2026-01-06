@@ -1,12 +1,10 @@
-#define GENERAL_SETTINGS_CATEGORY "29th - General Settings"
-
-#define RESTRICTIONS_SUBCATEGORY "Restrictions"
+#include "..\..\data\settingCategories.hpp"
 
 [
     "TN_disableTI", 
     "CHECKBOX", 
     "Disable thermal imaging optics",
-    [GENERAL_SETTINGS_CATEGORY, RESTRICTIONS_SUBCATEGORY],
+    [GENERAL_SETTINGS_CATEGORY, THERMALS_SUBCATEGORY],
     true,
 	1,
     {

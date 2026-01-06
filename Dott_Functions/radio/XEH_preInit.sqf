@@ -1,4 +1,4 @@
-#define RADIO_SETTINGS_CATEGORY "29th - Radio Settings"
+#include "..\..\data\settingCategories.hpp"
 
 [
     "TN_addRadio", 

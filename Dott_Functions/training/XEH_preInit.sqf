@@ -1,4 +1,4 @@
-#define SECTOR_SETTINGS_CATEGORY "29th - Sector Settings"
+#include "..\..\data\settingCategories.hpp"
 
 [
     "TN_costInfantry", // Internal setting name, should always contain a tag! This will be the global variable which takes the value of the setting.
