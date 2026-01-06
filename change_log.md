@@ -9,32 +9,34 @@ Overall Future Goals
 * Random mortars in area defined by admin
 * Teleport pole that teleports you inside a radius, or into an area, or along a circle edge (COULD USE POLY TOO)
 	- Poly contained in circle, check random points in circle until you find one in poly?
+* Wave system for team leaders to call in player waves
+  - Could also use timer
+* Deploy area. Allow a side to deploy within or outside of a designated circle.
 * Fix Security Flaws
   - Limit remote exec functions
   - allowFunctionsRecompile = 1; is necessary for custom sector settings, can't think of a way to bypass this
   - This is a low priority since this mission file is intended to be used on private servers.
+* mission.sqm
+  - When/if it becomes worth it, update mission.sqm to
+  - Merge baseObjectsInit w/ event version
+  - Merge excludeObjFromZeus w/ event version
+  - Merge cleaner w/ event version (this might not require sqm change)
+  - Add trigger zone for arsenal instead of just getting the middle of respawn and box
+  - Remove most zeus modules and just dynamically create in mission based on hashmap
+* CTF system via chat commands
+  - Pole addactions to score?
+  - Maybe no flag? Drop object on death that is the "flag"
+* Possibly restricting chat commands to certain slots/players
+  - Add ability to admin to add players to array?
+  - Unit string indicators like sl, plt, etc...
+  - Player profile string reading for Cpl, Sgt, etc?
+
 * Near Goals
-	- CTF system via chat commands
-		- Pole addactions to score?
-		- Maybe no flag? Drop object on death that is the "flag"
-	- Possibly restricting chat commands to certain slots/players
-		- Add ability to admin to add players to array?
-		- Unit string indicators like sl, plt, etc...
-		- Player profile string reading for Cpl, Sgt, etc?
-	- Wave system for team leaders to call in player waves
-		- Could also use timer
-	- Deploy area. Allow a side to deploy within or outside of a designated circle.
-  - mission.sqm
-    - When/if it becomes worth it, update mission.sqm to
-    - Merge baseObjectsInit w/ event version
-    - Merge excludeObjFromZeus w/ event version
-    - Merge cleaner w/ event version (this might not require sqm change)
-    - Add trigger zone for arsenal instead of just getting the middle of respawn and box
-    - Remove most zeus modules and just dynamically create in mission based on hashmap
   - New hint system
     - Using vanilla hint is limiting due to potential overwrites from different systems, 
       which can also make how long we want a message to stay up inconsistent.
     - Potentially take FNF notification system and tweak it.
+    - Potentially use CBA's, but might have timing conflicts (ex. OCAP recording and round notifications).
   - UI for round safestart/ready system
   - More modular command system
     - That would seamlessly have its available commands be modified by what modules are on 
@@ -56,6 +58,7 @@ v4.3.1
 ---
 
 * OCAP Integration
+  - New folder "ocap" under DOTT_Functions.
   - Mission automatically starts recording on safestart/live and pauses recording on round end.
   - Safe start begin/abort and round start/end shown as events in OCAP recording.
   - Should upload automatically when mission ends.
