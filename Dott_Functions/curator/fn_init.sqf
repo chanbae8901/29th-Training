@@ -68,7 +68,9 @@ if (isServer) then
 {
 	addMissionEventHandler ["OnUserAdminStateChanged", {
 		params ["_networkId", "_loggedIn"];
-		private _unit = (getUserInfo _networkId) select 10;	
+		private _userInfo = (getUserInfo _networkId);
+		if (count _userInfo < 11) exitWith {};
+		private _unit = _userInfo select 10;	
 		if (isNil "_unit") exitWith {};
 		if (_loggedIn) exitWith 
 		{

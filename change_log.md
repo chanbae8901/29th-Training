@@ -76,6 +76,7 @@ v4.3.1
 
 * Curator
   - Hopefully fix role-based Zeus not working on first life when JIP.
+  - Fix error when admin logs out.
 
 * Radio
   - Prevent arsenal closed from being called if Zeus is open.
