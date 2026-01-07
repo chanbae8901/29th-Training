@@ -75,10 +75,13 @@ if (isServer) then
 		if (_loggedIn) exitWith 
 		{
 			if (isNull getAssignedCuratorLogic _unit) then 
-			{ 
+			{
+				unassignCurator zeus_admin;
+				sleep .1;
 				_unit assignCurator zeus_admin; 
 			};
 		};
+		//logging out
 		[_unit] spawn {
 			params ["_unit"];
 			if (getAssignedCuratorLogic _unit == zeus_admin) then
