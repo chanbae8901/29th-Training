@@ -41,3 +41,15 @@ private _defaultAdminCommands = "['reset', 'debrief', 'goto', 'measure', 'ticket
 		pvpfw_chatIntercept_adminCommands = parseSimpleArray _this;
 	}
 ] call CBA_fnc_addSetting;
+
+[
+	"TN_removedCommands", 
+	"EDITBOX", 
+	["Removed Commands", "Commands listed here will not be able to be used by anyone. Use single quotes."],
+	COMMAND_SETTINGS_CATEGORY,
+	"[]",
+	1,
+	{
+		pvpfw_chatIntercept_removedCommands = parseSimpleArray _this;
+	}
+] call CBA_fnc_addSetting;
