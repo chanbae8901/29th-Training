@@ -44,7 +44,21 @@ if (hasInterface) then
 			}
 		] call CBA_fnc_addEventHandler;
 
-		[player] spawn DOTT_curator_fnc_checkAssignment;
+		//Fix role-based Zeus not working on first life when JIP
+		if (isNil "bis_fnc_preload_init") then //JIP
+		{
+			addMissionEventHandler 
+			[
+				"PreloadFinished", 
+				{
+					[player] call DOTT_curator_fnc_checkAssignment;
+					removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
+				}
+			];
+		} else //non-JIP, but might not be needed because this is a JIP problem
+		{
+			[player] call DOTT_curator_fnc_checkAssignment;
+		};
 
 		[player] remoteExec ["DOTT_curator_fnc_addPlayerEditable", 2];
 	};	

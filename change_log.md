@@ -71,8 +71,11 @@ v4.3.1
 
 * Commands
   - Command usage is now case insensitive again. (Accidentally introduced sensitivity in 4.3.0).
-  - Not logged commands, restricted, and admin command lists are now CBA settings.
+  - Not logged commands, restricted, and admin command lists are now CBA settings. Will not be shown in mission settings GUI.
   - Added removedCommands CBA setting that blocks commands for everyone.
+
+* Curator
+  - Hopefully fix role-based Zeus not working on first life when JIP.
 
 * Radio
   - Prevent arsenal closed from being called if Zeus is open.
