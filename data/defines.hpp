@@ -1,12 +1,12 @@
+//Define ONLY ONE of the variations below
 #define DOTT_TRAINING
 //#define DOTT_EVENT
 
 /*
-Order of doesn't matter EXCEPT FOR:
+Order of modules doesn't matter EXCEPT FOR:
 
-event requires round to be initialized first
+Round should be first, a lot of other modules assume its initialized
 loadout should be after radio, otherwise radio saving won't work properly
-commands should be at the end
 
 */
 
@@ -15,5 +15,5 @@ commands should be at the end
 #endif
 
 #ifdef DOTT_EVENT
-#define DOTT_MODULES ["round", "event", "curator", "ticket", "thermals", "radio", "loadout", "spectator", "vehicle", "ocap"]
+#define DOTT_MODULES ["round", "event",                                     "curator", "ticket", "thermals", "radio", "loadout", "spectator", "vehicle", "ocap"]
 #endif
