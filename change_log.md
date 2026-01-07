@@ -38,9 +38,6 @@ Overall Future Goals
     - Potentially take FNF notification system and tweak it.
     - Potentially use CBA's, but might have timing conflicts (ex. OCAP recording and round notifications).
   - UI for round safestart/ready system
-  - More modular command system
-    - That would seamlessly have its available commands be modified by what modules are on 
-      or depending on using training or event version.
 ---
 TBD
 
@@ -74,6 +71,8 @@ v4.3.1
 
 * Commands
   - Command usage is now case insensitive again. (Accidentally introduced sensitivity in 4.3.0).
+  - Not logged commands, restricted, and admin command lists are now CBA settings.
+  - Added removedCommands CBA setting that blocks commands for everyone.
 
 * Radio
   - Prevent arsenal closed from being called if Zeus is open.
