@@ -48,8 +48,5 @@
 	],
 	[
 		["tickets", "Manages tickets and changes tickets for a given side, by the given value (E.G. '!tickets Blufor 5' will add 5 tickets to Blufor). '!tickets reset' sets all tickets to zero. '!tickets' returns the current value of all teams tickets. '!tickets enable' or 'disable' to enable/disable ticket system"]
-	],
-	[],
-	[],
-	["tickets"]
+	]
 ] call DOTT_commands_fnc_addModule;

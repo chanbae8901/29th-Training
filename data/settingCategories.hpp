@@ -8,3 +8,5 @@
 #define LOADOUT_SUBCATEGORY "Loadout"
 
 #define SECTOR_SETTINGS_CATEGORY "29th - Sector Settings"
+
+#define COMMAND_SETTINGS_CATEGORY "29th - Command Settings"

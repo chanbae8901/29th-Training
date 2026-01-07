@@ -34,6 +34,5 @@
 	],
 	[
 		["radio", "Checks radio encryption codes for TFAR radios."]
-	],
-	["radio"]
+	]
 ] call DOTT_commands_fnc_addModule;

@@ -24,13 +24,10 @@
 
 if (isNil "pvpfw_chatIntercept_allCommands") exitWith { false };
 
-params [["_commands", [], [[]]], ["_helpInfo", [], [[]]], ["_noLog", [], [[]]], ["_restricted", [], [[]]], ["_admin", [], [[]]]];
+params [["_commands", [], [[]]], ["_helpInfo", [], [[]]]];
 
 pvpfw_chatIntercept_allCommands append _commands;
 pvpfw_chatIntercept_helpInfo append _helpInfo;
-pvpfw_chatIntercept_noLogCommands append _noLog;
-pvpfw_chatIntercept_restrictedCommands append _restricted;
-pvpfw_chatIntercept_adminCommands append _admin;
 
 true
 

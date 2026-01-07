@@ -10,7 +10,5 @@
 	],
 	[
 		["cleanup", "Cleans up bodies (trash can function)"]
-	],
-	[],
-	["cleanup"]
+	]
 ] call DOTT_commands_fnc_addModule;

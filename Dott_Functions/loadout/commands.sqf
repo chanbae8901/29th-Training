@@ -133,8 +133,5 @@
 		["reset", "Rearms, heals, and (optionally) teleports players to spawn. !reset' will rearm, heal, and teleport players to spawn. '!reset stay' will rearm and heal them. May also specify side (blufor, opfor, grnfor)"],
 		["debrief", "ACE Heals and teleports players for debrief. '!debrief' to teleport all players to Blufor base, '!debrief here' to teleport all players to your position"],
 		["goto", "Teleports admin to side spawns. '!goto SIDE' (blufor, opfor, grnfor)"]
-	],
-	[],
-	["heal", "rearm"],
-	["reset", "debrief", "goto"]
+	]
 ] call DOTT_commands_fnc_addModule;

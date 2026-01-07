@@ -145,7 +145,6 @@ class DOTT_Commands
 		class init {};
 		class execute {};
 		class addModule {};
-		class changeRestriction {};
 	};
 };
 

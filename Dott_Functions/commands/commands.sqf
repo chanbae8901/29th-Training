@@ -4,11 +4,12 @@
 // E.G. !commands, !COMMANDS, and !CoMmAnDs will all work, but '!help !COMMANDS' will not (unless argument is 'toLower' before hand is the command code)
 // systemChat is the best way to give feedback to the local player executing commands
 
-pvpfw_chatIntercept_noLogCommands = ["commands", "help", "showchat"];
-
-pvpfw_chatIntercept_adminCommands = ["measure"];
-//admin only IF mid-round, available otherwise
-pvpfw_chatIntercept_restrictedCommands = ["arsenal"];
+/*
+	pvpfw_chatIntercept_noLogCommands
+	pvpfw_chatIntercept_adminCommands
+	pvpfw_chatIntercept_restrictedCommands
+	created in XEH_preInit.sqf
+*/
 
 pvpfw_chatIntercept_helpInfo = 
 [
