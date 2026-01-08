@@ -26,7 +26,21 @@ if !(isClass (configFile >> "CfgPatches" >> "OCAP_recorder")) exitWith {};
 
 DOTT_ocap_roundNum = 1;
 
-// Round events for OCAP viewing
+
+//Order matters, event won't register if recording is not currently happening
+//However, dont start/pause recordings if autoStart is forced by server config
+
+//SafeStart Start
+if !(OCAP_settings_autoStart) then 
+{ 
+	[
+		"DOTT_round_safeStartBegin", 
+		{
+			["ocap_record"] call CBA_fnc_serverEvent;
+		}
+	] call CBA_fnc_addEventHandler;
+};
+
 [
 	"DOTT_round_safeStartBegin", 
 	{
@@ -34,12 +48,35 @@ DOTT_ocap_roundNum = 1;
 	}
 ] call CBA_fnc_addEventHandler;
 
+//Safe Start Aborted
 [
 	"DOTT_round_safeStartAborted", 
 	{
 		["ocap_customEvent", ["generalEvent", "Safe start aborted!"]] call CBA_fnc_serverEvent;
 	}
 ] call CBA_fnc_addEventHandler;
+
+if !(OCAP_settings_autoStart) then 
+{
+	[
+		"DOTT_round_safeStartAborted", 
+		{
+			["ocap_pause"] call CBA_fnc_serverEvent;
+		}
+	] call CBA_fnc_addEventHandler;
+};
+
+//Round Start
+if !(OCAP_settings_autoStart) then 
+{
+	[
+		"DOTT_round_started", 
+		{
+			if (OCAP_recorder_recording) exitWith {};
+			["ocap_record"] call CBA_fnc_serverEvent;
+		}
+	] call CBA_fnc_addEventHandler;
+};
 
 [
 	"DOTT_round_started", 
@@ -48,6 +85,7 @@ DOTT_ocap_roundNum = 1;
 	}
 ] call CBA_fnc_addEventHandler;
 
+//Round End
 [
 	"DOTT_round_ended", 
 	{
@@ -56,34 +94,18 @@ DOTT_ocap_roundNum = 1;
 	}
 ] call CBA_fnc_addEventHandler;
 
-if (OCAP_settings_autoStart) exitWith {}; //If server overrides mission settings
+if !(OCAP_settings_autoStart) then 
+{
+	[
+		"DOTT_round_ended", 
+		{
+			["ocap_pause"] call CBA_fnc_serverEvent;
+		}
+	] call CBA_fnc_addEventHandler;
+};
 
-// Start/pause recording
-[
-	"DOTT_round_safeStartBegin", 
-	{
-		["ocap_record"] call CBA_fnc_serverEvent;
-	}
-] call CBA_fnc_addEventHandler;
 
-[
-	"DOTT_round_safeStartAborted", 
-	{
-		["ocap_pause"] call CBA_fnc_serverEvent;
-	}
-] call CBA_fnc_addEventHandler;
 
-[
-	"DOTT_round_started", 
-	{
-		if (OCAP_recorder_recording) exitWith {};
-		["ocap_record"] call CBA_fnc_serverEvent;
-	}
-] call CBA_fnc_addEventHandler;
 
-[
-	"DOTT_round_ended", 
-	{
-		["ocap_pause"] call CBA_fnc_serverEvent;
-	}
-] call CBA_fnc_addEventHandler;
+
+
