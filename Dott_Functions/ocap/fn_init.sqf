@@ -129,3 +129,8 @@ if !(OCAP_settings_autoStart) then
 		}
 	] call CBA_fnc_addEventHandler;
 };
+
+//Workaround for major but unlikely issue where if save has no markers, it is formatted improperly.
+//Might not work consistently
+createMarkerLocal ["DOTT_ocap_debugMarker", [0,0,0]];
+"DOTT_ocap_debugMarker" setMarkerAlphaLocal 0;

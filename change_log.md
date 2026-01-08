@@ -60,6 +60,9 @@ v4.3.1
   - Safe start begin/abort and round start/end shown as events in OCAP recording.
   - Should upload automatically when mission ends.
   - Adds cba_settings.sqf and cba_settings_hasSettingsFile = 1 in description.ext.
+  - Issues: 
+    Markers changed between rounds (create, move, delete) will not be tracked properly in OCAP
+    Sectors do not show up properly on map, capture event will be displayed however.
 
 * Continued Modularization
   - CBA settings split from single file in settings folder to XEH_preInit.sqf in relevant subfolders.
