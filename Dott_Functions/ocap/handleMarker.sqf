@@ -112,6 +112,7 @@ EGVAR(listener,markers) = [QGVARMAIN(handleMarker), {
 
       private _logParams = (str [_mrk_name, _dir, _type, _text, _captureFrameNo, -1, _mrk_owner, _mrk_color, _size, _sideOfMarker, _pos, _shape, _alpha, _brush]);
 		  _logparams SYSCHAT;
+      diag_log _logparams;
       [":MARKER:CREATE:", [_mrk_name, _dir, _type, _text, _captureFrameNo, -1, _mrk_owner, _mrk_color, _size, _sideOfMarker, _pos, _shape, _alpha, _brush]] call EFUNC(extension,sendData);
     };
 
@@ -119,6 +120,7 @@ EGVAR(listener,markers) = [QGVARMAIN(handleMarker), {
 
       if (_mrk_name in GVAR(trackedMarkers)) then {
         if (isNil "_dir") then {_dir = 0};
+        (str [_mrk_name, GVAR(captureFrameNo), _pos, _dir, _alpha]) SYSCHAT;
         [":MARKER:MOVE:", [_mrk_name, GVAR(captureFrameNo), _pos, _dir, _alpha]] call EFUNC(extension,sendData);
       };
     };

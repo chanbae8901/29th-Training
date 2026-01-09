@@ -60,8 +60,11 @@ v4.3.1
   - Safe start begin/abort and round start/end shown as events in OCAP recording.
   - Should upload automatically when mission ends.
   - Adds cba_settings.sqf and cba_settings_hasSettingsFile = 1 in description.ext.
+  - Workarounds that
+    Remove OCAP started recording notification
+    Let markers created and removed between rounds be tracked
   - Issues: 
-    Markers changed between rounds (create, move, delete) will not be tracked properly in OCAP
+    Marker changes (create, update, delete) may not show the user who did it if done before/between rounds.
     Sectors do not show up properly on map, capture event will be displayed however.
 
 * Continued Modularization

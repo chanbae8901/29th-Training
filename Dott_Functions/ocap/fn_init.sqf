@@ -52,10 +52,27 @@ addMissionEventHandler ["EntityCreated",
 	};
 }];
 
-//Workaround for major but unlikely issue where if save has no markers, it is formatted improperly.
-//Might not work consistently
-createMarkerLocal ["DOTT_ocap_debugMarker", [0,0,0]];
-"DOTT_ocap_debugMarker" setMarkerAlphaLocal 0;
+//Enable marker moves to be tracked
+//Use ACE event to reduce spam to server
+[
+	"ace_markers_markerMoveEnded", //local event
+	{
+		params ["_player", "_marker", "_originalPos", "_finalPos"];
+		private _isExcluded = false;
+		if (!isNil "ocap_recorder_settings_excludeMarkerFromRecord") then {
+		{
+			if ((str _marker) find _x >= -1) exitWith {
+			_isExcluded = true;
+			};
+		} forEach (parseSimpleArray ocap_recorder_settings_excludeMarkerFromRecord);
+		};
+		if (_isExcluded) exitWith {};
+
+		private _pos = ATLToASL _finalPos;
+
+		["ocap_handleMarker", ["UPDATED", _marker, _player, _pos, "", "", "", markerDir _marker, "", "", 1]] call CBA_fnc_serverEvent;		
+	}
+] call CBA_fnc_addEventHandler;
 
 //Order matters, event won't register if recording is not currently happening
 //However, dont start/pause recordings if autoStart is forced by server config
@@ -64,11 +81,16 @@ if !(OCAP_settings_autoStart) then
 	DOTT_ocap_fnc_startRecording = compile preprocessFileLineNumbers "DOTT_Functions\ocap\fn_startRecording.sqf";
 	DOTT_ocap_fnc_stopRecording = compile preprocessFileLineNumbers "DOTT_Functions\ocap\fn_stopRecording.sqf";
 
-	// Turn on writing state for extension so that player markers are processed before first round.
-	[":START:", [worldName, ocap_recorder_missionName, getMissionConfigValue ["author", ""], ocap_recorder_frameCaptureDelay]] call ocap_extension_fnc_sendData;
-	[":SET:VERSION:", [ocap_version]] call ocap_extension_fnc_sendData;
+	// Trigger a waitAndExecute in OCAP init.sqf so we can get rid of it.
+	ocap_recorder_startTime = time;
+	[{ocap_recorder_captureFrameNo > 0}, {call DOTT_ocap_fnc_stopRecording}] call CBA_fnc_waitUntilAndExecute;
+	//Add marker workarounds
 	[{!isNil "ocap_listener_markers"}, {call compile preprocessFileLineNumbers "DOTT_Functions\ocap\handleMarker.sqf"}] call CBA_fnc_waitUntilAndExecute;
 };
+
+//Workaround for major but unlikely issue where if save has no markers, it is formatted improperly.
+createMarkerLocal ["DOTT_ocap_debugMarker", [0,0,0]];
+"DOTT_ocap_debugMarker" setMarkerAlphaLocal 0;
 
 //SafeStart Start
 if !(OCAP_settings_autoStart) then 
@@ -79,12 +101,35 @@ if !(OCAP_settings_autoStart) then
 			call DOTT_ocap_fnc_startRecording;
 		}
 	] call CBA_fnc_addEventHandler;
+
+	[
+		"DOTT_round_safeStartAborted", 
+		{
+			[{call DOTT_ocap_fnc_stopRecording}] call CBA_fnc_execNextFrame;
+		}
+	] call CBA_fnc_addEventHandler;
+
+	[
+		"DOTT_round_started", 
+		{
+			if (OCAP_recorder_recording) exitWith {};
+			call DOTT_ocap_fnc_startRecording;
+		}
+	] call CBA_fnc_addEventHandler;	
+
+	[
+		"DOTT_round_ended", 
+		{
+			[{call DOTT_ocap_fnc_stopRecording}] call CBA_fnc_execNextFrame;
+		}
+	] call CBA_fnc_addEventHandler;	
 };
 
+//SafeStart Start
 [
 	"DOTT_round_safeStartBegin", 
 	{
-		["ocap_customEvent", ["generalEvent", "Safe start began!"]] call CBA_fnc_serverEvent;
+		[{["ocap_customEvent", ["generalEvent", "Safe start began!"]] call CBA_fnc_serverEvent}] call CBA_fnc_execNextFrame;
 	}
 ] call CBA_fnc_addEventHandler;
 
@@ -96,32 +141,11 @@ if !(OCAP_settings_autoStart) then
 	}
 ] call CBA_fnc_addEventHandler;
 
-if !(OCAP_settings_autoStart) then 
-{
-	[
-		"DOTT_round_safeStartAborted", 
-		{
-			call DOTT_ocap_fnc_stopRecording;
-		}
-	] call CBA_fnc_addEventHandler;
-};
-
 //Round Start
-if !(OCAP_settings_autoStart) then 
-{
-	[
-		"DOTT_round_started", 
-		{
-			if (OCAP_recorder_recording) exitWith {};
-			call DOTT_ocap_fnc_startRecording;
-		}
-	] call CBA_fnc_addEventHandler;
-};
-
 [
 	"DOTT_round_started", 
 	{
-		["ocap_customEvent", ["generalEvent", format ["Round %1 started!", DOTT_ocap_roundNum]]] call CBA_fnc_serverEvent;
+		[{["ocap_customEvent", ["generalEvent", format ["Round %1 started!", DOTT_ocap_roundNum]]] call CBA_fnc_serverEvent}] call CBA_fnc_execNextFrame;
 	}
 ] call CBA_fnc_addEventHandler;
 
@@ -133,13 +157,3 @@ if !(OCAP_settings_autoStart) then
 		DOTT_ocap_roundNum = DOTT_ocap_roundNum + 1;
 	}
 ] call CBA_fnc_addEventHandler;
-
-if !(OCAP_settings_autoStart) then 
-{
-	[
-		"DOTT_round_ended", 
-		{
-			call DOTT_ocap_fnc_stopRecording;
-		}
-	] call CBA_fnc_addEventHandler;
-};
