@@ -17,9 +17,6 @@ ocap_recorder_recording = true;
 publicVariable "ocap_recorder_recording";
 
 if (ocap_recorder_captureFrameNo == 0) then {
-  // Notify the extension
-  [":START:", [worldName, ocap_recorder_missionName, getMissionConfigValue ["author", ""], ocap_recorder_frameCaptureDelay]] call ocap_extension_fnc_sendData;
-  [":SET:VERSION:", [ocap_version]] call ocap_extension_fnc_sendData;
   call ocap_recorder_fnc_captureLoop;
 };
 

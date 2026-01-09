@@ -52,13 +52,22 @@ addMissionEventHandler ["EntityCreated",
 	};
 }];
 
+//Workaround for major but unlikely issue where if save has no markers, it is formatted improperly.
+//Might not work consistently
+createMarkerLocal ["DOTT_ocap_debugMarker", [0,0,0]];
+"DOTT_ocap_debugMarker" setMarkerAlphaLocal 0;
 
 //Order matters, event won't register if recording is not currently happening
 //However, dont start/pause recordings if autoStart is forced by server config
 if !(OCAP_settings_autoStart) then 
 {
-	DOTT_ocap_fnc_startRecording = call compile preprocessFileLineNumbers "DOTT_Functions\ocap\fn_startRecording.sqf";
-	DOTT_ocap_fnc_stopRecording = call compile preprocessFileLineNumbers "DOTT_Functions\ocap\fn_stopRecording.sqf";
+	DOTT_ocap_fnc_startRecording = compile preprocessFileLineNumbers "DOTT_Functions\ocap\fn_startRecording.sqf";
+	DOTT_ocap_fnc_stopRecording = compile preprocessFileLineNumbers "DOTT_Functions\ocap\fn_stopRecording.sqf";
+
+	// Turn on writing state for extension so that player markers are processed before first round.
+	[":START:", [worldName, ocap_recorder_missionName, getMissionConfigValue ["author", ""], ocap_recorder_frameCaptureDelay]] call ocap_extension_fnc_sendData;
+	[":SET:VERSION:", [ocap_version]] call ocap_extension_fnc_sendData;
+	[{!isNil "ocap_listener_markers"}, {call compile preprocessFileLineNumbers "DOTT_Functions\ocap\handleMarker.sqf"}] call CBA_fnc_waitUntilAndExecute;
 };
 
 //SafeStart Start
@@ -134,8 +143,3 @@ if !(OCAP_settings_autoStart) then
 		}
 	] call CBA_fnc_addEventHandler;
 };
-
-//Workaround for major but unlikely issue where if save has no markers, it is formatted improperly.
-//Might not work consistently
-createMarkerLocal ["DOTT_ocap_debugMarker", [0,0,0]];
-"DOTT_ocap_debugMarker" setMarkerAlphaLocal 0;
