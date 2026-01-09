@@ -63,8 +63,8 @@ v4.3.1
   - Workarounds that
     Remove OCAP started recording notification
     Let markers created and removed between rounds be tracked
-  - Issues: 
-    Marker changes (create, update, delete) may not show the user who did it if done before/between rounds.
+    Let ACE moved markers be tracked
+  - Issues:
     Sectors do not show up properly on map, capture event will be displayed however.
 
 * Continued Modularization
