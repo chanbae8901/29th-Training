@@ -36,8 +36,10 @@ Overall Future Goals
     - Using vanilla hint is limiting due to potential overwrites from different systems, 
       which can also make how long we want a message to stay up inconsistent.
     - Potentially take FNF notification system and tweak it.
-    - Potentially use CBA's, but might have timing conflicts (ex. OCAP recording and round notifications).
+    - Potentially use CBA's.
   - UI for round safestart/ready system
+  - Finish event module
+    - Safestart related flag actions bugged.
 ---
 TBD
 
@@ -50,7 +52,7 @@ TBD
 
 ---
 v4.3.1  
-5 JAN 2026
+9 JAN 2026
 
 ---
 
@@ -69,6 +71,9 @@ v4.3.1
       Sectors do not show up properly on map, capture event will be displayed however.
       Due to workarounds, created markers show up in recording 2 seconds after they were created.
       Editing a marker before 2 seconds after creation likely will cause incorrect tracking.
+      Renaming markers is not tracked.
+  - Not Tested:
+    Team Swapping during/between rounds
 
 * Continued Modularization
   - CBA settings split from single file in settings folder to XEH_preInit.sqf in relevant subfolders.
