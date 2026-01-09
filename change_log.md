@@ -67,7 +67,8 @@ v4.3.1
       Prevent major but unlikely issue where if save has no markers, it is formatted improperly and breaks.
   - Issues:
       Sectors do not show up properly on map, capture event will be displayed however.
-      Due to workarounds, created markers show up in recording two seconds after they were created.
+      Due to workarounds, created markers show up in recording 2 seconds after they were created.
+      Editing a marker before 2 seconds after creation likely will cause incorrect tracking.
 
 * Continued Modularization
   - CBA settings split from single file in settings folder to XEH_preInit.sqf in relevant subfolders.

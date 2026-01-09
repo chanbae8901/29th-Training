@@ -121,12 +121,12 @@ if (isServer) then
 	[
 		"DOTT_round_started", 
 		{
-			[{["ocap_customEvent", ["generalEvent", format ["Round %1 started!", DOTT_ocap_roundNum]]] call CBA_fnc_serverEvent}];
-
 			if !(OCAP_settings_autoStart || OCAP_recorder_recording) then 
 			{ 				
 				call DOTT_ocap_fnc_startRecording;
 			};
+
+			["ocap_customEvent", ["generalEvent", format ["Round %1 started!", DOTT_ocap_roundNum]]] call CBA_fnc_serverEvent;			
 		}
 	] call CBA_fnc_addEventHandler;	
 
@@ -145,6 +145,7 @@ if (hasInterface && !(OCAP_settings_autoStart)) then
 	//do OCAP initalization on players outside of capture loop so we can save proper marker info
 	[] spawn
 	{
+		if !(didJIP) exitWith {};
 		waitUntil {!isNull player};
 		[player] remoteExec ["DOTT_ocap_fnc_initializePlayer", 2];
 	};
