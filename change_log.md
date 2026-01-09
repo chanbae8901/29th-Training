@@ -61,11 +61,12 @@ v4.3.1
   - Should upload automatically when mission ends.
   - Adds cba_settings.sqf and cba_settings_hasSettingsFile = 1 in description.ext.
   - Workarounds that
-    Remove OCAP started recording notification
-    Let markers created and removed between rounds be tracked
-    Let ACE moved markers be tracked
+      Remove OCAP started recording notification
+      Let markers created and removed between rounds be tracked
+      Let ACE moved markers be tracked
   - Issues:
-    Sectors do not show up properly on map, capture event will be displayed however.
+      Sectors do not show up properly on map, capture event will be displayed however.
+      Due to workarounds, created markers show up in recording two seconds after they were created.
 
 * Continued Modularization
   - CBA settings split from single file in settings folder to XEH_preInit.sqf in relevant subfolders.
