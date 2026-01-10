@@ -133,6 +133,7 @@ class DOTT_OCAP
 	{
 		file = "Dott_Functions\ocap";
 		class init {};
+		class initClient {};
 	};
 };
 

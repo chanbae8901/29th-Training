@@ -105,6 +105,10 @@ v4.3.1
   - Hopefully fix inconsistent case where Forced Parade is not applied on join.
   - Will not load if 29th Mod is not loaded.
 
+* Spectator
+  - Invulnerability extended to two seconds to reduce damage instances from leaving box.
+  - Let teleport from loadout (flexibleReset) override allowDamage if player is teleporting.
+  
 - Renamed event "DOTT_exitedMainMenu" to "DOTT_exitedPauseMenu" for better accuracy.
 
 ---

@@ -74,6 +74,8 @@ else //otherwise if array is correct size, then teleport requested
 
 	call DOTT_spectator_fnc_exit; //kick player out of spectator
 
+	DOTT_loadout_teleporting = true;
+
 	private _tries = 0; //try multiple times if it fails for whatever reason
 
 	player allowDamage false;
@@ -133,11 +135,14 @@ else //otherwise if array is correct size, then teleport requested
 
 		_tries = _tries + 1;
 	};
+	
 	[] spawn 
 	{
 		sleep 2;
 		player allowDamage true;
+		DOTT_loadout_teleporting = nil;
 	};
+
 	//teleport true for switch below
 	_teleport = _tries > 0;
 };
