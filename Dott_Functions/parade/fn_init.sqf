@@ -18,6 +18,8 @@
  * 
  */
 
+if(!isClass (configFile >> "CfgPatches" >> "29thID_Uniforms")) exitWith {};
+
 if (hasInterface) then
 {
 	call DOTT_parade_fnc_handleInitialInventory;

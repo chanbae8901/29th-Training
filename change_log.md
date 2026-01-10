@@ -99,9 +99,11 @@ v4.3.1
 * Loadout
   - Prevent arsenal closed from being called if Zeus is open.
   - Increase invulnerability time by 2 more seconds on teleport to reduce damage on teleport instances.
+  - setInsignia no longer throws error if 29th Insignias are missing.
 
 * Parade
   - Hopefully fix inconsistent case where Forced Parade is not applied on join.
+  - Will not load if 29th Mod is not loaded.
 
 - Renamed event "DOTT_exitedMainMenu" to "DOTT_exitedPauseMenu" for better accuracy.
 
