@@ -7,9 +7,12 @@ if (isServer) then
 
 	private _missionAddonStrLen = count MISSION_ADDON;
 	
+	private _excludeList = ["noLogCommands", "restrictedCommands", "adminCommands", "removedCommands"];
+
 	{
 		if (_x select [0,_missionAddonStrLen] != MISSION_ADDON) then {continue};
-		
+		if (_excludeList find (_x select [_missionAddonStrLen + 1]) != -1) then {continue};
+
 		//replace default with server initial setting
 		private _setting = (cba_settings_default getVariable _x);
 		_setting set [DEFAULT_INDEX, [_x, "server"] call CBA_settings_fnc_get];

@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_parade_fnc_handleInitialInventory
- * Date:	9/30/2025
- * Version: 1.2
+ * Date:	1/5/2026
+ * Version: 1.3
  * Author:  Hill [29th ID]
  *
  * Description:
@@ -14,22 +14,45 @@
  * n/a
  *
  * Example:
- * [player] spawn DOTT_parade_fnc_handleInitialInventory
+ * call DOTT_parade_fnc_handleInitialInventory
  */
 
 if (!hasInterface) exitWith {};
 
-waitUntil {!isNull player};
+private _fn_loadParade =
+{
+	private _side = side (group player);
 
-if (side (group player) == WEST) then {
-	addMissionEventHandler ["PreloadFinished", {
-		[true] call DOTT_parade_fnc_load;
-		removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
-	}];
+	switch (_side) do
+	{
+		case WEST:
+		{
+			[true] call DOTT_parade_fnc_load;
+		};
+		case EAST:
+		{
+			[player, missionConfigfile >> "CfgRespawnInventory" >> "29TH_PARADE_EAST"] call BIS_fnc_loadInventory;
+		};
+		case INDEPENDENT:
+		{
+			[player, missionConfigfile >> "CfgRespawnInventory" >> "29TH_PARADE_INDEPENDENT"] call BIS_fnc_loadInventory;
+		};
+	};
 };
-if (side (group player) == EAST) then {
-	[player, missionConfigfile >> "CfgRespawnInventory" >> "29TH_PARADE_EAST"] call BIS_fnc_loadInventory;
+
+if (isNil "bis_fnc_preload_init") then //JIP
+{
+	addMissionEventHandler 
+	[
+		"PreloadFinished", 
+		{
+			call (_thisArgs select 0);
+			removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
+		}, 
+		[_fn_loadParade]
+	];
+} else //non-JIP
+{
+	call _fn_loadParade;
 };
-if (side (group player) == INDEPENDENT) then {
-	[player, missionConfigfile >> "CfgRespawnInventory" >> "29TH_PARADE_INDEPENDENT"] call BIS_fnc_loadInventory;
-};
+

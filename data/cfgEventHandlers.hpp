@@ -2,7 +2,7 @@ class Extended_PreInit_EventHandlers
 {
 	class DOTT_MissionSettings
 	{
-		init = "call compile preprocessFileLineNumbers ""Dott_Functions\settings\XEH_preInit.sqf""";
+		init = "call compile preprocessFileLineNumbers ""XEH_preInit.sqf""";
 	}; 
 };
 
@@ -22,6 +22,6 @@ class Extended_DisplayUnload_EventHandlers
     };
     class RscDisplayMPInterrupt
 	{
-        DOTT = "[""DOTT_exitedMainMenu"", []] call CBA_fnc_localEvent";
+        DOTT = "[""DOTT_exitedPauseMenu"", []] call CBA_fnc_localEvent";
     };	
 };

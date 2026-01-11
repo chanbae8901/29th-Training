@@ -9,36 +9,37 @@ Overall Future Goals
 * Random mortars in area defined by admin
 * Teleport pole that teleports you inside a radius, or into an area, or along a circle edge (COULD USE POLY TOO)
 	- Poly contained in circle, check random points in circle until you find one in poly?
+* Wave system for team leaders to call in player waves
+  - Could also use timer
+* Deploy area. Allow a side to deploy within or outside of a designated circle.
 * Fix Security Flaws
   - Limit remote exec functions
   - allowFunctionsRecompile = 1; is necessary for custom sector settings, can't think of a way to bypass this
   - This is a low priority since this mission file is intended to be used on private servers.
+* mission.sqm
+  - When/if it becomes worth it, update mission.sqm to
+  - Merge baseObjectsInit w/ event version
+  - Merge excludeObjFromZeus w/ event version
+  - Merge cleaner w/ event version (this might not require sqm change)
+  - Add trigger zone for arsenal instead of just getting the middle of respawn and box
+  - Remove most zeus modules and just dynamically create in mission based on hashmap
+* CTF system via chat commands
+  - Pole addactions to score?
+  - Maybe no flag? Drop object on death that is the "flag"
+* Possibly restricting chat commands to certain slots/players
+  - Add ability to admin to add players to array?
+  - Unit string indicators like sl, plt, etc...
+  - Player profile string reading for Cpl, Sgt, etc?
+
 * Near Goals
-	- CTF system via chat commands
-		- Pole addactions to score?
-		- Maybe no flag? Drop object on death that is the "flag"
-	- Possibly restricting chat commands to certain slots/players
-		- Add ability to admin to add players to array?
-		- Unit string indicators like sl, plt, etc...
-		- Player profile string reading for Cpl, Sgt, etc?
-	- Wave system for team leaders to call in player waves
-		- Could also use timer
-	- Deploy area. Allow a side to deploy within or outside of a designated circle.
-  - mission.sqm
-    - When/if it becomes worth it, update mission.sqm to
-    - Merge baseObjectsInit w/ event version
-    - Merge excludeObjFromZeus w/ event version
-    - Merge cleaner w/ event version (this might not require sqm change)
-    - Add trigger zone for arsenal instead of just getting the middle of respawn and box
-    - Remove most zeus modules and just dynamically create in mission based on hashmap
   - New hint system
     - Using vanilla hint is limiting due to potential overwrites from different systems, 
       which can also make how long we want a message to stay up inconsistent.
     - Potentially take FNF notification system and tweak it.
+    - Potentially use CBA's.
   - UI for round safestart/ready system
-  - More modular command system
-    - That would seamlessly have its available commands be modified by what modules are on 
-      or depending on using training or event version.
+  - Finish event module
+    - Safestart related flag actions bugged.
 ---
 TBD
 
@@ -48,6 +49,67 @@ TBD
 	- Included new class "FlagTaken"
 	- Included new class "FlagCaptured"
 	- Included new class "FlagReturned"
+
+---
+v4.3.1  
+9 JAN 2026
+
+---
+
+* OCAP Integration
+  - New folder "ocap" under DOTT_Functions.
+  - Mission automatically starts recording on safestart/live and pauses recording on round end.
+  - Safe start begin/abort and round start/end shown as events in OCAP recording.
+  - Should upload automatically when mission ends.
+  - Adds cba_settings.sqf and cba_settings_hasSettingsFile = 1 in description.ext.
+  - Workarounds that
+      Remove OCAP started recording notification
+      Let markers created and removed between rounds be tracked
+      Let ACE moved markers be tracked
+      Prevent major but unlikely issue where if save has no markers, it is formatted improperly and breaks.
+  - Issues:
+      Sectors do not show up properly on map, capture event will be displayed however.
+      Due to workarounds, created markers show up in recording 2 seconds after they were created.
+      Editing a marker before 2 seconds after creation likely will cause incorrect tracking.
+      Renaming markers is not tracked.
+  - Not Tested:
+    Team Swapping during/between rounds
+
+* Continued Modularization
+  - CBA settings split from single file in settings folder to XEH_preInit.sqf in relevant subfolders.
+  - Categories renamed/reorganized to match modules more.
+  - main init.sqf and XEH_preInit.sqf make use of DOTT_Modules defines in data\defines.hpp
+    by checking if relevant module init functions or setting files exist.
+  - Minimize the amount of #ifdefs in the code (many used for loading optimization) for maintainability.
+  - Commands split from single file in commands folder to commands.sqf in relevant subfolders.
+
+* Commands
+  - Command usage is now case insensitive again. (Accidentally introduced sensitivity in 4.3.0).
+  - Not logged commands, restricted, and admin command lists are now CBA settings. Will not be shown in mission settings GUI.
+  - Added removedCommands CBA setting that blocks commands for everyone.
+
+* Curator
+  - Hopefully fix role-based Zeus not working on first life when JIP.
+  - Fix error when admin logs out.
+
+* Radio
+  - Prevent arsenal closed from being called if Zeus is open.
+  - Added BIS arsenal event handler.
+
+* Loadout
+  - Prevent arsenal closed from being called if Zeus is open.
+  - Increase invulnerability time by 2 more seconds on teleport to reduce damage on teleport instances.
+  - setInsignia no longer throws error if 29th Insignias are missing.
+
+* Parade
+  - Hopefully fix inconsistent case where Forced Parade is not applied on join.
+  - Will not load if 29th Mod is not loaded.
+
+* Spectator
+  - Invulnerability extended to two seconds to reduce damage instances from leaving box.
+  - Let teleport from loadout (flexibleReset) override allowDamage if player is teleporting.
+  
+- Renamed event "DOTT_exitedMainMenu" to "DOTT_exitedPauseMenu" for better accuracy.
 
 ---
 v4.3.0  

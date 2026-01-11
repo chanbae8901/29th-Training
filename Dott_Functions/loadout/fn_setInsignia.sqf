@@ -52,7 +52,7 @@ if (!local _target) exitWith
 
 if(!isClass (configFile >> "CfgPatches" >> "29th_Insignias")) exitWith 
 {
-	["29th Insignias not found."] call BIS_fnc_error; 
+	//["29th Insignias not found."] call BIS_fnc_error; 
 	false;
 };
 

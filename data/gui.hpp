@@ -1,5 +1,3 @@
-#ifdef DOTT_TRAINING
-
 class RscDisplayMissionOptions
 {
 	idd = 2913;
@@ -1064,8 +1062,6 @@ class DOTT_settings_Row_Slider
 	shadow = 0;
 	style = 16;
 };
-
-#endif
 
 class DOTT_settings_Row_Time
 {

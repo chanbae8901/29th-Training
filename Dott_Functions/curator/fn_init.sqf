@@ -44,7 +44,21 @@ if (hasInterface) then
 			}
 		] call CBA_fnc_addEventHandler;
 
-		[player] spawn DOTT_curator_fnc_checkAssignment;
+		//Fix role-based Zeus not working on first life when JIP
+		if (isNil "bis_fnc_preload_init") then //JIP
+		{
+			addMissionEventHandler 
+			[
+				"PreloadFinished", 
+				{
+					[player] call DOTT_curator_fnc_checkAssignment;
+					removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
+				}
+			];
+		} else //non-JIP, but might not be needed because this is a JIP problem
+		{
+			[player] call DOTT_curator_fnc_checkAssignment;
+		};
 
 		[player] remoteExec ["DOTT_curator_fnc_addPlayerEditable", 2];
 	};	
@@ -54,15 +68,20 @@ if (isServer) then
 {
 	addMissionEventHandler ["OnUserAdminStateChanged", {
 		params ["_networkId", "_loggedIn"];
-		private _unit = (getUserInfo _networkId) select 10;	
+		private _userInfo = (getUserInfo _networkId);
+		if (count _userInfo < 11) exitWith {};
+		private _unit = _userInfo select 10;	
 		if (isNil "_unit") exitWith {};
 		if (_loggedIn) exitWith 
 		{
 			if (isNull getAssignedCuratorLogic _unit) then 
-			{ 
+			{
+				unassignCurator zeus_admin;
+				sleep .1;
 				_unit assignCurator zeus_admin; 
 			};
 		};
+		//logging out
 		[_unit] spawn {
 			params ["_unit"];
 			if (getAssignedCuratorLogic _unit == zeus_admin) then

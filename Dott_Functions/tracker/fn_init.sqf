@@ -23,6 +23,8 @@
  * 
  */
 
+if (("enableRoundEventLog" call BIS_fnc_getParamValue) != 1) exitWith {};
+
 if (isServer) then
 {
 	DOTT_tracker_previous = [];

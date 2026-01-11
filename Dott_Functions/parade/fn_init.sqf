@@ -18,9 +18,11 @@
  * 
  */
 
+if(!isClass (configFile >> "CfgPatches" >> "29thID_Uniforms")) exitWith {};
+
 if (hasInterface) then
 {
-	[] spawn DOTT_parade_fnc_handleInitialInventory;
+	call DOTT_parade_fnc_handleInitialInventory;
 };
 
 if (isServer) then

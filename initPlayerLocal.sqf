@@ -33,4 +33,4 @@ addMissionEventHandler ["EntityCreated",
 }];
 
 // ====== Fix inconsistent bug where chat is no longer displayed after leaving main menu ======
-["DOTT_exitedMainMenu", {[] spawn { sleep 0.1; showChat true }}] call CBA_fnc_addEventHandler;
+["DOTT_exitedPauseMenu", {[] spawn { sleep 0.1; showChat true }}] call CBA_fnc_addEventHandler;

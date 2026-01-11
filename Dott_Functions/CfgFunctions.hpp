@@ -10,12 +10,7 @@ class Dott_Loadout
 		class resetWeaponState {};
 		class onArsenalClosed {};
 		class setInsignia {};
-
-		#ifdef DOTT_TRAINING
-
 		class flexibleReset {};
-
-		#endif
 	};
 };
 
@@ -131,7 +126,16 @@ class DOTT_Vehicle
 	};
 };
 
-#ifdef DOTT_TRAINING
+class DOTT_OCAP
+{
+	tag = "DOTT_ocap";
+	class OCAPFunctions
+	{
+		file = "Dott_Functions\ocap";
+		class init {};
+		class initClient {};
+	};
+};
 
 class DOTT_Commands
 {
@@ -141,8 +145,7 @@ class DOTT_Commands
 		file = "Dott_Functions\commands";
 		class init {};
 		class execute {};
-		//class remove {};
-		//class changeRestriction {};
+		class addModule {};
 	};
 };
 
@@ -205,7 +208,7 @@ class Dott_Settings
 	class GUIFunctions
 	{
 		file = "Dott_Functions\settings";
-		class initServer {};		
+		class init {};		
 		class initDisplayMissionOptions {};
 	};
 };
@@ -223,10 +226,6 @@ class Dott_Parade
 		class checkNonCombatLoadout {};
 	};
 };
-
-#endif
-
-#ifdef DOTT_EVENT
 
 class Dott_Event
 {
@@ -246,5 +245,3 @@ class Dott_Event
 		class cleaner {};
 	};
 };
-
-#endif

@@ -25,13 +25,17 @@ _argument = [];
 	};
 }forEach _chatArr;
 
-_command = toString _command;
+_command = toLower (toString _command);
 _argument = toString _argument;
 
 private _commandCode = pvpfw_chatIntercept_allCommands get _command;
 
 if !(isNil "_commandCode") then 
 {
+	if (pvpfw_chatIntercept_removedCommands find _command != -1) exitWith 
+	{
+		systemChat "Command has been disabled by server!";
+	};	
 	private _isAdmin = serverCommandAvailable "#lock";
 	if (pvpfw_chatIntercept_adminCommands find _command != -1 && !_isAdmin) exitWith 
 	{
