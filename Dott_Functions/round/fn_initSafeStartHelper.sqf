@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_round_fnc_initSafeStartHelper
- * Date:	12/24/2025
- * Version: 1.1
+ * Date:	01/11/2026
+ * Version: 1.2
  * Author:  Bae [29th ID] 
  *
  * Description:
@@ -19,8 +19,9 @@
  * 
  */
 
-private _allSidesReady = call DOTT_round_fnc_checkAllSidesReady;
 if (isNil "DOTT_safeStartActive") exitWith { true };
+
+private _allSidesReady = call DOTT_round_fnc_checkAllSidesReady;
 if (!_allSidesReady) exitWith 
 {
 	// Display aborted message if someone unready mid-countdown			
