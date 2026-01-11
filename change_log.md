@@ -55,6 +55,9 @@ v4.3.2
 11 JAN 2026
 
 ---
+* Round
+  - Added check to see if safestart is running before initalizing safestart.
+
 * Spectator
   - Moved loadout teleport check after sleep.
 

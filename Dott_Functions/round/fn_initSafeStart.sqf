@@ -21,6 +21,11 @@
 
 if (!isServer) exitWith {remoteExec ["DOTT_round_fnc_initSafeStart", 2];}; //server should be in charge of this waitAndExecute
 
+if !(isNil "DOTT_safeStartActive") exitWith {};
+
+DOTT_safeStartActive = true;
+publicVariable "DOTT_safeStartActive";
+
 private _safeStartTime = TN_safeStartTime; // time between all sides ready and automatic live call (default 10)
 
 private _msgText = format [
@@ -35,8 +40,6 @@ private _msgText = format [
 	false
 ] remoteExecCall ["DOTT_common_fnc_displayMsg"];
 
-DOTT_safeStartActive = true;
-publicVariable "DOTT_safeStartActive";
 ["DOTT_round_safeStartBegin", []] call CBA_fnc_globalEvent;
 [_safeStartTime] call BIS_fnc_countdown;
 call DOTT_round_fnc_initSafeStartHelper;
