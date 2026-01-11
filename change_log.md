@@ -51,6 +51,14 @@ TBD
 	- Included new class "FlagReturned"
 
 ---
+v4.3.2  
+11 JAN 2026
+
+---
+* Spectator
+  - Moved loadout teleport check after sleep.
+
+---
 v4.3.1  
 9 JAN 2026
 

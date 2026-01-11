@@ -25,8 +25,8 @@ cutText ["","PLAIN DOWN"]; // Clear cutText
 hintSilent ""; // Clear Hint
 [] spawn 
 {
-	if (!isNil "DOTT_loadout_teleporting") exitWith {}; //don't conflict with command teleport
 	sleep 2; //wait so player does not take collision damage from other players leaving box
+	if (!isNil "DOTT_loadout_teleporting") exitWith {}; //don't conflict with command teleport	
 	player allowDamage true; // Make player vulnerable again
 };
 

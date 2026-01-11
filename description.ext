@@ -15,8 +15,8 @@ OverviewText = "YOUR DESCRIPTION HERE"; //CHANGE THIS
 
 #ifdef DOTT_TRAINING
 
-OnLoadName = "29th Training V4.3.1";
-briefingName = "29th Training V4.3.1";
+OnLoadName = "29th Training V4.3.2";
+briefingName = "29th Training V4.3.2";
 // =========================== Loading Screen
 Author = "29th Engineers";
 OnLoadMission = "<t align='center'><t size='1.5' color='#2A1ADC'>BLUFOR</t><t size='1.5' color='#FFFFFF'> | </t><t size='1.5' color='#B40404'>OPFOR</t><t size='1.5' color='#FFFFFF'> | </t><t size='1.5' color='#088A08'>GRNFOR</t><br/><t size='1.25' color='#A09FAB'> Training Sandbox</t><br/>Ever Forward!</t>";
