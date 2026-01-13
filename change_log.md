@@ -59,6 +59,9 @@ v4.3.2
 * Curator
   - Fix unassign/assign curator not executed in scheduled environment error.
 
+* Event
+  - Replace Ready All Sides flag function with initSafeStart.
+  
 * Round
   - Added check to see if safestart is running before initalizing safestart.
   - Log weaponstate of every player to server log at beginning of round (hopefully helps figure out silent bug issue).

@@ -68,19 +68,12 @@ if (_currentState < 2) then
 #define ALL_READY_ID "DOTT_allReadyActionId"
 private _fnc_addAllReadyActions =
 {
-	private _fnc_readyAllSides = 
 	{
-		[west, true, false] call DOTT_round_fnc_manageReady;
-		[east, true, false] call DOTT_round_fnc_manageReady;
-		[resistance, true, false] call DOTT_round_fnc_manageReady;
-	};
-
-	{
-		private _actionId = _x addAction ["<t color='#bf3eff'>Ready All Sides (Admin)</t>", { call (_this select 3) }, _fnc_readyAllSides, 1.5, true, true, "", "serverCommandAvailable '#lock'", 8];
+		private _actionId = _x addAction ["<t color='#bf3eff'>Ready All Sides (Admin)</t>", { call DOTT_round_fnc_initSafeStart }, nil, 1.5, true, true, "", "serverCommandAvailable '#lock'", 8];
 		_x setVariable [ALL_READY_ID, _actionId];
 	} forEach DOTT_event_timerObjects;
 
-	private _actionId = DOTT_event_endingObject addAction ["<t color='#bf3eff'>Ready All Sides (Admin)</t>", { call (_this select 3) }, _fnc_readyAllSides, 1.5, true, true, "", "serverCommandAvailable '#lock'", 8];
+	private _actionId = DOTT_event_endingObject addAction ["<t color='#bf3eff'>Ready All Sides (Admin)</t>", { call DOTT_round_fnc_initSafeStart }, nil, 1.5, true, true, "", "serverCommandAvailable '#lock'", 8];
 	DOTT_event_endingObject setVariable [ALL_READY_ID, _actionId];
 };
 
