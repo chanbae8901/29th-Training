@@ -61,7 +61,8 @@ v4.3.2
 
 * Event
   - Replace Ready All Sides flag function with initSafeStart.
-  
+  - Side ready flag action now has safe start begin event handler.
+
 * Round
   - Added check to see if safestart is running before initalizing safestart.
   - Log weaponstate of every player to server log at beginning of round (hopefully helps figure out silent bug issue).

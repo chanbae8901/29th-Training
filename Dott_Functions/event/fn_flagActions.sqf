@@ -62,6 +62,11 @@ if (_currentState < 2) then
 			};				
 		}, [_fnc_addSideReadyActions, _fnc_removeSideReadyActions]
 	] call CBA_fnc_addEventHandlerArgs;
+
+	[
+		"DOTT_round_safeStartBegin",
+		{ call _thisArgs }, _fnc_removeSideReadyActions
+	] call CBA_fnc_addEventHandlerArgs;
 };
 
 /*** Ready All Sides (Admin) ***/
