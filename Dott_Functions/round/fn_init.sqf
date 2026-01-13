@@ -153,6 +153,7 @@ if (isServer) then
 			private _players = allPlayers - entities "HeadlessClient_F";
 			_players = _players select { alive _x }; //only get alive players, probably not needed however
 			{
+				diag_log (str (weaponState _x));
 				if !(currentWeapon _x == "Throw" || currentWeapon _x == "Put") exitWith {};
 				[_x] remoteExec ["DOTT_loadout_fnc_resetWeaponState", _x];
 				if (TN_notifyFinalCheck) then

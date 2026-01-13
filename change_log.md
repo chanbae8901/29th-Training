@@ -61,6 +61,7 @@ v4.3.2
 
 * Round
   - Added check to see if safestart is running before initalizing safestart.
+  - Log weaponstate of every player to server log at beginning of round (hopefully helps figure out silent bug issue).
 
 * Spectator
   - Moved loadout teleport check after sleep.
