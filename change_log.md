@@ -55,6 +55,10 @@ v4.3.2
 11 JAN 2026
 
 ---
+
+* Curator
+  - Fix unassign/assign curator not executed in scheduled environment error.
+
 * Round
   - Added check to see if safestart is running before initalizing safestart.
 
