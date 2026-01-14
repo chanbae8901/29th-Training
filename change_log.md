@@ -63,6 +63,8 @@ v4.3.2
   - Replace Ready All Sides flag function with initSafeStart.
   - Side ready flag action now has safe start begin event handler.
 
+* OCAP
+  - Fixed incorrect variable name in initializePlayer (ocap_nextId -> ocap_recorder_nextId)
 * Round
   - Added check to see if safestart is running before initalizing safestart.
   - Log weaponstate of every player to server log at beginning of round (hopefully helps figure out silent bug issue).
