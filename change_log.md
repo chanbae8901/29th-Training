@@ -56,6 +56,7 @@ v4.3.3
 ---
 * Round
   - Replace incorrect exitWith with continue for round start checking weapon states.
+  - Client side weapon state check waits 3 seconds for server side weapon state fix now.
 
 ---
 v4.3.2  

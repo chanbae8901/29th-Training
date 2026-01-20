@@ -184,18 +184,23 @@ if (hasInterface) then
 	[
 		"DOTT_round_started",
 		{	
-			private _players = allPlayers - entities "HeadlessClient_F";
-			_players = _players select { alive _x }; //only get alive players, probably not needed however
-			
+			[] spawn
 			{
-				if !(currentWeapon _x == "Throw" || currentWeapon _x == "Put") then { continue };
-				if (TN_notifyFinalCheck) then
+				sleep 3; //Probably temporary, wait for server side fix attempt before we check on client
+
+				private _players = allPlayers - entities "HeadlessClient_F";
+				_players = _players select { alive _x }; //only get alive players, probably not needed however
+				
 				{
-					private _msg = format ["WARNING: %1 has silent weapon for %2.", name _x, name player];
-					[_msg] remoteExec ["systemChat"];
-				};
-			}
-			forEach _players;
+					if !(currentWeapon _x == "Throw" || currentWeapon _x == "Put") then { continue };
+					if (TN_notifyFinalCheck) then
+					{
+						private _msg = format ["WARNING: %1 has silent weapon for %2.", name _x, name player];
+						[_msg] remoteExec ["systemChat"];
+					};
+				}
+				forEach _players;
+			};				
 		} 
 	] call CBA_fnc_addEventHandler;
 };
