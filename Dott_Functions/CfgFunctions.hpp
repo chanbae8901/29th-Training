@@ -49,6 +49,7 @@ class Dott_Round
 		class timeWarning {};
 		class roundEvents {};
 		class formatTime {};
+		class collectSilentWeapons {};
 	};
 };
 

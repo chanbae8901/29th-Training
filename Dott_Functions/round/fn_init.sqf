@@ -142,7 +142,7 @@ if (hasInterface) then
 /*---------- Final Checks ---------- */
 if (isServer) then 
 {
-	//check if any player has the silent weapon bug and fix
+	//check if any player has the silent weapon bug on server and fix
 	[
 		"DOTT_round_started",
 		{	
@@ -152,7 +152,7 @@ if (isServer) then
 			diag_log "Round Start Weapon States:";			
 			{
 				diag_log format ["%1: %2", name _x, weaponState _x];
-				if !(currentWeapon _x == "Throw" || currentWeapon _x == "Put") exitWith {};
+				if !(currentWeapon _x == "Throw" || currentWeapon _x == "Put") then { continue };
 				[_x] remoteExec ["DOTT_loadout_fnc_resetWeaponState", _x];
 				if (TN_notifyFinalCheck) then
 				{
@@ -163,6 +163,28 @@ if (isServer) then
 			forEach _players;
 		} 
 	] call CBA_fnc_addEventHandler;
+
+	//Collect client side silent weapons and notify
+	[
+		"DOTT_round_started",
+		{
+			DOTT_round_clientSilentWeapons = nil; //if for some reason non-empty due to late response from last time
+
+			[] spawn
+			{
+				sleep 5;
+				if (isNil "DOTT_round_clientSilentWeapons") exitWith {};
+
+				{
+					private _msg = format ["%1 has silent weapon for %2", _x, _y];
+					[_msg] remoteExec ["systemChat"];
+				}
+				forEach DOTT_round_clientSilentWeapons;
+
+				DOTT_round_clientSilentWeapons = nil;
+			};
+		} 
+	] call CBA_fnc_addEventHandler;	
 };
 
 if (hasInterface) then 
@@ -184,18 +206,21 @@ if (hasInterface) then
 	[
 		"DOTT_round_started",
 		{	
-			private _players = allPlayers - entities "HeadlessClient_F";
-			_players = _players select { alive _x }; //only get alive players, probably not needed however
-			
+			if !(TN_notifyFinalCheck) exitWith {};
+
+			[] spawn
 			{
-				if !(currentWeapon _x == "Throw" || currentWeapon _x == "Put") exitWith {};
-				if (TN_notifyFinalCheck) then
+				sleep 2.5; //Probably temporary, wait for server side fix attempt before we check on client
+
+				private _players = allPlayers - entities "HeadlessClient_F";
+				_players = _players select { alive _x }; //only get alive players, probably not needed however
+				
 				{
-					private _msg = format ["WARNING: %1 has silent weapon for %2.", name _x, name player];
-					[_msg] remoteExec ["systemChat"];
-				};
-			}
-			forEach _players;
+					if !(currentWeapon _x == "Throw" || currentWeapon _x == "Put") then { continue };
+					[name _x, name player] remoteExecCall ["DOTT_round_fnc_collectSilentWeapons", 2];
+				}
+				forEach _players;
+			};				
 		} 
 	] call CBA_fnc_addEventHandler;
 };

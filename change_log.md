@@ -51,9 +51,18 @@ TBD
 	- Included new class "FlagReturned"
 
 ---
+v4.3.3  
+19 JAN 2026
+---
+* Round
+  - Replace incorrect exitWith with continue for round start checking weapon states.
+  - Client side weapon state check waits 2.5 seconds for server side weapon state fix now.
+  - Notification for client side weapon state check happens 5 seconds after round start (if any found).
+  - Reworked client side weapon state notification to be less spammy.
+
+---
 v4.3.2  
 11 JAN 2026
-
 ---
 
 * Curator
