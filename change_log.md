@@ -54,8 +54,11 @@ TBD
 v4.3.4  
 20 JAN 2026
 ---
+* Commands
+  - !weaponstate added, which shows a list of players that currently have silent weapons for the player.
+
 * Loadout
-  - Remove enableDamageGlobal from teleport script in attempt to fix silent weapon bug cause
+  - Remove enableSimulationGlobal from teleport script in attempt to fix silent weapon bug cause
 
 ---
 v4.3.3  

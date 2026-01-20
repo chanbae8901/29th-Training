@@ -17,7 +17,8 @@ pvpfw_chatIntercept_helpInfo =
 	["commands", "Lists commands"],
 	["arsenal", "Places an ACE arsenal in front of the player"],
 	["measure", "Measure distances on the map using shift + click markers. Set a reference using '!measure set', then use '!measure' to get distance to your current shift + click marker"],
-	["showchat", "Shows chat display (for bug where chat is hidden after using menu)."]
+	["showchat", "Shows chat display (for bug where chat is hidden after using menu)."],
+	["weaponstate", "List all players current having silent weapon bug ONLY for executing player."]
 ];
 
 
@@ -125,9 +126,26 @@ pvpfw_chatIntercept_allCommands =
 		}
 	],
 	[
-		"showChat",
+		"showchat",
 		{
 			showChat true;
+		}
+	],
+	[
+		"weaponstate",
+		{
+			private _buggedPlayers = [];
+
+			private _players = allPlayers - entities "HeadlessClient_F";
+			_players = _players select { alive _x }; //only get alive players, probably not needed however
+			
+			{
+				if !(currentWeapon _x == "Throw" || currentWeapon _x == "Put") then { continue };
+				_buggedPlayers pushBack (name _x);
+			}
+			forEach _players;
+
+			systemChat str _buggedPlayers;
 		}
 	]	
 ];
