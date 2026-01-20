@@ -152,7 +152,7 @@ if (isServer) then
 			diag_log "Round Start Weapon States:";			
 			{
 				diag_log format ["%1: %2", name _x, weaponState _x];
-				if !(currentWeapon _x == "Throw" || currentWeapon _x == "Put") exitWith {};
+				if !(currentWeapon _x == "Throw" || currentWeapon _x == "Put") then { continue };
 				[_x] remoteExec ["DOTT_loadout_fnc_resetWeaponState", _x];
 				if (TN_notifyFinalCheck) then
 				{
@@ -188,7 +188,7 @@ if (hasInterface) then
 			_players = _players select { alive _x }; //only get alive players, probably not needed however
 			
 			{
-				if !(currentWeapon _x == "Throw" || currentWeapon _x == "Put") exitWith {};
+				if !(currentWeapon _x == "Throw" || currentWeapon _x == "Put") then { continue };
 				if (TN_notifyFinalCheck) then
 				{
 					private _msg = format ["WARNING: %1 has silent weapon for %2.", name _x, name player];

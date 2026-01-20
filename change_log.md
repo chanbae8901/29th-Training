@@ -51,9 +51,15 @@ TBD
 	- Included new class "FlagReturned"
 
 ---
+v4.3.3  
+19 JAN 2026
+---
+* Round
+  - Replace incorrect exitWith with continue for round start checking weapon states.
+
+---
 v4.3.2  
 11 JAN 2026
-
 ---
 
 * Curator
