@@ -60,6 +60,9 @@ v4.3.4
 * Loadout
   - Remove enableSimulationGlobal from teleport script in attempt to fix silent weapon bug cause
 
+* Spectator
+  - Remove enableSimulation from enter/exit in attempt to fix silent weapon bug cause
+
 ---
 v4.3.3  
 19 JAN 2026

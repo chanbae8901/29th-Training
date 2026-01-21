@@ -31,7 +31,6 @@ hintSilent ""; // Clear Hint
 };
 
 player switchCamera "internal"; // Make sure the camera is returned to the player
-player enableSimulation true;
 ["exitSpectator", "onEachFrame"] call BIS_fnc_removeStackedEventHandler; //  Remove the stackedEventHandler as we no longer need it
 if (!(weaponLowered player)) then 
 {
