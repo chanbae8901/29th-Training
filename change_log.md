@@ -57,6 +57,9 @@ v4.3.5
 * Curator
   - Fix _unit not being passed to spawned code in init
 
+* Thermals
+  - Fix disabling PIP Thermals not working due to mistakenly being executed server side instead of client.
+
 ---
 v4.3.4  
 20 JAN 2026

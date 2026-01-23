@@ -25,6 +25,13 @@ if (hasInterface) then
 			[] spawn DOTT_thermals_fnc_blackScreen;
 		}
 	] call CBA_fnc_addPlayerEventHandler;
+
+	["DOTT_disablePIPThermalsEvent", "GetInMan", {
+		if !(TN_disableTI) exitWith {};
+
+		//some delay is necessary or PiP won't shut off
+		[{ call DOTT_thermals_fnc_disablePIP }, [] , 0.1] call CBA_fnc_waitAndExecute;
+	}] call CBA_fnc_addBISPlayerEventHandler;	
 };
 
 if (isServer) then
@@ -45,11 +52,4 @@ if (isServer) then
 			_x disableTIEquipment TN_disableTI;
 		};
 	} forEach allMissionObjects "AllVehicles";
-
-	["DOTT_disablePIPThermalsEvent", "GetInMan", {
-		if !(TN_disableTI) exitWith {};
-
-		//some delay is necessary or PiP won't shut off
-		[{ call DOTT_thermals_fnc_disablePIP }, [] , 0.1] call CBA_fnc_waitAndExecute;
-	}] call CBA_fnc_addBISPlayerEventHandler;
 };
