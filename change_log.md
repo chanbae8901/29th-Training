@@ -58,7 +58,8 @@ v4.3.5
   - Fix _unit not being passed to spawned code in init
 
 * OCAP
-  - Add showing (stationary) sectors on map w/ side changes
+  - Add showing sectors on map w/ side changes
+  - Updates in OCAP recording show up several seconds after when it actually happened/may not even be tracked, but better than nothing I guess.
 
 * Thermals
   - Fix disabling PIP Thermals not working due to mistakenly being executed server side instead of client.
