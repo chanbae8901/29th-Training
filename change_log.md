@@ -57,6 +57,9 @@ v4.3.5
 * Curator
   - Fix _unit not being passed to spawned code in init
 
+* OCAP
+  - Add showing (stationary) sectors on map w/ side changes
+
 * Thermals
   - Fix disabling PIP Thermals not working due to mistakenly being executed server side instead of client.
 
