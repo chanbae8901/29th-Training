@@ -53,6 +53,7 @@ TBD
 ---
 v4.3.6  
 02 FEB 2026
+---
 
 * Loadout
   - EXPERIMENTAL: Apply setUnitLoadout before CBA_fnc_setLoadout to attempt to replicate conditions where silent bug doesn't appear for players who haven't respawned.
@@ -62,6 +63,7 @@ v4.3.6
   - Client side check notification now condensed, excludes showing who views the issue.
 
 * OCAP
+  - Wait 10 seconds after sector is created to create marker to wait for any Zeus changes.
   - Remove 'fix' halfing sector marker size.
 
 * Spectator
