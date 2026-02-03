@@ -51,6 +51,27 @@ TBD
 	- Included new class "FlagReturned"
 
 ---
+v4.3.5  
+29 JAN 2026
+---
+* Curator
+  - Fix _unit not being passed to spawned code in init
+
+* Loadout
+  - EXPERIMENTAL: Altered fullSetUnitLoadout to not use resetWeaponState and instead swap the player's weapon to some unlikely used vanilla weapon (CPW) before
+    reapplying loadout to attempt to reduce silent weapon bug.
+
+* OCAP
+  - Add showing sectors on map w/ side changes
+    NOTE: Reduced marker size in half while creating it since OCAP seems to make it twice the actual size, but it seems other markers do the exact opposite
+    and become half the size?
+  - Updates in OCAP recording (ex. sector moved or changed size) show up several seconds after when it actually happened/may not even be tracked, 
+    but better than nothing I guess.
+
+* Thermals
+  - Fix disabling PIP Thermals not working due to mistakenly being executed server side instead of client.
+
+---
 v4.3.4  
 20 JAN 2026
 ---

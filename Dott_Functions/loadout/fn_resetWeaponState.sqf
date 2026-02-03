@@ -7,6 +7,7 @@
  * Description:
  * Force resync of weapon state server side by unequipping and requipping binoculars (or opposite if no binoculars are equipped).
  * Binoculars are used so that it will not affect the fire mode of other weapons
+ * NOTE: Seems to not work perfectly, only prevents one cause of desync (weapon holder to server, server to everyone else still happens).
  *
  * Parameter(s): 
  * _unit: local unit that needs to reset weapon state

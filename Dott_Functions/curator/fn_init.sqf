@@ -76,8 +76,9 @@ if (isServer) then
 		{
 			if (isNull getAssignedCuratorLogic _unit) then 
 			{
-				[] spawn
+				[_unit] spawn
 				{
+					params ["_unit"];
 					unassignCurator zeus_admin;
 					sleep .1;
 					_unit assignCurator zeus_admin; 
@@ -90,8 +91,9 @@ if (isServer) then
 			params ["_unit"];
 			if (getAssignedCuratorLogic _unit == zeus_admin) then
 			{
-				[] spawn
+				[_unit] spawn
 				{
+					params ["_unit"];					
 					unassignCurator zeus_admin;
 					sleep .1;
 					[_unit] spawn DOTT_curator_fnc_checkAssignment;

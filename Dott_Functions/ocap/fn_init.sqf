@@ -31,15 +31,12 @@ if (isServer) then
 
 	DOTT_ocap_roundNum = 1;
 
-	// --- Sector Capture --- //
+	// --- Sector --- //
+	DOTT_ocap_fnc_handleSector = compileFinal preprocessFileLineNumbers "DOTT_Functions\ocap\fn_handleSector.sqf";	
+	DOTT_ocap_fnc_createSectorMarkers = compileFinal preprocessFileLineNumbers "DOTT_Functions\ocap\fn_createSectorMarkers.sqf";
+
 	{
-		[_x, "ownerChanged", 
-		{
-			params ["_sector", "_owner", "_ownerOld"];
-			private _sectorName = _sector getVariable ["name", "sector"];
-			private _ownerName = _owner call BIS_fnc_sideName;
-			["ocap_customEvent", ["generalEvent", format["%1 captured by %2", _sectorName, _ownerName]]] call CBA_fnc_serverEvent;
-		}] call BIS_fnc_addScriptedEventHandler;
+		_x call DOTT_ocap_fnc_handleSector;
 	} forEach (allMissionObjects "ModuleSector_F");
 
 	addMissionEventHandler ["EntityCreated", 
@@ -47,13 +44,7 @@ if (isServer) then
 		params ["_entity"];
 		if (_entity isKindOf "ModuleSector_F") then 
 		{
-			[_entity, "ownerChanged", 
-			{
-				params ["_sector", "_owner", "_ownerOld"];
-				private _sectorName = _sector getVariable ["name", "sector"];
-				private _ownerName = _owner call BIS_fnc_sideName;
-				["ocap_customEvent", ["generalEvent", format["%1 captured by %2", _sectorName, _ownerName]]] call CBA_fnc_serverEvent;
-			}] call BIS_fnc_addScriptedEventHandler;
+			_entity call DOTT_ocap_fnc_handleSector;
 		};
 	}];
 
