@@ -32,7 +32,7 @@ if (_owner != sideUnknown) then
     private _triggerArea = triggerarea _trigger;
     if (_triggerArea select 3) then {_marker setMarkerShapeLocal "rectangle";} else {_marker setMarkerShapeLocal "ellipse";};
     _marker setMarkerDirLocal (_triggerArea select 2);
-    _marker setMarkerSizeLocal [(_triggerArea select 0)/2,(_triggerArea select 1)/2]; //we shouldn't have to divide by two, but OCAP doesn't do it properly so we do
+    _marker setMarkerSizeLocal [(_triggerArea select 0),(_triggerArea select 1)]; 
     _marker setMarkerBrushLocal "Border";
     _marker setMarkerAlphaLocal 1;
 

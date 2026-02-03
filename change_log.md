@@ -58,6 +58,9 @@ v4.3.6
   - Remove server side checking for silent weapon, mostly pointless since client side can cause the issue.
   - Client side check notification now condensed, excludes showing who views the issue.
 
+* OCAP
+  - Remove 'fix' halfing sector marker size.
+
 * Spectator
   - Reworked invulnerability to work around the fact that BIS spectator function implicitly does it already.
 

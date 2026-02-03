@@ -49,7 +49,7 @@ params ["_logic"];
             private _trigger = _x;
             private _triggerArea = (triggerArea _trigger) select [0, 2];
             private _marker = _areaMarkers select _forEachIndex;
-            private _markerArea = ((getMarkerSize _marker) select [0, 2]) apply {_x * 2}; //remultiply by two due to OCAP bug
+            private _markerArea = (getMarkerSize _marker) select [0, 2];
             if (_triggerArea isNotEqualTo _markerArea) exitWith 
             {
                 private _owner = _logic getVariable ["owner", sideUnknown];
