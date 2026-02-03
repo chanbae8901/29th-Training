@@ -153,7 +153,7 @@ if (isServer) then
 				sleep 3;
 				if (isNil "DOTT_round_clientSilentWeapons") exitWith {};
 
-				private _msg = format ["%1 has silent weapon", keys DOTT_round_clientSilentWeapons];
+				private _msg = format ["%1 has silent weapon.", keys DOTT_round_clientSilentWeapons];
 				diag_log _msg;
 				[_msg] remoteExec ["systemChat"];
 
