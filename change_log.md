@@ -51,6 +51,14 @@ TBD
 	- Included new class "FlagReturned"
 
 ---
+v4.3.6  
+02 FEB 2026
+
+* Round
+  - Remove server side checking for silent weapon, mostly pointless since client side can cause the issue.
+  - Client side check notification now condensed, excludes showing who views the issue.
+
+---
 v4.3.5  
 29 JAN 2026
 ---

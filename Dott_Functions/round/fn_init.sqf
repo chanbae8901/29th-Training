@@ -142,28 +142,6 @@ if (hasInterface) then
 /*---------- Final Checks ---------- */
 if (isServer) then 
 {
-	//check if any player has the silent weapon bug on server and fix
-	[
-		"DOTT_round_started",
-		{	
-			private _players = allPlayers - entities "HeadlessClient_F";
-			_players = _players select { alive _x }; //only get alive players, probably not needed however
-
-			diag_log "Round Start Weapon States:";			
-			{
-				diag_log format ["%1: %2", name _x, weaponState _x];
-				if !(currentWeapon _x == "Throw" || currentWeapon _x == "Put") then { continue };
-				[_x] remoteExec ["DOTT_loadout_fnc_resetWeaponState", _x];
-				if (TN_notifyFinalCheck) then
-				{
-					private _msg = format ["FIXED: %1 had silent weapon, now fixed.", name _x];
-					[_msg] remoteExec ["systemChat"];
-				};
-			}
-			forEach _players;
-		} 
-	] call CBA_fnc_addEventHandler;
-
 	//Collect client side silent weapons and notify
 	[
 		"DOTT_round_started",
@@ -172,14 +150,12 @@ if (isServer) then
 
 			[] spawn
 			{
-				sleep 5;
+				sleep 3;
 				if (isNil "DOTT_round_clientSilentWeapons") exitWith {};
 
-				{
-					private _msg = format ["%1 has silent weapon for %2", _x, _y];
-					[_msg] remoteExec ["systemChat"];
-				}
-				forEach DOTT_round_clientSilentWeapons;
+				private _msg = format ["%1 has silent weapon", keys DOTT_round_clientSilentWeapons];
+				diag_log _msg;
+				[_msg] remoteExec ["systemChat"];
 
 				DOTT_round_clientSilentWeapons = nil;
 			};
@@ -210,8 +186,7 @@ if (hasInterface) then
 
 			[] spawn
 			{
-				sleep 2.5; //Probably temporary, wait for server side fix attempt before we check on client
-
+				sleep 0.5;
 				private _players = allPlayers - entities "HeadlessClient_F";
 				_players = _players select { alive _x }; //only get alive players, probably not needed however
 				
