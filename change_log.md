@@ -54,6 +54,9 @@ TBD
 v4.3.7  
 04 FEB 2026
 ---
+* Loadout
+  - Removed resetWeaponState, while there is some evidence it stops the server from having the weapon be desynced, doesn't stop clients randomly being desynced.
+    Could result in silent bug happening when leaving ACE Arsenal under certain conditions.
 
 * OCAP
   - Fix not passing variable into sleep in 4.3.5 (...again).
