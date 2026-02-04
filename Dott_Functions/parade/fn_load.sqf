@@ -8,7 +8,7 @@
  * Swaps player not in non-combat uniform to parade uniform.
  *
  * Parameter(s): 
- * _force (Boolean - default false): Load parade uniform even if in non-combat uniform.
+ * n/a
  *
  * Returns:
  * true
@@ -17,12 +17,10 @@
  * call DOTT_parade_fnc_load;
  * 
  */
-params [["_force", false, [true]]];
 //https://github.com/acemod/ACE3/blob/master/addons/arsenal/defines.hpp
 (findDisplay 1127002) closeDisplay 1; //close loadouts first
 (findDisplay 1127001) closeDisplay 1; //close ace arsenal
 
-if !(_force || !([player] call DOTT_parade_fnc_checkNonCombatLoadout)) exitWith {};
 private _savedLoadouts = profileNamespace getVariable ["ace_arsenal_saved_loadouts", []];
 private _customParadeIdx = _savedLoadouts findIf {_x select 0 == "Forced Parade"};
 if (_customParadeIdx == -1) then
@@ -39,5 +37,5 @@ if (_customParadeIdx == -1) then
     };
 };
 player spawn DOTT_loadout_fnc_setInsignia;
-if !(_force) then { systemChat "Parade loadout applied." };
+systemChat "Parade loadout applied.";
 true

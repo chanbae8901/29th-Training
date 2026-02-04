@@ -58,6 +58,8 @@ v4.3.7
 * OCAP
   - Fix not passing variable into sleep in 4.3.5 (...again).
 
+* Parade
+  - Force parade now always swaps to parade loadout (no checking if in non-combat uniform such as Class A).
 
 ---
 v4.3.6  
