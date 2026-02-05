@@ -7,6 +7,7 @@ class Dott_Loadout
 		file = "Dott_Functions\loadout";
 		class init {};
 		class fullSetUnitLoadout {};
+		class resetWeaponState {};
 		class onArsenalClosed {};
 		class setInsignia {};
 		class flexibleReset {};

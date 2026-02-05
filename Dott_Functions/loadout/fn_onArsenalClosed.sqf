@@ -22,6 +22,11 @@
 
 resetLoadout = [player] call CBA_fnc_getLoadout;
 
+[] spawn 
+{
+	[player] spawn DOTT_loadout_fnc_resetWeaponState;
+};
+
 player spawn DOTT_loadout_fnc_setInsignia;
 
 if (!(weaponLowered player)) then 

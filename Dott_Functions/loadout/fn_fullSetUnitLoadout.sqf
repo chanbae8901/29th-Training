@@ -26,6 +26,9 @@ if (!local _unit) exitWith {["Unit %1 must be local.", _unit] call BIS_fnc_error
 
 if (!alive _unit) exitWith { false };
 
+removeAllMagazines _unit; //untested if necessary safeguard for silent bug
+sleep 0.5;
+
 isNil { [_unit, _loadout, _fullMagazines] call CBA_fnc_setLoadout }; //run unscheduled
 
 //don't pull out weapon if no primary 
@@ -33,6 +36,9 @@ if (primaryWeapon _unit == "") then
 {
 	_unit action ["SwitchWeapon", _unit, _unit, -1] 
 };
+
 _unit spawn DOTT_loadout_fnc_setInsignia;
+
+[_unit] spawn DOTT_loadout_fnc_resetWeaponState;
 
 true
