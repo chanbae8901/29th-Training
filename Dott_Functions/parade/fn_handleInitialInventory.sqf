@@ -27,7 +27,7 @@ private _fn_loadParade =
 	{
 		case WEST:
 		{
-			[true] call DOTT_parade_fnc_load;
+			call DOTT_parade_fnc_load;
 		};
 		case EAST:
 		{

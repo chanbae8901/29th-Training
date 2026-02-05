@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_loadout_fnc_flexibleReset
- * Date:	12/11/2025
- * Version: 1.2
+ * Date:	02/04/2026
+ * Version: 1.3
  * Author:  Dott [29th ID]
  *
  * Description:

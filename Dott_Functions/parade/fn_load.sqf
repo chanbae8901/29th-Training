@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_parade_fnc_load
- * Date:	8/27/2025
- * Version: 1.0
+ * Date:	02/04/2026
+ * Version: 1.1
  * Author:  Bae [29th ID]
  *
  * Description:

@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_loadout_fnc_onArsenalClosed
- * Date:	9/30/2025
- * Version: 1.2
+ * Date:	02/04/2026
+ * Version: 1.3
  * Author:  Hill [29th ID]
  *
  * Description:

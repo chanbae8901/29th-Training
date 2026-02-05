@@ -1,6 +1,6 @@
 /*
  * Name:	DOTT_loadout_fnc_resetWeaponState
- * Date:	8/10/2025
+ * Date:	02/04/2026
  * Version: 1.0
  * Author:  Bae [29th ID]
  *

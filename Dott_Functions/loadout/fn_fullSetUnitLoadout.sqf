@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_loadout_fnc_fullSetUnitLoadout
- * Date:	1/29/2026
- * Version: 1.2
+ * Date:	02/04/2026
+ * Version: 1.3
  * Author:  Bae [29th ID]
  *
  * Description:
