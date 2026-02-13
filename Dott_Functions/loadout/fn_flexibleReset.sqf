@@ -46,6 +46,7 @@ if (_inventory isEqualTo true) then { _inventory = missionNamespace getVariable 
 if (count _inventory != 0) then
 {	
 	if (!isNil {missionNamespace getVariable "BIS_EGSpectator_initialized"}) exitWith { systemChat "Player in spectator, skipping rearm." }; 
+	if (arsenalActionId != -1) exitWith { systemChat "Player in base, skipping rearm." }; 
 	[player, _inventory, true] spawn DOTT_loadout_fnc_fullSetUnitLoadout;
 	_resetInventory = true; //set to true for switch below
 };

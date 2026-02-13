@@ -23,6 +23,7 @@ params ["_logic"];
     {
         private _areas = _logic getVariable ["areas", []];
         private _areaMarkers = _logic getVariable ["DOTT_areaMarkers", []];
+        if (count _areas != count _areaMarkers) then { continue }; //can occur likely due to delayed deleting of stuff passed by reference, so skip until everything is expected
         private _moved = false;
 
         //if sector moves

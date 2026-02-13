@@ -21,16 +21,71 @@
 
 params["_unit"];
 
-waitUntil { sleep 0.2; (weaponState _unit) select 6 == 0 }; //wait until unit is not reloading
+private _primary = primaryWeapon _unit;
+private _primaryItems = primaryWeaponItems _unit;
 private _primaryMags = primaryWeaponMagazine _unit;
 
-{
-	_unit removePrimaryWeaponItem _x;
-}
-forEach _primaryMags;
+//also remove handgun so we don't auto-swap to it when removing primary
+private _handgun = handgunWeapon _unit;
+private _handgunItems = handgunItems _unit;
+private _handgunMags = handgunMagazine _unit;
 
-sleep 0.5;
+//need to remove other loadout items because addWeapon will automatically find and insert magazine from them
+private _uniformItems = uniformItems _unit;
+private _vestItems = vestItems _unit;
+private _backpackItems = backpackItems _unit;
+
+_unit removeWeapon _primary;
+_unit removeWeapon _handgun;
+
+{
+	_unit removeItemFromUniform _x;
+}
+forEach _uniformItems;
+
+{
+	_unit removeItemFromVest _x;
+}
+forEach _vestItems;
+
+{
+	_unit removeItemFromBackpack _x;
+}
+forEach _backpackItems;
+
+waitUntil { sleep 1; !isSwitchingWeapon _unit }; //wait until unit is not switching weapon
+
+_unit addWeapon _primary;
+
+{
+	_unit addPrimaryWeaponItem _x;
+} forEach _primaryItems;
+
+//here instead of below since it makes reload sound after delay
+{
+	_unit addMagazine _x;
+} forEach _handgunMags;
+
+_unit addWeapon _handgun;
+
+{
+	_unit addHandgunItem _x;
+} forEach _handgunItems;
+
+sleep 1;
 
 {
 	_unit addPrimaryWeaponItem _x;
 } forEach _primaryMags;
+
+{
+	_unit addItemToUniform _x;
+} forEach _uniformItems;
+
+{
+	_unit addItemToVest _x;
+} forEach _vestItems;
+
+{
+	_unit addItemToBackpack _x;
+} forEach _backpackItems;

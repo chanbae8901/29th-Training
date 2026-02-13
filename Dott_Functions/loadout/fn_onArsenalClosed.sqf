@@ -22,9 +22,24 @@
 
 resetLoadout = [player] call CBA_fnc_getLoadout;
 
+//weak fix for potential silent weapon bug when player after respawn having selected loadout in previous life,
+//enters ace arsenal and picks same loadout
+//weak meaning fixing some but not all cases
 [] spawn 
 {
-	[player] spawn DOTT_loadout_fnc_resetWeaponState;
+	waitUntil { sleep 1; (weaponState player) select 6 == 0 }; //wait until unit is not reloading
+	private _primaryMags = primaryWeaponMagazine player;
+
+	{
+		player removePrimaryWeaponItem _x;
+	}
+	forEach _primaryMags;
+
+	sleep 1;
+
+	{
+		player addPrimaryWeaponItem _x;
+	} forEach _primaryMags;
 };
 
 player spawn DOTT_loadout_fnc_setInsignia;
