@@ -45,9 +45,9 @@
 				//blank argument means reset and teleport everybody
 				if (_argument isEqualTo "") exitWith
 				{
-					[{[resetLoadout,true, getPosASL res_blu] spawn DOTT_loadout_fnc_flexibleReset}] remoteExec ["call", west];
-					[{[resetLoadout,true, getPosASL res_red] spawn DOTT_loadout_fnc_flexibleReset}] remoteExec ["call", east];
-					[{[resetLoadout,true, getPosASL res_grn] spawn DOTT_loadout_fnc_flexibleReset}] remoteExec ["call", resistance];
+					[{[resetLoadout,true, getPosASL base_res_blu] spawn DOTT_loadout_fnc_flexibleReset}] remoteExec ["call", west];
+					[{[resetLoadout,true, getPosASL base_res_red] spawn DOTT_loadout_fnc_flexibleReset}] remoteExec ["call", east];
+					[{[resetLoadout,true, getPosASL base_res_grn] spawn DOTT_loadout_fnc_flexibleReset}] remoteExec ["call", resistance];
 					systemChat "Rearming, healing, and teleporting all players to spawn!"
 				};
 				//toLower case to reduce user error
@@ -79,9 +79,9 @@
 				//if no stay, then rearm/heal/teleport that side
 				switch (_argument) do
 				{
-					case "blufor": { [{ [resetLoadout, true, getPosASL res_blu] spawn DOTT_loadout_fnc_flexibleReset }] remoteExec ["call", west]; systemChat "Rearming, healing, and teleporting Blufor players to spawn!"; };
-					case "opfor": { [{ [resetLoadout, true, getPosASL res_red] spawn DOTT_loadout_fnc_flexibleReset }] remoteExec ["call", east]; systemChat "Rearming, healing, and teleporting Opfor players to spawn!"; };
-					case "grnfor": { [{ [resetLoadout, true, getPosASL res_grn] spawn DOTT_loadout_fnc_flexibleReset }] remoteExec ["call", resistance]; systemChat "Rearming, healing, and teleporting Grnfor players to spawn!"; };
+					case "blufor": { [{ [resetLoadout, true, getPosASL base_res_blu] spawn DOTT_loadout_fnc_flexibleReset }] remoteExec ["call", west]; systemChat "Rearming, healing, and teleporting Blufor players to spawn!"; };
+					case "opfor": { [{ [resetLoadout, true, getPosASL base_res_red] spawn DOTT_loadout_fnc_flexibleReset }] remoteExec ["call", east]; systemChat "Rearming, healing, and teleporting Opfor players to spawn!"; };
+					case "grnfor": { [{ [resetLoadout, true, getPosASL base_res_grn] spawn DOTT_loadout_fnc_flexibleReset }] remoteExec ["call", resistance]; systemChat "Rearming, healing, and teleporting Grnfor players to spawn!"; };
 					default {systemChat "Error: Invalid input(s)! Must be 'stay', 'blufor', 'opfor', 'grnfor'"};
 				};
 			}	
@@ -93,7 +93,7 @@
 				//blank argument means debrief in blufor base
 				if (_argument isEqualTo "") then
 				{
-					private _pos = getPosASL res_blu;
+					private _pos = getPosASL base_res_blu;
 					[[true, true, _pos], DOTT_loadout_fnc_flexibleReset ] remoteExec ["spawn"];
 					systemChat "Healing, rearming, and teleporting all players to Blufor base!";
 				}

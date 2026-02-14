@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_curator_fnc_excludeObjects
  * Date:	7/27/2025
- * Version: 1.1
+ * Version: 1.1.1
  * Author:  Bae [29th ID] modified from Hill [29th ID]
  *
  * Description:
@@ -21,31 +21,28 @@
 if (!isServer) exitWith {};
 
 curatorExcludedObjects = [] spawn {
-	private ["_ammoBoxes","_spectateTerminal","_garbage","_baseLights","_respawnPos","_zeus_modules", "_hcs", "_misc"];
-	_ammoBoxes = [blu_ammo,red_ammo,grn_ammo];
-	_spectateTerminal = [terminal,terminal_1,terminal_2,table,table_1,table_2];
-	_garbage = [blu_garbage,red_garbage,green_garbage];
-	_baseLights = [light,light_1,light_2,light_3,light_4,light_5];
-	_respawnPos = [res_blu,res_red,res_grn,res_civ];
-	_zeus_modules = [zeus_admin,zeus_ltc,zeus_maj,zeus_msgt,zeus_co,zeus_snco,zeus_cs,zeus_plt1_pl,zeus_plt1_ps1,zeus_plt1_ps2,zeus_plt2_pl,zeus_plt2_ps1,zeus_plt2_ps2,
-						zeus_red_plt,zeus_red_1_plt,
-						zeus_grn_plt,zeus_grn_1_plt];
-	_hcs = entities "HeadlessClient_F";
-	_misc = [tfar_settings];
+	private _baseObjects = [];
+
+	{ //forEach object placed in editor
+		//get variable name in string format, if empty then skip to next object
+		private _vicString = vehicleVarName _x;
+		if (_vicString isEqualTo "") then { continue };
+		
+		//make all lower case to reduce user errors
+		_vicString = toLowerANSI _vicString;
+		
+		//create array of tags split with an underscore (E.G. "base_action_terminal_0" becomes ["base","action","terminal","0"] )
+		private _tags = _vicString splitString "_";
+			
+		//if the first tag isn't "base", skip object, continue to next object in array
+		private _baseObject = _tags select 0;
+		if (_baseObject isNotEqualTo "base") then { continue };
+		_baseObjects pushBack _x;
+	}
+	forEach allMissionObjects "All";
 
 	//set a flag on each object to indicate it should be excluded from Zeus editing
-	{
-		{  _x setVariable ["isCuratorExcluded", true, false];  } forEach _x;
-	} forEach [
-		_ammoBoxes,
-		_spectateTerminal,
-		_garbage,
-		_baseLights,
-		_respawnPos,
-		_zeus_modules,
-		_hcs,
-		_misc
-	];
+	{  _x setVariable ["isCuratorExcluded", true, false];  } forEach _baseObjects;
 
 	while {true} do {
 		{

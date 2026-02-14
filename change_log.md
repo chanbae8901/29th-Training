@@ -68,6 +68,8 @@ v4.4.0
 - Removed CP1S3.
 - Removed rifleman slots to make each BLUFOR squad have 18 members.
 
+- Renamed base object variables to unify training/event fn_initBaseObjects and fn_cleaner.
+- Disabled simulation, enabled simple object, and/or enabled local only on some objects in base for optimization.
 ---
 v4.3.8  
 07 FEB 2026

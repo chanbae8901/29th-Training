@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_training_fnc_cleaner
- * Date:	7/26/2025
- * Version: 1.1
+ * Date:	02/14/2025
+ * Version: 2.1
  * Author:  Rellikplug	AKA: Hill [29th ID]
  *
  * Description:
@@ -18,21 +18,15 @@
  * 
  */
 
-private ["_dead","_posBlu","_posRed","_posGreen","_all_garbages","_near_objects","_countObjects","_countDead","_countAllNear"];
+private ["_dead","_near_objects","_countObjects","_countDead","_countAllNear"];
 
 _dead = allDeadMen;
 
-	//  define positions of objects addAction is attached to
-_posBlu = getPosATL blu_garbage;
-_posRed = getPosATL red_garbage;
-_posGreen = getPosATL green_garbage;
-_all_garbages = [_posBlu,_posRed,_posGreen];
-
-	//  get items around trash cans
+//  get items around trash cans
 _near_objects =  [];
 {
     _near_objects append (nearestObjects [_x, ["WeaponHolder", "GroundWeaponHolder"], 250]);
-} forEach _all_garbages;
+} forEach DOTT_garbages;
 
 _countObjects = count _near_objects;
 _countDead = count _dead;
