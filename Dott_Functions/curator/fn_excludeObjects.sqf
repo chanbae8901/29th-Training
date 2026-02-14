@@ -27,7 +27,7 @@ curatorExcludedObjects = [] spawn {
 	_garbage = [blu_garbage,red_garbage,green_garbage];
 	_baseLights = [light,light_1,light_2,light_3,light_4,light_5];
 	_respawnPos = [res_blu,res_red,res_grn,res_civ];
-	_zeus_modules = [zeus_admin,zeus_ltc,zeus_maj,zeus_msgt,zeus_co,zeus_snco,zeus_cs,zeus_plt1_pl,zeus_plt1_ps1,zeus_plt1_ps2,zeus_plt2_pl,zeus_plt2_ps,
+	_zeus_modules = [zeus_admin,zeus_ltc,zeus_maj,zeus_msgt,zeus_co,zeus_snco,zeus_cs,zeus_plt1_pl,zeus_plt1_ps1,zeus_plt1_ps2,zeus_plt2_pl,zeus_plt2_ps1,zeus_plt2_ps2,
 						zeus_red_plt,zeus_red_1_plt,
 						zeus_grn_plt,zeus_grn_1_plt];
 	_hcs = entities "HeadlessClient_F";

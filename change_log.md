@@ -51,6 +51,24 @@ TBD
 	- Included new class "FlagReturned"
 
 ---
+v4.4.0
+12 FEB 2026
+---
+* mission.sqm changes
+- Renamed “Medic” to “Rifleman (Medic)” to maintain consistency of showing ACE roles in parentheses.
+- Removed ACE Advanced Engineer trait from Combat Engineer slot.
+- Renamed Engineer slot to Crewman and added 1x more (2 total) per squad, 2x more (4 total) on OPFOR and GRNFOR.
+- Swapped all “Engineer” types to “Crewman” types. (Some squads had the former instead of the latter for Engineer (Repair) type.) 
+  (Just makes it easier to search for all roles, not important otherwise.)
+- Remove redudant group name prefix from all roles, and remove the CBA @Group suffix from non-first in group units (only the first unit in a group needs it, 
+  makes it easier to maintain/edit roles in future).
+- Swap Sharpshooter type with Marksman for Platoon Sniper. (Former is DLC, don’t think it matters at all).
+- Guest squad composition uniform with non-guest squad.
+- Added 1 more Autorifleman and Combat Engineer slot to each squad.
+- Removed CP1S3.
+- Removed rifleman slots to make each BLUFOR squad have 18 members.
+
+---
 v4.3.8  
 07 FEB 2026
 ---
