@@ -64,6 +64,8 @@ v4.4.0
 - Renamed base object variables to unify training/event fn_initBaseObjects, fn_cleaner, and fn_excludeObjects.
 - Disabled simulation, enabled simple object, and/or enabled local only on some objects in base for optimization.
 - Removed Game Master modules from the sqm, create via script instead. Adds createCuratorModule, removes checkAssignment, fixAssignment.
+- Remove trigger from sqm animating terminals, they are added by script now.
+- Remove deprecated TFAR module (hopefully didn't do anything anymore).
 ---
 v4.3.8  
 07 FEB 2026
