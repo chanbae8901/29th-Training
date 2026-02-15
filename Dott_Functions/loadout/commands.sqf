@@ -119,9 +119,9 @@
 				_argument = toLower _argument;
 				switch (_argument) do
 				{
-					case "blufor": { [[],false,getPosASL blu_ammo] spawn DOTT_loadout_fnc_flexibleReset; systemChat "Teleporting to Blufor spawn!"; };
-					case "opfor": { [[],false,getPosASL red_ammo] spawn DOTT_loadout_fnc_flexibleReset; systemChat "Teleporting to Opfor spawn!"; };
-					case "grnfor": { [[],false,getPosASL grn_ammo] spawn DOTT_loadout_fnc_flexibleReset; systemChat "Teleporting to Grnfor spawn!"; };
+					case "blufor": { [[],false,getPosASL base_action_arsenal_blu] spawn DOTT_loadout_fnc_flexibleReset; systemChat "Teleporting to Blufor spawn!"; };
+					case "opfor": { [[],false,getPosASL base_action_arsenal_red] spawn DOTT_loadout_fnc_flexibleReset; systemChat "Teleporting to Opfor spawn!"; };
+					case "grnfor": { [[],false,getPosASL base_action_arsenal_grn] spawn DOTT_loadout_fnc_flexibleReset; systemChat "Teleporting to Grnfor spawn!"; };
 					default {systemChat "Error: Invalid input! Must be 'blufor', 'opfor', or 'grnfor'"};
 				};
 			}

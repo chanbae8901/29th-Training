@@ -15,7 +15,7 @@
  * true
  *
  * Example:
- * [blu_ammo, 125] call DOTT_parade_fnc_forceAll;
+ * [base_action_arsenal_blu, 125] call DOTT_parade_fnc_forceAll;
  * 
  */
 params ["_obj", "_radius"];

@@ -153,7 +153,7 @@ player addEventHandler ["Respawn", { arsenalActionId = -1; }];
 if (DOTT_MODULES find "parade" != -1) then
 {
 	lastDebriefTime = -10;
-	blu_ammo addAction [
+	base_action_arsenal_blu addAction [
 		"<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#3f8eff'>  Force Parade</t>", 
 		{
 			params ["_target"];
@@ -164,7 +164,7 @@ if (DOTT_MODULES find "parade" != -1) then
 		true, 
 		true, 
 		"", 
-		"serverCommandAvailable '#lock' && ((player distance blu_ammo) < 5 || (time - lastDebriefTime) < 10)", 
+		"serverCommandAvailable '#lock' && ((player distance base_action_arsenal_blu) < 5 || (time - lastDebriefTime) < 10)", 
 		50
 	];
 };
