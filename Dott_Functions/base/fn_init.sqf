@@ -70,9 +70,21 @@ forEach allMissionObjects "All";
 	_trg setTriggerStatements [_condition, _activate, _deActivate];
 } forEach DOTT_terminals;
 
+//Very messy area below but I'm lazy
 //------- ACE Arsenal via radius from box -------//
+//------- Disable Environment Noises when in radius unless in specator or Zeus -------//
 private _centers = [];
+
 arsenalActionId = -1;
+
+#define ENV_ON 1 fadeEnvironment 1
+#define ENV_OFF 1 fadeEnvironment 0
+DOTT_keepEnvironmentSounds = false;
+["DOTT_enteredZeus", {DOTT_keepEnvironmentSounds = true; ENV_ON}] call CBA_fnc_addEventHandler;
+["DOTT_exitedZeus", {DOTT_keepEnvironmentSounds = false; if (arsenalActionId != -1) then {ENV_OFF}}] call CBA_fnc_addEventHandler;
+["enteredSpectator", {DOTT_keepEnvironmentSounds = true; ENV_ON}] call CBA_fnc_addEventHandler;
+["exitedSpectator", {DOTT_keepEnvironmentSounds = false; if (arsenalActionId != -1) then {ENV_OFF}}] call CBA_fnc_addEventHandler;
+
 
 for "_i" from 0 to ((count DOTT_arsenals) - 1) do 
 {
@@ -92,16 +104,18 @@ for "_i" from 0 to ((count DOTT_arsenals) - 1) do
 
 	while {true} do 
 	{
-	private _inZone = false;
-	{
-		private _distSquared = (getPosATL player) distanceSqr _x;
-		if(_distSquared <= _radiusSquared) exitWith {_inZone = true};
-	} forEach _centers;
+		private _inZone = false;
+		{
+			private _distSquared = (getPosATL player) distanceSqr _x;
+			if(_distSquared <= _radiusSquared) exitWith {_inZone = true};
+		} forEach _centers;
 
 	if (_inZone) then 
 	{
+
 		if (arsenalActionId == -1) then 
 		{
+			if !(DOTT_keepEnvironmentSounds) then { ENV_OFF }; //put inside arsenalActionId since I'm too lazy to put a check for inZone change
 			if (isClass (configFile >> "CfgPatches" >> "ace_main")) then 
 			{ 
 				arsenalActionId = player addAction [
@@ -122,6 +136,7 @@ for "_i" from 0 to ((count DOTT_arsenals) - 1) do
 	{
 		if (arsenalActionId != -1) then 
 		{
+			ENV_ON;
 			player removeAction arsenalActionId;
 			arsenalActionId = -1;
 		};
