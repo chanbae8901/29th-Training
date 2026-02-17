@@ -77,6 +77,7 @@ v4.4.0
   - Add createCuratorModule
   - Remove checkAssignment, fixAssignment. createCuratorModule will simply delete and recreate if already existing, which will alternatively fix the issue that these are fixing.
   - Moved some logic from client to server side (setCuratorVisionModes, addPlayerEditable).
+  - Team base locations now show up in curator.
 ---
 v4.3.8  
 07 FEB 2026

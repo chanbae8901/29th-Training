@@ -73,7 +73,6 @@ forEach allMissionObjects "All";
 //Very messy area below but I'm lazy
 //------- ACE Arsenal via radius from box -------//
 //------- Disable Environment Noises when in radius unless in specator or Zeus -------//
-private _centers = [];
 
 arsenalActionId = -1;
 
@@ -86,19 +85,17 @@ DOTT_keepEnvironmentSounds = false;
 ["exitedSpectator", {DOTT_keepEnvironmentSounds = false; if (arsenalActionId != -1) then {ENV_OFF}}] call CBA_fnc_addEventHandler;
 
 
-for "_i" from 0 to ((count DOTT_arsenals) - 1) do 
+if (isNil "DOTT_arsenal_centers") then
 {
-	private _ammo = DOTT_arsenals select _i;
+	DOTT_arsenal_centers = [];
 
-	private _p1 = getPosATL _ammo;
-
-	_centers pushBack _p1;
+	{
+		DOTT_arsenal_centers pushBack (getPosATL _x);
+	} forEach DOTT_arsenals;
 };
-
-[_centers] spawn 
+[] spawn 
 {
-	params ["_centers"];
-	if (count _centers == 0) exitWith {};
+	if (count DOTT_arsenal_centers == 0) exitWith {};
 	private _radius = if (isNil "DOTT_event_arsenalRadius") then { 75 } else { DOTT_event_arsenalRadius };
 	private _radiusSquared = _radius*_radius;
 
@@ -108,7 +105,7 @@ for "_i" from 0 to ((count DOTT_arsenals) - 1) do
 		{
 			private _distSquared = (getPosATL player) distanceSqr _x;
 			if(_distSquared <= _radiusSquared) exitWith {_inZone = true};
-		} forEach _centers;
+		} forEach DOTT_arsenal_centers;
 
 	if (_inZone) then 
 	{
