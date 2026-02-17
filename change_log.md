@@ -50,7 +50,7 @@ v4.4.0
 * mission.sqm changes
   - Renamed “Medic” to “Rifleman (Medic)” to maintain consistency of showing ACE roles in parentheses.
   - Removed ACE Advanced Engineer trait from Combat Engineer slot.
-  - Renamed Engineer slot to Crewman and added 1x more (2 total) per squad, 2x more (4 total) on OPFOR and GRNFOR.
+  - Renamed Engineer slot to Crewman and added 1x more (2 total) per squad.
   - Swapped all “Engineer” types to “Crewman” types. (Some squads had the former instead of the latter for Engineer (Repair) type.) 
     (Just makes it easier to search for all roles, not important otherwise.)
   - Remove redudant group name prefix from all roles, and remove the CBA @Group suffix from non-first in group units (only the first unit in a group needs it, 
@@ -59,7 +59,8 @@ v4.4.0
   - Guest squad composition uniform with non-guest squad.
   - Added 1 more Autorifleman and Combat Engineer slot to each squad.
   - Removed CP1S3.
-  - Removed rifleman slots to make each BLUFOR squad have 18 members.
+  - Removed rifleman slots to make each BLUFOR squad have 16 members.
+  - OPFOR and GRNFOR slot composition now matches 1 platoon of BLUFOR.
 
   - Renamed base object variables to unify training/event.
   - Disabled simulation, enabled simple object, and/or enabled local only on some objects in base for optimization.
@@ -67,6 +68,11 @@ v4.4.0
   - Removed Game Master modules from the sqm, create via script instead. 
   - Remove trigger from sqm animating terminals, they are added by script now (already existing from event version of initBaseObjects).
   - Remove deprecated TFAR module (hopefully didn't do anything anymore).
+
+* Base Placement
+  - Altis remains at airport per tradition, otherwise
+  - ALWAYS put the base within map bounds/play area to ensure location scripts do not misbehave (ex. ZEN Teleporters)
+  - Prioritize placing away from POIs, optimially in the sea bottom-left of the map (still in map bounds as stated above).
 
 * New Base Module
   - Transfers/unifies initBaseObjects -> init and cleaner functions from training and event modules. Removed respective versions from said modules.
