@@ -90,7 +90,7 @@ if (isNil "DOTT_arsenal_centers") then
 	DOTT_arsenal_centers = [];
 
 	{
-		DOTT_arsenal_centers pushBack (getPosATL _x);
+		DOTT_arsenal_centers pushBack (getPosASL _x);
 	} forEach DOTT_arsenals;
 };
 [] spawn 
@@ -103,7 +103,7 @@ if (isNil "DOTT_arsenal_centers") then
 	{
 		private _inZone = false;
 		{
-			private _distSquared = (getPosATL player) distanceSqr _x;
+			private _distSquared = (getPosASL player) distanceSqr _x;
 			if(_distSquared <= _radiusSquared) exitWith {_inZone = true};
 		} forEach DOTT_arsenal_centers;
 

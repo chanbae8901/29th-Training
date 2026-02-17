@@ -38,8 +38,8 @@ if (hasInterface) then
 	DOTT_arsenal_centers = [];
 
 	{
-		private _respawnPos = getPosATL (_x select 0);
-		private _arsenalPos = getPosATL (_x select 1);
+		private _respawnPos = getPosASL (_x select 0);
+		private _arsenalPos = getPosASL (_x select 1);
 		
 		private _centerPos = [(_respawnPos#0 + _arsenalPos#0)/2, (_respawnPos#1 + _arsenalPos#1)/2, (_respawnPos#2 + _arsenalPos#2)/2];
 		DOTT_arsenal_centers pushBack _centerPos;
@@ -60,7 +60,7 @@ if (hasInterface) then
 				[ 
 				"\A3\ui_f\data\map\markers\nato\b_unknown.paa", 
 				_locationColors select _forEachIndex, 
-				_x, 
+				ASLtoAGL _x, 
 				1, 
 				1, 
 				0, 
@@ -69,7 +69,7 @@ if (hasInterface) then
 				0.05 
 				], 
 				true, 
-				false 
+				true
 			] call bis_fnc_addcuratoricon);
 		} forEach DOTT_arsenal_centers;
 	}
