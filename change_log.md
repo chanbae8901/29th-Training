@@ -76,6 +76,7 @@ v4.4.0
 * Curator
   - Add createCuratorModule
   - Remove checkAssignment, fixAssignment. createCuratorModule will simply delete and recreate if already existing, which will alternatively fix the issue that these are fixing.
+  - Moved some logic from client to server side (setCuratorVisionModes, addPlayerEditable).
 ---
 v4.3.8  
 07 FEB 2026

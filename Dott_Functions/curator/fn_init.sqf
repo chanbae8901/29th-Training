@@ -20,13 +20,10 @@
 
 //Note: Events DOTT_enteredZeus and DOTT_exitedZeus are defined in cfgEventHandlers
 
+#define CREATE_CURATOR_MODULE(_obj) [vehicleVarName _obj, roleDescription _obj] call DOTT_curator_fnc_createCuratorModule
+
 if (hasInterface) then 
 {
-	{
-		// -2 = NV, -1 = normal, 3rd number is TI see https://community.bistudio.com/wiki/setCamUseTi	
-		[_x, [-1, -2, 0]] call BIS_fnc_setCuratorVisionModes; 
-	} forEach allCurators;
-
 	[] spawn 
 	{
 		waitUntil { !isNull player };
@@ -41,39 +38,42 @@ if (hasInterface) then
 				_msg remoteExec ["DOTT_common_fnc_diag_log",2];
 			}
 		] call CBA_fnc_addEventHandler;
-
-		//Fix role-based Zeus not working on first life when JIP
-		if (isNil "bis_fnc_preload_init") then //JIP
-		{
-			addMissionEventHandler 
-			[
-				"PreloadFinished", 
-				{
-					[player] spawn DOTT_curator_fnc_createCuratorModule;
-					removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
-				}
-			];
-		} else //non-JIP, but might not be needed because this is a JIP problem
-		{
-			[player] spawn DOTT_curator_fnc_createCuratorModule;
-		};
-
-		[player] remoteExec ["DOTT_curator_fnc_addPlayerEditable", 2];
 	};	
 };
 
 if (isServer) then
 {
-	DOTT_curator_group = createGroup [sideLogic, false];
-
-	if (isNil "zeus_admin") then { //in case zeus_admin is in mission.sqm for some reason
-		zeus_admin = DOTT_curator_group createUnit ["ModuleCurator_F", [0, 0, 0], [], 0, "NONE"];
-		zeus_admin setVariable ["owner", "#adminLogged", true];
-		zeus_admin setVariable ["name", "Admin", true];    
-		zeus_admin setVariable ["Addons", 3, true];
-		zeus_admin setVariable ["BIS_fnc_initModules_disableAutoActivation", false];
-		zeus_admin setVariable ["isCuratorExcluded", true, false];
+	if (isNil "DOTT_curator_units") then //in case curator units aren't defined for some reason
+	{
+		DOTT_curator_units = ["#adminLogged"];
 	};
+
+	//add curator modules that exist in sqm to unit list to fix Zeus not working for JIP players until they die or respawn (primarily for event template)
+	{
+		private _owner = _x getVariable "owner";
+		DOTT_curator_units pushBackUnique _owner;
+	}
+	forEach (allMissionObjects "ModuleCurator_F");
+
+	if (isNil "zeus_admin") then { //in case zeus_admin is in mission.sqm for some reason, I guess hope mission maker set it to this variable name
+		[{time > 0}, { zeus_admin = ["#adminLogged", "Admin"] call DOTT_curator_fnc_createCuratorModule }] call CBA_fnc_waitUntilAndExecute;
+	};
+
+	{
+		CREATE_CURATOR_MODULE(_x);		
+	}
+	forEach allPlayers; //below event handler fires too late for non-JIP players
+
+	addMissionEventHandler ["OnUserSelectedPlayer", 
+	{
+		params ["_networkId", "_playerObject"];
+		
+		if (isNull _playerObject) exitWith { diag_log "Player was null for curator module creation." };
+
+		[_playerObject] call DOTT_curator_fnc_addPlayerEditable;
+
+		CREATE_CURATOR_MODULE(_playerObject);
+	}];
 
 	addMissionEventHandler ["OnUserAdminStateChanged", {
 		params ["_networkId", "_loggedIn"];
@@ -105,7 +105,7 @@ if (isServer) then
 					params ["_unit"];					
 					unassignCurator zeus_admin;
 					sleep .1;
-					[_unit] spawn DOTT_curator_fnc_createCuratorModule;
+					CREATE_CURATOR_MODULE(_unit);
 				};
 			};
 		};

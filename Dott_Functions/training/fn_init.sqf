@@ -21,11 +21,13 @@
 
 //for curator module, make sure training init is put before curator
 //maybe not the cleanest way, but won't break anything if curator module isn't used
+//all lower case
 DOTT_curator_units = 
 [
-    "blu_co", "blu_cs", "blu_snco", "ltc", "maj", "msgt", "blu_plt1_pl", "blu_plt1_ps1", "blu_plt1_ps2", "blu_plt2_pl", "blu_plt2_ps1", "blu_plt2_ps2",
-    "red_plt", "red_1_plt",
-    "grn_plt", "grn_1_plt"
+	"#adminlogged",
+    "blu_co", "blu_xo", "blu_cs", "blu_snco", "ltc", "maj", "msgt", "blu_plt1_pl", "blu_plt1_ps1", "blu_plt1_ps2", "blu_plt2_pl", "blu_plt2_ps1", "blu_plt2_ps2",
+    "red_plt", "red_plt_1", "red_plt_2",
+    "grn_plt", "grn_plt_1", "grn_plt_2"
 ];
 
 if (hasInterface) then
