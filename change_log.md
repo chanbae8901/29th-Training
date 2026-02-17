@@ -72,12 +72,17 @@ v4.4.0
   - Transfers/unifies initBaseObjects -> init and cleaner functions from training and event modules. Removed respective versions from said modules.
   - Possible due to renaming base object variables to follow more versatile event version.
   - NEW FEATURE: Environment sounds now disabled while in base (determined by ACE Arsenal radius) for less distracting (de)briefs.
+  - centers array for arsenals now global (DOTT_arsenal_centers), can be edited before by other modules (ex. training) without being overwritten
 
 * Curator
   - Add createCuratorModule
-  - Remove checkAssignment, fixAssignment. createCuratorModule will simply delete and recreate if already existing, which will alternatively fix the issue that these are fixing.
+  - Remove checkAssignment, fixAssignment. createCuratorModule will simply delete and recreate if already existing, 
+    which will alternatively fix the issue that these are fixing.
   - Moved some logic from client to server side (setCuratorVisionModes, addPlayerEditable).
   - Team base locations now show up in curator.
+
+* Loadout
+  - Use ace_common_fnc_addToInventory to hopefully fix rare issue where grenades are not properly "equipped" when resetWeaponState is used.
 ---
 v4.3.8  
 07 FEB 2026

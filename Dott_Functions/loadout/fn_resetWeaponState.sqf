@@ -79,13 +79,13 @@ sleep 1;
 } forEach _primaryMags;
 
 {
-	_unit addItemToUniform _x;
+	[_unit, _x, "uniform"] call ace_common_fnc_addToInventory;
 } forEach _uniformItems;
 
 {
-	_unit addItemToVest _x;
+	[_unit, _x, "vest"] call ace_common_fnc_addToInventory;
 } forEach _vestItems;
 
 {
-	_unit addItemToBackpack _x;
+	[_unit, _x, "backpack"] call ace_common_fnc_addToInventory;
 } forEach _backpackItems;
