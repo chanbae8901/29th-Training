@@ -93,9 +93,13 @@ if (isNil "DOTT_arsenal_centers") then
 		DOTT_arsenal_centers pushBack (getPosASL _x);
 	} forEach DOTT_arsenals;
 };
+
 [] spawn 
 {
 	if (count DOTT_arsenal_centers == 0) exitWith {};
+
+	waitUntil { !isNull player };
+
 	private _radius = if (isNil "DOTT_event_arsenalRadius") then { 75 } else { DOTT_event_arsenalRadius };
 	private _radiusSquared = _radius*_radius;
 
@@ -142,8 +146,13 @@ if (isNil "DOTT_arsenal_centers") then
 	};
 };
 
-player addEventHandler ["Respawn", { arsenalActionId = -1; }];
-//-----------------------------//
+["DOTT_base_respawnArsenalActionId", "Respawn", 
+	{
+		arsenalActionId = -1;
+	}
+] call CBA_fnc_addBISPlayerEventHandler;
+
+//- Add Force Parade to BLUFOR Ammo Box, maybe belongs in parade module instead -//
 if (DOTT_MODULES find "parade" != -1) then
 {
 	lastDebriefTime = -10;

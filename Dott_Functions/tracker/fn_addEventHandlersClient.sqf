@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_tracker_fnc_addEventHandlersClient
- * Date:	12/11/2025
- * Version: 1.2
+ * Date:	02/19/2026
+ * Version: 1.2.1
  * Author:  Bae [29th ID]
  *
  * Description:

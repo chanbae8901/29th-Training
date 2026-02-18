@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_tracker_fnc_recordKill
- * Date:	9/30/2025
- * Version: 1.3
+ * Date:	02/19/2026
+ * Version: 1.3.1
  * Author:  Bae [29th ID]
  *
  * Description:

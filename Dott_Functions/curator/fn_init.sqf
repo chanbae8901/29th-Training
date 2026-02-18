@@ -1,11 +1,11 @@
 /*
  * Name:	DOTT_curator_fnc_init
- * Date:	12/30/2025
- * Version: 1.0
+ * Date:	02/19/2026
+ * Version: 2.0
  * Author:  Bae [29th ID]
  *
  * Description:
- * Initalizes curator fixes and settings.
+ * Initalizes curator modules, fixes, and settings.
  *
  * Parameter(s): 
  * None
@@ -20,7 +20,7 @@
 
 //Note: Events DOTT_enteredZeus and DOTT_exitedZeus are defined in cfgEventHandlers
 
-#define CREATE_CURATOR_MODULE(_obj) [vehicleVarName _obj, roleDescription _obj] call DOTT_curator_fnc_createCuratorModule
+#define CREATE_CURATOR_MODULE(_obj) [vehicleVarName _obj, roleDescription _obj] call DOTT_curator_fnc_createModule
 
 if (hasInterface) then 
 {
@@ -55,8 +55,10 @@ if (isServer) then
 	}
 	forEach (allMissionObjects "ModuleCurator_F");
 
-	if (isNil "zeus_admin") then { //in case zeus_admin is in mission.sqm for some reason, I guess hope mission maker set it to this variable name
-		[{time > 0}, { zeus_admin = ["#adminLogged", "Admin"] call DOTT_curator_fnc_createCuratorModule }] call CBA_fnc_waitUntilAndExecute;
+	//in case zeus_admin is in mission.sqm for some reason, I guess hope mission maker set it to this variable name
+	//TODO: Check if #adminLogged owner curator module exists and assign zeus_admin to that instead of assuming above
+	if (isNil "zeus_admin") then { 
+		[{time > 0}, { zeus_admin = ["#adminLogged", "Admin"] call DOTT_curator_fnc_createModule }] call CBA_fnc_waitUntilAndExecute;
 	};
 
 	{

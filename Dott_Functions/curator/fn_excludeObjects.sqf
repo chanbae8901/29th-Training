@@ -1,8 +1,8 @@
 /*
  * Name:	DOTT_curator_fnc_excludeObjects
- * Date:	7/27/2025
- * Version: 1.1.1
- * Author:  Bae [29th ID] modified from Hill [29th ID]
+ * Date:	02/19/2026
+ * Version: 2.0
+ * Author:  Bae [29th ID] modified from Dott/Hill [29th ID]
  *
  * Description:
  * Ensures that important mission objects are not editable by Zeus curators.
@@ -20,8 +20,7 @@
 
 if (!isServer) exitWith {};
 
-curatorExcludedObjects = [] spawn {
-	private _baseObjects = [];
+DOTT_script_curatorExcludedObjects = [] spawn {
 
 	{ //forEach object placed in editor
 		//get variable name in string format, if empty then skip to next object
@@ -37,12 +36,11 @@ curatorExcludedObjects = [] spawn {
 		//if the first tag isn't "base", skip object, continue to next object in array
 		private _baseObject = _tags select 0;
 		if (_baseObject isNotEqualTo "base") then { continue };
-		_baseObjects pushBack _x;
+
+		//set a flag on each object to indicate it should be excluded from Zeus editing
+		_x setVariable ["isCuratorExcluded", true, false];
 	}
 	forEach allMissionObjects "All";
-
-	//set a flag on each object to indicate it should be excluded from Zeus editing
-	{  _x setVariable ["isCuratorExcluded", true, false];  } forEach _baseObjects;
 
 	while {true} do {
 		{

@@ -111,7 +111,7 @@ class DOTT_Curator
 		class init {};
 		class excludeObjects {};
 		class addPlayerEditable {};
-		class createCuratorModule {};
+		class createModule {};
 	};
 };
 

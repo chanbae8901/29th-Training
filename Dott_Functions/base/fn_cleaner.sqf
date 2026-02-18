@@ -1,5 +1,5 @@
 /*
- * Name:	DOTT_training_fnc_cleaner
+ * Name:	DOTT_base_fnc_cleaner
  * Date:	02/14/2025
  * Version: 2.1
  * Author:  Rellikplug	AKA: Hill [29th ID]
@@ -14,7 +14,7 @@
  * false if no objects deleted, true otherwise
  *
  * Example:
- * call DOTT_training_fnc_cleaner;
+ * call DOTT_base_fnc_cleaner;
  * 
  */
 

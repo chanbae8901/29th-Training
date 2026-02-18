@@ -32,7 +32,7 @@ loadScreen =  "Pictures\116Inf InsigniaAlpha.paa";
 class Header {
   gameType = SANDBOX;
   minPlayers = 1;
-  maxPlayers = 171; //Total number of playable units placed in the editor including virtual entities
+  maxPlayers = 167; //Total number of playable units placed in the editor including virtual entities
 };
 
 respawnOnStart = 0;

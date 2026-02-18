@@ -45,7 +45,7 @@ TBD
 
 ---
 v4.4.0
-12 FEB 2026
+19 FEB 2026
 ---
 * mission.sqm changes
   - Renamed “Medic” to “Rifleman (Medic)” to maintain consistency of showing ACE roles in parentheses.
@@ -55,17 +55,17 @@ v4.4.0
     (Just makes it easier to search for all roles, not important otherwise.)
   - Remove redudant group name prefix from all roles, and remove the CBA @Group suffix from non-first in group units (only the first unit in a group needs it, 
     makes it easier to maintain/edit roles in future).
-  - Swap Sharpshooter type with Marksman for Platoon Sniper. (Former is DLC, don’t think it matters at all).
   - Guest squad composition uniform with non-guest squad.
   - Added 1 more Autorifleman and Combat Engineer slot to each squad.
   - Removed CP1S3.
+  - Removed Platoon Sniper slot.
   - Added 1x SNCO slot in Battalion/Regiment.
-  - Removed rifleman slots to make each BLUFOR squad have 16 members.
+  - Removed rifleman slots to make each squad have 16 members.
   - OPFOR and GRNFOR slot composition now matches 1 platoon of BLUFOR.
 
-  - Renamed base object variables to unify training/event.
+  - Renamed base object variables to unify training and event base scripts.
   - Disabled simulation, enabled simple object, and/or enabled local only on some objects in base for optimization.
-    (Trash can needs no simple object, lights need simulation on.)
+    (Trash can needs no simple object, lights need simulation on, keep ammo box non-local so inventory is synced)
   - Removed Game Master modules from the sqm, create via script instead. 
   - Remove trigger from sqm animating terminals, they are added by script now (already existing from event version of initBaseObjects).
   - Remove deprecated TFAR module (hopefully didn't do anything anymore).
@@ -82,20 +82,24 @@ v4.4.0
   - centers array for arsenals now global (DOTT_arsenal_centers), can be edited before by other modules (ex. training) without being overwritten
 
 * Curator
-  - Add createCuratorModule
-  - Remove checkAssignment, fixAssignment. createCuratorModule will simply delete and recreate if already existing, 
+  - Add createModule, which creates Game Master modules when a player in an assigned slot loads in.
+  - Remove checkAssignment, fixAssignment. createModule will simply delete and recreate if already existing, 
     which will alternatively fix the issue that these are fixing.
-  - Moved some logic from client to server side (setCuratorVisionModes, addPlayerEditable).
-  - Team base locations now show up in curator.
+  - Moved some logic (setCuratorVisionModes, addPlayerEditable) so that it is no longer remoteexec'd from client to server.
 
 * Loadout
-  - Use ace_common_fnc_addToInventory to hopefully fix rare issue where grenades are not properly "equipped" when resetWeaponState is used.
+  - Use ace_common_fnc_addToInventory to hopefully fix rare issue where equipped grenades are not throwable when resetWeaponState is used.
 
 * OCAP
   - Swap center sector marker from shield to objective marker because it somewhat looks like a person when zoomed out in OCAP.
 
 * Tracker
   - Also check if side is civllian to reduce cases where instigator side is unknown in recordKill and addEventHandlersClient.
+
+* Training
+  - Move array of Zues slots here from curator.
+  - Team base locations now show up in curator.
+  - Handle finding arsenal centers for base module to have it be between the arsenal and respawn for each base.
 ---
 v4.3.8  
 07 FEB 2026

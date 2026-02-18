@@ -1,15 +1,37 @@
+/*
+ * Name:	DOTT_curator_fnc_createModule
+ * Date:	02/19/2026
+ * Version: 1.0
+ * Author:  Bae [29th ID]
+ *
+ * Description:
+ *  Creates a curator module for the specified player with settings and tweaks if their role is in DOTT_curator_units.
+ *  Should be called in unscheduled environment.
+ *
+ * Parameter(s): 
+ * _playerVarName: Variable name of player to create curator module for (defined in mission.sqm)
+ * _roleDescription: Description of curator role to show in Zeus interface (defined in mission.sqm), not sure where it shows up
+ *
+ * Returns:
+ * _logic: Curator module created for specified player
+ *
+ * Example:
+ * call DOTT_curator_fnc_createModule;
+ * 
+ */
+
 params ["_playerVarName", "_roleDescription"];
 
 if (time == 0) exitWith
 {
-    [{time > 0}, {_this call DOTT_curator_fnc_createCuratorModule}, _this] call CBA_fnc_waitUntilAndExecute;
+    [{time > 0}, {_this call DOTT_curator_fnc_createModule}, _this] call CBA_fnc_waitUntilAndExecute;
 };
 
 _playerVarName = toLower _playerVarName;
 
 if (DOTT_curator_units find _playerVarName == -1) exitWith {};
 
-if !(isServer) exitWith {_this remoteExec ["DOTT_curator_fnc_createCuratorModule", 2]};
+if !(isServer) exitWith {_this remoteExecCall ["DOTT_curator_fnc_createModule", 2]};
 
 private _curatorModuleName = format ["DOTT_curator_zeus_%1", _playerVarName];
 
@@ -26,6 +48,7 @@ _logic setVariable ["owner", _playerVarName, true];
 _logic setVariable ["name", _roleDescription, true];
 _logic setVariable ["Addons", 3, true];
 _logic setVariable ["BIS_fnc_initModules_disableAutoActivation", false];
+
 _logic setVariable ["isCuratorExcluded", true, false];
 
 _logic addCuratorEditableObjects [allPlayers, true];
