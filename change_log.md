@@ -59,6 +59,7 @@ v4.4.0
   - Guest squad composition uniform with non-guest squad.
   - Added 1 more Autorifleman and Combat Engineer slot to each squad.
   - Removed CP1S3.
+  - Added 1x SNCO slot in Battalion/Regiment.
   - Removed rifleman slots to make each BLUFOR squad have 16 members.
   - OPFOR and GRNFOR slot composition now matches 1 platoon of BLUFOR.
 

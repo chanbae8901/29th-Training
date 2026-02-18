@@ -25,7 +25,7 @@
 DOTT_curator_units = 
 [
 	"#adminlogged",
-    "blu_co", "blu_xo", "blu_cs", "blu_snco", "ltc", "maj", "msgt", "blu_plt1_pl", "blu_plt1_ps1", "blu_plt1_ps2", "blu_plt2_pl", "blu_plt2_ps1", "blu_plt2_ps2",
+    "blu_reg_o_1", "blu_reg_o_2", "blu_reg_snco_1", "blu_reg_snco_2", "blu_chq_co", "blu_chq_xo", "blu_chq_cs", "blu_chq_snco", "blu_plt1_pl", "blu_plt1_ps1", "blu_plt1_ps2", "blu_plt2_pl", "blu_plt2_ps1", "blu_plt2_ps2",
     "red_plt", "red_plt_1", "red_plt_2",
     "grn_plt", "grn_plt_1", "grn_plt_2"
 ];
