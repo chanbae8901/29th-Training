@@ -90,6 +90,9 @@ v4.4.0
 * Loadout
   - Use ace_common_fnc_addToInventory to hopefully fix rare issue where grenades are not properly "equipped" when resetWeaponState is used.
 
+* OCAP
+  - Swap center sector marker from shield to objective marker because it somewhat looks like a person when zoomed out in OCAP.
+
 * Tracker
   - Also check if side is civllian to reduce cases where instigator side is unknown in recordKill and addEventHandlersClient.
 ---
