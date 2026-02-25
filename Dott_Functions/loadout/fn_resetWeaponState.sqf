@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_loadout_fnc_resetWeaponState
- * Date:	02/04/2026
- * Version: 1.0
+ * Date:	02/19/2026
+ * Version: 1.1
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -79,13 +79,13 @@ sleep 1;
 } forEach _primaryMags;
 
 {
-	_unit addItemToUniform _x;
+	[_unit, _x, "uniform"] call ace_common_fnc_addToInventory;
 } forEach _uniformItems;
 
 {
-	_unit addItemToVest _x;
+	[_unit, _x, "vest"] call ace_common_fnc_addToInventory;
 } forEach _vestItems;
 
 {
-	_unit addItemToBackpack _x;
+	[_unit, _x, "backpack"] call ace_common_fnc_addToInventory;
 } forEach _backpackItems;

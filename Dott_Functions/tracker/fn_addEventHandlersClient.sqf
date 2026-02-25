@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_tracker_fnc_addEventHandlersClient
- * Date:	12/11/2025
- * Version: 1.2
+ * Date:	02/19/2026
+ * Version: 1.2.1
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -96,7 +96,7 @@ DOTT_lastFireCheck = 0;
 		{
 			params ["_instigator"];
 			private _side = side (group _instigator);			
-			if (_side == sideUnknown) then //dead man
+			if (_side == sideUnknown || _side == civilian) then //dead man
 			{
 				//might work improperly if zeus changed player side
 				_side = getNumber (configFile >> "CfgVehicles" >> typeOf _instigator >> "side") call BIS_fnc_sideType;

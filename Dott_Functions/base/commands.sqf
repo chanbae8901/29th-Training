@@ -3,7 +3,7 @@
 		[
 			"cleanup",
 			{
-				call DOTT_training_fnc_cleaner;
+				call DOTT_base_fnc_cleaner;
 				systemChat "Cleaning up!"
 			}
 		]

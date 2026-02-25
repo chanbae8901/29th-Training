@@ -109,11 +109,9 @@ class DOTT_Curator
 	{
 		file = "Dott_Functions\curator";
 		class init {};
-		class fixAssignment {};
-		class checkAssignment {};
 		class excludeObjects {};
-		class eventExcludeObjects {};
 		class addPlayerEditable {};
+		class createModule {};
 	};
 };
 
@@ -157,8 +155,6 @@ class DOTT_Training
 	{
 		file = "Dott_Functions\training";
 		class init {};
-		class initBaseObjects {};
-		class cleaner {};
 		class initDateAndWeather {};
 		class initDefaultLoadouts {};
 	};
@@ -242,7 +238,16 @@ class Dott_Event
 		class checkWinCondition {};
 		class gui_setSafeStartTime {};
 		class markEditorPlacedObjects {};
-		class initBaseObjects {};
+	};
+};
+
+class Dott_Base
+{
+	tag = "DOTT_base";
+	class BaseFunctions
+	{
+		file = "Dott_Functions\base";
+		class init {};
 		class cleaner {};
 	};
 };

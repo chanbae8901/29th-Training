@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_event_fnc_init
- * Date:	12/30/2025
- * Version: 1.0
+ * Date:	02/19/2026
+ * Version: 1.0.1
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -94,8 +94,6 @@ if (hasInterface) then
 /******* Everything else ********/
 if (hasInterface) then
 {
-	call DOTT_event_fnc_initBaseObjects;
-
 	[] spawn {
 		//Prevent error due to no saved respawn inventory
 		waitUntil { !isNull player };

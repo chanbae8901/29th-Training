@@ -58,7 +58,7 @@ private _oldTextMarker = _logic getVariable ["DOTT_nameMarker", ""];
 private _sectorName = _logic getVariable ["name", ""];
 
 private _markerIconText = createmarkerlocal ["DOTT_ocap_iconText" + str _logic + str time, position _logic];
-_markerIconText setmarkertypelocal "loc_Defend";
+_markerIconText setmarkertypelocal "hd_objective";
 _markerIconText setmarkercolorlocal _markerColor;
 _markerIconText setmarkertextlocal _sectorName;
 _markerIconText setmarkersizelocal [.5,.5];

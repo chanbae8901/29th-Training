@@ -16,13 +16,6 @@ Overall Future Goals
   - Limit remote exec functions
   - allowFunctionsRecompile = 1; is necessary for custom sector settings, can't think of a way to bypass this
   - This is a low priority since this mission file is intended to be used on private servers.
-* mission.sqm
-  - When/if it becomes worth it, update mission.sqm to
-  - Merge baseObjectsInit w/ event version
-  - Merge excludeObjFromZeus w/ event version
-  - Merge cleaner w/ event version (this might not require sqm change)
-  - Add trigger zone for arsenal instead of just getting the middle of respawn and box
-  - Remove most zeus modules and just dynamically create in mission based on hashmap
 * CTF system via chat commands
   - Pole addactions to score?
   - Maybe no flag? Drop object on death that is the "flag"
@@ -50,6 +43,63 @@ TBD
 	- Included new class "FlagCaptured"
 	- Included new class "FlagReturned"
 
+---
+v4.4.0
+19 FEB 2026
+---
+* mission.sqm changes
+  - Renamed “Medic” to “Rifleman (Medic)” to maintain consistency of showing ACE roles in parentheses.
+  - Removed ACE Advanced Engineer trait from Combat Engineer slot.
+  - Renamed Engineer slot to Crewman and added 1x more (2 total) per squad.
+  - Swapped all “Engineer” types to “Crewman” types. (Some squads had the former instead of the latter for Engineer (Repair) type.) 
+    (Just makes it easier to search for all roles, not important otherwise.)
+  - Remove redudant group name prefix from all roles, and remove the CBA @Group suffix from non-first in group units (only the first unit in a group needs it, 
+    makes it easier to maintain/edit roles in future).
+  - Guest squad composition uniform with non-guest squad.
+  - Added 1 more Autorifleman and Combat Engineer slot to each squad.
+  - Removed CP1S3.
+  - Removed Platoon Sniper slot.
+  - Added 1x SNCO slot in Battalion/Regiment.
+  - Removed rifleman slots to make each squad have 16 members.
+  - OPFOR and GRNFOR slot composition now matches 1 platoon of BLUFOR.
+
+  - Renamed base object variables to unify training and event base scripts.
+  - Disabled simulation, enabled simple object, and/or enabled local only on some objects in base for optimization.
+    (Trash can needs no simple object, lights need simulation on, keep ammo box non-local so inventory is synced)
+  - Removed Game Master modules from the sqm, create via script instead. 
+  - Remove trigger from sqm animating terminals, they are added by script now (already existing from event version of initBaseObjects).
+  - Remove deprecated TFAR module (hopefully didn't do anything anymore).
+
+* Base Placement
+  - Altis remains at airport per tradition, otherwise
+  - ALWAYS put the base within map bounds/play area to ensure location scripts do not misbehave (ex. ZEN Teleporters)
+  - Prioritize placing away from POIs, optimially in the sea bottom-left of the map (still in map bounds as stated above).
+
+* New Base Module
+  - Transfers/unifies initBaseObjects -> init and cleaner functions from training and event modules. Removed respective versions from said modules.
+  - Possible due to renaming base object variables to follow more versatile event version.
+  - NEW FEATURE: Environment sounds now disabled while in base (determined by ACE Arsenal radius) for less distracting (de)briefs.
+  - centers array for arsenals now global (DOTT_arsenal_centers), can be edited before by other modules (ex. training) without being overwritten
+
+* Curator
+  - Add createModule, which creates Game Master modules when a player in an assigned slot loads in.
+  - Remove checkAssignment, fixAssignment. createModule will simply delete and recreate if already existing, 
+    which will alternatively fix the issue that these are fixing.
+  - Moved some logic (setCuratorVisionModes, addPlayerEditable) so that it is no longer remoteexec'd from client to server.
+
+* Loadout
+  - Use ace_common_fnc_addToInventory to hopefully fix rare issue where equipped grenades are not throwable when resetWeaponState is used.
+
+* OCAP
+  - Swap center sector marker from shield to objective marker because it somewhat looks like a person when zoomed out in OCAP.
+
+* Tracker
+  - Also check if side is civllian to reduce cases where instigator side is unknown in recordKill and addEventHandlersClient.
+
+* Training
+  - Move array of Zues slots here from curator.
+  - Team base locations now show up in curator.
+  - Handle finding arsenal centers for base module to have it be between the arsenal and respawn for each base.
 ---
 v4.3.8  
 07 FEB 2026

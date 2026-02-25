@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_parade_fnc_forceAll
- * Date:	9/30/2025
- * Version: 1.2
+ * Date:	02/19/2026
+ * Version: 1.2.1
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -15,7 +15,7 @@
  * true
  *
  * Example:
- * [blu_ammo, 125] call DOTT_parade_fnc_forceAll;
+ * [base_action_arsenal_blu, 125] call DOTT_parade_fnc_forceAll;
  * 
  */
 params ["_obj", "_radius"];
