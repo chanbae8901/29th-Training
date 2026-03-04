@@ -19,6 +19,6 @@
  */
 
 params["_enabled"];
-overtimeEnabled = _enabled;
-publicVariable "overtimeEnabled";
+DOTT_round_overtimeEnabled = _enabled;
+publicVariable "DOTT_round_overtimeEnabled";
 true;

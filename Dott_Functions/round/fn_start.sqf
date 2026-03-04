@@ -22,7 +22,7 @@
 
 
 //return false if round already active, otherwise return true
-params[["_roundLength", timerLength, [0]]]; // Length of the round in seconds
+params[["_roundLength", DOTT_round_timerLength, [0]]]; // Length of the round in seconds
 if (call DOTT_round_fnc_isRoundActive) exitWith {false};
 
 [_roundLength] call BIS_fnc_countdown;

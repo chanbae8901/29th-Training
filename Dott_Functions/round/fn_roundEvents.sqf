@@ -33,7 +33,7 @@ private _events =
 private _timeLeft = call DOTT_round_fnc_getTime; 
 private _eventIndex = 0;
 
-while {_timeLeft > 0 || overtimeEnabled == true} do 
+while {_timeLeft > 0 || DOTT_round_overtimeEnabled == true} do 
 {
 	//handle addTime increasing time
 	if(DOTT_round_timeAdded) then 

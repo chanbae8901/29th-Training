@@ -25,14 +25,14 @@
 if (isServer) then 
 {
 	DOTT_round_sideReady = [false, false, false];
-	timerLength = DEFAULT_TIMER;
-	overtimeEnabled = false;
-	overtimePeriod = DEFAULT_OVERTIME;
+	DOTT_round_timerLength = DEFAULT_TIMER;
+	DOTT_round_overtimeEnabled = false;
+	DOTT_round_overtimePeriod = DEFAULT_OVERTIME;
 
 	publicVariable "DOTT_round_sideReady";
-	publicVariable "timerLength";
-	publicVariable "overtimeEnabled";
-	publicVariable "overtimePeriod";
+	publicVariable "DOTT_round_timerLength";
+	publicVariable "DOTT_round_overtimeEnabled";
+	publicVariable "DOTT_round_overtimePeriod";
 
 	//prevent scores showing up on right side UI
 	[
