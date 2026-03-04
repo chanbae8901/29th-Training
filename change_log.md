@@ -45,6 +45,15 @@ TBD
 
 ---
 v4.4.1
+03 MAR 2026
+---
+
+* Loadout
+- Fix fullSetUnitLoadout not correctly applying drab version of Insiginia.
+
+
+---
+v4.4.1
 25 FEB 2026
 ---
 * Base

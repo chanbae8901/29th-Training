@@ -34,8 +34,13 @@ if (primaryWeapon _unit == "") then
 	_unit action ["SwitchWeapon", _unit, _unit, -1] 
 };
 
-_unit spawn DOTT_loadout_fnc_setInsignia;
+private _scriptHandle = [_unit] spawn DOTT_loadout_fnc_resetWeaponState;
 
-[_unit] spawn DOTT_loadout_fnc_resetWeaponState;
+//wait so that setInsignia does not correctly assume non-combat loadout
+[_unit, _scriptHandle] spawn {
+	params ["_unit", "_scriptHandle"];
+	waitUntil { scriptDone _scriptHandle };
+	_unit spawn DOTT_loadout_fnc_setInsignia;
+};
 
 true
