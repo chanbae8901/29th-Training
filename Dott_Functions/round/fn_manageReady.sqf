@@ -49,9 +49,27 @@ if (_showHint) then
 };
 
 
-if(call DOTT_round_fnc_checkAllSidesReady && isNil {DOTT_safeStartActive}) then 
+if (call DOTT_round_fnc_checkAllSidesReady) then 
 {
-	call DOTT_round_fnc_initSafeStart;
+	if (isNil "DOTT_round_safeStartActive") then { [] call DOTT_round_fnc_initSafeStart }
+	else //we were in forced safe start and all teams are ready before the timer is up, so shorten the timer to the safe start time
+	{
+		if ([0] call BIS_fnc_countdown <= TN_safeStartTime) exitWith {};
+
+		private _msgText = format [
+			"<t color='#ffffff' size='3'>All teams ready! Shortening safe start.</t><br/>Live in %1!",
+			[TN_safeStartTime] call DOTT_round_fnc_formatTime
+		];
+
+		[
+			_msgText,
+			"PLAIN",
+			0.5,
+			false
+		] remoteExecCall ["DOTT_common_fnc_displayMsg"];
+
+		[TN_safeStartTime] call BIS_fnc_countdown;
+	};
 };
 
 0

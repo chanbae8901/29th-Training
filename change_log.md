@@ -51,7 +51,10 @@ v4.4.1
 * Loadout
 - Fix fullSetUnitLoadout not correctly applying drab version of Insiginia.
 
-
+* Round
+- Added !ss (safestart) as a new command, which allows the admin to force safe start with a specified time in minutes, 
+  or unforce safe start if given 0 (E.G. '!ss 1' forces a 1 minute safe start)".
+  Teams can still ready up, and if all teams ready up during this forced safe start period, it will shorten to the default safe start period.
 ---
 v4.4.1
 25 FEB 2026

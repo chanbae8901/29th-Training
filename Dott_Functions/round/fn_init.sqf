@@ -24,15 +24,11 @@
 
 if (isServer) then 
 {
-	DOTT_round_sideReady = [false, false, false];
-	DOTT_round_timerLength = DEFAULT_TIMER;
-	DOTT_round_overtimeEnabled = false;
-	DOTT_round_overtimePeriod = DEFAULT_OVERTIME;
-
-	publicVariable "DOTT_round_sideReady";
-	publicVariable "DOTT_round_timerLength";
-	publicVariable "DOTT_round_overtimeEnabled";
-	publicVariable "DOTT_round_overtimePeriod";
+	DOTT_round_sideReady = [false, false, false]; 	publicVariable "DOTT_round_sideReady";
+	DOTT_round_timerLength = DEFAULT_TIMER; 		publicVariable "DOTT_round_timerLength";
+	DOTT_round_overtimeEnabled = false; 			publicVariable "DOTT_round_overtimeEnabled";
+	DOTT_round_overtimePeriod = DEFAULT_OVERTIME; 	publicVariable "DOTT_round_overtimePeriod";
+	DOTT_round_ignoreReadiness = false; 			publicVariable "DOTT_round_ignoreReadiness";
 
 	//prevent scores showing up on right side UI
 	[

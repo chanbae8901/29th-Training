@@ -18,4 +18,4 @@
  * 
  */
 
-[true] call BIS_fnc_countdown && isNil "DOTT_safeStartActive"
+[true] call BIS_fnc_countdown && isNil "DOTT_round_safeStartActive"

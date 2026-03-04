@@ -45,8 +45,8 @@ private _msgText = format [
 
 UNREADY_ALL_SIDES;
 
-DOTT_safeStartActive = nil;
-publicVariable "DOTT_safeStartActive";
+DOTT_round_safeStartActive = nil;
+publicVariable "DOTT_round_safeStartActive";
 
 [] remoteExec ["DOTT_round_fnc_roundEvents"]; 
 

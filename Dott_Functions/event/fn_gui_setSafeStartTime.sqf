@@ -42,7 +42,7 @@ _btnOK ctrlAddEventHandler ["ButtonClick", {
     params ["_ctrl"]; 
 	private _timeCtrl = ctrlParent _ctrl;
 	private _sliderCtrl = _timeCtrl displayCtrl 5140;
-    if (isNil "DOTT_safeStartActive") then { systemChat "Safe start has already ended! Input ignored."}
+    if (isNil "DOTT_round_safeStartActive") then { systemChat "Safe start has already ended! Input ignored."}
 	else 
 	{
 		private _newtime = sliderPosition _sliderCtrl;
