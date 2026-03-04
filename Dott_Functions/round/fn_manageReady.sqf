@@ -1,3 +1,5 @@
+#include "defines.hpp"
+
 /*
  * Name:	DOTT_round_fnc_manageReady
  * Date:	12/24/2025
@@ -22,7 +24,7 @@ params["_side", "_isReady", ["_showHint", true]];
 
 if (call DOTT_round_fnc_isRoundActive) exitWith {1};
 
-private _sideIdx = playerSide call BIS_fnc_sideID;
+private _sideIdx = _side call BIS_fnc_sideID;
 if (_sideIdx > 2) exitWith {systemChat "Error: Invalid side to change ready state."};
 private _playerSideReady = DOTT_round_sideReady select _sideIdx;
 if (_playerSideReady == _isReady) exitWith { 2 };
@@ -32,7 +34,7 @@ publicVariable "DOTT_round_sideReady";
 
 ["DOTT_round_manageReadyChange", _this] call CBA_fnc_globalEvent;
 
-private _readyStr = playerSide call BIS_fnc_sideName; //For now name of team
+private _readyStr = _side call BIS_fnc_sideName; //For now name of team
 
 if (_showHint) then
 {

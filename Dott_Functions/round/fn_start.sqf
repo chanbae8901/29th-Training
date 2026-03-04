@@ -1,3 +1,5 @@
+#include "defines.hpp"
+
 /*
  * Name:	DOTT_round_fnc_start
  * Date:	12/24/2025
@@ -41,8 +43,7 @@ private _msgText = format [
 	[{(call DOTT_round_fnc_getTime) <= 0}, { call DOTT_round_fnc_end }, []] call CBA_fnc_waitUntilAndExecute;
 }] remoteExecCall ["call", 2];
 
-DOTT_round_sideReady = [false, false, false]; 
-publicVariable "DOTT_round_sideReady";
+UNREADY_ALL_SIDES;
 
 DOTT_safeStartActive = nil;
 publicVariable "DOTT_safeStartActive";

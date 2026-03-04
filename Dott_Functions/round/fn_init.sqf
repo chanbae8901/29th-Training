@@ -1,3 +1,5 @@
+#include "defines.hpp"
+
 /*
  * Name:	DOTT_round_fnc_init
  * Date:	12/24/2025
@@ -23,9 +25,9 @@
 if (isServer) then 
 {
 	DOTT_round_sideReady = [false, false, false];
-	timerLength = 20*60; 
-	overtimeEnabled = false; 
-	overtimePeriod = 5*60; 
+	timerLength = DEFAULT_TIMER;
+	overtimeEnabled = false;
+	overtimePeriod = DEFAULT_OVERTIME;
 
 	publicVariable "DOTT_round_sideReady";
 	publicVariable "timerLength";
@@ -36,18 +38,18 @@ if (isServer) then
 	[
 		"DOTT_round_started",
 		{
-			west addScoreSide -9999;
-			east addScoreSide -9999;
-			independent addScoreSide -9999;							
+			west addScoreSide -SCORE_REDUCE_VALUE;
+			east addScoreSide -SCORE_REDUCE_VALUE;
+			independent addScoreSide -SCORE_REDUCE_VALUE;							
 		} 
 	] call CBA_fnc_addEventHandler;	
 
 	[
 		"DOTT_round_ended",
 		{
-			west addScoreSide 9999;
-			east addScoreSide 9999;
-			independent addScoreSide 9999;							
+			west addScoreSide SCORE_REDUCE_VALUE;
+			east addScoreSide SCORE_REDUCE_VALUE;
+			independent addScoreSide SCORE_REDUCE_VALUE;							
 		} 
 	] call CBA_fnc_addEventHandler;	
 };

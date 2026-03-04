@@ -1,3 +1,5 @@
+#include "defines.hpp"
+
 /*
  * Name:	DOTT_round_fnc_initSafeStartHelper
  * Date:	01/11/2026
