@@ -23,7 +23,11 @@
 params ["_unitIndex", "_time", "_sides"];
 
 private _unitSides = _sides select _unitIndex;
-private _currentSide = sideUnknown;
+
+if (_unitSides isEqualTo []) exitWith { sideUnknown }; //not sure if ever happens but just in case
+
+private _currentSide = (_unitSides select 0) select 0;
+
 for "_i" from (count _unitSides - 1) to 0 step - 1 do 
 {
 	private _sideTime = (_unitSides select _i) select 1;
