@@ -8,7 +8,7 @@
 #define OCAP_SAVETAG "Event"
 #endif
 
-force OCAP_settings_autoStart = false;
+force OCAP_settings_autoStart = true;
 force OCAP_settings_minPlayerCount = 2;
 force OCAP_settings_trackTickets = false;
 force OCAP_settings_saveMissionEnded = true;
