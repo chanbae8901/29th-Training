@@ -4,7 +4,7 @@
 
 private _defaultNoLog = "['commands', 'help', 'showchat', 'radio', 'fb']";
 private _defaultRestrictedCommands = "['arsenal', 'heal', 'rearm', 'cleanup', 'fb']";
-private _defaultAdminCommands = "['reset', 'debrief', 'goto', 'measure', 'tickets', 'parade', 's', 'ss']";
+private _defaultAdminCommands = "['reset', 'debrief', 'goto', 'measure', 'tickets', 'parade', 's', 'safe']";
 
 [
     "TN_noLogCommands", 
