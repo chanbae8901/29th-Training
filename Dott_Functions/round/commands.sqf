@@ -120,6 +120,11 @@
 							systemChat "Forcing Safe Start!";
 						};
 						default {
+							if (call DOTT_round_fnc_checkAllSidesReady) exitWith 
+							{
+								systemChat "Error: All teams are already ready!";
+							};
+
 							[_minutes * 60] call DOTT_round_fnc_changeForcedSafeStart;
 							systemChat "Changing forced safestart!";
 						};
