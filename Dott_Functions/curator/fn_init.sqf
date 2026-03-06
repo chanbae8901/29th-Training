@@ -38,6 +38,10 @@ if (hasInterface) then
 				_msg remoteExec ["DOTT_common_fnc_diag_log",2];
 			}
 		] call CBA_fnc_addEventHandler;
+
+		[player] remoteExec ["DOTT_curator_fnc_addPlayerEditable", 2];
+
+		[vehicleVarName player, roleDescription player] remoteExec ["DOTT_curator_fnc_createModule", 2];
 	};	
 };
 
@@ -60,22 +64,6 @@ if (isServer) then
 	if (isNil "zeus_admin") then { 
 		[{time > 0}, { zeus_admin = ["#adminLogged", "Admin"] call DOTT_curator_fnc_createModule }] call CBA_fnc_waitUntilAndExecute;
 	};
-
-	{
-		CREATE_CURATOR_MODULE(_x);		
-	}
-	forEach allPlayers; //below event handler fires too late for non-JIP players
-
-	addMissionEventHandler ["OnUserSelectedPlayer", 
-	{
-		params ["_networkId", "_playerObject"];
-		
-		if (isNull _playerObject) exitWith { diag_log "Player was null for curator module creation." };
-
-		[_playerObject] call DOTT_curator_fnc_addPlayerEditable;
-
-		CREATE_CURATOR_MODULE(_playerObject);
-	}];
 
 	addMissionEventHandler ["OnUserAdminStateChanged", {
 		params ["_networkId", "_loggedIn"];

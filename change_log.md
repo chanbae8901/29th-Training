@@ -48,6 +48,9 @@ v4.4.2
 03 MAR 2026
 ---
 
+* Curator
+  - Revert moving logic server side from 4.4.0 since OnUserSelectedPlayer event fires on every respawn and not just initial join.
+
 * Loadout
   - Fix fullSetUnitLoadout not correctly applying drab version of Insiginia.
 
