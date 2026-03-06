@@ -54,6 +54,9 @@ v4.4.2
 * Loadout
   - Fix fullSetUnitLoadout not correctly applying drab version of Insiginia.
 
+* Radio
+  - Radios from disconnecting bodies are now deleted as well.
+
 * Round
   - Added !safe (safestart) as a new command, which allows the admin to force safe start with a specified time in minutes, 
     or unforce safe start if given 0 (E.G. '!safe 1' forces a 1 minute safe start)".
