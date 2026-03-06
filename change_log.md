@@ -72,6 +72,8 @@ v4.4.2
   - Disconnecting bodies in base are now automatically deleted. 
     Logic maybe belongs in base module instead, but this was the easier route and don't know if we want event template to have this behavior.
 
+* Increase hiding respawn body on old body time from 0.5 to 1 seconds in initPlayerLocal.
+
 ---
 v4.4.1
 25 FEB 2026

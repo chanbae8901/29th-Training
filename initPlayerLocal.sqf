@@ -29,7 +29,7 @@ addMissionEventHandler ["EntityCreated",
 	params["_entity"];
 	if (!(_entity isKindOf "Man") || local _entity) exitWith {};
 	_entity hideObject true;
-	[{ (_this select 0) hideObject false }, [_entity], 0.5] call CBA_fnc_waitAndExecute; //.2 was too short sometimes
+	[{ (_this select 0) hideObject false }, [_entity], 1.0] call CBA_fnc_waitAndExecute; //prev 0.5, worked fine unless server/network overload
 }];
 
 // ====== Fix inconsistent bug where chat is no longer displayed after leaving main menu ======
