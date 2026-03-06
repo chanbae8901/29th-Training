@@ -64,6 +64,10 @@ v4.4.2
   - Hopefully finally fixed small issue where instigator is unknown by defaulting side of instigator to first entry in _unitSides instead
     of sideUnknown if _time is lower than all entries. Previous fix attempts in 4.4.0 and 4.4.1 likely could be reverted, but will leave in place.
 
+* Training
+  - Disconnecting bodies in base are now automatically deleted. 
+    Logic maybe belongs in base module instead, but this was the easier route and don't know if we want event template to have this behavior.
+
 ---
 v4.4.1
 25 FEB 2026
