@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_parade_fnc_init
- * Date:	12/30/2025
- * Version: 1.0
+ * Date:	03/09/2026
+ * Version: 1.1
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -22,7 +22,11 @@ if(!isClass (configFile >> "CfgPatches" >> "29thID_Uniforms")) exitWith {};
 
 if (hasInterface) then
 {
-	call DOTT_parade_fnc_handleInitialInventory;
+	[] spawn 
+	{
+		waitUntil { !isNull player };
+		isNil { call DOTT_parade_fnc_handleInitialInventory }; //call unscheduled
+	};
 };
 
 if (isServer) then

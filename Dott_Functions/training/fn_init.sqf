@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_training_fnc_init
- * Date:	02/19/2026
- * Version: 1.1.1
+ * Date:	03/06/2026
+ * Version: 1.2
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -30,21 +30,20 @@ DOTT_curator_units =
     "grn_plt", "grn_plt_1", "grn_plt_2"
 ];
 
+/* Center Arsenal zone in middle of base instead of at arsenal box for base module */
+private _findCenterObjs = [[base_res_red, base_action_arsenal_red], [base_res_blu, base_action_arsenal_blu], [base_res_grn, base_action_arsenal_grn]];
+DOTT_arsenal_centers = [];
+
+{
+	private _respawnPos = getPosASL (_x select 0);
+	private _arsenalPos = getPosASL (_x select 1);
+	
+	private _centerPos = [(_respawnPos#0 + _arsenalPos#0)/2, (_respawnPos#1 + _arsenalPos#1)/2, (_respawnPos#2 + _arsenalPos#2)/2];
+	DOTT_arsenal_centers pushBack _centerPos;
+} forEach _findCenterObjs;
+
 if (hasInterface) then
 {
-
-	/* Center Arsenal zone in middle of base instead of at arsenal box for base module */
-	private _findCenterObjs = [[base_res_red, base_action_arsenal_red], [base_res_blu, base_action_arsenal_blu], [base_res_grn, base_action_arsenal_grn]];
-	DOTT_arsenal_centers = [];
-
-	{
-		private _respawnPos = getPosASL (_x select 0);
-		private _arsenalPos = getPosASL (_x select 1);
-		
-		private _centerPos = [(_respawnPos#0 + _arsenalPos#0)/2, (_respawnPos#1 + _arsenalPos#1)/2, (_respawnPos#2 + _arsenalPos#2)/2];
-		DOTT_arsenal_centers pushBack _centerPos;
-	} forEach _findCenterObjs;
-
 	/* Draw base locations on map for curator */
 	DOTT_training_curatorBaseLogic = objNull;
 
@@ -91,4 +90,23 @@ if (isServer) then
 	private _forcedOvercast = 0.1;
 	private _forcedFog      = [0.1, 0.01, 0];
 	[_forcedDate, _forcedOvercast, _forcedFog] call DOTT_training_fnc_initDateAndWeather;
+
+	//delete disconnecting bodies in base
+	addMissionEventHandler ["HandleDisconnect", {
+		params ["_unit"];
+
+		if (isNull _unit) exitWith {}; //shouldn't be null but just in case
+
+		private _pos = getPosASL _unit;
+
+		{
+			if ( _pos distance _x < 75) exitWith 
+			{
+				deleteVehicle _unit;
+			};
+		}
+		forEach DOTT_arsenal_centers;
+
+		false //make sure true isn't the return, would make the units AI controlled
+	}];
 };

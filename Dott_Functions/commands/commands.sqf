@@ -147,5 +147,32 @@ pvpfw_chatIntercept_allCommands =
 
 			systemChat str _buggedPlayers;
 		}
-	]	
+	],
+	[
+		"fb",
+		{
+			private _blend = [[1, 1, 1, 0], [0.3, 0.3, 0.3, 1]] select ace_common_epilepsyFriendlyMode;
+
+			private _strength = 1;
+
+			ace_grenades_flashbangPPEffectCC ppEffectEnable true;
+			ace_grenades_flashbangPPEffectCC ppEffectAdjust [1, 1, (0.8 + _strength) min 1, _blend, [0, 0, 0, 1], [0, 0, 0, 0]];
+
+			ace_grenades_flashbangPPEffectCC ppEffectCommit 0.01;
+			[{
+				params ["_strength", "_blend"];
+
+				ace_grenades_flashbangPPEffectCC ppEffectAdjust [1, 1, 0, _blend, [0, 0, 0, 1], [0, 0, 0, 0]];
+				ace_grenades_flashbangPPEffectCC ppEffectCommit (10 * _strength);
+			}, [_strength, _blend], 7 * _strength] call CBA_fnc_waitAndExecute;
+
+			// FULLRECOVERY - end effect
+			[{
+				ace_grenades_flashbangPPEffectCC ppEffectEnable false;
+			}, [], 17 * _strength] call CBA_fnc_waitAndExecute;	
+   			playSound3D ["\rhsusf\addons\rhsusf_c_weapons\sounds\flashbang.ogg", player, false, getPosASL player, 0.1, 1, 0, 0, true];
+		}
+	]
 ];
+
+

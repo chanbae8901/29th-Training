@@ -6,7 +6,7 @@
  *
  * Description:
  *  Creates a curator module for the specified player with settings and tweaks if their role is in DOTT_curator_units.
- *  Should be called in unscheduled environment.
+ *  Must be called in unscheduled environment.
  *
  * Parameter(s): 
  * _playerVarName: Variable name of player to create curator module for (defined in mission.sqm)

@@ -1,13 +1,13 @@
 /*
  * Name:	DOTT_radio_fnc_remove
- * Date:	9/10/2018
- * Version: 1.0
+ * Date:	03/06/2026
+ * Version: 2.0
  * Author: Rellikplug	AKA: Hill [29th ID]
  *
  * Description:
  * Deletes SR radio in linked slot along with LR backpack, if either exist on unit.
  *
- * Parameter(s): unit: Object - unit to delete radios from
+ * Parameter(s): unit: Object - local unit to delete radios from
  *
  * Returns:
  * Array in format [removed SR, removed LR]
@@ -17,7 +17,6 @@
  * 
  */
 
-if !(hasInterface) exitWith {};
 if !(isClass (configfile >> "CfgPatches" >> "task_force_radio_items")) exitWith {};
 
 params ["_unit"];
@@ -25,13 +24,14 @@ params ["_unit"];
 private _sw = false;
 private _lr = false;
 
-if (call TFAR_fnc_haveSWRadio) then 
+private _swRadios = [_unit] call TFAR_fnc_getRadioItems;
+
+if (count _swRadios > 0) then 
 {
-  private _active_sr_radio = call TFAR_fnc_activeSwRadio; //_SwRadio = ((getUnitLoadout _unit select 9) select 2);
-  _unit unlinkItem _active_sr_radio;
+  _unit unlinkItem (_swRadios select 0); //assume the player only has 1 sw radio 
   _sw = true;
 };
-if (call TFAR_fnc_haveLRRadio) then 
+if ((backpack _unit) call TFAR_fnc_isLRRadio) then 
 {
   removeBackpack _unit;
   _lr = true;

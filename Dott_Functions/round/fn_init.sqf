@@ -1,7 +1,9 @@
+#include "defines.hpp"
+
 /*
  * Name:	DOTT_round_fnc_init
- * Date:	12/24/2025
- * Version: 1.3
+ * Date:	03/06/2026
+ * Version: 1.4
  * Author:  Bae [29th ID] modified from Dott [29th ID]
  *
  * Description:
@@ -22,38 +24,36 @@
 
 if (isServer) then 
 {
-	DOTT_round_sideReady = [false, false, false];
-	timerLength = 20*60; 
-	overtimeEnabled = false; 
-	overtimePeriod = 5*60; 
-
-	publicVariable "DOTT_round_sideReady";
-	publicVariable "timerLength";
-	publicVariable "overtimeEnabled";
-	publicVariable "overtimePeriod";
+	DOTT_round_sideReady = [false, false, false]; 	publicVariable "DOTT_round_sideReady";
+	DOTT_round_timerLength = DEFAULT_TIMER; 		publicVariable "DOTT_round_timerLength";
+	DOTT_round_overtimeEnabled = false; 			publicVariable "DOTT_round_overtimeEnabled";
+	DOTT_round_overtimePeriod = DEFAULT_OVERTIME; 	publicVariable "DOTT_round_overtimePeriod";
+	DOTT_round_ignoreReadiness = false; 			publicVariable "DOTT_round_ignoreReadiness";
 
 	//prevent scores showing up on right side UI
 	[
 		"DOTT_round_started",
 		{
-			west addScoreSide -9999;
-			east addScoreSide -9999;
-			independent addScoreSide -9999;							
+			{
+				_x addScoreSide -SCORE_REDUCE_VALUE
+			} forEach [west, east, independent];					
 		} 
 	] call CBA_fnc_addEventHandler;	
 
 	[
 		"DOTT_round_ended",
 		{
-			west addScoreSide 9999;
-			east addScoreSide 9999;
-			independent addScoreSide 9999;							
+			{
+				_x addScoreSide SCORE_REDUCE_VALUE
+			} forEach [west, east, independent];						
 		} 
 	] call CBA_fnc_addEventHandler;	
 };
 
 if (hasInterface) then
 {
+	call DOTT_round_fnc_initReadyUI;
+
 	//For JIP players
 	//showScoreTable silently fails if called too early
 	addMissionEventHandler ["PreloadFinished", {

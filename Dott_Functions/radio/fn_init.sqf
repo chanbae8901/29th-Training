@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_radio_fnc_init
- * Date:	01/05/2026
- * Version: 1.1
+ * Date:	03/06/2026
+ * Version: 1.2
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -48,4 +48,19 @@ if (hasInterface) then
 
 	call DOTT_radio_fnc_initTransferSettings;
 };
+
+if (isServer) then
+{
+	//depending on setting, remove radios from disconnecting bodies
+	addMissionEventHandler ["HandleDisconnect", {
+		params ["_unit"];
+
+		if (isNull _unit) exitWith {};
+
+		if (TN_removeRadiosOnDeath) then
+		{
+			_unit call DOTT_radio_fnc_remove;
+		};
+	}];
+}
 

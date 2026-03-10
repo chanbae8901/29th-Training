@@ -20,12 +20,12 @@
 
 
 params[["_force", false, [false]]];
-if (overtimeEnabled && !_force) then
+if (DOTT_round_overtimeEnabled && !_force) then
 {
-	["<t color='#ffffff' size='3'><br/>%1 Minute OVERTIME</t>","PLAIN",0.5, true, overTimePeriod/60] remoteExecCall ["DOTT_common_fnc_displayMsg"];
-	[overtimePeriod] call BIS_fnc_countdown;
-	overtimeEnabled = false; //Prevents overtime from repeating forever
-	publicVariable "overtimeEnabled";
+	["<t color='#ffffff' size='3'><br/>%1 Minute OVERTIME</t>","PLAIN",0.5, true, DOTT_round_overtimePeriod/60] remoteExecCall ["DOTT_common_fnc_displayMsg"];
+	[DOTT_round_overtimePeriod] call BIS_fnc_countdown;
+	DOTT_round_overtimeEnabled = false; //Prevents overtime from repeating forever
+	publicVariable "DOTT_round_overtimeEnabled";
 	DOTT_round_timeAdded = true;
 	publicVariable "DOTT_round_timeAdded";
 	[{(call DOTT_round_fnc_getTime) <= 0}, { call DOTT_round_fnc_end }, []] call CBA_fnc_waitUntilAndExecute;
@@ -34,8 +34,8 @@ if (overtimeEnabled && !_force) then
 	//let waituntilandexecute in fn_start call end
 	if (call DOTT_round_fnc_isRoundActive) exitWith 
 	{		
-		overtimeEnabled = false; //in case manual end was called
-		publicVariable "overtimeEnabled";		
+		DOTT_round_overtimeEnabled = false; //in case manual end was called
+		publicVariable "DOTT_round_overtimeEnabled";		
 		[-1] call BIS_fnc_countdown; 
 		true
 	};

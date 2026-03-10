@@ -30,9 +30,9 @@ Overall Future Goals
       which can also make how long we want a message to stay up inconsistent.
     - Potentially take FNF notification system and tweak it.
     - Potentially use CBA's.
-  - UI for round safestart/ready system
   - Finish event module
     - Safestart related flag actions bugged.
+    - Potentially integrate new forced safe start feature
 ---
 TBD
 
@@ -42,6 +42,38 @@ TBD
 	- Included new class "FlagTaken"
 	- Included new class "FlagCaptured"
 	- Included new class "FlagReturned"
+
+---
+v4.4.2
+06 MAR 2026
+---
+
+* Curator
+  - Revert moving logic server side from 4.4.0 since OnUserSelectedPlayer event fires on every respawn and not just initial join.
+  - Check if object is not local-only before adding to excludeObjects list.
+
+* Loadout
+  - Fix fullSetUnitLoadout not correctly applying drab version of Insiginia.
+
+* Radio
+  - Radios from disconnecting bodies are now deleted as well.
+
+* Round
+  - Added !safe as a new command, which allows the admin to force safe start with a specified time in minutes, 
+    or unforce safe start if given 0 (E.G. '!safe 1' forces a 1 minute safe start)".
+    Teams can still ready up, and if all teams ready up during this forced safe start period, it will shorten to the default safe start period.
+    Creates fn_changedForcedSafeStart.sqf along with public variable DOTT_round_ignoreReadiness.
+  - Added HUD overlay showing team ready status during safe start. (Thanks PFC Wells.) Creates fn_initReadyUI.sqf
+
+* Tracker
+  - Hopefully finally fixed small issue where instigator is unknown by defaulting side of instigator to first entry in _unitSides instead
+    of sideUnknown if _time is lower than all entries. Previous fix attempts in 4.4.0 and 4.4.1 likely could be reverted, but will leave in place.
+
+* Training
+  - Disconnecting bodies in base are now automatically deleted. 
+    Logic maybe belongs in base module instead, but this was the easier route and don't know if we want event template to have this behavior.
+
+* Increase hiding respawn body on old body time from 0.5 to 1 seconds in initPlayerLocal.
 
 ---
 v4.4.1

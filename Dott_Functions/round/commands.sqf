@@ -103,6 +103,45 @@
 					case 2: { systemChat "Error: Side is already unready!"; };				
 				};
 			}
+		],
+		[
+			"safe",
+			{
+				_argument = _this select 0;
+				private _minutes = abs (parsenumber _argument); //overtime can't be negative!
+				if (_minutes > 0) then 
+				{
+					switch (true) do {
+						case (call DOTT_round_fnc_isRoundActive): {
+							systemChat "Error: Round is currently active!";
+						};
+						case (isNil "DOTT_round_safeStartActive"): {
+							[_minutes * 60, true] call DOTT_round_fnc_initSafeStart;
+							systemChat "Forcing Safe Start!";
+						};
+						default {
+							if (call DOTT_round_fnc_checkAllSidesReady) exitWith 
+							{
+								systemChat "Error: All teams are already ready!";
+							};
+
+							[_minutes * 60] call DOTT_round_fnc_changeForcedSafeStart;
+							systemChat "Changing forced safestart!";
+						};
+					};
+				}
+				else 
+				{
+					if ([0] call DOTT_round_fnc_changeForcedSafeStart) then
+					{					
+						systemChat "Safe start is no longer forced and will end if all teams are not ready!";
+					}
+					else
+					{
+						systemChat "Error: No safe start active!";
+					}
+				};
+			}
 		]
 	],
 	[
@@ -113,6 +152,7 @@
 		["overtime", "Creates an overtime period that occurs when the timer ends, a value of 0 disables overtime. Overtime must be reapplied for each timer"],
 		["game", "Calls game and ends any countdown"],
 		["ready", "Sets the player's side as ready, and begins the safe start if all player sides are ready"],
-		["unready", "Cancels the ready status for the player's side"]
+		["unready", "Cancels the ready status for the player's side"],
+		["safe", "Forces safe start with a specified time in minutes, or unforce safe start if given 0 (E.G. '!safe 1' forces a 1 minute safe start)"]
 	]
 ] call DOTT_commands_fnc_addModule;

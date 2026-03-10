@@ -1,3 +1,5 @@
+#include "defines.hpp"
+
 /*
  * Name:	DOTT_round_fnc_start
  * Date:	12/24/2025
@@ -20,13 +22,13 @@
 
 
 //return false if round already active, otherwise return true
-params[["_roundLength", timerLength, [0]]]; // Length of the round in seconds
+params[["_roundLength", DOTT_round_timerLength, [0]]]; // Length of the round in seconds
 if (call DOTT_round_fnc_isRoundActive) exitWith {false};
 
 [_roundLength] call BIS_fnc_countdown;
 
 private _msgText = format [
-	"<t color='#ffffff' size='4'>LIVE LIVE LIVE</t><br/>%1 Time Limit",
+	"<t color='#ffffff'><t size='4'>LIVE LIVE LIVE</t><br/><t size='2'>%1 Time Limit</t></t>",
 	[_roundLength, true] call DOTT_round_fnc_formatTime
 ];
 
@@ -41,11 +43,10 @@ private _msgText = format [
 	[{(call DOTT_round_fnc_getTime) <= 0}, { call DOTT_round_fnc_end }, []] call CBA_fnc_waitUntilAndExecute;
 }] remoteExecCall ["call", 2];
 
-DOTT_round_sideReady = [false, false, false]; 
-publicVariable "DOTT_round_sideReady";
+UNREADY_ALL_SIDES;
 
-DOTT_safeStartActive = nil;
-publicVariable "DOTT_safeStartActive";
+DOTT_round_safeStartActive = nil;
+publicVariable "DOTT_round_safeStartActive";
 
 [] remoteExec ["DOTT_round_fnc_roundEvents"]; 
 
