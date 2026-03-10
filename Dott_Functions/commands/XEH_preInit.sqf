@@ -1,5 +1,3 @@
-#include "commands.sqf"
-
 #include "..\..\data\settingCategories.hpp"
 
 private _defaultNoLog = "['commands', 'help', 'showchat', 'radio', 'fb']";

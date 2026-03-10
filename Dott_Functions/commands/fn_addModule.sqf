@@ -10,9 +10,6 @@
  * Parameter(s): 
  * _commands - Array of command definitions to add (see commands.sqf for format)
  * _helpInfo - Array of help info definitions to add (see commands.sqf for format)
- * _noLog - Array of command names that should not be logged when used
- * _restricted - Array of command names that should be restricted to outside rounds
- * _admin - Array of command names that should be restricted to admins only
  *
  * Returns:
  * true if commands added, false otherwise

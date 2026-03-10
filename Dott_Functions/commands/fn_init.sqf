@@ -23,6 +23,8 @@
 if (hasInterface) then {
 	pvpfw_chatIntercept_commandMarker = "!"; //Character at the front of the chat input to intercept it
 
+	//Initialize base command arrays first, then load module command files
+	#include "commands.sqf"
 	{
 		private _commandsFile = format ["DOTT_Functions\%1\commands.sqf", _x];
 		if !(fileExists _commandsFile) then { continue };
