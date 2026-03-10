@@ -1,41 +1,45 @@
-/*
- * Name:	DOTT_common_fnc_displayMsg
- * Date:	2/16/2024
- * Version:	1.0
- * Author:	Dott [29th ID]
+/**
+ * DOTT_common_fnc_displayMsg
  *
- * Description:
- * Displays titleText messages globally
+ * Displays titleText messages, typically remoteExec'd for global use.
+ * Supports a single format substitution (%1) via _msgVar1.
  *
- * Parameter(s):
- * _msgText (string): The message, including formating and markups (E.G. "<t color='#ffffff' size='2'><br/> %1 is dead!</t>")
- * _msgEffect (string): Title effect
- * _msgDur (number): The duration of the message, in seconds
- * _msgFormat (bool): Whether the message requires formatting (%1)
- * _msgVar1 (any): Whatever %1 should be
+ * NOTE: Only one format variable (%1) is supported. If you need
+ * multiple substitutions, pre-format the string before calling.
+ *
+ * Parameters:
+ *     _msgText   - STRING  - message body with optional HTML markup
+ *     _msgEffect - STRING  - title effect (default: "PLAIN")
+ *     _msgDur    - NUMBER  - display duration in seconds (default: 0.5)
+ *     _msgFormat - BOOL    - true to apply format with _msgVar1
+ *                            (default: false)
+ *     _msgVar1   - ANY     - value substituted for %1 (default: 0)
  *
  * Returns:
- * n/a
+ *     Nothing
  *
  * Example:
- * ["<t color='#ffffff' size='4'>Timer Started!</t><br/>%1 Minute Time Limit","PLAIN",0.5, true, timerLength] remoteExec ["DOTT_common_fnc_displayMsg"];
- * 
+ *     ["<t color='#ffffff' size='4'>Timer Started!</t><br/>%1 Minute Time Limit", "PLAIN", 0.5, true, timerLength]
+ *         remoteExec ["DOTT_common_fnc_displayMsg"];
  */
 
-params 
+params
 [
-	["_msgText", "Error: No text defined!", [""]],
-	["_msgEffect", "PLAIN", [""]],
-	["_msgDur", 0.5, [0]],
-	["_msgFormat", false, [false]], 
-	["_msgVar1", 0]
+    ["_msgText", "Error: No text defined!", [""]],
+    ["_msgEffect", "PLAIN", [""]],
+    ["_msgDur", 0.5, [0]],
+    ["_msgFormat", false, [false]],
+    ["_msgVar1", 0]
 ];
 
 if (_msgFormat) then
 {
-	titleText [format [_msgText, _msgVar1], _msgEffect, _msgDur, true, true];
+    titleText [
+        format [_msgText, _msgVar1],
+        _msgEffect, _msgDur, true, true
+    ];
 }
 else
 {
-	titleText [_msgText, _msgEffect, _msgDur, true, true];
+    titleText [_msgText, _msgEffect, _msgDur, true, true];
 };
