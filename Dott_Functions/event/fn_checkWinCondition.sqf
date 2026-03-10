@@ -102,7 +102,7 @@ forEach _sideSettings;
 
 while {call DOTT_round_fnc_isRoundActive} do
 {
-	sleep DOTT_event_winCheckInterval;
+	sleep (DOTT_event_winCheckInterval max 0.5);
 
 	{
 		private _fnCheck = _x select 0;
