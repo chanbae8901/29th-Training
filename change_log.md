@@ -50,6 +50,7 @@ v4.4.2
 
 * Curator
   - Revert moving logic server side from 4.4.0 since OnUserSelectedPlayer event fires on every respawn and not just initial join.
+  - Check if object is not local-only before adding to excludeObjects list.
 
 * Loadout
   - Fix fullSetUnitLoadout not correctly applying drab version of Insiginia.

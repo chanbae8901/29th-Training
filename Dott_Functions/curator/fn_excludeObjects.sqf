@@ -23,6 +23,8 @@ if (!isServer) exitWith {};
 DOTT_script_curatorExcludedObjects = [] spawn {
 
 	{ //forEach object placed in editor
+		if (netId _x == "0:0") then { continue }; //skip local-only objects
+
 		//get variable name in string format, if empty then skip to next object
 		private _vicString = vehicleVarName _x;
 		if (_vicString isEqualTo "") then { continue };
