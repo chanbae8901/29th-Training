@@ -95,7 +95,7 @@ if (isServer) then
 					params ["_unit"];					
 					unassignCurator zeus_admin;
 					sleep .1;
-					CREATE_CURATOR_MODULE(_unit);
+					isNil { CREATE_CURATOR_MODULE(_unit) };
 				};
 			};
 		};
