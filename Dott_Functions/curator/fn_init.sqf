@@ -1,7 +1,7 @@
 /*
  * Name:	DOTT_curator_fnc_init
- * Date:	02/19/2026
- * Version: 2.0
+ * Date:	03/09/2026
+ * Version: 2.1
  * Author:  Bae [29th ID]
  *
  * Description:
@@ -65,41 +65,47 @@ if (isServer) then
 		[{time > 0}, { zeus_admin = ["#adminLogged", "Admin"] call DOTT_curator_fnc_createModule }] call CBA_fnc_waitUntilAndExecute;
 	};
 
-	addMissionEventHandler ["OnUserAdminStateChanged", {
-		params ["_networkId", "_loggedIn"];
-		private _userInfo = (getUserInfo _networkId);
-		if (count _userInfo < 11) exitWith {};
-		private _unit = _userInfo select 10;	
-		if (isNil "_unit") exitWith {};
-		if (_loggedIn) exitWith 
-		{
-			if (isNull getAssignedCuratorLogic _unit) then 
-			{
-				[_unit] spawn
-				{
-					params ["_unit"];
-					unassignCurator zeus_admin;
-					sleep .1;
-					_unit assignCurator zeus_admin; 
-				};
+	[] spawn
+	{
+		waitUntil {!isNil "zeus_admin" || time > 10 };
+		if (time > 10) exitWith { diag_log "zeus_admin not defined, skipping event handlers" }; //failsafe if zeus_admin isn't defined by now
 
-			};
-		};
-		//logging out
-		[_unit] spawn {
-			params ["_unit"];
-			if (getAssignedCuratorLogic _unit == zeus_admin) then
+		addMissionEventHandler ["OnUserAdminStateChanged", {
+			params ["_networkId", "_loggedIn"];
+			private _userInfo = (getUserInfo _networkId);
+			if (count _userInfo < 11) exitWith {};
+			private _unit = _userInfo select 10;	
+			if (isNil "_unit") exitWith {};
+			if (_loggedIn) exitWith 
 			{
-				[_unit] spawn
+				if (isNull getAssignedCuratorLogic _unit) then 
 				{
-					params ["_unit"];					
-					unassignCurator zeus_admin;
-					sleep .1;
-					isNil { CREATE_CURATOR_MODULE(_unit) };
+					[_unit] spawn
+					{
+						params ["_unit"];
+						unassignCurator zeus_admin;
+						sleep .1;
+						_unit assignCurator zeus_admin; 
+					};
+
 				};
 			};
-		};
-	}];
+			//logging out
+			[_unit] spawn {
+				params ["_unit"];
+				if (getAssignedCuratorLogic _unit == zeus_admin) then
+				{
+					[_unit] spawn
+					{
+						params ["_unit"];					
+						unassignCurator zeus_admin;
+						sleep .1;
+						isNil { CREATE_CURATOR_MODULE(_unit) };
+					};
+				};
+			};
+		}];
+	};
 
 	[] spawn DOTT_curator_fnc_excludeObjects;
 };
