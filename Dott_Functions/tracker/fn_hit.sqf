@@ -28,6 +28,8 @@ params ["_projectile", "_hitEntity"];
 //if they go through server will get spammed with errors 
 if !(alive _hitEntity && _hitEntity isKindOf "AllVehicles") exitWith {}; 
 private _instigatorInfo = _projectile getVariable "DOTT_instigatorInfo";
+//if projectile hits multiple things it can have time of hit already
+if (count _instigatorInfo > 4) then { _instigatorInfo deleteAt 4 };
 _instigatorInfo pushBack round(serverTime - DOTT_tracker_startTime);
 
 if (_hitEntity isKindOf "Man") exitWith { [_hitEntity, _instigatorInfo] remoteExecCall ["DOTT_tracker_fnc_sendHit", 2] };

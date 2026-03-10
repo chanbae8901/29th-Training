@@ -44,6 +44,14 @@ TBD
 	- Included new class "FlagReturned"
 
 ---
+v4.4.3
+10 MAR 2026
+---
+* Tracker
+  - Optimize sendHit by not inadvertently creating a new HashMap even if it's not needed.
+  - Fix hit not overwriting potentially saved hit time if projectile has hit other valid objects.
+
+---
 v4.4.2
 06 MAR 2026
 ---

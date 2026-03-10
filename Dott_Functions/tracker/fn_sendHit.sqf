@@ -24,7 +24,8 @@ params ["_unit", "_instigatorInfo"];
 private _key = [_instigatorInfo select 0, _instigatorInfo select 1]; //name, side
 private _value = [_instigatorInfo select 2, _instigatorInfo select 3, _instigatorInfo select 4]; //firing pos, weapon, time
 
-private _hitMap = _unit getVariable ["DOTT_hitMap", createHashMap];
+private _hitMap = _unit getVariable "DOTT_hitMap";
+if (isNil "_hitMap") then { _hitMap = createHashMap };
 _hitMap set [_key, _value];
 
 _unit setVariable ["DOTT_lastHit", _key];
