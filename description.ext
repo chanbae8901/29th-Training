@@ -26,13 +26,14 @@ OverviewText = "<t align='center'><t size='1.5' color='#2A1ADC'>BLUFOR</t><t siz
 
 dev = "29th Engineers";
 OnLoadMissionTime = 1;
-loadScreen =  "Pictures\116Inf InsigniaAlpha.paa";
+loadScreen = "Pictures\116Inf InsigniaAlpha.paa";
 //OverviewPicture = "Pictures\116Inf InsigniaAlpha.paa"; //doesn't work on a dedicated server
 
-class Header {
-  gameType = SANDBOX;
-  minPlayers = 1;
-  maxPlayers = 167; //Total number of playable units placed in the editor including virtual entities
+class Header
+{
+    gameType = SANDBOX;
+    minPlayers = 1;
+    maxPlayers = 167; //Total number of playable units placed in the editor including virtual entities
 };
 
 respawnOnStart = 0;
@@ -64,31 +65,31 @@ allowFunctionsRecompile = 1;
 
 #include "data\cfgEventHandlers.hpp"
 
-class CfgNotifications 
+class CfgNotifications
 {
-	#include "data\cfgNotifications.hpp"
+    #include "data\cfgNotifications.hpp"
 };
 
 class Params
 {
-	#include "data\params.hpp"
+    #include "data\params.hpp"
 };
 
 #include "data\gui.hpp"
 
 class CfgRespawnInventory
 {
-	#include "data\cfgInventories.hpp"
+    #include "data\cfgInventories.hpp"
 };
 
 class CfgRoles
 {
-	#include "data\cfgRoles.hpp"
+    #include "data\cfgRoles.hpp"
 };
 
-class CfgFunctions 
+class CfgFunctions
 {
-	#include "Dott_Functions\CfgFunctions.hpp"
+    #include "Dott_Functions\CfgFunctions.hpp"
 };
 
 #include "data\cfgNotifications.hpp"
