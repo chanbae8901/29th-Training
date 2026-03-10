@@ -1,27 +1,30 @@
 /*
- * Name:	DOTT_curator_fnc_addPlayerEditable
- * Date:	12/29/2025
- * Version: 1.0
- * Author:  Hill [29th ID]
+ * Function: DOTT_curator_fnc_addPlayerEditable
+ * Author:   Hill [29th ID]
  *
  * Description:
- * Adds the specified player as an editable object for all curators.
+ *     Adds the given player unit as an editable object for
+ *     every active curator module. Headless clients are
+ *     skipped since they should never appear in Zeus.
+ *     Intended to be called on the server via remoteExec.
  *
- * Parameter(s): 
- * _unit: Player to add as editable object
+ * Parameters:
+ *     _unit - Object - Player unit to make editable
  *
  * Returns:
- * n/a
+ *     Nothing
  *
  * Example:
- * [player] remoteExec ["DOTT_curator_fnc_addPlayerEditable", 2];	
+ *     [player] remoteExec [
+ *         "DOTT_curator_fnc_addPlayerEditable", 2
+ *     ];
  */
 
 params ["_unit"];
 
-if (!(_unit isKindOf "HeadlessClient_F")) then 
+if (!(_unit isKindOf "HeadlessClient_F")) then
 {
-	{
-		_x addCuratorEditableObjects [[_unit], true];
-	} forEach allCurators;
+    {
+        _x addCuratorEditableObjects [[_unit], true];
+    } forEach allCurators;
 };
