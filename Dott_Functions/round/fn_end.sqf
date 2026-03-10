@@ -22,7 +22,7 @@
 params[["_force", false, [false]]];
 if (DOTT_round_overtimeEnabled && !_force) then
 {
-	["<t color='#ffffff' size='3'><br/>%1 Minute OVERTIME</t>","PLAIN",0.5, true, DOTT_round_overtimePeriod/60] remoteExecCall ["DOTT_common_fnc_displayMsg"];
+	[format ["<t color='#ffffff' size='3'><br/>%1 Minute OVERTIME</t>", DOTT_round_overtimePeriod / 60],"PLAIN",0.5, true] remoteExecCall ["DOTT_common_fnc_displayMsg"];
 	[DOTT_round_overtimePeriod] call BIS_fnc_countdown;
 	DOTT_round_overtimeEnabled = false; //Prevents overtime from repeating forever
 	publicVariable "DOTT_round_overtimeEnabled";
@@ -50,5 +50,4 @@ if (DOTT_round_overtimeEnabled && !_force) then
 };
 
 true
-
 

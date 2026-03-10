@@ -22,7 +22,7 @@ _canMark = {
 	_classBlacklist = ["Land_DataTerminal_01_F","Wreck_Base","FlagCarrierCore","Base_CUP_Plant"];
 
 	if (_obj getVariable ["DOTT_autoMarkExclude", false]) exitWith {false};
-	_size = (boundingBox _x) select 2;
+	_size = (boundingBox _obj) select 2;
 
 	_size > 1.5
 	and

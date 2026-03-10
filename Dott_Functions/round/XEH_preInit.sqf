@@ -1,5 +1,7 @@
 #include "..\..\data\settingCategories.hpp"
 
+disableRespawnScoreboard = -1;
+
 [
     "TN_disableScoreboard", 
     "CHECKBOX", 
