@@ -1,46 +1,55 @@
-/*
- * Name:	DOTT_loadout_fnc_fullSetUnitLoadout
- * Date:	03/06/2026
- * Version: 1.4
- * Author:  Bae [29th ID]
+/**
+ * DOTT_loadout_fnc_fullSetUnitLoadout
  *
- * Description:
- * Wrapper function that ensures other functions are called with setUnitLoadout.
- * Should spawn this function over setUnitLoadout when applicable.
+ * Purpose: Wrapper around CBA_fnc_setLoadout that also resets weapon
+ *          state (silent weapon bug fix) and reapplies insignia once
+ *          the reset finishes. Prefer spawning this over calling
+ *          setUnitLoadout directly.
  *
- * Parameter(s): 
- * ["_unit","_loadout", "_fullMagazines"]
- * Reference https://cbateam.github.io/CBA_A3/docs/files/loadout/fnc_setLoadout-sqf.html
+ * Params:
+ *   _unit          - Object, must be local and alive
+ *   _loadout       - Array, CBA extended loadout
+ *   _fullMagazines - Bool, true to use full magazines
  *
- * Returns:
- * false if _unit not local or alive, true otherwise
+ * Returns: false if _unit is not local or alive, true otherwise
  *
- * Example:
- * [player, _inventory, true] spawn DOTT_loadout_fnc_fullSetUnitLoadout;
- * 
+ * Reference:
+ *   https://cbateam.github.io/CBA_A3/docs/files/loadout/fnc_setLoadout-sqf.html
  */
 
-params["_unit", "_loadout", "_fullMagazines"];
+params ["_unit", "_loadout", "_fullMagazines"];
 
-if (!local _unit) exitWith {["Unit %1 must be local.", _unit] call BIS_fnc_error; false;};
+if (!local _unit) exitWith
+{
+    ["Unit %1 must be local.", _unit] call BIS_fnc_error;
+    false;
+};
 
 if (!alive _unit) exitWith { false };
 
-isNil { [_unit, _loadout, _fullMagazines] call CBA_fnc_setLoadout }; //run unscheduled
-
-//don't pull out weapon if no primary 
-if (primaryWeapon _unit == "") then 
+// Run in unscheduled environment.
+isNil
 {
-	_unit action ["SwitchWeapon", _unit, _unit, -1] 
+    [_unit, _loadout, _fullMagazines]
+        call CBA_fnc_setLoadout;
 };
 
-private _scriptHandle = [_unit] spawn DOTT_loadout_fnc_resetWeaponState;
+// Don't pull out weapon if no primary.
+if (primaryWeapon _unit == "") then
+{
+    _unit action ["SwitchWeapon", _unit, _unit, -1];
+};
 
-//wait so that setInsignia does not correctly assume non-combat loadout
-[_unit, _scriptHandle] spawn {
-	params ["_unit", "_scriptHandle"];
-	waitUntil { scriptDone _scriptHandle };
-	_unit spawn DOTT_loadout_fnc_setInsignia;
+private _scriptHandle =
+    [_unit] spawn DOTT_loadout_fnc_resetWeaponState;
+
+// Wait so that setInsignia does not correctly assume
+// non-combat loadout.
+[_unit, _scriptHandle] spawn
+{
+    params ["_unit", "_scriptHandle"];
+    waitUntil { scriptDone _scriptHandle };
+    _unit spawn DOTT_loadout_fnc_setInsignia;
 };
 
 true
