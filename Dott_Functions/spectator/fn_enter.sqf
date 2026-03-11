@@ -40,14 +40,6 @@
  * _this select 9 : Whether to show entities / locations lists
  */
 
-/*
- * For overriding the spectate button->?
- * Make something that triggers once (findDisplay 49) exists
- * (the menu). Then look up the IDC of the spectate button and
- * add from there.
- * - Hill
- */
-
 if (isDedicated || !hasInterface) exitWith
 {
     ["Player must not be dedicated server or HC."]

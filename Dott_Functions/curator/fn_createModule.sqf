@@ -29,7 +29,7 @@
 
 params ["_playerVarName", "_roleDescription"];
 
-// Defer until mission has started to avoid race conditions.
+// Need to wait until after start to create modules.
 if (time == 0) exitWith
 {
     [

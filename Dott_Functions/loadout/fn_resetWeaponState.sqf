@@ -2,7 +2,7 @@
  * DOTT_loadout_fnc_resetWeaponState
  *
  * Purpose: Fully removes and re-adds the primary and handgun weapons
- *          to reset internal weapon state, preventing the silent weapon
+ *          to reset internal weapon state, in an attempt to prevent the silent weapon
  *          bug. Also strips and restores all container items so that
  *          addWeapon cannot auto-insert stray magazines.
  *          Does nothing if the unit has no primary weapon.

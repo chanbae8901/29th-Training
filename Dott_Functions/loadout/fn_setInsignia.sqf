@@ -2,7 +2,7 @@
  * DOTT_loadout_fnc_setInsignia
  *
  * Purpose: If a unit has a valid 29th squad.xml configuration, applies
- *          the appropriate insignia to their uniform. HQ members get
+ *          the appropriate insignia to their uniform. Members get
  *          the non-drab/non-combat variant when not in a combat loadout.
  *
  * Params:  _target - Object, local unit wearing a uniform
