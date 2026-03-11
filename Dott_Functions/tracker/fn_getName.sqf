@@ -1,34 +1,45 @@
-/*
- * Name:	DOTT_tracker_fnc_getName
- * Date:	9/30/2025
- * Version: 1.1
- * Author:  Bae [29th ID]
+/**
+ * File: fn_getName.sqf
+ * Function: DOTT_tracker_fnc_getName
+ * Author: Bae [29th ID]
  *
- * Description:
- * Returns name of infantry or of vehicle.
+ * Purpose:
+ * Returns the display name for a unit. For infantry, uses the
+ * player name (falling back to cached DOTT_name if dead). For
+ * vehicles, uses the config display name.
  *
- * Parameter(s): 
- * _unit (Object): Player/Vehicle to find name of
+ * Parameters:
+ * _unit (Object): Player or vehicle to get the name of.
  *
  * Returns:
- * String
- *
- * Example:
- * player call DOTT_tracker_fnc_getName;
- * 
+ * String -- the unit's display name, or "?" if null.
  */
 
-params["_unit"];
-private _name = "?"; //placeholder in case of null unit (ex. unit deleted but their placed mine still explodes)
+params ["_unit"];
+
+// Placeholder for null units (e.g. deleted unit whose
+// placed mine still explodes).
+private _name = "?";
 if (isNull _unit) exitWith { _name };
-if (_unit isKindOf "Man") then 
+
+if (_unit isKindOf "Man") then
 {
-	if (alive _unit) then { _name = name _unit } 
-	else { _name = _unit getVariable ["DOTT_name", "?"] };
-} else 
+    if (alive _unit) then
+    {
+        _name = name _unit;
+    }
+    else
+    {
+        _name = _unit getVariable ["DOTT_name", "?"];
+    };
+}
+else
 {
-	_name = getText (configFile >> "CfgVehicles" >> typeOf _unit >> "displayName");
-	if (_name == "") then {_name = "Vehicle"}; 
+    _name = getText (
+        configFile >> "CfgVehicles"
+        >> typeOf _unit >> "displayName"
+    );
+    if (_name == "") then { _name = "Vehicle" };
 };
 
 _name
