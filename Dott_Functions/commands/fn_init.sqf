@@ -28,6 +28,8 @@ if (hasInterface) then
 {
     pvpfw_chatIntercept_commandMarker = "!"; //Character at the front of the chat input to intercept it
 
+    #include "commands.sqf"
+    
     // Load each module's commands.sqf if it exists.
     {
         private _commandsFile = format [
