@@ -1,55 +1,59 @@
-/*
- * Name:	DOTT_thermals_fnc_init
- * Date:	12/30/2025
- * Version: 1.0
- * Author:  Bae [29th ID]
+/**
+ * DOTT_thermals_fnc_init
  *
- * Description:
- * Initalizes thermal restriction module.
+ * Initializes the thermal restriction module.
+ * - Client: monitors vision mode changes to black-screen on
+ *   thermal use, and disables PIP thermal cameras on vehicle entry.
+ * - Server: disables TI equipment on all current and future
+ *   vehicles when the CBA setting is enabled.
  *
- * Parameter(s): 
- * None
+ * Parameters:
+ *     None
  *
  * Returns:
- * n/a
+ *     Nothing
  *
  * Example:
- * call DOTT_thermals_fnc_init;
- * 
+ *     call DOTT_thermals_fnc_init;
  */
 
-if (hasInterface) then 
+// --- Client-side: vision mode monitoring and PIP disable ---
+if (hasInterface) then
 {
-	["visionMode", 
-		{
-			[] spawn DOTT_thermals_fnc_blackScreen;
-		}
-	] call CBA_fnc_addPlayerEventHandler;
+    ["visionMode",
+    {
+        [] spawn DOTT_thermals_fnc_blackScreen;
+    }] call CBA_fnc_addPlayerEventHandler;
 
-	["DOTT_disablePIPThermalsEvent", "GetInMan", {
-		if !(TN_disableTI) exitWith {};
+    ["DOTT_disablePIPThermalsEvent", "GetInMan",
+    {
+        if !(TN_disableTI) exitWith {};
 
-		//some delay is necessary or PiP won't shut off
-		[{ call DOTT_thermals_fnc_disablePIP }, [] , 0.1] call CBA_fnc_waitAndExecute;
-	}] call CBA_fnc_addBISPlayerEventHandler;	
+        // Brief delay required or PIP cameras won't shut off.
+        [{
+            call DOTT_thermals_fnc_disablePIP;
+        }, [], 0.1] call CBA_fnc_waitAndExecute;
+    }] call CBA_fnc_addBISPlayerEventHandler;
 };
 
+// --- Server-side: disable TI on vehicles ---
 if (isServer) then
 {
-	// --- Disable thermal imaging on vehicles ---
-	addMissionEventHandler ["EntityCreated", 
-	{
-		private _objectCreated = _this;
-		if (_objectCreated isKindOf "AllVehicles" && !(_objectCreated isKindOf "Man")) then 
-		{
-			_objectCreated disableTIEquipment TN_disableTI;
-		};
-	}];
+    addMissionEventHandler ["EntityCreated",
+    {
+        private _objectCreated = _this;
 
-	{
-		if !(_x isKindOf "Man") then 
-		{
-			_x disableTIEquipment TN_disableTI;
-		};
-	} forEach allMissionObjects "AllVehicles";
+        if (_objectCreated isKindOf "AllVehicles"
+            && {!(_objectCreated isKindOf "Man")}) then
+        {
+            _objectCreated disableTIEquipment TN_disableTI;
+        };
+    }];
+
+    {
+        if !(_x isKindOf "Man") then
+        {
+            _x disableTIEquipment TN_disableTI;
+        };
+    } forEach allMissionObjects "AllVehicles";
 };

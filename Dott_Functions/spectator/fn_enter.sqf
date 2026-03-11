@@ -1,84 +1,124 @@
-/*
- * Name:	DOTT_spectator_fnc_enter
- * Date:	12/11/2025
- * Version: 1.2
- * Author: Rellikplug AKA: Hill [29th ID] modified by Bae [29th ID]
+/**
+ * DOTT_spectator_fnc_enter
  *
- * Description: Enters user into spectator mode. 
- * Lets the player leave by pressing reload by calling DOTT_spectator_fnc_exit.
+ * Places the player into BIS EG Spectator mode and registers a
+ * per-frame handler that exits spectator when the player presses
+ * Reload, moves too far from the start position, or dies.
  *
- * Parameter(s): 
- * None
+ * Must be spawned, not called.
+ *
+ * KNOWN ISSUE: The player can sometimes respawn while still in the
+ * spectator box. The onEachFrame handler catches this via an
+ * !alive check and forces an exit to prevent a stuck state.
+ *
+ * Parameters:
+ *     None
  *
  * Returns:
- * true if entered spectator mode, false otherwise
+ *     BOOL - true if spectator entered, false if blocked
  *
  * Example:
- * [] spawn DOTT_spectator_fnc_enter
+ *     [] spawn DOTT_spectator_fnc_enter;
  */
 
-/* 
-// ["Initialize", [player, [<side>,<side>], true, true, true, true, true, true, true, true]] call BIS_fnc_EGSpectator;
-// The custom array for Initialize function can contain:
-_this select 0 : The target player object
-_this select 1 : Whitelisted sides, empty means all
-_this select 2 : Whether AI can be viewed by the spectator
-_this select 3 : Whether Free camera mode is available
-_this select 4 : Whether 3th Person Perspective camera mode is available
-_this select 5 : Whether to show Focus Info stats widget
-_this select 6 : Whether or not to show camera buttons widget
-_this select 7 : Whether to show controls helper widget
-_this select 8 : Whether to show header widget
-_this select 9 : Whether to show entities / locations lists
-*/
+/*
+ * BIS_fnc_EGSpectator Initialize parameters:
+ *
+ * ["Initialize", [player, [<side>,<side>], true, true, true,
+ *     true, true, true, true, true]] call BIS_fnc_EGSpectator;
+ *
+ * _this select 0 : The target player object
+ * _this select 1 : Whitelisted sides, empty means all
+ * _this select 2 : Whether AI can be viewed by the spectator
+ * _this select 3 : Whether Free camera mode is available
+ * _this select 4 : Whether 3rd Person Perspective camera mode
+ *                   is available
+ * _this select 5 : Whether to show Focus Info stats widget
+ * _this select 6 : Whether or not to show camera buttons widget
+ * _this select 7 : Whether to show controls helper widget
+ * _this select 8 : Whether to show header widget
+ * _this select 9 : Whether to show entities / locations lists
+ */
 
 /*
-For overriding the spectate button->?
-Make something that triggers once (findDisplay 49) exists (the menu)
-Then look up the IDC of the spectate button and add from there
-- Hill
-*/
+ * For overriding the spectate button->?
+ * Make something that triggers once (findDisplay 49) exists
+ * (the menu). Then look up the IDC of the spectate button and
+ * add from there.
+ * - Hill
+ */
 
-if (isDedicated || !hasInterface) exitWith {["Player must be not be dedicated server or HC."] call BIS_fnc_error; false};
-
-if (TN_limitSpectator == 2) exitWith { hint "Spectator Disabled"; false }; // Spectator Disabled
-
-hintSilent "SPECTATOR\n----------\nPress RELOAD to exit";  // Tell player they are spectating
-
-[] spawn 
+if (isDedicated || !hasInterface) exitWith
 {
-	while {!isNil {missionNamespace getVariable "BIS_EGSpectator_initialized"}} do 
-	{ // While spectator is active show messages
-		cutText ["SPECTATOR\n----------\nPress RELOAD to exit","PLAIN DOWN"];
-		sleep 30; // Show message every 30 seconds			
-	};
+    ["Player must not be dedicated server or HC."]
+        call BIS_fnc_error;
+    false
+};
+
+// --- Spectator disabled by CBA setting ---
+if (TN_limitSpectator == 2) exitWith
+{
+    hint "Spectator Disabled";
+    false
+};
+
+hintSilent "SPECTATOR\n----------\nPress RELOAD to exit";
+
+// --- Periodic reminder while spectating ---
+[] spawn
+{
+    while {
+        !isNil {
+            missionNamespace getVariable
+                "BIS_EGSpectator_initialized"
+        }
+    } do
+    {
+        cutText [
+            "SPECTATOR\n----------\nPress RELOAD to exit",
+            "PLAIN DOWN"
+        ];
+        sleep 30;
+    };
 };
 
 [player, true] remoteExecCall ["hideObjectGlobal", 2];
 
+// --- Build params based on spectator restriction level ---
 private _params = switch (TN_limitSpectator) do
 {
-	case 0: { [player, [], false] }; // No limits
-	case 1: { [player, [side player], false, false, false, false] }; // 1PP Team Only
+    case 0: { [player, [], false] };
+    case 1:
+    {
+        [player, [side player], false, false, false, false]
+    };
+    default { [player, [], false] };
 };
 
-["Initialize", _params] call BIS_fnc_EGSpectator;  // Start Spectator
+["Initialize", _params] call BIS_fnc_EGSpectator;
 
+// --- Per-frame exit checks ---
 private _startPos = getPosATL player;
-["exitSpectator", "onEachFrame", 
+
+["exitSpectator", "onEachFrame",
 {
-	params ["_startPos"];
-	if (inputAction "ReloadMagazine" > 0) exitWith 
-	{ // Check if "Reload" key is pressed
-		call DOTT_spectator_fnc_exit;
-	};
-	if (((getPosATL player) distanceSqr _startPos ) > (5 * 5)) exitWith 
-	{
-		call DOTT_spectator_fnc_exit;
-	};
-	//player respawns while in spectator box for some reason
-	if (!alive player) exitWith 
-	{
+    params ["_startPos"];
+
+    // Reload key pressed.
+    if (inputAction "ReloadMagazine" > 0) exitWith
+    {
+        call DOTT_spectator_fnc_exit;
+    };
+
+    // Player drifted away from start position.
+    if (getPosATL player distanceSqr _startPos > 25) exitWith
+    {
+        call DOTT_spectator_fnc_exit;
+    };
+
+    // Player respawned while in spectator (known issue).
+    if (!alive player) exitWith
+    {
         call DOTT_spectator_fnc_exit;
     };
 }, [_startPos]] call BIS_fnc_addStackedEventHandler;
