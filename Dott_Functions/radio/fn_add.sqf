@@ -1,38 +1,49 @@
-/*
- * Name:	DOTT_radio_fnc_add
- * Date:	12/11/2025
- * Version: 1.2
- * Author:  Hill [29th ID]
+/**
+ * Function: DOTT_radio_fnc_add
+ * Author:   Hill [29th ID]
  *
  * Description:
- * Assigns faction SR radio to player if none in linked slot.
+ *   Assigns the faction-correct TFAR SR radio to the player if
+ *   they have no radio in the linked slot, or forces the correct
+ *   one based on the TN_addRadio setting.
  *
- * Parameter(s): 
- * None
+ * Parameters:
+ *   None
  *
  * Returns:
- * true
- *
- * Example:
- * call DOTT_radio_fnc_add;
+ *   true
  */
 
 if (!hasInterface) exitWith {};
 
-if (isClass (configfile >> "CfgPatches" >> "task_force_radio_items")) then 
+if (isClass (configFile >> "CfgPatches" >> "task_force_radio_items")) then
 {
-  if (TN_addRadio == 0) exitWith {true};
+    // 0 = disabled, 1 = only when empty, 2 = force side radio.
+    if (TN_addRadio == 0) exitWith { true };
 
-  if (TN_addRadio == 2 || {(((getUnitLoadout player) select 9) select 2) == ""}) then 
-  {
-    switch (side (group player)) do 
+    // Slot index 9, sub-index 2 is the linked radio item.
+    private _hasNoRadio =
+        (((getUnitLoadout player) select 9) select 2) == "";
+
+    if (TN_addRadio == 2 || { _hasNoRadio }) then
     {
-      case (WEST): { player linkItem "TFAR_anprc152" };
-      case (EAST): { player linkItem "TFAR_fadak" };
-      case (INDEPENDENT): { player linkItem "TFAR_anprc148jem" };
-      default {false};
+        switch (side (group player)) do
+        {
+            case WEST:
+            {
+                player linkItem "TFAR_anprc152";
+            };
+            case EAST:
+            {
+                player linkItem "TFAR_fadak";
+            };
+            case INDEPENDENT:
+            {
+                player linkItem "TFAR_anprc148jem";
+            };
+            default {};
+        };
     };
-  };
 };
 
 true

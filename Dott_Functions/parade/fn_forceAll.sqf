@@ -1,30 +1,27 @@
-/*
- * Name:	DOTT_parade_fnc_forceAll
- * Date:	02/19/2026
- * Version: 1.2.1
- * Author:  Bae [29th ID]
+/**
+ * Function: DOTT_parade_fnc_forceAll
+ * Author:   Bae [29th ID]
  *
  * Description:
- * Swaps any player not in non-combat uniforms to parade uniforms within _radius from _obj.
+ *   Forces all players within a given radius of an object into
+ *   parade loadout by remotely executing fn_load on each client.
  *
- * Parameter(s): 
- * _obj (Object): The object to check around.
- * _radius (Number): The radius around the object to check for players.
+ * Parameters:
+ *   _obj    (Object) - Center object to measure distance from
+ *   _radius (Number) - Radius in meters around _obj
  *
  * Returns:
- * true
- *
- * Example:
- * [base_action_arsenal_blu, 125] call DOTT_parade_fnc_forceAll;
- * 
+ *   true
  */
+
 params ["_obj", "_radius"];
 
 private _allPlayers = call BIS_fnc_listPlayers;
 
-private _targets = _allPlayers select 
+// Filter to players within the specified radius.
+private _targets = _allPlayers select
 {
-	_obj distance _x <= _radius;
+    _obj distance _x <= _radius;
 };
 
 {

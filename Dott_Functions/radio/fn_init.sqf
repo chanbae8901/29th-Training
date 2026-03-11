@@ -1,66 +1,79 @@
-/*
- * Name:	DOTT_radio_fnc_init
- * Date:	03/06/2026
- * Version: 1.2
- * Author:  Bae [29th ID]
+/**
+ * Function: DOTT_radio_fnc_init
+ * Author:   Bae [29th ID]
  *
  * Description:
- * Initalizes radio module. Does nothing if TFAR Beta not enabled.
- * Should be initialized before loadout.
+ *   Initializes the radio module. Registers arsenal-close handlers
+ *   to auto-add radios, a death handler to strip radios, a
+ *   disconnect handler for the same, and sets up TFAR settings
+ *   persistence. No-ops if TFAR Beta is not loaded.
+ *   Should be initialized before loadout.
  *
- * Parameter(s): 
- * None
+ * Parameters:
+ *   None
  *
  * Returns:
- * n/a
- *
- * Example:
- * call DOTT_radio_fnc_init;
- * 
+ *   Nothing
  */
 
 if !(isClass (configFile >> "CfgPatches" >> "tfar_core")) exitWith {};
 
 if (hasInterface) then
 {
-	[missionNamespace, "arsenalClosed", {
-		if !(isNull (findDisplay 312)) exitWith {}; //Don't do if Zeus Open (ZEN Loadout Editing)
-		call DOTT_radio_fnc_add;
-	}] call BIS_fnc_addScriptedEventHandler;
+    // Re-add side-correct radio after closing vanilla arsenal.
+    [
+        missionNamespace,
+        "arsenalClosed",
+        {
+            // Skip if Zeus is open (ZEN loadout editing).
+            if !(isNull (findDisplay 312)) exitWith {};
+            call DOTT_radio_fnc_add;
+        }
+    ] call BIS_fnc_addScriptedEventHandler;
 
-	if (isClass (configFile >> "CfgPatches" >> "ace_main")) then 
-	{
-		["ace_arsenal_displayClosed", 
-		{
-			if !(isNull (findDisplay 312)) exitWith {}; //Don't do if Zeus Open (ZEN Loadout Editing)
-			call DOTT_radio_fnc_add;
-		}] call CBA_fnc_addEventHandler;
-	};
+    // Re-add side-correct radio after closing ACE arsenal.
+    if (isClass (configFile >> "CfgPatches" >> "ace_main")) then
+    {
+        [
+            "ace_arsenal_displayClosed",
+            {
+                // Skip if Zeus is open (ZEN loadout editing).
+                if !(isNull (findDisplay 312)) exitWith {};
+                call DOTT_radio_fnc_add;
+            }
+        ] call CBA_fnc_addEventHandler;
+    };
 
-	["DOTT_radio_removeOnDeath", "Killed", 		
-		{		
-			if (TN_removeRadiosOnDeath) then
-			{
-				(_this select 0) call DOTT_radio_fnc_remove;
-			};
-		}
-	] call CBA_fnc_addBISPlayerEventHandler;
+    // Strip radios on death when the setting is enabled.
+    [
+        "DOTT_radio_removeOnDeath",
+        "Killed",
+        {
+            if (TN_removeRadiosOnDeath) then
+            {
+                (_this select 0) call DOTT_radio_fnc_remove;
+            };
+        }
+    ] call CBA_fnc_addBISPlayerEventHandler;
 
-	call DOTT_radio_fnc_initTransferSettings;
+    // Persist TFAR radio settings across respawn / loadout swap.
+    call DOTT_radio_fnc_initTransferSettings;
 };
 
 if (isServer) then
 {
-	//depending on setting, remove radios from disconnecting bodies
-	addMissionEventHandler ["HandleDisconnect", {
-		params ["_unit"];
+    // Strip radios from disconnecting players' bodies.
+    addMissionEventHandler [
+        "HandleDisconnect",
+        {
+            params ["_unit"];
 
-		if (isNull _unit) exitWith {};
+            if (isNull _unit) exitWith {};
 
-		if (TN_removeRadiosOnDeath) then
-		{
-			_unit call DOTT_radio_fnc_remove;
-		};
-	}];
-}
-
+            if (TN_removeRadiosOnDeath) then
+            {
+                _unit call DOTT_radio_fnc_remove;
+            };
+        }
+    ];
+};
