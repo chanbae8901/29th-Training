@@ -33,27 +33,15 @@ switch (_eventType) do
         private _unit = _eventInfo select 0;
         private _unitName = _unit select 0;
         private _unitSide = _unit select 1;
-        _eventInfo set [
-            0,
-            [_unitName, _unitSide, _eventTime]
-                call DOTT_tracker_fnc_nameToNum
-        ];
+        _eventInfo set [0, [_unitName, _unitSide, _eventTime] call DOTT_tracker_fnc_nameToNum];
         if (count _eventInfo > 2) then
         {
             private _instigator = _eventInfo select 2;
             private _instigatorName = _instigator select 0;
             private _instigatorSide = _instigator select 1;
             private _weaponName = _eventInfo select 4;
-            _eventInfo set [
-                2,
-                [_instigatorName, _instigatorSide, _eventTime]
-                    call DOTT_tracker_fnc_nameToNum
-            ];
-            _eventInfo set [
-                4,
-                [_weaponName]
-                    call DOTT_tracker_fnc_weaponToNum
-            ];
+            _eventInfo set [2, [_instigatorName, _instigatorSide, _eventTime] call DOTT_tracker_fnc_nameToNum];
+            _eventInfo set [4, [_weaponName] call DOTT_tracker_fnc_weaponToNum];
         };
         // Remove unconscious if happened after death
         // (bad network rare case).
@@ -62,8 +50,7 @@ switch (_eventType) do
         for "_i" from (count DOTT_tracker_events - 1)
             to 0 step -1 do
         {
-            private _pastEvent =
-                DOTT_tracker_events select _i;
+            private _pastEvent = DOTT_tracker_events select _i;
             private _pastType = _pastEvent select 0;
             if !(
                 _pastType == INFANTRY_KILL_NUM
@@ -75,8 +62,7 @@ switch (_eventType) do
                 _pastTime = _pastTime select 0;
             };
             if (_pastTime < _afterTime) exitWith {};
-            private _pastUnitNum =
-                (_pastEvent select 2) select 0;
+            private _pastUnitNum = (_pastEvent select 2) select 0;
             if (_unitNum == _pastUnitNum) exitWith
             {
                 _saveEvent = false;
@@ -89,30 +75,15 @@ switch (_eventType) do
         private _unit = _eventInfo select 0;
         private _unitName = _unit select 0;
         private _unitSide = _unit select 1;
-        _eventInfo set [
-            0,
-            [_unitName, _unitSide, _eventTime select 0]
-                call DOTT_tracker_fnc_nameToNum
-        ];
+        _eventInfo set [0, [_unitName, _unitSide, _eventTime select 0] call DOTT_tracker_fnc_nameToNum];
         if (count _eventInfo > 2) then
         {
             private _instigator = _eventInfo select 2;
             private _instigatorName = _instigator select 0;
             private _instigatorSide = _instigator select 1;
             private _weaponName = _eventInfo select 4;
-            _eventInfo set [
-                2,
-                [
-                    _instigatorName,
-                    _instigatorSide,
-                    _eventTime select 1
-                ] call DOTT_tracker_fnc_nameToNum
-            ];
-            _eventInfo set [
-                4,
-                [_weaponName]
-                    call DOTT_tracker_fnc_weaponToNum
-            ];
+            _eventInfo set [2, [_instigatorName, _instigatorSide, _eventTime select 1] call DOTT_tracker_fnc_nameToNum];
+            _eventInfo set [4, [_weaponName] call DOTT_tracker_fnc_weaponToNum];
         };
         // Remove unconscious if happened after death
         // (bad network rare case).
@@ -121,8 +92,7 @@ switch (_eventType) do
         for "_i" from (count DOTT_tracker_events - 1)
             to 0 step -1 do
         {
-            private _pastEvent =
-                DOTT_tracker_events select _i;
+            private _pastEvent = DOTT_tracker_events select _i;
             private _pastType = _pastEvent select 0;
             if !(
                 _pastType == INFANTRY_KILL_NUM
@@ -134,8 +104,7 @@ switch (_eventType) do
                 _pastTime = _pastTime select 0;
             };
             if (_pastTime < _afterTime) exitWith {};
-            private _pastUnitNum =
-                (_pastEvent select 2) select 0;
+            private _pastUnitNum = (_pastEvent select 2) select 0;
             if (_unitNum == _pastUnitNum) exitWith
             {
                 _saveEvent = false;
@@ -148,27 +117,15 @@ switch (_eventType) do
         private _unit = _eventInfo select 0;
         private _unitName = _unit select 0;
         private _unitSide = _unit select 1;
-        _eventInfo set [
-            0,
-            [_unitName, _unitSide, _eventTime]
-                call DOTT_tracker_fnc_nameToNum
-        ];
+        _eventInfo set [0, [_unitName, _unitSide, _eventTime] call DOTT_tracker_fnc_nameToNum];
         if (count _eventInfo > 1) then
         {
             private _instigator = _eventInfo select 1;
             private _instigatorName = _instigator select 0;
             private _instigatorSide = _instigator select 1;
             private _weaponName = _eventInfo select 3;
-            _eventInfo set [
-                1,
-                [_instigatorName, _instigatorSide, _eventTime]
-                    call DOTT_tracker_fnc_nameToNum
-            ];
-            _eventInfo set [
-                3,
-                [_weaponName]
-                    call DOTT_tracker_fnc_weaponToNum
-            ];
+            _eventInfo set [1, [_instigatorName, _instigatorSide, _eventTime] call DOTT_tracker_fnc_nameToNum];
+            _eventInfo set [3, [_weaponName] call DOTT_tracker_fnc_weaponToNum];
         };
         // Remove unconscious close to death.
         private _afterTime = _eventTime - 2;
@@ -176,22 +133,19 @@ switch (_eventType) do
         for "_i" from (count DOTT_tracker_events - 1)
             to 0 step -1 do
         {
-            private _pastEvent =
-                DOTT_tracker_events select _i;
+            private _pastEvent = DOTT_tracker_events select _i;
             private _pastType = _pastEvent select 0;
             if !(
                 _pastType == ACE_CONSCIOUSNESS_NUM
                 || _pastType == DELAY_ACE_CONSCIOUSNESS_NUM
             ) then { continue };
             private _pastTime = _pastEvent select 1;
-            if (_pastType == DELAY_ACE_CONSCIOUSNESS_NUM)
-                then
+            if (_pastType == DELAY_ACE_CONSCIOUSNESS_NUM) then
             {
                 _pastTime = _pastTime select 0;
             };
             if (_pastTime < _afterTime) exitWith {};
-            private _pastUnitNum =
-                (_pastEvent select 2) select 0;
+            private _pastUnitNum = (_pastEvent select 2) select 0;
             if (_unitNum == _pastUnitNum) exitWith
             {
                 DOTT_tracker_events deleteAt _i;
@@ -203,30 +157,15 @@ switch (_eventType) do
         private _unit = _eventInfo select 0;
         private _unitName = _unit select 0;
         private _unitSide = _unit select 1;
-        _eventInfo set [
-            0,
-            [_unitName, _unitSide, _eventTime select 0]
-                call DOTT_tracker_fnc_nameToNum
-        ];
+        _eventInfo set [0, [_unitName, _unitSide, _eventTime select 0] call DOTT_tracker_fnc_nameToNum];
         if (count _eventInfo > 1) then
         {
             private _instigator = _eventInfo select 1;
             private _instigatorName = _instigator select 0;
             private _instigatorSide = _instigator select 1;
             private _weaponName = _eventInfo select 3;
-            _eventInfo set [
-                1,
-                [
-                    _instigatorName,
-                    _instigatorSide,
-                    _eventTime select 1
-                ] call DOTT_tracker_fnc_nameToNum
-            ];
-            _eventInfo set [
-                3,
-                [_weaponName]
-                    call DOTT_tracker_fnc_weaponToNum
-            ];
+            _eventInfo set [1, [_instigatorName, _instigatorSide, _eventTime select 1] call DOTT_tracker_fnc_nameToNum];
+            _eventInfo set [3, [_weaponName] call DOTT_tracker_fnc_weaponToNum];
         };
         // Remove unconscious close to death.
         private _afterTime = (_eventTime select 0) - 2;
@@ -234,22 +173,19 @@ switch (_eventType) do
         for "_i" from (count DOTT_tracker_events - 1)
             to 0 step -1 do
         {
-            private _pastEvent =
-                DOTT_tracker_events select _i;
+            private _pastEvent = DOTT_tracker_events select _i;
             private _pastType = _pastEvent select 0;
             if !(
                 _pastType == ACE_CONSCIOUSNESS_NUM
                 || _pastType == DELAY_ACE_CONSCIOUSNESS_NUM
             ) then { continue };
             private _pastTime = _pastEvent select 1;
-            if (_pastType == DELAY_ACE_CONSCIOUSNESS_NUM)
-                then
+            if (_pastType == DELAY_ACE_CONSCIOUSNESS_NUM) then
             {
                 _pastTime = _pastTime select 0;
             };
             if (_pastTime < _afterTime) exitWith {};
-            private _pastUnitNum =
-                (_pastEvent select 2) select 0;
+            private _pastUnitNum = (_pastEvent select 2) select 0;
             if (_unitNum == _pastUnitNum) exitWith
             {
                 DOTT_tracker_events deleteAt _i;
@@ -262,27 +198,15 @@ switch (_eventType) do
         private _unit = _eventInfo select 0;
         private _unitName = _unit select 0;
         private _unitSide = _unit select 1;
-        _eventInfo set [
-            0,
-            [_unitName, _unitSide, _eventTime]
-                call DOTT_tracker_fnc_nameToNum
-        ];
+        _eventInfo set [0, [_unitName, _unitSide, _eventTime] call DOTT_tracker_fnc_nameToNum];
         if (count _eventInfo > 1) then
         {
             private _instigator = _eventInfo select 1;
             private _instigatorName = _instigator select 0;
             private _instigatorSide = _instigator select 1;
             private _weaponName = _eventInfo select 3;
-            _eventInfo set [
-                1,
-                [_instigatorName, _instigatorSide, _eventTime]
-                    call DOTT_tracker_fnc_nameToNum
-            ];
-            _eventInfo set [
-                3,
-                [_weaponName]
-                    call DOTT_tracker_fnc_weaponToNum
-            ];
+            _eventInfo set [1, [_instigatorName, _instigatorSide, _eventTime] call DOTT_tracker_fnc_nameToNum];
+            _eventInfo set [3, [_weaponName] call DOTT_tracker_fnc_weaponToNum];
         };
     };
 };

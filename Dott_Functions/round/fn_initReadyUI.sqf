@@ -86,7 +86,6 @@ if (!hasInterface) exitWith {};
 // --- Recompile teardown: clean up previous instance before reinitializing ---
 if !(isNil "DOTT_readyUI_initialized") then
 {
-    // Remove per-frame handlers
     if !(isNil "DOTT_readyUI_pfhHandle") then
     {
         [DOTT_readyUI_pfhHandle]
@@ -100,7 +99,6 @@ if !(isNil "DOTT_readyUI_initialized") then
         DOTT_readyUI_shinePFH = nil;
     };
 
-    // Remove CBA event handlers (stored handles)
     if !(isNil "DOTT_readyUI_ehReady") then
     {
         [
@@ -134,7 +132,6 @@ if !(isNil "DOTT_readyUI_initialized") then
         DOTT_readyUI_ehStarted = nil;
     };
 
-    // Destroy old controls
     private _oldBg = uiNamespace getVariable [
         "DOTT_readyUI_bg", controlNull
     ];

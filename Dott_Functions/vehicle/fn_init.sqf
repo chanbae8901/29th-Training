@@ -18,7 +18,6 @@
 
 if (!isServer) exitWith {};
 
-// --- Fast-rope FRIES auto-equip for helicopters ---
 if (isClass (configFile >> "CfgPatches" >> "ace_main")) then
 {
     addMissionEventHandler ["EntityCreated",
@@ -38,7 +37,6 @@ if (isClass (configFile >> "CfgPatches" >> "ace_main")) then
     }];
 };
 
-// --- Strip default inventories from future vehicles ---
 addMissionEventHandler ["EntityCreated",
 {
     if !(TN_removeDefaultVehicleInventories) exitWith {};
@@ -55,7 +53,6 @@ addMissionEventHandler ["EntityCreated",
     };
 }];
 
-// --- Strip default inventories from existing vehicles ---
 if !(TN_removeDefaultVehicleInventories) exitWith {};
 
 {

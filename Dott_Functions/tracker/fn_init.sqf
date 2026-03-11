@@ -18,8 +18,7 @@
  * true
  */
 
-if (("enableRoundEventLog"
-    call BIS_fnc_getParamValue) != 1) exitWith {};
+if (("enableRoundEventLog" call BIS_fnc_getParamValue) != 1) exitWith {};
 
 if (isServer) then
 {
@@ -46,14 +45,10 @@ if (isServer) then
 
             // Reset all hit info on players at start
             // of round.
-            private _players =
-                allPlayers
-                - entities "HeadlessClient_F";
+            private _players = allPlayers - entities "HeadlessClient_F";
             {
-                _x setVariable
-                    ["DOTT_lastHit", nil];
-                _x setVariable
-                    ["DOTT_hitMap", createHashMap];
+                _x setVariable ["DOTT_lastHit", nil];
+                _x setVariable ["DOTT_hitMap", createHashMap];
             }
             forEach _players;
         }
@@ -93,14 +88,12 @@ if (isServer) then
             // frame later so wait.
             [
                 {
-                    _this call
-                        DOTT_tracker_fnc_recordACEConscious;
+                    _this call DOTT_tracker_fnc_recordACEConscious;
                 },
                 _this, 0.5
             ] call CBA_fnc_waitAndExecute;
         }
-    ]
-    call CBA_fnc_addEventHandler;
+    ] call CBA_fnc_addEventHandler;
 
     // --- Tracker Diary --- //
     [
@@ -112,16 +105,14 @@ if (isServer) then
                 // Wait for any last second events from
                 // the network.
                 sleep 1;
-                publicVariable
-                    "DOTT_tracker_startTime";
+                publicVariable "DOTT_tracker_startTime";
                 [
                     DOTT_tracker_events,
                     DOTT_tracker_names,
                     DOTT_tracker_sides,
                     DOTT_tracker_weapons,
                     DOTT_tracker_currentRound
-                ] remoteExec
-                    ["DOTT_tracker_fnc_createDiaryEntries"];
+                ] remoteExec ["DOTT_tracker_fnc_createDiaryEntries"];
 
                 DOTT_tracker_previous pushBack
                 [
@@ -131,8 +122,7 @@ if (isServer) then
                     +DOTT_tracker_weapons
                 ];
 
-                DOTT_tracker_currentRound =
-                    DOTT_tracker_currentRound + 1;
+                DOTT_tracker_currentRound = DOTT_tracker_currentRound + 1;
             };
         }
     ] call CBA_fnc_addEventHandler;
@@ -141,8 +131,7 @@ if (isServer) then
     {
         [_x, "ownerChanged",
         {
-            _this call
-                DOTT_tracker_fnc_recordSectorCapture;
+            _this call DOTT_tracker_fnc_recordSectorCapture;
         }] call BIS_fnc_addScriptedEventHandler;
     } forEach (allMissionObjects "ModuleSector_F");
 
@@ -153,8 +142,7 @@ if (isServer) then
         {
             [_entity, "ownerChanged",
             {
-                _this call
-                    DOTT_tracker_fnc_recordSectorCapture;
+                _this call DOTT_tracker_fnc_recordSectorCapture;
             }] call BIS_fnc_addScriptedEventHandler;
         };
     }];
@@ -178,11 +166,9 @@ if (hasInterface) then
 
     addMissionEventHandler ["PreloadFinished",
     {
-        [player] remoteExec
-            ["DOTT_tracker_fnc_sendAll", 2];
+        [player] remoteExec ["DOTT_tracker_fnc_sendAll", 2];
         player removeDiarySubject "Statistics";
-        removeMissionEventHandler
-            ["PreloadFinished", _thisEventHandler];
+        removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
     }];
 
     // --- Fire/Burn Related Information --- //
@@ -190,12 +176,9 @@ if (hasInterface) then
         "DOTT_round_started",
         {
             DOTT_tracker_cookOffs = [];
-            player setVariable
-                ["DOTT_burnInstigator", nil];
-            player setVariable
-                ["DOTT_burnInstigatorTime", nil];
-            player setVariable
-                ["DOTT_burnWeapon", nil];
+            player setVariable ["DOTT_burnInstigator", nil];
+            player setVariable ["DOTT_burnInstigatorTime", nil];
+            player setVariable ["DOTT_burnWeapon", nil];
             // Burn info of other players locally is not
             // reset, but should be fine.
         }

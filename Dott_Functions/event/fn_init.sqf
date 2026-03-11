@@ -19,8 +19,7 @@
  */
 
 /******** CONFIG ********/
-call compile preprocessFileLineNumbers
-    "eventSettings.sqf";
+call compile preprocessFileLineNumbers "eventSettings.sqf";
 
 /******* Timer ********/
 if (DOTT_event_hasTimer) then
@@ -35,22 +34,18 @@ if (DOTT_event_hasTimer) then
         [
             "DOTT_round_started",
             {
-                [] spawn
-                    DOTT_event_fnc_checkWinCondition;
+                [] spawn DOTT_event_fnc_checkWinCondition;
             }
         ] call CBA_fnc_addEventHandler;
     };
 };
 
 /******* AliveCheck ********/
-if (DOTT_event_hasAliveCheck
-    || DOTT_event_numberOfLives > 0) then
+if (DOTT_event_hasAliveCheck || DOTT_event_numberOfLives > 0) then
 {
     if (isNil "DOTT_event_spectateArea") then
     {
-        systemChat
-            "WARNING: Spectate area object"
-            + " (spectateArea) not found!";
+        systemChat "WARNING: Spectate area object (spectateArea) not found!";
     };
 };
 
@@ -61,8 +56,7 @@ if (DOTT_event_hasAliveCheck) then
         [
             "DOTT_round_started",
             {
-                [] spawn
-                    DOTT_event_fnc_aliveCheck;
+                [] spawn DOTT_event_fnc_aliveCheck;
             }
         ] call CBA_fnc_addEventHandler;
     };
@@ -105,17 +99,10 @@ if (hasInterface) then
 {
     [] spawn
     {
-        //Prevent error due to no saved
-        //respawn inventory
+        //Prevent error due to no saved respawn inventory
         waitUntil { !isNull player };
-        [
-            player,
-            [missionNamespace, "Current Inventory"]
-        ] call BIS_fnc_saveInventory;
-        [
-            player,
-            ["missionNamespace:Current Inventory"]
-        ] call BIS_fnc_setRespawnInventory;
+        [player, [missionNamespace, "Current Inventory"]] call BIS_fnc_saveInventory;
+        [player, ["missionNamespace:Current Inventory"]] call BIS_fnc_setRespawnInventory;
     };
 
     //Hide map markers belonging to opposing sides

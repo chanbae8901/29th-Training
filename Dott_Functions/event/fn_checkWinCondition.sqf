@@ -22,14 +22,11 @@
  *     DOTT_round_fnc_isRoundActive
  */
 
-private _loopChecks =
-    [[{ false }], [{ false }], [{ false }]];
-private _endChecks =
-    [[{ false }], [{ false }], [{ false }]];
+private _loopChecks = [[{ false }], [{ false }], [{ false }]];
+private _endChecks = [[{ false }], [{ false }], [{ false }]];
 
 {
-    private _pointValue =
-        _x getVariable ["DOTT_pointValue", 0];
+    private _pointValue = _x getVariable ["DOTT_pointValue", 0];
 
     if (_pointValue == 0) then { continue };
 
@@ -44,13 +41,9 @@ private _endChecks =
                         "_newOwner",
                         "_oldOwner"
                     ];
-                    private _pointValue =
-                        _sector getVariable
-                            ["DOTT_pointValue", 0];
-                    private _newOwnerId =
-                        _newOwner call BIS_fnc_sideId;
-                    private _oldOwnerId =
-                        _oldOwner call BIS_fnc_sideId;
+                    private _pointValue = _sector getVariable ["DOTT_pointValue", 0];
+                    private _newOwnerId = _newOwner call BIS_fnc_sideId;
+                    private _oldOwnerId = _oldOwner call BIS_fnc_sideId;
 
                     if (_newOwnerId <= 2) then
                     {
@@ -73,8 +66,7 @@ private _endChecks =
                 }
             ] call BIS_fnc_addScriptedEventHandler;
 
-            private _owner =
-                _x getVariable ["owner", sideUnknown];
+            private _owner = _x getVariable ["owner", sideUnknown];
             private _idx = _owner call BIS_fnc_sideID;
             if (_idx <= 2) then
             {
@@ -92,14 +84,9 @@ private _endChecks =
                 params [
                     "_unit", "_killer", "_instigator"
                 ];
-                private _pointValue =
-                    _unit getVariable
-                        ["DOTT_pointValue", 0];
-                private _awardTeam =
-                    _unit getVariable
-                        ["DOTT_awardTeam", sideUnknown];
-                private _idx =
-                    _awardTeam call BIS_fnc_sideID;
+                private _pointValue = _unit getVariable ["DOTT_pointValue", 0];
+                private _awardTeam = _unit getVariable ["DOTT_awardTeam", sideUnknown];
+                private _idx = _awardTeam call BIS_fnc_sideID;
                 if (_idx <= 2) then
                 {
                     DOTT_event_score set [
@@ -116,9 +103,7 @@ private _endChecks =
 fn_numPoints =
 {
     params ["_sideId", "_pointsRequired"];
-
-    DOTT_event_score
-        select _sideId >= _pointsRequired
+    DOTT_event_score select _sideId >= _pointsRequired
 };
 
 private _sideSettings =
@@ -129,7 +114,6 @@ private _sideSettings =
 ];
 
 {
-    //no win condition for this side
     if (_x isEqualType "") then { continue };
 
     private _winCon = toLower (_x select 0);
@@ -172,16 +156,11 @@ private _sideSettings =
             };
             if (_args call _fnCheck) exitWith
             {
-                private _winningSide =
-                    _forEachIndex
-                        call BIS_fnc_sideType;
-                [true, _winningSide]
-                    call DOTT_event_fnc_game;
+                private _winningSide = _forEachIndex call BIS_fnc_sideType;
+                [true, _winningSide] call DOTT_event_fnc_game;
             };
         } forEach _endChecks;
 
-        //no side met win conditions,
-        //call neutral ending
         [true] call DOTT_event_fnc_game;
     }, _endChecks
 ] call CBA_fnc_addEventHandlerArgs;
@@ -199,11 +178,8 @@ while {call DOTT_round_fnc_isRoundActive} do
         };
         if (_args call _fnCheck) exitWith
         {
-            private _winningSide =
-                _forEachIndex
-                    call BIS_fnc_sideType;
-            [true, _winningSide]
-                call DOTT_event_fnc_game;
+            private _winningSide = _forEachIndex call BIS_fnc_sideType;
+            [true, _winningSide] call DOTT_event_fnc_game;
         };
     } forEach _loopChecks;
 };

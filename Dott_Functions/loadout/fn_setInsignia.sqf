@@ -66,8 +66,7 @@ if (count _sqdParams == 0) exitWith
 
 // Get squad string stored in memberICQ.
 _targetSquad = ((_sqdParams select 1) select 4);
-_foundInsignias =
-    _insigniaMap getOrDefault [_targetSquad, []];
+_foundInsignias = _insigniaMap getOrDefault [_targetSquad, []];
 
 if (count _foundInsignias == 0) exitWith
 {
@@ -82,8 +81,7 @@ _targetInsignia = _foundInsignias select 0;
 if (count _foundInsignias == 2) then
 {
     // BLUFOR parade gear, dress blues, or no weapon.
-    private _isNotCombatLoadout =
-        _target call DOTT_parade_fnc_checkNonCombatLoadout;
+    private _isNotCombatLoadout = _target call DOTT_parade_fnc_checkNonCombatLoadout;
 
     // Use non-combat version.
     if (_isNotCombatLoadout) then
@@ -107,9 +105,7 @@ if (_targetRole find "Clerk" != -1
 if (_curInsignia != _targetInsignia
     && _curInsignia != "") then
 {
-    systemChat
-        ("Insignia swapped to "
-            + _targetInsignia + ".");
+    systemChat ("Insignia swapped to " + _targetInsignia + ".");
 };
 
 [_target, ""] call BIS_fnc_setUnitInsignia;

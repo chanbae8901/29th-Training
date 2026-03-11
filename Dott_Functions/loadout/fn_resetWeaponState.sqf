@@ -16,7 +16,6 @@
 
 params ["_unit"];
 
-// --- Snapshot current weapon state ---
 private _primary = primaryWeapon _unit;
 private _primaryItems = primaryWeaponItems _unit;
 private _primaryMags = primaryWeaponMagazine _unit;
@@ -33,7 +32,6 @@ private _uniformItems = uniformItems _unit;
 private _vestItems = vestItems _unit;
 private _backpackItems = backpackItems _unit;
 
-// --- Strip weapons and container items ---
 _unit removeWeapon _primary;
 _unit removeWeapon _handgun;
 
@@ -52,7 +50,6 @@ _unit removeWeapon _handgun;
 // Wait until unit is not switching weapon.
 waitUntil { sleep 1; !isSwitchingWeapon _unit };
 
-// --- Restore primary weapon and attachments ---
 _unit addWeapon _primary;
 
 {
@@ -64,7 +61,6 @@ _unit addWeapon _primary;
     _unit addMagazine _x;
 } forEach _handgunMags;
 
-// --- Restore handgun ---
 _unit addWeapon _handgun;
 
 {
@@ -73,7 +69,6 @@ _unit addWeapon _handgun;
 
 sleep 1;
 
-// --- Restore primary magazines and container contents ---
 {
     _unit addPrimaryWeaponItem _x;
 } forEach _primaryMags;

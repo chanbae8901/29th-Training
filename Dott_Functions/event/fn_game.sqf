@@ -26,11 +26,9 @@ params
     ["_forceEndingClass", "", [""]]
 ];
 
-//server only
 if (!isServer) exitWith
 {
-    _this remoteExecCall
-        ["DOTT_event_fnc_game", 2];
+    _this remoteExecCall ["DOTT_event_fnc_game", 2];
 };
 
 /******** CONFIG ********/
@@ -42,8 +40,7 @@ private _endResistance = "EndGuerVictory";
 
 /************************/
 
-//check if game was called already, exit if true,
-//prevents duplicate endings
+// Prevents duplicate endings.
 if (isNil "gameCalled") then
 {
     gameCalled = false;
@@ -51,50 +48,33 @@ if (isNil "gameCalled") then
 if (gameCalled) exitWith {};
 gameCalled = true;
 publicVariable "gameCalled";
-["DOTT_event_gameCalled", []]
-    call CBA_fnc_globalEvent;
+["DOTT_event_gameCalled", []] call CBA_fnc_globalEvent;
 
-//if ending is forced, then call the specified
-//ending for all clients
 if (_forceEnding) exitWith
 {
-    //if a specific ending is specified when
-    //called, then do that
     if (_forceEndingClass != "") then
     {
-        [_forceEndingClass]
-            remoteExec ["BIS_fnc_endMission"];
+        [_forceEndingClass] remoteExec ["BIS_fnc_endMission"];
     }
     else
     {
-        //else trigger victory ending for given
-        //side, or neutral ending if not west,
-        //east, or resistance
         switch (_sideVictory) do
         {
             case west:
             {
-                [_endWest]
-                    remoteExec
-                        ["BIS_fnc_endMission"];
+                [_endWest] remoteExec ["BIS_fnc_endMission"];
             };
             case east:
             {
-                [_endEast]
-                    remoteExec
-                        ["BIS_fnc_endMission"];
+                [_endEast] remoteExec ["BIS_fnc_endMission"];
             };
             case resistance:
             {
-                [_endResistance]
-                    remoteExec
-                        ["BIS_fnc_endMission"];
+                [_endResistance] remoteExec ["BIS_fnc_endMission"];
             };
             default
             {
-                [_endNeutral]
-                    remoteExec
-                        ["BIS_fnc_endMission"];
+                [_endNeutral] remoteExec ["BIS_fnc_endMission"];
             };
         };
     };
@@ -102,8 +82,6 @@ if (_forceEnding) exitWith
 
 //NO EVAL RIGHT NOW - WILL BE WRITTEN LATER - Dott
 
-//get the number of sectors in the mission,
-//and count them
 //private _eventSectors =
 //    missionnamespace getvariable
 //        ["BIS_fnc_moduleSector_sectors", []];

@@ -39,9 +39,7 @@
 if (isNil "DOTT_event_endingObject") then
 {
     DOTT_event_endingObject = objNull;
-    systemChat
-        "WARNING: Admin object"
-        + " (endingObject) not found!";
+    systemChat "WARNING: Admin object (endingObject) not found!";
 };
 
 private _currentState = switch (true) do
@@ -80,8 +78,7 @@ private _fnc_addSideReadyActions =
 private _fnc_removeSideReadyActions =
 {
     {
-        private _actionId =
-            _x getVariable [SIDE_READY_ID, -1];
+        private _actionId = _x getVariable [SIDE_READY_ID, -1];
         _x removeAction _actionId;
         _x setVariable [SIDE_READY_ID, nil];
     } forEach DOTT_event_timerObjects;
@@ -89,9 +86,7 @@ private _fnc_removeSideReadyActions =
 
 if (_currentState == 0) then
 {
-    private _playerSideReady =
-        DOTT_round_sideReady
-            select (playerSide call BIS_fnc_sideID);
+    private _playerSideReady = DOTT_round_sideReady select (playerSide call BIS_fnc_sideID);
     if !(_playerSideReady) then
     {
         call _fnc_addSideReadyActions;
@@ -163,20 +158,14 @@ private _fnc_addAllReadyActions =
 private _fnc_removeAllReadyActions =
 {
     {
-        private _actionId =
-            _x getVariable [ALL_READY_ID, -1];
-
+        private _actionId = _x getVariable [ALL_READY_ID, -1];
         _x removeAction _actionId;
         _x setVariable [ALL_READY_ID, nil];
     } forEach DOTT_event_timerObjects;
 
-    private _actionId =
-        DOTT_event_endingObject getVariable
-            [ALL_READY_ID, -1];
-
+    private _actionId = DOTT_event_endingObject getVariable [ALL_READY_ID, -1];
     DOTT_event_endingObject removeAction _actionId;
-    DOTT_event_endingObject setVariable
-        [ALL_READY_ID, nil];
+    DOTT_event_endingObject setVariable [ALL_READY_ID, nil];
 };
 
 if (_currentState == 0) then
@@ -201,12 +190,9 @@ private _fnc_addCancelSafeStart =
 {
     private _fnc_unreadyAllSides =
     {
-        [west, false, false]
-            call DOTT_round_fnc_manageReady;
-        [east, false, false]
-            call DOTT_round_fnc_manageReady;
-        [resistance, false, false]
-            call DOTT_round_fnc_manageReady;
+        [west, false, false] call DOTT_round_fnc_manageReady;
+        [east, false, false] call DOTT_round_fnc_manageReady;
+        [resistance, false, false] call DOTT_round_fnc_manageReady;
     };
     private _actionId =
         DOTT_event_endingObject addAction [
@@ -224,12 +210,9 @@ private _fnc_addCancelSafeStart =
 
 private _fnc_removeCancelSafeStart =
 {
-    private _actionId =
-        DOTT_event_endingObject getVariable
-            [CANCEL_SAFESTART_ID, -1];
+    private _actionId = DOTT_event_endingObject getVariable [CANCEL_SAFESTART_ID, -1];
     DOTT_event_endingObject removeAction _actionId;
-    DOTT_event_endingObject setVariable
-        [CANCEL_SAFESTART_ID, nil];
+    DOTT_event_endingObject setVariable [CANCEL_SAFESTART_ID, nil];
 };
 
 if (_currentState == 1) then
@@ -261,10 +244,7 @@ private _fnc_addChangeSafeStart =
         DOTT_event_endingObject addAction [
             "<t color='#bf3eff'>Change Safestart"
                 + " Time (Admin)</t>",
-            {
-                call
-                    DOTT_event_fnc_gui_setSafeStartTime;
-            },
+            { call DOTT_event_fnc_gui_setSafeStartTime },
             nil,
             1.5, true, true, "",
             "serverCommandAvailable '#lock'", 8
@@ -276,12 +256,9 @@ private _fnc_addChangeSafeStart =
 
 private _fnc_removeChangeSafeStart =
 {
-    private _actionId =
-        DOTT_event_endingObject getVariable
-            [CHANGE_SAFESTART_ID, -1];
+    private _actionId = DOTT_event_endingObject getVariable [CHANGE_SAFESTART_ID, -1];
     DOTT_event_endingObject removeAction _actionId;
-    DOTT_event_endingObject setVariable
-        [CHANGE_SAFESTART_ID, nil];
+    DOTT_event_endingObject setVariable [CHANGE_SAFESTART_ID, nil];
 };
 
 if (_currentState == 1) then
@@ -313,10 +290,7 @@ private _fnc_addForceEndSafeStartAction =
         DOTT_event_endingObject addAction [
             "<t color='#bf3eff'>Force End"
                 + " Safestart (Admin)</t>",
-            {
-                [DOTT_event_timerLength]
-                    call DOTT_round_fnc_start;
-            },
+            { [DOTT_event_timerLength] call DOTT_round_fnc_start },
             nil,
             1.5, true, true, "",
             "serverCommandAvailable '#lock'", 8
@@ -328,12 +302,9 @@ private _fnc_addForceEndSafeStartAction =
 
 private _fnc_removeForceEndSafeStartAction =
 {
-    private _actionId =
-        DOTT_event_endingObject getVariable
-            [FORCE_END_SAFESTART_ID, -1];
+    private _actionId = DOTT_event_endingObject getVariable [FORCE_END_SAFESTART_ID, -1];
     DOTT_event_endingObject removeAction _actionId;
-    DOTT_event_endingObject setVariable
-        [FORCE_END_SAFESTART_ID, nil];
+    DOTT_event_endingObject setVariable [FORCE_END_SAFESTART_ID, nil];
 };
 
 if (_currentState == 1) then
@@ -371,8 +342,7 @@ private _fnc_addEndingActions =
         "serverCommandAvailable '#lock'", 8
     ];
 
-    private _allPlayers =
-        call BIS_fnc_listPlayers;
+    private _allPlayers = call BIS_fnc_listPlayers;
     private _sides = [
         [west, "BLUFOR", "#155DFC"],
         [east, "OPFOR", "#B40404"],
@@ -396,8 +366,7 @@ private _fnc_addEndingActions =
             DOTT_event_endingObject addAction [
                 _actionText,
                 {
-                    [true, _this select 3]
-                        call DOTT_event_fnc_game;
+                    [true, _this select 3] call DOTT_event_fnc_game;
                 },
                 _side,
                 1.5, true, true, "",

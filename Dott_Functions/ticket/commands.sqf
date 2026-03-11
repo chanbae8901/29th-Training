@@ -18,8 +18,7 @@
                 // is disabled.
                 if (!DOTT_ticketEnabled) exitWith
                 {
-                    systemChat
-                        "Error: You must enable the ticket system first with '!tickets enable'";
+                    systemChat "Error: You must enable the ticket system first with '!tickets enable'";
                 };
 
                 // '!tickets' with no argument to see current
@@ -41,8 +40,7 @@
                 private _filterArg = [
                     _argument, "abcdefghijklmnopqrstuvwxyz"
                 ] call BIS_fnc_filterString;
-                private _ticketAmount =
-                    parseNumber _filterAmount;
+                private _ticketAmount = parseNumber _filterAmount;
 
                 switch (_filterArg) do
                 {
@@ -52,8 +50,7 @@
                             "Changing Blufor tickets by %1",
                             _ticketAmount
                         ];
-                        ["WEST", _ticketAmount]
-                            call DOTT_ticket_fnc_add;
+                        ["WEST", _ticketAmount] call DOTT_ticket_fnc_add;
                     };
                     case "opfor":
                     {
@@ -61,8 +58,7 @@
                             "Changing Opfor tickets by %1",
                             _ticketAmount
                         ];
-                        ["EAST", _ticketAmount]
-                            call DOTT_ticket_fnc_add;
+                        ["EAST", _ticketAmount] call DOTT_ticket_fnc_add;
                     };
                     case "grnfor":
                     {
@@ -70,21 +66,17 @@
                             "Changing Grnfor tickets by %1",
                             _ticketAmount
                         ];
-                        ["GUER", _ticketAmount]
-                            call DOTT_ticket_fnc_add;
+                        ["GUER", _ticketAmount] call DOTT_ticket_fnc_add;
                     };
                     case "reset":
                     {
-                        systemChat
-                            "Resetting tickets to zero!";
-                        ["reset"]
-                            call DOTT_ticket_fnc_add;
+                        systemChat "Resetting tickets to zero!";
+                        ["reset"] call DOTT_ticket_fnc_add;
                     };
                     case "disable":
                     {
                         // Case for disable at the end.
-                        systemChat
-                            "Ticket system disabled!";
+                        systemChat "Ticket system disabled!";
                         DOTT_ticketEnabled = false;
                         publicVariable "DOTT_ticketEnabled";
                         DOTT_ticketWEST = 0;
@@ -96,8 +88,7 @@
                     };
                     default
                     {
-                        systemChat
-                            "Error: Invalid input! Must be 'blufor', 'opfor', 'grnfor',  'reset', 'enable', 'disable'";
+                        systemChat "Error: Invalid input! Must be 'blufor', 'opfor', 'grnfor',  'reset', 'enable', 'disable'";
                     };
                 };
             }

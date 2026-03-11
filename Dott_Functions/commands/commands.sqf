@@ -11,8 +11,7 @@
     created in XEH_preInit.sqf
 */
 
-pvpfw_chatIntercept_helpInfo =
-[
+pvpfw_chatIntercept_helpInfo = [
     [
         "help",
         "Gives help on how to use commands"
@@ -40,23 +39,17 @@ pvpfw_chatIntercept_helpInfo =
 ];
 
 
-pvpfw_chatIntercept_allCommands =
-[
+pvpfw_chatIntercept_allCommands = [
     [
         "commands",
         {
             private _commands = "";
             {
-                _commands = _commands
-                    + (pvpfw_chatIntercept_commandMarker
-                    + _x) + ", ";
+                _commands = _commands + (pvpfw_chatIntercept_commandMarker + _x) + ", ";
             } forEach (keys pvpfw_chatIntercept_allCommands);
 
-            systemChat format [
-                "Available Commands: %1", _commands
-            ];
-            systemChat
-                "Use !help followed by the command name to see how to use it";
+            systemChat format ["Available Commands: %1", _commands];
+            systemChat "Use !help followed by the command name to see how to use it";
         }
     ],
     [
@@ -65,26 +58,18 @@ pvpfw_chatIntercept_allCommands =
             private _argument = _this select 0;
             _argument = toLower _argument;
 
-            private _helpInfo =
-                pvpfw_chatIntercept_helpInfo
-                get _argument;
+            private _helpInfo = pvpfw_chatIntercept_helpInfo get _argument;
 
             if !(isNil "_helpInfo") then
             {
                 private _restrictionStr =
                     switch (true) do
                 {
-                    case (
-                        pvpfw_chatIntercept_adminCommands
-                        find _argument != -1
-                    ):
+                    case (pvpfw_chatIntercept_adminCommands find _argument != -1):
                     {
                         "(ADMIN ONLY)";
                     };
-                    case (
-                        pvpfw_chatIntercept_restrictedCommands
-                        find _argument != -1
-                    ):
+                    case (pvpfw_chatIntercept_restrictedCommands find _argument != -1):
                     {
                         "(RESTRICTED)";
                     };
@@ -94,17 +79,11 @@ pvpfw_chatIntercept_allCommands =
                     };
                 };
 
-                systemChat format [
-                    "!%1: %2 %3",
-                    _argument,
-                    _restrictionStr,
-                    _helpInfo
-                ];
+                systemChat format ["!%1: %2 %3", _argument, _restrictionStr, _helpInfo];
             }
             else
             {
-                systemChat
-                    "Can't find the specified command! Make sure to enter the command without the '!'";
+                systemChat "Can't find the specified command! Make sure to enter the command without the '!'";
             };
         }
     ],
@@ -116,37 +95,28 @@ pvpfw_chatIntercept_allCommands =
                 "Land_ToiletBox_F",
                 "Land_FieldToilet_F"
             ];
-            //select object
             private _arsenalObj = selectRandom _arsenalArr;
 
-            //get position in front of player
             private _dir = getDir player;
             private _offset = player getPos [3, _dir];
             private _posATL = getPosATL player;
-            //use offset x/y but player z
             private _pos = [
                 _offset select 0,
                 _offset select 1,
                 _posATL select 2
             ];
 
-            //create arsenal
-            private _arsenal =
-                _arsenalObj createVehicle _pos;
+            private _arsenal = _arsenalObj createVehicle _pos;
             _arsenal enableSimulationGlobal false;
 
-            //add ACE arsenal
-            [_arsenal, true]
-                call ace_arsenal_fnc_initBox;
+            [_arsenal, true] call ace_arsenal_fnc_initBox;
 
             // Make the arsenal box editable by all curators.
             [
                 [_arsenal],
                 {
                     {
-                        _x addCuratorEditableObjects [
-                            _this, true
-                        ];
+                        _x addCuratorEditableObjects [_this, true];
                     }
                     forEach allCurators;
                 }
@@ -162,36 +132,26 @@ pvpfw_chatIntercept_allCommands =
             {
                 if (isNil "plyrRefPos") then
                 {
-                    systemChat
-                        "Error: Please define a base point with !measure set";
+                    systemChat "Error: Please define a base point with !measure set";
                 }
                 else //measure current shift+click marker based off reference
                 {
-                    private _msrDistance = round (
-                        customWaypointPosition
-                        distance plyrRefPos
-                    );
-                    systemChat format [
-                        "Distance is %1 meters",
-                        _msrDistance
-                    ];
+                    private _msrDistance = round (customWaypointPosition distance plyrRefPos);
+                    systemChat format ["Distance is %1 meters", _msrDistance];
                 };
             }
             else //anything else sets reference shift+click marker
             {
-                private _waypointPosCount =
-                    count customWaypointPosition;
+                private _waypointPosCount = count customWaypointPosition;
 
                 if (_waypointPosCount == 3) then
                 {
                     plyrRefPos = customWaypointPosition;
-                    systemChat
-                        "Measurement reference point set";
+                    systemChat "Measurement reference point set";
                 }
                 else
                 {
-                    systemChat
-                        "Error: No marker! Place a marker on the map with shift + click";
+                    systemChat "Error: No marker! Place a marker on the map with shift + click";
                 };
             };
         }
@@ -207,9 +167,7 @@ pvpfw_chatIntercept_allCommands =
         {
             private _buggedPlayers = [];
 
-            private _players =
-                allPlayers
-                - entities "HeadlessClient_F";
+            private _players = allPlayers - entities "HeadlessClient_F";
             _players = _players select { alive _x }; //only get alive players, probably not needed however
 
             {
@@ -227,34 +185,20 @@ pvpfw_chatIntercept_allCommands =
     [
         "fb",
         {
-            private _blend = [
-                [1, 1, 1, 0],
-                [0.3, 0.3, 0.3, 1]
-            ] select ace_common_epilepsyFriendlyMode;
+            private _blend = [[1, 1, 1, 0], [0.3, 0.3, 0.3, 1]] select ace_common_epilepsyFriendlyMode;
 
             private _strength = 1;
 
-            ace_grenades_flashbangPPEffectCC
-                ppEffectEnable true;
-            ace_grenades_flashbangPPEffectCC ppEffectAdjust [
-                1, 1, (0.8 + _strength) min 1,
-                _blend, [0, 0, 0, 1], [0, 0, 0, 0]
-            ];
-
-            ace_grenades_flashbangPPEffectCC
-                ppEffectCommit 0.01;
+            ace_grenades_flashbangPPEffectCC ppEffectEnable true;
+            ace_grenades_flashbangPPEffectCC ppEffectAdjust [1, 1, (0.8 + _strength) min 1, _blend, [0, 0, 0, 1], [0, 0, 0, 0]];
+            ace_grenades_flashbangPPEffectCC ppEffectCommit 0.01;
 
             [
                 {
                     params ["_strength", "_blend"];
 
-                    ace_grenades_flashbangPPEffectCC
-                        ppEffectAdjust [
-                            1, 1, 0, _blend,
-                            [0, 0, 0, 1], [0, 0, 0, 0]
-                        ];
-                    ace_grenades_flashbangPPEffectCC
-                        ppEffectCommit (10 * _strength);
+                    ace_grenades_flashbangPPEffectCC ppEffectAdjust [1, 1, 0, _blend, [0, 0, 0, 1], [0, 0, 0, 0]];
+                    ace_grenades_flashbangPPEffectCC ppEffectCommit (10 * _strength);
                 },
                 [_strength, _blend],
                 7 * _strength
@@ -263,18 +207,13 @@ pvpfw_chatIntercept_allCommands =
             // FULLRECOVERY - end effect
             [
                 {
-                    ace_grenades_flashbangPPEffectCC
-                        ppEffectEnable false;
+                    ace_grenades_flashbangPPEffectCC ppEffectEnable false;
                 },
                 [],
                 17 * _strength
             ] call CBA_fnc_waitAndExecute;
 
-            playSound3D [
-                "\rhsusf\addons\rhsusf_c_weapons\sounds\flashbang.ogg",
-                player, false, getPosASL player,
-                0.1, 1, 0, 0, true
-            ];
+            playSound3D ["\rhsusf\addons\rhsusf_c_weapons\sounds\flashbang.ogg", player, false, getPosASL player, 0.1, 1, 0, 0, true];
         }
     ]
 ];

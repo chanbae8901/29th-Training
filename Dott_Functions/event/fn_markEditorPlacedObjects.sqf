@@ -62,8 +62,7 @@ _objectsToMark = [];
 {
     _objectsToMark append allMissionObjects _x;
 } forEach _baseClasses;
-_objectsToMark =
-    _objectsToMark select { _x call _canMark };
+_objectsToMark = _objectsToMark select { _x call _canMark };
 
 _createMarker =
 {
@@ -75,22 +74,17 @@ _createMarker =
         _obj
     ];
 
-    // format marker and set direction
     _marker setMarkerShapeLocal "Rectangle";
     _marker setMarkerBrushLocal "SolidFull";
     _marker setMarkerColorLocal "ColorBlack";
     _marker setMarkerDirLocal getDir _obj;
 
-    // Grab dimensions of bounding box of the object
     _bbr = boundingBoxReal _obj;
     _p1 = _bbr select 0;
     _p2 = _bbr select 1;
-    _maxWidth =
-        abs ((_p2 select 0) - (_p1 select 0));
-    _maxLength =
-        abs ((_p2 select 1) - (_p1 select 1));
+    _maxWidth = abs ((_p2 select 0) - (_p1 select 0));
+    _maxLength = abs ((_p2 select 1) - (_p1 select 1));
 
-    // set marker size to size of bounding box
     _marker setMarkerSizeLocal [
         _maxWidth / 2,
         _maxLength / 2

@@ -50,31 +50,18 @@ if (hasInterface) then
         //Draw little skulls each time a player dies. Seen only by Zeus.
         player call BIS_fnc_drawCuratorDeaths;
 
-        // Log when local player opens Zeus interface.
         [
             "DOTT_enteredZeus",
             {
                 private _curatorName = name player;
-                private _msg = format [
-                    "CURATOR INTERFACE OPENED: %1",
-                    _curatorName
-                ];
-                _msg remoteExec [
-                    "DOTT_common_fnc_diag_log", 2
-                ];
+                private _msg = format ["CURATOR INTERFACE OPENED: %1", _curatorName];
+                _msg remoteExec ["DOTT_common_fnc_diag_log", 2];
             }
         ] call CBA_fnc_addEventHandler;
 
-        [player] remoteExec [
-            "DOTT_curator_fnc_addPlayerEditable", 2
-        ];
+        [player] remoteExec ["DOTT_curator_fnc_addPlayerEditable", 2];
 
-        [
-            vehicleVarName player,
-            roleDescription player
-        ] remoteExecCall [
-            "DOTT_curator_fnc_createModule", 2
-        ];
+        [vehicleVarName player, roleDescription player] remoteExecCall ["DOTT_curator_fnc_createModule", 2];
     };
 };
 
@@ -99,9 +86,7 @@ if (isServer) then
         [
             { time > 0 },
             {
-                zeus_admin = [
-                    "#adminLogged", "Admin"
-                ] call DOTT_curator_fnc_createModule;
+                zeus_admin = ["#adminLogged", "Admin"] call DOTT_curator_fnc_createModule;
             }
         ] call CBA_fnc_waitUntilAndExecute;
     };
@@ -113,8 +98,7 @@ if (isServer) then
         //failsafe if zeus_admin isn't defined by now
         if (time > 10) exitWith
         {
-            diag_log
-                "zeus_admin not defined, skipping event handlers";
+            diag_log "zeus_admin not defined, skipping event handlers";
         };
 
         addMissionEventHandler [
@@ -122,8 +106,7 @@ if (isServer) then
             {
                 params ["_networkId", "_loggedIn"];
 
-                private _userInfo =
-                    (getUserInfo _networkId);
+                private _userInfo = getUserInfo _networkId;
                 if (count _userInfo < 11) exitWith {};
 
                 private _unit = _userInfo select 10;
@@ -131,9 +114,7 @@ if (isServer) then
 
                 if (_loggedIn) exitWith
                 {
-                    if (
-                        isNull getAssignedCuratorLogic _unit
-                    ) then
+                    if (isNull getAssignedCuratorLogic _unit) then
                     {
                         [_unit] spawn
                         {
@@ -149,10 +130,7 @@ if (isServer) then
                 [_unit] spawn
                 {
                     params ["_unit"];
-                    if (
-                        getAssignedCuratorLogic _unit
-                        == zeus_admin
-                    ) then
+                    if (getAssignedCuratorLogic _unit == zeus_admin) then
                     {
                         [_unit] spawn
                         {

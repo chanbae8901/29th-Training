@@ -69,18 +69,13 @@ switch (_playerSide) do
             // and hint team.
             if (DOTT_ticketWEST isEqualTo 0) then
             {
-                "Your team is out of tickets!"
-                    remoteExec ["hint", _playerSide];
-                "ADMIN: Blufor is out of tickets!"
-                    remoteExec ["hint", _adminClient];
+                "Your team is out of tickets!" remoteExec ["hint", _playerSide];
+                "ADMIN: Blufor is out of tickets!" remoteExec ["hint", _adminClient];
                 [
                     "<t color='#ffffff' size='2'>You are the last player allowed to leave spawn!</t>",
                     "PLAIN",
                     0.8
-                ] remoteExec [
-                    "DOTT_common_fnc_displayMsg",
-                    _clientOwner
-                ];
+                ] remoteExec ["DOTT_common_fnc_displayMsg", _clientOwner];
             }
             else
             {
@@ -89,17 +84,12 @@ switch (_playerSide) do
                 format [
                     "Your team has %1 tickets remaining!",
                     DOTT_ticketWEST
-                ] remoteExec [
-                    "hintSilent", _playerSide
-                ];
+                ] remoteExec ["hintSilent", _playerSide];
                 [
                     "<t color='#ffffff' size='2'>You may leave spawn!</t>",
                     "PLAIN",
                     0.5
-                ] remoteExec [
-                    "DOTT_common_fnc_displayMsg",
-                    _clientOwner
-                ];
+                ] remoteExec ["DOTT_common_fnc_displayMsg", _clientOwner];
             };
         };
     };
@@ -124,35 +114,25 @@ switch (_playerSide) do
 
             if (DOTT_ticketEAST isEqualTo 0) then
             {
-                "Your team is out of tickets!"
-                    remoteExec ["hint", _playerSide];
-                "ADMIN: Opfor is out of tickets!"
-                    remoteExec ["hint", _adminClient];
+                "Your team is out of tickets!" remoteExec ["hint", _playerSide];
+                "ADMIN: Opfor is out of tickets!" remoteExec ["hint", _adminClient];
                 [
                     "<t color='#ffffff' size='2'>You are the last player allowed to leave spawn!</t>",
                     "PLAIN",
                     0.8
-                ] remoteExec [
-                    "DOTT_common_fnc_displayMsg",
-                    _clientOwner
-                ];
+                ] remoteExec ["DOTT_common_fnc_displayMsg", _clientOwner];
             }
             else
             {
                 format [
                     "Your team has %1 tickets remaining!",
                     DOTT_ticketEAST
-                ] remoteExec [
-                    "hintSilent", _playerSide
-                ];
+                ] remoteExec ["hintSilent", _playerSide];
                 [
                     "<t color='#ffffff' size='2'>You may leave spawn!</t>",
                     "PLAIN",
                     0.5
-                ] remoteExec [
-                    "DOTT_common_fnc_displayMsg",
-                    _clientOwner
-                ];
+                ] remoteExec ["DOTT_common_fnc_displayMsg", _clientOwner];
             };
         };
     };
@@ -177,35 +157,25 @@ switch (_playerSide) do
 
             if (DOTT_ticketGUER isEqualTo 0) then
             {
-                "Your team is out of tickets!"
-                    remoteExec ["hint", _playerSide];
-                "ADMIN: Grnfor is out of tickets!"
-                    remoteExec ["hint", _adminClient];
+                "Your team is out of tickets!" remoteExec ["hint", _playerSide];
+                "ADMIN: Grnfor is out of tickets!" remoteExec ["hint", _adminClient];
                 [
                     "<t color='#ffffff' size='2'>You are the last player allowed to leave spawn!</t>",
                     "PLAIN",
                     0.8
-                ] remoteExec [
-                    "DOTT_common_fnc_displayMsg",
-                    _clientOwner
-                ];
+                ] remoteExec ["DOTT_common_fnc_displayMsg", _clientOwner];
             }
             else
             {
                 format [
                     "Your team has %1 tickets remaining!",
                     DOTT_ticketGUER
-                ] remoteExec [
-                    "hintSilent", _playerSide
-                ];
+                ] remoteExec ["hintSilent", _playerSide];
                 [
                     "<t color='#ffffff' size='2'>You may leave spawn!</t>",
                     "PLAIN",
                     0.5
-                ] remoteExec [
-                    "DOTT_common_fnc_displayMsg",
-                    _clientOwner
-                ];
+                ] remoteExec ["DOTT_common_fnc_displayMsg", _clientOwner];
             };
         };
     };

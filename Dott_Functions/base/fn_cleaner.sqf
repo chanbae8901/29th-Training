@@ -23,13 +23,7 @@ private _dead = allDeadMen;
 //  get items around trash cans
 private _nearObjects = [];
 {
-    _nearObjects append (
-        nearestObjects [
-            _x,
-            ["WeaponHolder", "GroundWeaponHolder"],
-            250
-        ]
-    );
+    _nearObjects append (nearestObjects [_x, ["WeaponHolder", "GroundWeaponHolder"], 250]);
 } forEach DOTT_garbages;
 
 private _countObjects = count _nearObjects;
@@ -45,10 +39,6 @@ if (_countAllNear < 1) exitWith
 { deleteVehicle _x; } forEach _dead;
 { deleteVehicle _x; } forEach _nearObjects;
 
-private _text = format [
-    "Cleaned:\n%1 Objects\n%2 Dead Bodies",
-    _countObjects,
-    _countDead
-];
+private _text = format ["Cleaned:\n%1 Objects\n%2 Dead Bodies", _countObjects, _countDead];
 hintSilent _text;
 true

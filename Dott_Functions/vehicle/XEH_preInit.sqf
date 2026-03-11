@@ -16,8 +16,7 @@
     "CHECKBOX",
     [
         "Disable RHS engine warmup",
-        "Disable RHS startup delay on some vehicles."
-            + " Useful for preventing teleport bug."
+        "Disable RHS startup delay on some vehicles. Useful for preventing teleport bug."
     ],
     [GENERAL_SETTINGS_CATEGORY, VEHICLE_SUBCATEGORY],
     true,
@@ -38,8 +37,7 @@
     "CHECKBOX",
     [
         "Auto add FRIES",
-        "Automatically equip FRIES to helicopters"
-            + " when they are created."
+        "Automatically equip FRIES to helicopters when they are created."
     ],
     [GENERAL_SETTINGS_CATEGORY, VEHICLE_SUBCATEGORY],
     true,

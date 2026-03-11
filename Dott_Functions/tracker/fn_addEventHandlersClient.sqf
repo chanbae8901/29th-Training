@@ -37,12 +37,9 @@ player addEventHandler ["FiredMan",
         name _unit, side (group _unit),
         getPosASL _unit, _realWeapon
     ];
-    _projectile setVariable
-        ["DOTT_instigatorInfo", _data];
-    _projectile addEventHandler
-        ["HitPart", { call DOTT_tracker_fnc_hit }];
-    _projectile addEventHandler
-        ["HitExplosion", { call DOTT_tracker_fnc_hit }];
+    _projectile setVariable ["DOTT_instigatorInfo", _data];
+    _projectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];
+    _projectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];
 
     // Shotguns.
     _projectile addEventHandler
@@ -51,15 +48,10 @@ player addEventHandler ["FiredMan",
         params ["_projectile", "_submunitionProjectile"];
         _submunitionProjectile setVariable [
             "DOTT_instigatorInfo",
-            _projectile getVariable
-                "DOTT_instigatorInfo"
+            _projectile getVariable "DOTT_instigatorInfo"
         ];
-        _submunitionProjectile addEventHandler
-            ["HitPart",
-                { call DOTT_tracker_fnc_hit }];
-        _submunitionProjectile addEventHandler
-            ["HitExplosion",
-                { call DOTT_tracker_fnc_hit }];
+        _submunitionProjectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];
+        _submunitionProjectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];
     }];
 }];
 
@@ -83,12 +75,9 @@ player addEventHandler ["FiredMan",
         name _unit, side (group _unit),
         getPosASL _unit, _realWeapon
     ];
-    _projectile setVariable
-        ["DOTT_instigatorInfo", _data];
-    _projectile addEventHandler
-        ["HitPart", { call DOTT_tracker_fnc_hit }];
-    _projectile addEventHandler
-        ["HitExplosion", { call DOTT_tracker_fnc_hit }];
+    _projectile setVariable ["DOTT_instigatorInfo", _data];
+    _projectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];
+    _projectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];
 
     _projectile addEventHandler
         ["SubmunitionCreated",
@@ -96,15 +85,10 @@ player addEventHandler ["FiredMan",
         params ["_projectile", "_submunitionProjectile"];
         _submunitionProjectile setVariable [
             "DOTT_instigatorInfo",
-            _projectile getVariable
-                "DOTT_instigatorInfo"
+            _projectile getVariable "DOTT_instigatorInfo"
         ];
-        _submunitionProjectile addEventHandler
-            ["HitPart",
-                { call DOTT_tracker_fnc_hit }];
-        _submunitionProjectile addEventHandler
-            ["HitExplosion",
-                { call DOTT_tracker_fnc_hit }];
+        _submunitionProjectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];
+        _submunitionProjectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];
     }];
 }] call CBA_fnc_addEventHandler;
 
@@ -130,12 +114,9 @@ player addEventHandler ["FiredMan",
         name _unit, side (group _unit),
         getPosASL _unit, _explosiveName
     ];
-    _explosive setVariable
-        ["DOTT_instigatorInfo", _data];
-    _explosive addEventHandler
-        ["HitPart", { call DOTT_tracker_fnc_hit }];
-    _explosive addEventHandler
-        ["HitExplosion", { call DOTT_tracker_fnc_hit }];
+    _explosive setVariable ["DOTT_instigatorInfo", _data];
+    _explosive addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];
+    _explosive addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];
 
     // Bouncing mines.
     _explosive addEventHandler
@@ -144,15 +125,10 @@ player addEventHandler ["FiredMan",
         params ["_projectile", "_submunitionProjectile"];
         _submunitionProjectile setVariable [
             "DOTT_instigatorInfo",
-            _projectile getVariable
-                "DOTT_instigatorInfo"
+            _projectile getVariable "DOTT_instigatorInfo"
         ];
-        _submunitionProjectile addEventHandler
-            ["HitPart",
-                { call DOTT_tracker_fnc_hit }];
-        _submunitionProjectile addEventHandler
-            ["HitExplosion",
-                { call DOTT_tracker_fnc_hit }];
+        _submunitionProjectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];
+        _submunitionProjectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];
     }];
 }] call CBA_fnc_addEventHandler;
 
@@ -212,8 +188,7 @@ DOTT_lastFireCheck = 0;
             round (serverTime - DOTT_tracker_startTime)
         ];
 
-        [[_unit], _instigatorInfo] remoteExecCall
-            ["DOTT_tracker_fnc_sendHit", 2];
+        [[_unit], _instigatorInfo] remoteExecCall ["DOTT_tracker_fnc_sendHit", 2];
     };
 
     if (_ammo == "burn") then
@@ -307,8 +282,7 @@ DOTT_lastFireCheck = 0;
             round (serverTime - DOTT_tracker_startTime)
         ];
 
-        [[_unit], _instigatorInfo] remoteExecCall
-            ["DOTT_tracker_fnc_sendHit", 2];
+        [[_unit], _instigatorInfo] remoteExecCall ["DOTT_tracker_fnc_sendHit", 2];
     };
 
     // Burn has a delay of 1 second so if someone dies
@@ -382,8 +356,7 @@ DOTT_lastFireCheck = 0;
             round (serverTime - DOTT_tracker_startTime)
         ];
 
-        [[_unit], _instigatorInfo] remoteExecCall
-            ["DOTT_tracker_fnc_sendHit", 2];
+        [[_unit], _instigatorInfo] remoteExecCall ["DOTT_tracker_fnc_sendHit", 2];
     };
 
     // Vehicle explosion.
@@ -416,8 +389,7 @@ DOTT_lastFireCheck = 0;
             round (serverTime - DOTT_tracker_startTime)
         ];
 
-        [[_unit], _instigatorInfo] remoteExecCall
-            ["DOTT_tracker_fnc_sendHit", 2];
+        [[_unit], _instigatorInfo] remoteExecCall ["DOTT_tracker_fnc_sendHit", 2];
     };
 }] call CBA_fnc_addEventHandler;
 
@@ -430,12 +402,9 @@ DOTT_lastFireCheck = 0;
 
     if (!isNull _instigator) then
     {
-        _unit setVariable
-            ["DOTT_burnInstigator", _instigator, true];
-        _unit setVariable
-            ["DOTT_burnInstigatorTime", time];
-        _unit setVariable
-            ["DOTT_burnWeapon", "Fire", true];
+        _unit setVariable ["DOTT_burnInstigator", _instigator, true];
+        _unit setVariable ["DOTT_burnInstigatorTime", time];
+        _unit setVariable ["DOTT_burnWeapon", "Fire", true];
     }
     else
     {
@@ -464,10 +433,8 @@ DOTT_lastFireCheck = 0;
                 (getShotParents _grenade) select 0,
                 true
             ];
-            _unit setVariable
-                ["DOTT_burnInstigatorTime", time];
-            _unit setVariable
-                ["DOTT_burnWeapon", "ACE AN-M14", true];
+            _unit setVariable ["DOTT_burnInstigatorTime", time];
+            _unit setVariable ["DOTT_burnWeapon", "ACE AN-M14", true];
         }
         else
         {
@@ -497,31 +464,15 @@ DOTT_lastFireCheck = 0;
             // Look for nearby burning people.
             if (isNull _instigator) then
             {
-                private _men = (position _unit)
-                    nearObjects ["Man", 5];
+                private _men = (position _unit) nearObjects ["Man", 5];
                 {
-                    private _burnInstigator =
-                        _x getVariable
-                            ["DOTT_burnInstigator",
-                             objNull];
+                    private _burnInstigator = _x getVariable ["DOTT_burnInstigator", objNull];
                     if (!isNull _burnInstigator) exitWith
                     {
-                        private _burnWeapon =
-                            _x getVariable
-                                ["DOTT_burnWeapon",
-                                 "Fire"];
-                        _unit setVariable [
-                            "DOTT_burnInstigator",
-                            _burnInstigator, true
-                        ];
-                        _unit setVariable [
-                            "DOTT_burnInstigatorTime",
-                            time
-                        ];
-                        _unit setVariable [
-                            "DOTT_burnWeapon",
-                            _burnWeapon, true
-                        ];
+                        private _burnWeapon = _x getVariable ["DOTT_burnWeapon", "Fire"];
+                        _unit setVariable ["DOTT_burnInstigator", _burnInstigator, true];
+                        _unit setVariable ["DOTT_burnInstigatorTime", time];
+                        _unit setVariable ["DOTT_burnWeapon", _burnWeapon, true];
                     };
                 }
                 forEach _men;
@@ -544,27 +495,21 @@ addMissionEventHandler ["EntityKilled",
     if (isNull _instigator) then
     {
         // Look for ACE/RHS incendiary grenade.
-        private _grenades = (position _unit)
-            nearObjects [
-                "GrenadeHand",
-                VEHICLE_GRENADE_DISTANCE
-            ];
+        private _grenades = (position _unit) nearObjects ["GrenadeHand", VEHICLE_GRENADE_DISTANCE];
         {
             if (
                 (typeOf _x) == "ACE_G_M14"
                 || (typeOf _x) == "rhs_ammo_an_m14_th3"
             ) exitWith
             {
-                _instigator =
-                    (getShotParents _x) select 0;
+                _instigator = (getShotParents _x) select 0;
             };
         }
         forEach _grenades;
     };
     if (isNull _instigator) exitWith {};
 
-    DOTT_tracker_cookOffs pushBack
-        [getPosASL _unit, _instigator];
+    DOTT_tracker_cookOffs pushBack [getPosASL _unit, _instigator];
 }];
 
 player addEventHandler ["Respawn",

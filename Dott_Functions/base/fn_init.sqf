@@ -42,28 +42,23 @@ DOTT_arsenals = [];
 DOTT_garbages = []; //global variable for cleaner function
 
 { //forEach object placed in editor
-    //get variable name in string format, if empty then skip to next object
     private _vicString = vehicleVarName _x;
     if (_vicString isEqualTo "") then { continue };
 
-    //make all lower case to reduce user errors
     _vicString = toLowerANSI _vicString;
 
-    //create array of tags split with an underscore (E.G. "base_action_terminal_0" becomes ["base","action","terminal","0"] )
+    // E.G. "base_action_terminal_0" -> ["base","action","terminal","0"]
     private _tags = _vicString splitString "_";
 
-    //if less then 3 tags, object isn't named for this convention, skip object
     private _tagCount = count _tags;
     if (_tagCount < 3) then { continue };
 
-    //if the second tag isn't "action", skip object, continue to next object in vehicles array
     private _actionObject = _tags select 1;
     if (_actionObject isNotEqualTo "action") then
     {
         continue;
     };
 
-    //third tag is action type, sort variable into associated array
     private _actionType = _tags select 2;
     switch (_actionType) do
     {
@@ -90,25 +85,14 @@ forEach allMissionObjects "All";
         nil, 6, false, true, "", "true", 4
     ];
 
-    //create trigger for animating the spectator box and set it up
-    private _trg = createTrigger [
-        "EmptyDetector", getPos _x, false
-    ];
+    private _trg = createTrigger ["EmptyDetector", getPos _x, false];
     _trg setTriggerArea [0, 0, 0, false];
     _trg setTriggerActivation ["NONE", "NONE", true];
 
-    private _condition = format [
-        "player distance %1 < 3", _x
-    ];
-    private _activate = format [
-        "[%1,3] call BIS_fnc_dataTerminalAnimate;", _x
-    ];
-    private _deActivate = format [
-        "[%1,0] call BIS_fnc_dataTerminalAnimate;", _x
-    ];
-    _trg setTriggerStatements [
-        _condition, _activate, _deActivate
-    ];
+    private _condition = format ["player distance %1 < 3", _x];
+    private _activate = format ["[%1,3] call BIS_fnc_dataTerminalAnimate;", _x];
+    private _deActivate = format ["[%1,0] call BIS_fnc_dataTerminalAnimate;", _x];
+    _trg setTriggerStatements [_condition, _activate, _deActivate];
 } forEach DOTT_terminals;
 
 //Very messy area below but I'm lazy
@@ -184,8 +168,7 @@ if (isNil "DOTT_arsenal_centers") then
     {
         private _inZone = false;
         {
-            private _distSquared =
-                (getPosASL player) distanceSqr _x;
+            private _distSquared = (getPosASL player) distanceSqr _x;
             if (_distSquared <= _radiusSquared) exitWith
             {
                 _inZone = true;
@@ -202,21 +185,12 @@ if (isNil "DOTT_arsenal_centers") then
                     ENV_OFF;
                 };
 
-                if (
-                    isClass (
-                        configFile >> "CfgPatches"
-                        >> "ace_main"
-                    )
-                ) then
+                if (isClass (configFile >> "CfgPatches" >> "ace_main")) then
                 {
                     arsenalActionId = player addAction [
                         "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#bf3eff'>  Ace Arsenal</t>",
                         {
-                            [
-                                _this select 1,
-                                _this select 1,
-                                true
-                            ] call ace_arsenal_fnc_openBox;
+                            [_this select 1, _this select 1, true] call ace_arsenal_fnc_openBox;
                         },
                         nil, 1.5, true, true, "", "true"
                     ];
@@ -226,8 +200,7 @@ if (isNil "DOTT_arsenal_centers") then
                     arsenalActionId = player addAction [
                         "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#bf3eff'>  Virtual Arsenal</t>",
                         {
-                            ["Open", true]
-                                spawn BIS_fnc_arsenal;
+                            ["Open", true] spawn BIS_fnc_arsenal;
                         },
                         nil, 1.5, true, true, "", "true"
                     ];
@@ -264,8 +237,7 @@ if (DOTT_MODULES find "parade" != -1) then
         "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#3f8eff'>  Force Parade</t>",
         {
             params ["_target"];
-            [_target, 125]
-                call DOTT_parade_fnc_forceAll;
+            [_target, 125] call DOTT_parade_fnc_forceAll;
         },
         nil,
         0.9,

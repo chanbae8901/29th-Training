@@ -50,8 +50,7 @@
 #define OCAPEXTLOG(_args) \
     [":LOG:", _args] call EFUNC(extension,sendData)
 
-[QGVARMAIN(handleMarker), EGVAR(listener,markers)]
-    call CBA_fnc_removeEventHandler;
+[QGVARMAIN(handleMarker), EGVAR(listener,markers)] call CBA_fnc_removeEventHandler;
 
 EGVAR(listener,markers) =
     [QGVARMAIN(handleMarker),
@@ -108,18 +107,13 @@ EGVAR(listener,markers) =
             private _mrk_color = "";
             if (_color == "Default") then
             {
-                _mrk_color = (configFile
-                    >> "CfgMarkers" >> _type >> "color")
-                    call BIS_fnc_colorConfigToRGBA
-                    call bis_fnc_colorRGBtoHTML;
+                _mrk_color = (configFile >> "CfgMarkers" >> _type >> "color")
+                    call BIS_fnc_colorConfigToRGBA call bis_fnc_colorRGBtoHTML;
             }
             else
             {
-                _mrk_color = (configFile
-                    >> "CfgMarkerColors"
-                    >> _color >> "color")
-                    call BIS_fnc_colorConfigToRGBA
-                    call bis_fnc_colorRGBtoHTML;
+                _mrk_color = (configFile >> "CfgMarkerColors" >> _color >> "color")
+                    call BIS_fnc_colorConfigToRGBA call bis_fnc_colorRGBtoHTML;
             };
 
             private ["_sideOfMarker"];
@@ -131,10 +125,8 @@ EGVAR(listener,markers) =
             }
             else
             {
-                _sideOfMarker =
-                    (side _mrk_owner) call BIS_fnc_sideID;
-                _mrk_owner = _mrk_owner getVariable
-                    [QGVARMAIN(id), 0];
+                _sideOfMarker = (side _mrk_owner) call BIS_fnc_sideID;
+                _mrk_owner = _mrk_owner getVariable [QGVARMAIN(id), 0];
             };
 
             if (_sideOfMarker isEqualTo 4
@@ -161,8 +153,7 @@ EGVAR(listener,markers) =
                     {_i < ((count _pos) - 1)},
                     {_i = _i + 1}] do
                 {
-                    _polylinePos pushBack
-                        [_pos # (_i), _pos # (_i + 1)];
+                    _polylinePos pushBack [_pos # (_i), _pos # (_i + 1)];
                     _i = _i + 1;
                 };
                 _pos = _polylinePos;
@@ -180,8 +171,7 @@ EGVAR(listener,markers) =
                 };
             };
 
-            private _captureFrameNo =
-                GVAR(captureFrameNo);
+            private _captureFrameNo = GVAR(captureFrameNo);
 
             [":MARKER:CREATE:",
                 [_mrk_name, _dir, _type, _text,
@@ -226,8 +216,7 @@ EGVAR(listener,markers) =
                     [_mrk_name, GVAR(captureFrameNo)]]
                     call EFUNC(extension,sendData);
 
-                GVAR(trackedMarkers) =
-                    GVAR(trackedMarkers) - [_mrk_name];
+                GVAR(trackedMarkers) = GVAR(trackedMarkers) - [_mrk_name];
             };
         };
     };

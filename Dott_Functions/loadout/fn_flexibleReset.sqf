@@ -36,23 +36,18 @@ params
 
 if (!hasInterface) exitWith {}; // Client only.
 
-// If inventory array isn't empty, load specified inventory.
 private _resetInventory = false;
 
 if (_inventory isEqualTo true) then
 {
-    _inventory =
-        missionNamespace getVariable ["resetLoadout", []];
+    _inventory = missionNamespace getVariable ["resetLoadout", []];
 };
 
 if (count _inventory != 0) then
 {
-    if (!isNil
-        {missionNamespace getVariable
-            "BIS_EGSpectator_initialized"}) exitWith
+    if (!isNil {missionNamespace getVariable "BIS_EGSpectator_initialized"}) exitWith
     {
-        systemChat
-            "Player in spectator, skipping rearm.";
+        systemChat "Player in spectator, skipping rearm.";
     };
 
     if (arsenalActionId != -1) exitWith
@@ -60,16 +55,13 @@ if (count _inventory != 0) then
         systemChat "Player in base, skipping rearm.";
     };
 
-    [player, _inventory, true]
-        spawn DOTT_loadout_fnc_fullSetUnitLoadout;
+    [player, _inventory, true] spawn DOTT_loadout_fnc_fullSetUnitLoadout;
 
-    // Set to true for switch below.
     _resetInventory = true;
 };
 
 if (_heal) then
 {
-    // Call ACE medical treatment function.
     [player] call ACE_medical_treatment_fnc_fullHealLocal;
 
     if (["ace_hearing"] call ace_common_fnc_isModLoaded) then
@@ -81,24 +73,17 @@ if (_heal) then
 private _pointCount = count _point;
 private _teleport = false;
 
-// True if array is less than required size for teleport.
 if (_pointCount < 3) then
 {
-    // If array isn't empty, then it was the wrong size, provide
-    // error message to client.
     if (_point isNotEqualTo []) then
     {
-        hint
-            "DOTT_fnc_roundReset Error:"
-            + " Position Array wrong size!";
+        hint "DOTT_fnc_roundReset Error: Position Array wrong size!";
     };
 }
 else
 {
-    // Otherwise if array is correct size, then teleport requested.
-
-    // In case player was dead during teleport call, wait up to
-    // 30 seconds for player to respawn.
+    // Wait up to 30 seconds for player to respawn if they died
+    // during the teleport call.
     private _timeStart = time;
     waitUntil
     {
@@ -107,12 +92,10 @@ else
             || (!isNull player && alive player)
     };
 
-    // Kick player out of spectator.
     call DOTT_spectator_fnc_exit;
 
     DOTT_loadout_teleporting = true;
 
-    // Try multiple times if it fails for whatever reason.
     private _tries = 0;
 
     player allowDamage false;
@@ -126,13 +109,10 @@ else
                 ["emr_main_isClimbing", false])
         };
 
-        // Check distance to point and compare to _pointRad,
-        // if less then skip teleport.
         private _pointDist = player distance2D _point;
         if (_pointDist < _pointRad || !alive player)
             exitWith {};
 
-        // Cut to black with teleporting title.
         titleText [
             "<t color='#ffffff' size='4'>"
                 + "Teleporting...</t>",
@@ -141,12 +121,9 @@ else
 
         sleep 0.1;
 
-        // Damage off to prevent death/accidents during teleport.
-        // Force player out of vehicle if they're in one.
         moveOut player;
         sleep 0.1;
 
-        // Set player's position to specified point (ASL).
         private _dir = random 359;
         player setPosASL [
             (_point select 0) - 6 * sin(_dir),
@@ -155,18 +132,14 @@ else
         ];
         sleep 0.1;
 
-        // Check if the player is touching ground.
         private _ground = isTouchingGround player;
 
-        // If not touching ground then...
         if (!_ground) then
         {
-            // Get current height above water/terrain/objects.
             private _curr = getPos player;
             private _height = _curr select 2;
 
-            // If more than 2 meters in height set height to
-            // water/terrain.
+            // Snap to ground if floating above 2m.
             if (_height > 2) then
             {
                 player setPos [
@@ -193,7 +166,6 @@ else
         _tries = _tries + 1;
     };
 
-    // Return to normal state.
     [] spawn
     {
         sleep 2;
@@ -201,11 +173,9 @@ else
         DOTT_loadout_teleporting = nil;
     };
 
-    // Teleport true for switch below.
     _teleport = _tries > 0;
 };
 
-// If no msgClass, use defaults below.
 if (_msgClass isEqualTo "") exitWith
 {
     switch (true) do

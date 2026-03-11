@@ -41,10 +41,8 @@ if (time == 0) exitWith
 
 _playerVarName = toLower _playerVarName;
 
-// Only create modules for players in the allowed list.
 if (DOTT_curator_units find _playerVarName == -1) exitWith {};
 
-// Forward to server if called on a client.
 if !(isServer) exitWith
 {
     _this remoteExecCall [
@@ -56,7 +54,6 @@ private _curatorModuleName = format [
     "DOTT_curator_zeus_%1", _playerVarName
 ];
 
-// Clean up any pre-existing module for this player.
 if !(isNil _curatorModuleName) then
 {
     deleteVehicle (
@@ -65,7 +62,6 @@ if !(isNil _curatorModuleName) then
     missionNamespace setVariable [_curatorModuleName, nil];
 };
 
-// --- Build the new curator module ---
 private _group = createGroup [sideLogic, true];
 private _logic = _group createUnit [
     "ModuleCurator_F", [0, 0, 0], [], 0, "NONE"

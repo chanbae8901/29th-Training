@@ -43,15 +43,12 @@ if (isServer) then
         };
 
         //replace default with server initial setting
-        private _setting =
-            cba_settings_default getVariable _x;
+        private _setting = cba_settings_default getVariable _x;
         _setting set [
             0,
             [_x, "server"] call CBA_settings_fnc_get
         ];
-        DOTT_settings_default setVariable [
-            _x, _setting, true
-        ];
+        DOTT_settings_default setVariable [_x, _setting, true];
 
         DOTT_settings_allSettings pushBack _x;
     }

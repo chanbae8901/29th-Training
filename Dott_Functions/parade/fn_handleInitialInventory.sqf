@@ -30,21 +30,13 @@ private _fn_loadParade =
         };
         case EAST:
         {
-            [
-                player,
-                missionConfigFile
-                    >> "CfgRespawnInventory"
-                    >> "29TH_PARADE_EAST"
-            ] call BIS_fnc_loadInventory;
+            [player, missionConfigFile >> "CfgRespawnInventory" >> "29TH_PARADE_EAST"]
+                call BIS_fnc_loadInventory;
         };
         case INDEPENDENT:
         {
-            [
-                player,
-                missionConfigFile
-                    >> "CfgRespawnInventory"
-                    >> "29TH_PARADE_INDEPENDENT"
-            ] call BIS_fnc_loadInventory;
+            [player, missionConfigFile >> "CfgRespawnInventory" >> "29TH_PARADE_INDEPENDENT"]
+                call BIS_fnc_loadInventory;
         };
     };
 };

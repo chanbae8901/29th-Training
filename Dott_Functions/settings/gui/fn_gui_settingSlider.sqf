@@ -28,8 +28,7 @@ _settingData params [
 
 private _range = _max - _min;
 
-private _ctrlSlider =
-    _controlsGroup controlsGroupCtrl 5120;
+private _ctrlSlider = _controlsGroup controlsGroupCtrl 5120;
 _ctrlSlider sliderSetRange [_min, _max];
 _ctrlSlider sliderSetPosition _currentValue;
 _ctrlSlider sliderSetSpeed [
@@ -48,8 +47,7 @@ _ctrlSlider ctrlAddEventHandler [
     "SliderPosChanged",
     {
         params ["_ctrlSlider", "_value"];
-        (_ctrlSlider getVariable
-            "cba_settings_params") params [
+        (_ctrlSlider getVariable "cba_settings_params") params [
             "_setting", "_source",
             "_trailingDecimals", "_isPercentage"
         ];
@@ -57,11 +55,7 @@ _ctrlSlider ctrlAddEventHandler [
         private _editText =
             if (_isPercentage) then
             {
-                format [
-                    localize
-                        "STR_3DEN_percentageUnit",
-                    round (_value * 100), "%"
-                ]
+                format [localize "STR_3DEN_percentageUnit", round (_value * 100), "%"]
             }
             else
             {
@@ -70,14 +64,11 @@ _ctrlSlider ctrlAddEventHandler [
                     _value = round _value;
                 };
 
-                [_value, 1, _trailingDecimals max 0]
-                    call CBA_fnc_formatNumber
+                [_value, 1, _trailingDecimals max 0] call CBA_fnc_formatNumber
             };
 
-        private _controlsGroup =
-            ctrlParentControlsGroup _ctrlSlider;
-        private _ctrlSliderEdit =
-            _controlsGroup controlsGroupCtrl 5121;
+        private _controlsGroup = ctrlParentControlsGroup _ctrlSlider;
+        private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl 5121;
         _ctrlSliderEdit ctrlSetText _editText;
 
         SERVER_TEMP setVariable [
@@ -90,17 +81,11 @@ _ctrlSlider ctrlAddEventHandler [
             ]
         ];
 
-        private _ctrlDefault =
-            _controlsGroup controlsGroupCtrl 5020;
-        private _defaultValue =
-            (DOTT_settings_default
-                getVariable _setting) select 0;
-        _ctrlDefault ctrlEnable (
-            _value isNotEqualTo _defaultValue
-        );
+        private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
+        private _defaultValue = (DOTT_settings_default getVariable _setting) select 0;
+        _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 
-        private _ctrlSettingName =
-            _controlsGroup controlsGroupCtrl 5010;
+        private _ctrlSettingName = _controlsGroup controlsGroupCtrl 5010;
         _ctrlSettingName ctrlSetTextColor [
             0.95, 0.95, 0.1, 1
         ];
@@ -109,19 +94,14 @@ _ctrlSlider ctrlAddEventHandler [
 
 private _editText = if (_isPercentage) then
 {
-    format [
-        localize "STR_3DEN_percentageUnit",
-        round (_currentValue * 100), "%"
-    ]
+    format [localize "STR_3DEN_percentageUnit", round (_currentValue * 100), "%"]
 }
 else
 {
-    [_currentValue, 1, _trailingDecimals max 0]
-        call CBA_fnc_formatNumber
+    [_currentValue, 1, _trailingDecimals max 0] call CBA_fnc_formatNumber
 };
 
-private _ctrlSliderEdit =
-    _controlsGroup controlsGroupCtrl 5121;
+private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl 5121;
 _ctrlSliderEdit ctrlSetText _editText;
 
 _ctrlSliderEdit setVariable [
@@ -136,14 +116,12 @@ _ctrlSliderEdit ctrlAddEventHandler [
     "KeyUp",
     {
         params ["_ctrlSliderEdit"];
-        (_ctrlSliderEdit getVariable
-            "cba_settings_params") params [
+        (_ctrlSliderEdit getVariable "cba_settings_params") params [
             "_setting", "_source",
             "_trailingDecimals", "_isPercentage"
         ];
 
-        private _value =
-            parseNumber ctrlText _ctrlSliderEdit;
+        private _value = parseNumber ctrlText _ctrlSliderEdit;
 
         if (_isPercentage) then
         {
@@ -157,10 +135,8 @@ _ctrlSliderEdit ctrlAddEventHandler [
             };
         };
 
-        private _controlsGroup =
-            ctrlParentControlsGroup _ctrlSliderEdit;
-        private _ctrlSlider =
-            _controlsGroup controlsGroupCtrl 5120;
+        private _controlsGroup = ctrlParentControlsGroup _ctrlSliderEdit;
+        private _ctrlSlider = _controlsGroup controlsGroupCtrl 5120;
 
         _ctrlSlider sliderSetPosition _value;
         _value = sliderPosition _ctrlSlider;
@@ -175,17 +151,11 @@ _ctrlSliderEdit ctrlAddEventHandler [
             ]
         ];
 
-        private _ctrlDefault =
-            _controlsGroup controlsGroupCtrl 5020;
-        private _defaultValue =
-            (DOTT_settings_default
-                getVariable _setting) select 0;
-        _ctrlDefault ctrlEnable (
-            _value isNotEqualTo _defaultValue
-        );
+        private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
+        private _defaultValue = (DOTT_settings_default getVariable _setting) select 0;
+        _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 
-        private _ctrlSettingName =
-            _controlsGroup controlsGroupCtrl 5010;
+        private _ctrlSettingName = _controlsGroup controlsGroupCtrl 5010;
         _ctrlSettingName ctrlSetTextColor [
             0.95, 0.95, 0.1, 1
         ];
@@ -196,27 +166,20 @@ _ctrlSliderEdit ctrlAddEventHandler [
     "KillFocus",
     {
         params ["_ctrlSliderEdit"];
-        (_ctrlSliderEdit getVariable
-            "cba_settings_params") params [
+        (_ctrlSliderEdit getVariable "cba_settings_params") params [
             "_setting", "_source",
             "_trailingDecimals", "_isPercentage"
         ];
 
-        private _controlsGroup =
-            ctrlParentControlsGroup _ctrlSliderEdit;
-        private _ctrlSlider =
-            _controlsGroup controlsGroupCtrl 5120;
+        private _controlsGroup = ctrlParentControlsGroup _ctrlSliderEdit;
+        private _ctrlSlider = _controlsGroup controlsGroupCtrl 5120;
 
         private _value = sliderPosition _ctrlSlider;
 
         private _editText =
             if (_isPercentage) then
             {
-                format [
-                    localize
-                        "STR_3DEN_percentageUnit",
-                    round (_value * 100), "%"
-                ]
+                format [localize "STR_3DEN_percentageUnit", round (_value * 100), "%"]
             }
             else
             {
@@ -225,23 +188,16 @@ _ctrlSliderEdit ctrlAddEventHandler [
                     _value = round _value;
                 };
 
-                [_value, 1, _trailingDecimals max 0]
-                    call CBA_fnc_formatNumber
+                [_value, 1, _trailingDecimals max 0] call CBA_fnc_formatNumber
             };
 
         _ctrlSliderEdit ctrlSetText _editText;
 
-        private _ctrlDefault =
-            _controlsGroup controlsGroupCtrl 5020;
-        private _defaultValue =
-            (DOTT_settings_default
-                getVariable _setting) select 0;
-        _ctrlDefault ctrlEnable (
-            _value isNotEqualTo _defaultValue
-        );
+        private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
+        private _defaultValue = (DOTT_settings_default getVariable _setting) select 0;
+        _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 
-        private _ctrlSettingName =
-            _controlsGroup controlsGroupCtrl 5010;
+        private _ctrlSettingName = _controlsGroup controlsGroupCtrl 5010;
         _ctrlSettingName ctrlSetTextColor [
             0.95, 0.95, 0.1, 1
         ];
@@ -252,43 +208,30 @@ _controlsGroup setVariable [
     "cba_settings_fnc_updateUI",
     {
         params ["_controlsGroup", "_value"];
-        (_controlsGroup getVariable
-            "cba_settings_params") params [
+        (_controlsGroup getVariable "cba_settings_params") params [
             "_min", "_max",
             "_trailingDecimals", "_isPercentage"
         ];
 
-        private _ctrlSlider =
-            _controlsGroup controlsGroupCtrl 5120;
-        private _ctrlSliderEdit =
-            _controlsGroup controlsGroupCtrl 5121;
+        private _ctrlSlider = _controlsGroup controlsGroupCtrl 5120;
+        private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl 5121;
 
         _ctrlSlider sliderSetPosition _value;
 
         private _editText =
             if (_isPercentage) then
             {
-                format [
-                    localize
-                        "STR_3DEN_percentageUnit",
-                    round (_value * 100), "%"
-                ]
+                format [localize "STR_3DEN_percentageUnit", round (_value * 100), "%"]
             }
             else
             {
-                [_value, 1, _trailingDecimals max 0]
-                    call CBA_fnc_formatNumber
+                [_value, 1, _trailingDecimals max 0] call CBA_fnc_formatNumber
             };
 
         _ctrlSliderEdit ctrlSetText _editText;
 
-        private _ctrlDefault =
-            _controlsGroup controlsGroupCtrl 5020;
-        private _defaultValue =
-            (DOTT_settings_default
-                getVariable _setting) select 0;
-        _ctrlDefault ctrlEnable (
-            _value isNotEqualTo _defaultValue
-        );
+        private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
+        private _defaultValue = (DOTT_settings_default getVariable _setting) select 0;
+        _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
     }
 ];

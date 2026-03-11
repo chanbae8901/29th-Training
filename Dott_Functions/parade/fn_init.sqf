@@ -32,10 +32,7 @@ if (hasInterface) then
 if (isServer) then
 {
     // Register parade respawn inventories for each faction.
-    [WEST, "29TH_PARADE_WEST"]
-        call BIS_fnc_addRespawnInventory;
-    [EAST, "29TH_PARADE_EAST"]
-        call BIS_fnc_addRespawnInventory;
-    [INDEPENDENT, "29TH_PARADE_INDEPENDENT"]
-        call BIS_fnc_addRespawnInventory;
+    [WEST, "29TH_PARADE_WEST"] call BIS_fnc_addRespawnInventory;
+    [EAST, "29TH_PARADE_EAST"] call BIS_fnc_addRespawnInventory;
+    [INDEPENDENT, "29TH_PARADE_INDEPENDENT"] call BIS_fnc_addRespawnInventory;
 };

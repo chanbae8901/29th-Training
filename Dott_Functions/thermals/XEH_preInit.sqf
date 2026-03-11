@@ -22,11 +22,7 @@
             }
             else
             {
-                systemChat format [
-                    "Thermal imaging optics have been enabled."
-                    + " You have to reenter vehicle to enable"
-                    + " some PIP thermals."
-                ];
+                systemChat "Thermal imaging optics have been enabled. You have to reenter vehicle to enable some PIP thermals.";
             };
         };
 

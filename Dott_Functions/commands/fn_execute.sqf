@@ -63,66 +63,37 @@ _argument = [];
 _command = toLower (toString _command);
 _argument = toString _argument;
 
-private _commandCode =
-    pvpfw_chatIntercept_allCommands get _command;
+private _commandCode = pvpfw_chatIntercept_allCommands get _command;
 
 if !(isNil "_commandCode") then
 {
-    if (
-        pvpfw_chatIntercept_removedCommands
-        find _command != -1
-    ) exitWith
+    if (pvpfw_chatIntercept_removedCommands find _command != -1) exitWith
     {
-        systemChat
-            "Command has been disabled by server!";
+        systemChat "Command has been disabled by server!";
     };
 
     private _isAdmin = serverCommandAvailable "#lock";
 
-    if (
-        pvpfw_chatIntercept_adminCommands
-        find _command != -1
-        && !_isAdmin
-    ) exitWith
+    if (pvpfw_chatIntercept_adminCommands find _command != -1 && !_isAdmin) exitWith
     {
-        systemChat
-            "You must be the logged in admin to do that!";
+        systemChat "You must be the logged in admin to do that!";
     };
 
-    if (
-        pvpfw_chatIntercept_restrictedCommands
-        find _command != -1
-        && !_isAdmin
-        && (call DOTT_round_fnc_isRoundActive)
-    ) exitWith
+    if (pvpfw_chatIntercept_restrictedCommands find _command != -1 && !_isAdmin && (call DOTT_round_fnc_isRoundActive)) exitWith
     {
-        systemChat
-            "Restricted command! Round has started and you are not admin.";
+        systemChat "Restricted command! Round has started and you are not admin.";
     };
 
     [_argument] call _commandCode;
 
-    if (
-        pvpfw_chatIntercept_noLogCommands
-        find _command == -1
-    ) then
+    if (pvpfw_chatIntercept_noLogCommands find _command == -1) then
     {
-        private _msg = format [
-            "%1 executed command !%2 %3",
-            name player, _command, _argument
-        ];
-        _msg remoteExec [
-            "DOTT_common_fnc_diag_log", 2
-        ];
-        [
-            "Log",
-            ["Commands", _msg]
-        ] remoteExec ["DOTT_common_fnc_addDiaryRecord"];
+        private _msg = format ["%1 executed command !%2 %3", name player, _command, _argument];
+        _msg remoteExec ["DOTT_common_fnc_diag_log", 2];
+        ["Log", ["Commands", _msg]] remoteExec ["DOTT_common_fnc_addDiaryRecord"];
     };
 }
 else
 {
-    systemChat format [
-        "Unknown command: !%1", _command
-    ];
+    systemChat format ["Unknown command: !%1", _command];
 };

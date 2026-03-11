@@ -12,7 +12,6 @@
  * Example: call DOTT_loadout_fnc_onArsenalClosed;
  */
 
-// --- Persist inventory for respawn ---
 [player, [missionNamespace, "Current Inventory"]]
     call BIS_fnc_saveInventory;
 [player, ["missionNamespace:Current Inventory"]]

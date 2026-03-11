@@ -29,34 +29,23 @@ if (hasInterface) then
     pvpfw_chatIntercept_commandMarker = "!"; //Character at the front of the chat input to intercept it
 
     #include "commands.sqf"
-    
+
     // Load each module's commands.sqf if it exists.
     {
-        private _commandsFile = format [
-            "DOTT_Functions\%1\commands.sqf", _x
-        ];
+        private _commandsFile = format ["DOTT_Functions\%1\commands.sqf", _x];
         if !(fileExists _commandsFile) then { continue };
 
-        call compile preprocessFileLineNumbers
-            _commandsFile;
+        call compile preprocessFileLineNumbers _commandsFile;
     }
     forEach (DOTT_MODULES - ["commands"]);
 
     // Convert flat arrays to HashMaps for fast lookup.
-    pvpfw_chatIntercept_allCommands =
-        createHashMapFromArray
-        pvpfw_chatIntercept_allCommands;
-    pvpfw_chatIntercept_helpInfo =
-        createHashMapFromArray
-        pvpfw_chatIntercept_helpInfo;
+    pvpfw_chatIntercept_allCommands = createHashMapFromArray pvpfw_chatIntercept_allCommands;
+    pvpfw_chatIntercept_helpInfo = createHashMapFromArray pvpfw_chatIntercept_helpInfo;
 
     DOTT_commands_finishedInit = true;
-    [
-        "DOTT_commands_initCompleted", []
-    ] call CBA_fnc_localEvent;
+    ["DOTT_commands_initCompleted", []] call CBA_fnc_localEvent;
 
-    // Intercept chat messages starting with the command
-    // marker and route to fn_execute.
     addMissionEventHandler [
         "HandleChatMessage",
         {
@@ -70,20 +59,12 @@ if (hasInterface) then
 
             private _chatArr = toArray _text;
 
-            if (
-                (_chatArr select 0) isEqualTo
-                (
-                    (toArray
-                        pvpfw_chatIntercept_commandMarker)
-                    select 0
-                )
-            ) then
+            if ((_chatArr select 0) isEqualTo ((toArray pvpfw_chatIntercept_commandMarker) select 0)) then
             {
                 //only execute for the player who sent the message
                 if (_strID == getPlayerID player) then
                 {
-                    [_chatArr]
-                        call DOTT_commands_fnc_execute;
+                    [_chatArr] call DOTT_commands_fnc_execute;
                 };
                 true //blocks message from showing up in chat
             }

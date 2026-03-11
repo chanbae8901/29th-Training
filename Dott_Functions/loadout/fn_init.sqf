@@ -14,7 +14,6 @@
 
 if (hasInterface) then
 {
-    // --- BI Arsenal close handler ---
     [
         missionNamespace,
         "arsenalClosed",
@@ -25,7 +24,6 @@ if (hasInterface) then
         }
     ] call BIS_fnc_addScriptedEventHandler;
 
-    // --- ACE Arsenal close handler ---
     if (isClass (configFile >> "CfgPatches" >> "ace_main"))
         then
     {
@@ -39,13 +37,11 @@ if (hasInterface) then
         ] call CBA_fnc_addEventHandler;
     };
 
-    // --- Reapply insignia on respawn ---
     [
         "DOTT_loadout_setInsigniaRespawn",
         "Respawn",
         {
-            (_this select 0)
-                spawn DOTT_loadout_fnc_setInsignia;
+            (_this select 0) spawn DOTT_loadout_fnc_setInsignia;
         }
     ] call CBA_fnc_addBISPlayerEventHandler;
 };
