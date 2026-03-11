@@ -1,45 +1,54 @@
 /*
- * Name:	DOTT_base_fnc_cleaner
- * Date:	02/14/2025
- * Version: 2.1
- * Author:  Rellikplug	AKA: Hill [29th ID]
+ * Function: DOTT_base_fnc_cleaner
+ * Author:   Rellikplug AKA Hill [29th ID]
  *
  * Description:
- * Removes all dead bodies along with items (ex. weapons, magazines) around 250 meters from 
- * the base garbage cans (which should have this function attached with addAction).
+ *     Removes all dead bodies globally and deletes loose
+ *     ground items (weapons, magazines) within 250 meters
+ *     of each garbage can object in DOTT_garbages. Intended
+ *     to be attached to garbage cans via addAction.
  *
- * Parameter(s): None
+ * Parameters:
+ *     None
  *
  * Returns:
- * false if no objects deleted, true otherwise
+ *     Boolean - false if nothing was deleted, true otherwise
  *
  * Example:
- * call DOTT_base_fnc_cleaner;
- * 
+ *     call DOTT_base_fnc_cleaner;
  */
 
-private ["_dead","_near_objects","_countObjects","_countDead","_countAllNear"];
-
-_dead = allDeadMen;
+private _dead = allDeadMen;
 
 //  get items around trash cans
-_near_objects =  [];
+private _nearObjects = [];
 {
-    _near_objects append (nearestObjects [_x, ["WeaponHolder", "GroundWeaponHolder"], 250]);
+    _nearObjects append (
+        nearestObjects [
+            _x,
+            ["WeaponHolder", "GroundWeaponHolder"],
+            250
+        ]
+    );
 } forEach DOTT_garbages;
 
-_countObjects = count _near_objects;
-_countDead = count _dead;
-_countAllNear = _countObjects + _countDead;
+private _countObjects = count _nearObjects;
+private _countDead = count _dead;
+private _countAllNear = _countObjects + _countDead;
 
-if (_countAllNear < 1) exitWith 
+if (_countAllNear < 1) exitWith
 {
-	hintSilent "Nothing to delete.";
-	false
+    hintSilent "Nothing to delete.";
+    false
 };
 
 { deleteVehicle _x; } forEach _dead;
-{ deleteVehicle _x; } forEach _near_objects;
-_text = format ["Cleaned:\n%1 Objects\n%2 Dead Bodies",_countObjects,_countDead];
+{ deleteVehicle _x; } forEach _nearObjects;
+
+private _text = format [
+    "Cleaned:\n%1 Objects\n%2 Dead Bodies",
+    _countObjects,
+    _countDead
+];
 hintSilent _text;
 true
