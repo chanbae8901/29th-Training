@@ -1,25 +1,23 @@
-/*
- * Name:	DOTT_round_fnc_setOvertimePeriod
- * Date:	8/14/2025
- * Version: 1.0
- * Author:  Bae [29th ID] modified from Dott [29th ID]
+/**
+ * DOTT_round_fnc_setOvertimePeriod
  *
- * Description:
- * Setter function for overtime period.
+ * Sets the overtime period duration. Rejects non-positive values.
  *
- * Parameter(s): 
- * _time (Number) - value to set overtime period in seconds
+ * Parameters:
+ *     _time - Number - Overtime duration in seconds.
  *
  * Returns:
- * true
+ *     Boolean - true on success, false if rejected.
  *
  * Example:
- * [500] call DOTT_round_fnc_setOvertimePeriod;
- * 
+ *     [300] call DOTT_round_fnc_setOvertimePeriod;
  */
 
-params["_time"];
+params ["_time"];
+
 if (_time <= 0) exitWith {false};
+
 DOTT_round_overtimePeriod = _time;
 publicVariable "DOTT_round_overtimePeriod";
-true;
+
+true

@@ -1,4 +1,4 @@
-//Define ONLY ONE of the variations below
+// Define ONLY ONE of the variations below
 #define DOTT_TRAINING
 //#define DOTT_EVENT
 

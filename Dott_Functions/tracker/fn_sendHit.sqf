@@ -1,33 +1,45 @@
-/*
- * Name:	DOTT_tracker_fnc_sendHit
- * Date:	9/25/2025
- * Version: 1.0
- * Author:  Bae [29th ID]
+/**
+ * File: fn_sendHit.sqf
+ * Function: DOTT_tracker_fnc_sendHit
+ * Author: Bae [29th ID]
  *
- * Description:
- * Stores last hit of each player on a unit, as well as the last hit overall.
+ * Purpose:
+ * Server-side function that stores hit attribution data on
+ * each targeted unit. Maintains both a per-instigator hit map
+ * and a "last hit" pointer so kill/unconscious events can
+ * determine who was responsible.
  *
- * Parameter(s): 
- * _unit: Object to set hit info on
- * _hitInfo: Information about the hit - see fn_addEventHandlersClient and fn_hit
+ * Parameters:
+ * _units (Array): Objects to set hit info on.
+ * _instigatorInfo (Array): [name, side, pos, weapon, time].
  *
  * Returns:
  * Nothing
- *
- * Example:
- * [_hitEntity, _lastHit] remoteExecCall ["DOTT_tracker_fnc_sendHit", 2];
- * 
  */
 
 params ["_units", "_instigatorInfo"];
 
-private _key = [_instigatorInfo select 0, _instigatorInfo select 1]; //name, side
-private _value = [_instigatorInfo select 2, _instigatorInfo select 3, _instigatorInfo select 4]; //firing pos, weapon, time
+// name, side
+private _key = [
+    _instigatorInfo select 0,
+    _instigatorInfo select 1
+];
+// firing pos, weapon, time
+private _value = [
+    _instigatorInfo select 2,
+    _instigatorInfo select 3,
+    _instigatorInfo select 4
+];
 
 {
-    private _hitMap = _x getVariable "DOTT_hitMap";
-    if (isNil "_hitMap") then { _hitMap = createHashMap };
+    private _hitMap =
+        _x getVariable "DOTT_hitMap";
+    if (isNil "_hitMap") then
+    {
+        _hitMap = createHashMap;
+    };
     _hitMap set [_key, _value];
     _x setVariable ["DOTT_lastHit", _key];
     _x setVariable ["DOTT_hitMap", _hitMap];
-} forEach _units;
+}
+forEach _units;

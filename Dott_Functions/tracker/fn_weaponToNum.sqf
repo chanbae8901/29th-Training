@@ -1,30 +1,28 @@
-/*
- * Name:	DOTT_tracker_fnc_weaponToNum
- * Date:	8/26/2025
- * Version: 1.0
- * Author:  Bae [29th ID]
+/**
+ * File: fn_weaponToNum.sqf
+ * Function: DOTT_tracker_fnc_weaponToNum
+ * Author: Bae [29th ID]
  *
- * Description:
- * Server side function that checks/stores weapon name in DOTT_tracker_weapons and 
- * returns the index where it is (now) stored.
+ * Purpose:
+ * Server-side function that registers or looks up a weapon name
+ * in DOTT_tracker_weapons. Returns the index for compact event
+ * storage and network transmission.
  *
- * Parameter(s): 
- * _weaponName (String): Name of weapon to check/store
+ * Parameters:
+ * _weaponName (String): Display name of the weapon.
  *
  * Returns:
- * (Number) Index where weapon name is in DOTT_tracker_weapons
- *
- * Example:
- * ["AK-74M"] call DOTT_tracker_fnc_weaponToNum;
- * 
+ * Number -- index into DOTT_tracker_weapons.
  */
 
-params["_weaponName"];
+params ["_weaponName"];
+
 private _num = DOTT_tracker_weapons find _weaponName;
-if (_num == -1) then 
+
+if (_num == -1) then
 {
-	DOTT_tracker_weapons pushBack _weaponName;
-	_num = count DOTT_tracker_weapons - 1;
+    DOTT_tracker_weapons pushBack _weaponName;
+    _num = count DOTT_tracker_weapons - 1;
 };
 
 _num

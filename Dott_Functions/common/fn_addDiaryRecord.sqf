@@ -1,25 +1,23 @@
-/*
- * Name:	DOTT_common_fnc_addDiaryRecord
- * Date:	8/21/2025
- * Version:	1.0
- * Author:	Bae [29th ID]
+/**
+ * DOTT_common_fnc_addDiaryRecord
  *
- * Description:
- * Helper/wrapper function for createDiaryRecord intended to be remoteExec'd. 
+ * Wrapper for createDiaryRecord intended to be remoteExec'd.
+ * Allows server-side code to add diary entries on client machines.
  *
- * Parameter(s):
- *  _subject (String): Name of subject to add record.
- *	_textInfo (String): String to add to record.
+ * Parameters:
+ *     _subject  - STRING - diary subject category
+ *     _textInfo - STRING - body text for the diary entry
  *
  * Returns:
- * Diary Record
+ *     Diary Record, or nothing if no interface
  *
  * Example:
- * ["Something Happened", "Log"] remoteExec ["addDiaryRecord", 0];
- * 
+ *     ["Something Happened", "Log"]
+ *         remoteExec ["addDiaryRecord", 0];
  */
- 
-params["_subject", "_textInfo"];
+
+params ["_subject", "_textInfo"];
+
 if (!hasInterface) exitWith {};
 
 player createDiaryRecord [_subject, _textInfo];

@@ -1,21 +1,16 @@
-/*
- * Name:	DOTT_round_fnc_isRoundActive
- * Date:	12/22/2025
- * Version: 1.1
- * Author:  Bae [29th ID] modified from Dott [29th ID]
+/**
+ * DOTT_round_fnc_isRoundActive
  *
- * Description:
  * Checks if the round is currently active.
  *
- * Parameter(s): 
- * None
+ * Parameters:
+ *     None
  *
  * Returns:
- * true if the round is active, false otherwise.
+ *     Boolean - true if the round is active, false otherwise.
  *
  * Example:
- * call DOTT_round_fnc_isRoundActive;
- * 
+ *     call DOTT_round_fnc_isRoundActive;
  */
 
 [true] call BIS_fnc_countdown && isNil "DOTT_round_safeStartActive"

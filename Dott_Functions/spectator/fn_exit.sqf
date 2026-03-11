@@ -1,42 +1,59 @@
-/*
- * Name:	DOTT_spectator_fnc_exit
- * Date:	9/6/2016
- * Version: 1.0
- * Author: Rellikplug AKA: Hill [29th ID]
+/**
+ * DOTT_spectator_fnc_exit
  *
- * Description: Removes the player from spectator mode and undos the changes made by DOTT_spectator_fnc_enter.sqf.
+ * Removes the player from BIS EG Spectator mode and undoes all
+ * changes made by DOTT_spectator_fnc_enter. Temporarily disables
+ * damage to prevent collision kills when multiple players leave
+ * the spectator box at once.
  *
- * Parameter(s): 
- * None
+ * NOTE: The variable DOTT_loadout_teleporting is a magic string
+ * set by the loadout/teleport system. When present, it means the
+ * player is mid-teleport and damage must stay disabled to avoid
+ * conflicts. The 2-second re-enable is skipped in that case.
+ *
+ * Parameters:
+ *     None
  *
  * Returns:
- * false if player not in spectator, true otherwise
+ *     BOOL - false if not in spectator, true otherwise
  *
  * Example:
- * [] spawn DOTT_spectator_fnc_exit
+ *     call DOTT_spectator_fnc_exit;
  */
 
-// Check if spectator mode is initialized
-if (isNil {missionNamespace getVariable "BIS_EGSpectator_initialized"}) exitWith { false }; 
+// --- Bail if spectator was never initialized ---
+if (isNil {
+    missionNamespace getVariable "BIS_EGSpectator_initialized"
+}) exitWith { false };
 
-["Terminate"] call BIS_fnc_EGSpectator; //  End Spectator
+["Terminate"] call BIS_fnc_EGSpectator;
 [player, false] remoteExecCall ["hideObjectGlobal", 2];
-cutText ["","PLAIN DOWN"]; // Clear cutText
-hintSilent ""; // Clear Hint
 
-player allowDamage false; //Terminate EGSpectator makes player vulnerable, so make invulnerable again to minimize damage while leaving spectator (collision)
-[] spawn 
+cutText ["", "PLAIN DOWN"];
+hintSilent "";
+
+// Terminate makes the player vulnerable; disable damage briefly
+// to survive collision with other players leaving the box.
+player allowDamage false;
+
+[] spawn
 {
-	sleep 2; //wait so player does not take collision damage from other players leaving box
-	if (!isNil "DOTT_loadout_teleporting") exitWith {}; //don't conflict with command teleport	
-	player allowDamage true; // Make player vulnerable again
+    sleep 2;
+
+    // Don't conflict with the loadout teleport system.
+    if (!isNil "DOTT_loadout_teleporting") exitWith {};
+
+    player allowDamage true;
 };
 
-player switchCamera "internal"; // Make sure the camera is returned to the player
-["exitSpectator", "onEachFrame"] call BIS_fnc_removeStackedEventHandler; //  Remove the stackedEventHandler as we no longer need it
-if (!(weaponLowered player)) then 
+player switchCamera "internal";
+
+["exitSpectator", "onEachFrame"]
+    call BIS_fnc_removeStackedEventHandler;
+
+if !(weaponLowered player) then
 {
-	player action ["WeaponOnBack", player];
+    player action ["WeaponOnBack", player];
 };
 
 ["exitedSpectator", []] call CBA_fnc_localEvent;

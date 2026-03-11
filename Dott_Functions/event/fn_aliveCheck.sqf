@@ -1,88 +1,134 @@
-/* By Dott [29th ID]
+/**
+ * DOTT_event_fnc_aliveCheck
  *
- * Checks status of alive players and calls game end
- * If using respawns and a spectate area, the size of the spectate area can be changed
- * Server only, looping script
- * Requires eventLive = true to be able to call game
+ * Monitors alive player counts per side and triggers game end
+ * when only one side remains. Supports both permadeath (BIRD
+ * respawn) and spectate-area-based death detection.
  *
- * Configurable: (if players respawn)
- *	_spectateArea (object,Position2D, or Position3D): Object or position where the centre of the spectate area is
- *	_spectateAreaRadius (number): Radius of the spectate area, players inside are considered "dead" (default 200)
+ * Parameters:
+ *     None
+ *
+ * Returns:
+ *     Nothing
  *
  * Requires:
- *	eventGame.sqf
- *
+ *     DOTT_event_fnc_game
+ *     DOTT_round_fnc_isRoundActive
+ *     DOTT_event_spectateArea (global, if respawn-based)
+ *     DOTT_event_spectateAreaRadius (global, if respawn-based)
  */
 
-if (!isServer) exitWith {}; //server only
+if (!isServer) exitWith {};
 
 scopeName "main";
 
 /************************/
 
-//get missions respawn type
 private _respawnType = 0 call BIS_fnc_missionRespawnType;
-private _remainDead = (_respawnType == 1); //true if respawn type is BIRD (I.E. players remain dead)
+// BIRD respawn = players remain dead.
+private _remainDead = (_respawnType == 1);
 
-waitUntil { sleep 10; call DOTT_round_fnc_isRoundActive }; //wait until server is told event is live
+waitUntil {
+    sleep 10;
+    call DOTT_round_fnc_isRoundActive
+};
 
 
-while {call DOTT_round_fnc_isRoundActive} do 
+while {call DOTT_round_fnc_isRoundActive} do
 {
-	sleep 5; 
+    sleep 5;
 
-	private _allPlayers = call BIS_fnc_listPlayers;
+    private _allPlayers = call BIS_fnc_listPlayers;
 
-	private _bluforPlayers = [];
-	private _opforPlayers = [];
-	private _resistancePlayers = [];
+    private _bluforPlayers = [];
+    private _opforPlayers = [];
+    private _resistancePlayers = [];
 
-	{
-		private _side = side group _x;
-		switch (_side) do {
-			case west:       { _bluforPlayers pushBack _x };
-			case east:       { _opforPlayers pushBack _x };
-			case resistance: { _resistancePlayers pushBack _x };
-		};
-	} forEach _allPlayers;
+    {
+        private _side = side group _x;
+        switch (_side) do
+        {
+            case west:
+            {
+                _bluforPlayers pushBack _x;
+            };
+            case east:
+            {
+                _opforPlayers pushBack _x;
+            };
+            case resistance:
+            {
+                _resistancePlayers pushBack _x;
+            };
+        };
+    } forEach _allPlayers;
 
-	private _numBluforDead = 0;
-	private _numOpforDead = 0;
-	private _numResistanceDead = 0;
-	//if players remain dead, check who is actually alive
-	if (_remainDead) then 
-	{
-		_numBluforDead = ({!alive _x} count _bluforPlayers);
-		_numOpforDead = ({!alive _x} count _opforPlayers);
-		_numResistanceDead = ({!alive _x} count _resistancePlayers);
-	} else 
-	{
-		//create array of all players inside the spectate area
-		_numBluforDead = ({ (_x distance2D DOTT_event_spectateArea) < DOTT_event_spectateAreaRadius} count _bluforPlayers);
-		_numOpforDead = ({ (_x distance2D DOTT_event_spectateArea) < DOTT_event_spectateAreaRadius} count _opforPlayers);
-		_numResistanceDead = ({ (_x distance2D DOTT_event_spectateArea) < DOTT_event_spectateAreaRadius} count _resistancePlayers);
-	};
+    private _numBluforDead = 0;
+    private _numOpforDead = 0;
+    private _numResistanceDead = 0;
 
-	//get number of players of each side in spectate area array
-	private _isBluforAlive = (count _bluforPlayers) > _numBluforDead;
-	private _isOpforAlive = (count _opforPlayers) > _numOpforDead;
-	private _isResistanceAlive = (count _resistancePlayers) > _numResistanceDead;
-	
-	
-	//if all sides are wiped out, return to start of loop
-	//prevents niche case of last player on either team trading causing an erroneous victory
-	//admin can call game manually in this case
-	if (!_isBluforAlive && !_isOpforAlive && !_isResistanceAlive) then { continue };
+    if (_remainDead) then
+    {
+        _numBluforDead = { !alive _x } count _bluforPlayers;
+        _numOpforDead = { !alive _x } count _opforPlayers;
+        _numResistanceDead = { !alive _x } count _resistancePlayers;
+    }
+    else
+    {
+        _numBluforDead = {
+            (_x distance2D DOTT_event_spectateArea) < DOTT_event_spectateAreaRadius
+        } count _bluforPlayers;
 
-	// Check if only one side is alive
-	private _winnerSide = civilian;
+        _numOpforDead = {
+            (_x distance2D DOTT_event_spectateArea) < DOTT_event_spectateAreaRadius
+        } count _opforPlayers;
 
-	if (_isBluforAlive && !_isOpforAlive && !_isResistanceAlive) then { _winnerSide = west; };
-	if (!_isBluforAlive && _isOpforAlive && !_isResistanceAlive) then { _winnerSide = east; };
-	if (!_isBluforAlive && !_isOpforAlive && _isResistanceAlive) then { _winnerSide = resistance; };
+        _numResistanceDead = {
+            (_x distance2D DOTT_event_spectateArea) < DOTT_event_spectateAreaRadius
+        } count _resistancePlayers;
+    };
 
-	if (_winnerSide != civilian) then {
-		[true, _winnerSide] call DOTT_event_fnc_game;
-		breakTo "main";
-	};
+    private _isBluforAlive = (count _bluforPlayers) > _numBluforDead;
+    private _isOpforAlive = (count _opforPlayers) > _numOpforDead;
+    private _isResistanceAlive = (count _resistancePlayers) > _numResistanceDead;
+
+
+    //if all sides are wiped out, return to start
+    //of loop. Prevents niche case of last player
+    //on either team trading causing an erroneous
+    //victory. Admin can call game manually in
+    //this case.
+    if (!_isBluforAlive
+        && !_isOpforAlive
+        && !_isResistanceAlive) then
+    {
+        continue;
+    };
+
+    private _winnerSide = civilian;
+
+    if (_isBluforAlive
+        && !_isOpforAlive
+        && !_isResistanceAlive) then
+    {
+        _winnerSide = west;
+    };
+    if (!_isBluforAlive
+        && _isOpforAlive
+        && !_isResistanceAlive) then
+    {
+        _winnerSide = east;
+    };
+    if (!_isBluforAlive
+        && !_isOpforAlive
+        && _isResistanceAlive) then
+    {
+        _winnerSide = resistance;
+    };
+
+    if (_winnerSide != civilian) then
+    {
+        [true, _winnerSide] call DOTT_event_fnc_game;
+        breakTo "main";
+    };
 };

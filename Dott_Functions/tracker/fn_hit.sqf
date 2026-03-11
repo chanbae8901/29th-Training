@@ -1,45 +1,64 @@
-/*
- * Name:	DOTT_tracker_fnc_hit
- * Date:	9/30/2025
- * Version: 1.1
- * Author:  Bae [29th ID]
+/**
+ * File: fn_hit.sqf
+ * Function: DOTT_tracker_fnc_hit
+ * Author: Bae [29th ID]
  *
- * Description:
- * Function to be used in "HitExplosion" and "HitPart" projectile event for tracker system.
- * Transfers weapon/killer info from the projectile to the unit hit if conditions are met.
- * Should only be run client side.
+ * Purpose:
+ * HitExplosion/HitPart projectile event handler for the tracker.
+ * Transfers weapon/killer info from the projectile to the hit
+ * entity so the server can attribute kills correctly.
+ * Runs client-side only.
  *
- * NOTE: There is no check to ensure that the information is transferred to server fast enough before kill/uncon 
- * events are processed there, it is assumed it will be (which seems to be working).
+ * DESIGN RISK: There is no guarantee that the hit info sent here
+ * via remoteExecCall arrives on the server before the kill/uncon
+ * event is processed. The system relies on the assumption that
+ * network delivery is fast enough (backed by the 0.5-0.75s delay
+ * in fn_init.sqf). In practice this works, but under extreme
+ * network conditions it could theoretically fail.
  *
- * Parameter(s): 
- * [_projectile, _hitEntity] reference "HitExplosion" projectile event.
+ * Parameters:
+ * _projectile (Object): The projectile that hit.
+ * _hitEntity (Object): The entity that was hit.
  *
  * Returns:
  * true
- *
- * Example:
- * player call DOTT_tracker_fnc_hit;
- * 
  */
 
 params ["_projectile", "_hitEntity"];
-//things like buildings are considered alive
-//if they go through server will get spammed with errors 
-if !(alive _hitEntity && _hitEntity isKindOf "AllVehicles") exitWith {}; 
-private _instigatorInfo = _projectile getVariable "DOTT_instigatorInfo";
-//if projectile hits multiple things it can have time of hit already
-if (count _instigatorInfo > 4) then { _instigatorInfo deleteAt 4 };
-_instigatorInfo pushBack round(serverTime - DOTT_tracker_startTime);
 
-if (_hitEntity isKindOf "Man") exitWith { [[_hitEntity], _instigatorInfo] remoteExecCall ["DOTT_tracker_fnc_sendHit", 2] };
+// Things like buildings are considered alive.
+// If they go through server will get spammed with errors.
+if !(alive _hitEntity
+    && _hitEntity isKindOf "AllVehicles") exitWith {};
 
-//if vehicle is already going to blow up don't record any more damage so the kill is hopefully credited properly
-private _hitHull = _hitEntity getHitPointDamage "hitHull";
+private _instigatorInfo =
+    _projectile getVariable "DOTT_instigatorInfo";
+
+// If projectile hits multiple things it can have time of
+// hit already.
+if (count _instigatorInfo > 4) then
+{
+    _instigatorInfo deleteAt 4;
+};
+_instigatorInfo pushBack
+    round(serverTime - DOTT_tracker_startTime);
+
+if (_hitEntity isKindOf "Man") exitWith
+{
+    [[_hitEntity], _instigatorInfo] remoteExecCall
+        ["DOTT_tracker_fnc_sendHit", 2];
+};
+
+// If vehicle is already going to blow up don't record any
+// more damage so the kill is hopefully credited properly.
+private _hitHull =
+    _hitEntity getHitPointDamage "hitHull";
 if (_hitHull >= 1) exitWith {};
 
-private _targets = (crew _hitEntity) select { alive _x };
+private _targets =
+    (crew _hitEntity) select { alive _x };
 _targets pushBack _hitEntity;
-[_targets, _instigatorInfo] remoteExecCall ["DOTT_tracker_fnc_sendHit", 2];
+[_targets, _instigatorInfo] remoteExecCall
+    ["DOTT_tracker_fnc_sendHit", 2];
 
 true
