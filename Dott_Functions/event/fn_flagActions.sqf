@@ -26,9 +26,9 @@
  *     DOTT_event_timerLength (global)
  */
 
+/* --- Nil-guard timer objects --- */
+
 {
-    //if timer object is nil, set to objNull to
-    //avoid errors
     if (isNil {_x}) then
     {
         DOTT_event_timerObjects set
@@ -42,6 +42,8 @@ if (isNil "DOTT_event_endingObject") then
     systemChat "WARNING: Admin object (endingObject) not found!";
 };
 
+/* --- Determine current round state --- */
+
 private _currentState = switch (true) do
 {
     case (call DOTT_round_fnc_isRoundActive):
@@ -53,6 +55,84 @@ private _currentState = switch (true) do
         1;
     };
     default { 0 };
+};
+
+/* ============================================================
+ * Helper: registers an admin action on endingObject with
+ * standard add / remove event wiring.
+ *
+ * _actionVarId   - variable name stored on objects for cleanup
+ * _label         - HTML display text for the action
+ * _code          - code block executed on activation
+ * _codeArgs      - data passed as (this select 3)
+ * _showEvents    - CBA events that ADD the action
+ * _hideEvents    - CBA events that REMOVE the action
+ * _showOnState   - _currentState value at which to add now
+ * ========================================================== */
+
+private _fnc_registerEndingAction =
+{
+    params [
+        "_actionVarId",
+        "_label",
+        "_code",
+        "_codeArgs",
+        "_showEvents",
+        "_hideEvents",
+        "_showOnState"
+    ];
+
+    private _fnc_add =
+    {
+        params ["_actionVarId", "_label", "_code", "_codeArgs"];
+        private _actionId = DOTT_event_endingObject addAction [
+            _label,
+            _code,
+            _codeArgs,
+            1.5, true, true, "",
+            "serverCommandAvailable '#lock'",
+            8
+        ];
+        DOTT_event_endingObject setVariable [
+            _actionVarId, _actionId
+        ];
+    };
+
+    private _fnc_remove =
+    {
+        params ["_actionVarId"];
+        private _actionId =
+            DOTT_event_endingObject getVariable
+                [_actionVarId, -1];
+        DOTT_event_endingObject removeAction _actionId;
+        DOTT_event_endingObject setVariable
+            [_actionVarId, nil];
+    };
+
+    private _addArgs =
+        [_actionVarId, _label, _code, _codeArgs];
+    private _removeArgs = [_actionVarId];
+
+    // Show now if the round is in the right state.
+    if (_currentState == _showOnState) then
+    {
+        _addArgs call _fnc_add;
+    };
+
+    // Wire up show/hide to CBA events.
+    {
+        [_x,
+            { _thisArgs call (_thisArgs select 4) },
+            _addArgs + [_fnc_add]
+        ] call CBA_fnc_addEventHandlerArgs;
+    } forEach _showEvents;
+
+    {
+        [_x,
+            { _thisArgs call (_thisArgs select 1) },
+            _removeArgs + [_fnc_remove]
+        ] call CBA_fnc_addEventHandlerArgs;
+    } forEach _hideEvents;
 };
 
 /*** Side Ready ***/
@@ -183,149 +263,69 @@ if (_currentState == 0) then
     _fnc_addAllReadyActions
 ] call CBA_fnc_addEventHandler;
 
-/*** Cancel Safestart (Admin) ***/
-#define CANCEL_SAFESTART_ID "DOTT_cancelSafeStartActionId"
+/* ============================================================
+ * Safe-start admin actions (common pattern)
+ *
+ * Cancel Safestart, Change Safestart Time, and Force End
+ * Safestart share identical lifecycle: show during safe
+ * start, hide on abort or round start.
+ * ========================================================== */
 
-private _fnc_addCancelSafeStart =
-{
-    private _fnc_unreadyAllSides =
+private _safeStartShowEvents = [
+    "DOTT_round_safeStartBegin"
+];
+private _safeStartHideEvents = [
+    "DOTT_round_safeStartAborted",
+    "DOTT_round_started"
+];
+
+// Cancel Safestart
+[
+    "DOTT_cancelSafeStartActionId",
+    "<t color='#bf3eff'>Cancel Safestart (Admin)</t>",
     {
-        [west, false, false] call DOTT_round_fnc_manageReady;
-        [east, false, false] call DOTT_round_fnc_manageReady;
-        [resistance, false, false] call DOTT_round_fnc_manageReady;
-    };
-    private _actionId =
-        DOTT_event_endingObject addAction [
-            "<t color='#bf3eff'>"
-                + "Cancel Safestart (Admin)</t>",
-            { call (_this select 3) },
-            _fnc_unreadyAllSides,
-            1.5, true, true, "",
-            "serverCommandAvailable '#lock'", 8
-        ];
-    DOTT_event_endingObject setVariable [
-        CANCEL_SAFESTART_ID, _actionId
-    ];
-};
+        call (_this select 3);
+    },
+    // Unready all three sides to abort safe start.
+    {
+        [west, false, false]
+            call DOTT_round_fnc_manageReady;
+        [east, false, false]
+            call DOTT_round_fnc_manageReady;
+        [resistance, false, false]
+            call DOTT_round_fnc_manageReady;
+    },
+    _safeStartShowEvents,
+    _safeStartHideEvents,
+    1
+] call _fnc_registerEndingAction;
 
-private _fnc_removeCancelSafeStart =
-{
-    private _actionId = DOTT_event_endingObject getVariable [CANCEL_SAFESTART_ID, -1];
-    DOTT_event_endingObject removeAction _actionId;
-    DOTT_event_endingObject setVariable [CANCEL_SAFESTART_ID, nil];
-};
-
-if (_currentState == 1) then
-{
-    call _fnc_addCancelSafeStart;
-};
-
+// Change Safestart Time
 [
-    "DOTT_round_safeStartBegin",
-    _fnc_addCancelSafeStart
-] call CBA_fnc_addEventHandler;
+    "DOTT_changeSafeStartActionId",
+    "<t color='#bf3eff'>Change Safestart Time (Admin)</t>",
+    {
+        call DOTT_event_fnc_gui_setSafeStartTime;
+    },
+    nil,
+    _safeStartShowEvents,
+    _safeStartHideEvents,
+    1
+] call _fnc_registerEndingAction;
 
+// Force End Safestart
 [
-    "DOTT_round_safeStartAborted",
-    _fnc_removeCancelSafeStart
-] call CBA_fnc_addEventHandler;
-
-[
-    "DOTT_round_started",
-    _fnc_removeCancelSafeStart
-] call CBA_fnc_addEventHandler;
-
-/*** Change Safestart Time (Admin) ***/
-#define CHANGE_SAFESTART_ID "DOTT_changeSafeStartActionId"
-
-private _fnc_addChangeSafeStart =
-{
-    private _actionId =
-        DOTT_event_endingObject addAction [
-            "<t color='#bf3eff'>Change Safestart"
-                + " Time (Admin)</t>",
-            { call DOTT_event_fnc_gui_setSafeStartTime },
-            nil,
-            1.5, true, true, "",
-            "serverCommandAvailable '#lock'", 8
-        ];
-    DOTT_event_endingObject setVariable [
-        CHANGE_SAFESTART_ID, _actionId
-    ];
-};
-
-private _fnc_removeChangeSafeStart =
-{
-    private _actionId = DOTT_event_endingObject getVariable [CHANGE_SAFESTART_ID, -1];
-    DOTT_event_endingObject removeAction _actionId;
-    DOTT_event_endingObject setVariable [CHANGE_SAFESTART_ID, nil];
-};
-
-if (_currentState == 1) then
-{
-    call _fnc_addChangeSafeStart;
-};
-
-[
-    "DOTT_round_safeStartBegin",
-    _fnc_addChangeSafeStart
-] call CBA_fnc_addEventHandler;
-
-[
-    "DOTT_round_safeStartAborted",
-    _fnc_removeChangeSafeStart
-] call CBA_fnc_addEventHandler;
-
-[
-    "DOTT_round_started",
-    _fnc_removeChangeSafeStart
-] call CBA_fnc_addEventHandler;
-
-/*** Force End Safestart (Admin) ***/
-#define FORCE_END_SAFESTART_ID "DOTT_forceEndSafeStartActionId"
-
-private _fnc_addForceEndSafeStartAction =
-{
-    private _actionId =
-        DOTT_event_endingObject addAction [
-            "<t color='#bf3eff'>Force End"
-                + " Safestart (Admin)</t>",
-            { [DOTT_event_timerLength] call DOTT_round_fnc_start },
-            nil,
-            1.5, true, true, "",
-            "serverCommandAvailable '#lock'", 8
-        ];
-    DOTT_event_endingObject setVariable [
-        FORCE_END_SAFESTART_ID, _actionId
-    ];
-};
-
-private _fnc_removeForceEndSafeStartAction =
-{
-    private _actionId = DOTT_event_endingObject getVariable [FORCE_END_SAFESTART_ID, -1];
-    DOTT_event_endingObject removeAction _actionId;
-    DOTT_event_endingObject setVariable [FORCE_END_SAFESTART_ID, nil];
-};
-
-if (_currentState == 1) then
-{
-    call _fnc_addForceEndSafeStartAction;
-};
-
-[
-    "DOTT_round_safeStartBegin",
-    _fnc_addForceEndSafeStartAction
-] call CBA_fnc_addEventHandler;
-
-[
-    "DOTT_round_safeStartAborted",
-    _fnc_removeForceEndSafeStartAction
-] call CBA_fnc_addEventHandler;
-
-[
-    "DOTT_round_started",
-    _fnc_removeForceEndSafeStartAction
-] call CBA_fnc_addEventHandler;
+    "DOTT_forceEndSafeStartActionId",
+    "<t color='#bf3eff'>Force End Safestart (Admin)</t>",
+    {
+        [DOTT_event_timerLength]
+            call DOTT_round_fnc_start;
+    },
+    nil,
+    _safeStartShowEvents,
+    _safeStartHideEvents,
+    1
+] call _fnc_registerEndingAction;
 
 /*** Ending Actions (Admin) ***/
 

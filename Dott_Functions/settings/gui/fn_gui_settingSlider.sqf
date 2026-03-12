@@ -35,6 +35,28 @@ _ctrlSlider sliderSetSpeed [
     0.05 * _range, 0.1 * _range
 ];
 
+/**
+ * Formats a numeric value as display text for the edit box,
+ * handling percentage mode and rounding. Shared by all three
+ * event handlers and initial setup.
+ */
+private _fnc_formatEditText =
+{
+    params ["_val", "_decimals", "_pct"];
+    if (_pct) then
+    {
+        format [localize "STR_3DEN_percentageUnit", round (_val * 100), "%"]
+    }
+    else
+    {
+        if (_decimals < 0) then
+        {
+            _val = round _val;
+        };
+        [_val, 1, _decimals max 0] call CBA_fnc_formatNumber
+    };
+};
+
 _ctrlSlider setVariable [
     "cba_settings_params",
     [
@@ -52,20 +74,9 @@ _ctrlSlider ctrlAddEventHandler [
             "_trailingDecimals", "_isPercentage"
         ];
 
-        private _editText =
-            if (_isPercentage) then
-            {
-                format [localize "STR_3DEN_percentageUnit", round (_value * 100), "%"]
-            }
-            else
-            {
-                if (_trailingDecimals < 0) then
-                {
-                    _value = round _value;
-                };
-
-                [_value, 1, _trailingDecimals max 0] call CBA_fnc_formatNumber
-            };
+        private _editText = [
+            _value, _trailingDecimals, _isPercentage
+        ] call _fnc_formatEditText;
 
         private _controlsGroup = ctrlParentControlsGroup _ctrlSlider;
         private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl 5121;
@@ -92,14 +103,9 @@ _ctrlSlider ctrlAddEventHandler [
     }
 ];
 
-private _editText = if (_isPercentage) then
-{
-    format [localize "STR_3DEN_percentageUnit", round (_currentValue * 100), "%"]
-}
-else
-{
-    [_currentValue, 1, _trailingDecimals max 0] call CBA_fnc_formatNumber
-};
+private _editText = [
+    _currentValue, _trailingDecimals, _isPercentage
+] call _fnc_formatEditText;
 
 private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl 5121;
 _ctrlSliderEdit ctrlSetText _editText;
@@ -176,20 +182,9 @@ _ctrlSliderEdit ctrlAddEventHandler [
 
         private _value = sliderPosition _ctrlSlider;
 
-        private _editText =
-            if (_isPercentage) then
-            {
-                format [localize "STR_3DEN_percentageUnit", round (_value * 100), "%"]
-            }
-            else
-            {
-                if (_trailingDecimals < 0) then
-                {
-                    _value = round _value;
-                };
-
-                [_value, 1, _trailingDecimals max 0] call CBA_fnc_formatNumber
-            };
+        private _editText = [
+            _value, _trailingDecimals, _isPercentage
+        ] call _fnc_formatEditText;
 
         _ctrlSliderEdit ctrlSetText _editText;
 
@@ -218,15 +213,9 @@ _controlsGroup setVariable [
 
         _ctrlSlider sliderSetPosition _value;
 
-        private _editText =
-            if (_isPercentage) then
-            {
-                format [localize "STR_3DEN_percentageUnit", round (_value * 100), "%"]
-            }
-            else
-            {
-                [_value, 1, _trailingDecimals max 0] call CBA_fnc_formatNumber
-            };
+        private _editText = [
+            _value, _trailingDecimals, _isPercentage
+        ] call _fnc_formatEditText;
 
         _ctrlSliderEdit ctrlSetText _editText;
 
