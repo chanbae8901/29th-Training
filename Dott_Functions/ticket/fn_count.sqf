@@ -88,8 +88,7 @@ if (_tickets isEqualTo 0) then
 else
 {
     _tickets = _tickets - 1;
-    missionNamespace setVariable [_varName, _tickets];
-    publicVariable _varName;
+    missionNamespace setVariable [_varName, _tickets, true];
 
     if (_tickets isEqualTo 0) then
     {
