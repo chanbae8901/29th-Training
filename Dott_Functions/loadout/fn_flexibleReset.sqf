@@ -214,6 +214,7 @@ if (_msgClass isEqualTo "") exitWith
             ["Health", ["Healed", "Player is healed!"]]
                 call BIS_fnc_showNotification;
         };
+        default {};
     };
 };
 

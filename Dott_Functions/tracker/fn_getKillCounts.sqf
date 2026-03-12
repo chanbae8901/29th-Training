@@ -162,6 +162,7 @@ private _killCounts = createHashMap;
                 [_instigatorIndex, _instigatorSide]
             ];
         };
+        default {};
     };
 }
 forEach _events;

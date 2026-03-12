@@ -74,6 +74,7 @@ DOTT_garbages = []; //global variable for cleaner function
         {
             DOTT_garbages pushBack _x;
         };
+        default {};
     };
 }
 forEach allMissionObjects "All";

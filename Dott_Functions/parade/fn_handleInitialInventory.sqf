@@ -38,6 +38,7 @@ private _fn_loadParade =
             [player, missionConfigFile >> "CfgRespawnInventory" >> "29TH_PARADE_INDEPENDENT"]
                 call BIS_fnc_loadInventory;
         };
+        default {};
     };
 };
 

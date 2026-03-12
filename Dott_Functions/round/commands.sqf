@@ -122,6 +122,7 @@
                     {
                         systemChat "Error: Side is already ready!";
                     };
+                    default {};
                 };
             }
         ],
@@ -145,6 +146,7 @@
                     {
                         systemChat "Error: Side is already unready!";
                     };
+                    default {};
                 };
             }
         ],
