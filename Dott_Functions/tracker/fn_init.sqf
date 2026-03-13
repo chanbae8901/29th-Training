@@ -173,8 +173,6 @@ if (hasInterface) then
     DOTT_weaponNameCache = createHashMap;
     // --- Remove Statistics from Map, Send All
     //     Round Histories --- //
-    DOTT_tracker_last_round_Recorded = 0;
-
     addMissionEventHandler ["PreloadFinished",
     {
         [player] remoteExec ["DOTT_tracker_fnc_sendAll", 2];

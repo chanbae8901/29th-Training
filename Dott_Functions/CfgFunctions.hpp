@@ -194,6 +194,7 @@ class DOTT_Tracker
         class findPlayerEvents {};
         class getWeapon {};
         class sendAll {};
+        class receiveAll {};
         class addEventHandlersClient {};
         class hit {};
         class sendHit {};

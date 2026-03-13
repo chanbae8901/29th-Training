@@ -27,11 +27,6 @@ params [
     "_weapons", "_roundNum"
 ];
 
-waitUntil
-{
-    DOTT_tracker_last_round_Recorded == (_roundNum - 1)
-};
-
 if !(player diarySubjectExists "RoundEventLog") then
 {
     player createDiarySubject
@@ -164,7 +159,5 @@ _copyButton = format [
 _text = _text + _copyButton;
 player createDiaryRecord
     ["RoundScoreboard", [_title, _text]];
-
-DOTT_tracker_last_round_Recorded = _roundNum;
 
 true

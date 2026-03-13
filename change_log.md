@@ -82,6 +82,7 @@ v4.4.3
     After 5 seconds the searches resume, allowing re-attribution if the unit walks into a new fire source.
   - Optimize woundReceived burn handler by removing a redundant _fn_findSide call in the null instigator path.
     The result was always immediately overwritten by the same call that runs unconditionally after the if/else block.
+  - Temporary method of sending round history on join finally reworked, send all rounds in 1 remoteExec to new receiveAll function.
 
 ---
 v4.4.2
