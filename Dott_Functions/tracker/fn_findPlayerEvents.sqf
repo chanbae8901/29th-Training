@@ -4,9 +4,10 @@
  * Author: Bae [29th ID]
  *
  * Purpose:
- * Finds relevant player events in _events array. Will also
- * include the wake up and deaths of any units the player
- * knocks unconscious.
+ * Finds all events relevant to a specific player from the event
+ * list. Includes direct involvement (killed, knocked out, etc.)
+ * and also tracks the fate of anyone the player incapacitated
+ * (regain consciousness or death).
  *
  * Parameters:
  * _playerIndex (Number): Reference index of player in stored
@@ -66,6 +67,7 @@ for "_i" from 0 to (_numEvents - 1) do
                 _knockedUnconscious pushBack _unitIndex;
             };
         };
+
         case DELAY_ACE_CONSCIOUSNESS_NUM:
         {
             private _unitIndex = _eventInfo select 0;
@@ -81,35 +83,10 @@ for "_i" from 0 to (_numEvents - 1) do
             _playerEventIndexes pushBack _i;
             _knockedUnconscious pushBack _unitIndex;
         };
-        case INFANTRY_KILL_NUM:
-        {
-            private _unitIndex = _eventInfo select 0;
-            if (_unitIndex == _playerIndex) exitWith
-            {
-                _playerEventIndexes pushBack _i;
-            };
-            private _knockedIndex =
-                _knockedUnconscious find _unitIndex;
-            // Check if unit was knocked out by player
-            // before.
-            if (_knockedIndex != -1) exitWith
-            {
-                _playerEventIndexes pushBack _i;
-                _knockedUnconscious
-                    deleteAt _knockedIndex;
-            };
-            if (count _eventInfo > 1) then
-            {
-                private _instigatorIndex =
-                    _eventInfo select 1;
-                if (_instigatorIndex == _playerIndex)
-                    exitWith
-                {
-                    _playerEventIndexes pushBack _i;
-                };
-            };
-        };
 
+        // Infantry and delayed kills share the same
+        // relevance logic.
+        case INFANTRY_KILL_NUM;
         case DELAY_KILL_NUM:
         {
             private _unitIndex = _eventInfo select 0;
@@ -127,11 +104,15 @@ for "_i" from 0 to (_numEvents - 1) do
                 _knockedUnconscious
                     deleteAt _knockedIndex;
             };
-            private _instigatorIndex =
-                _eventInfo select 1;
-            if (_instigatorIndex == _playerIndex) exitWith
+            if (count _eventInfo > 1) then
             {
-                _playerEventIndexes pushBack _i;
+                private _instigatorIndex =
+                    _eventInfo select 1;
+                if (_instigatorIndex == _playerIndex)
+                    exitWith
+                {
+                    _playerEventIndexes pushBack _i;
+                };
             };
         };
 
@@ -148,6 +129,8 @@ for "_i" from 0 to (_numEvents - 1) do
                 };
             };
         };
+
+        default {};
     };
 };
 

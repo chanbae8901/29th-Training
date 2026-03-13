@@ -219,5 +219,6 @@ EGVAR(listener,markers) =
                 GVAR(trackedMarkers) = GVAR(trackedMarkers) - [_mrk_name];
             };
         };
+        default {};
     };
 }] call CBA_fnc_addEventHandler;

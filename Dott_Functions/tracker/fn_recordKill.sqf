@@ -4,15 +4,15 @@
  * Author: Bae [29th ID]
  *
  * Purpose:
- * Client-side function that constructs an array of
- * "Killed/EntityKilled" event for the tracker. Tracks when a
- * unit is killed and attempts to find out who did it and
- * stores it.
+ * Client-side function that constructs a kill event array from
+ * an EntityKilled event. Determines the killer by checking
+ * stored hit data, prioritizing any engine-provided instigator,
+ * and handles special cases like incendiary grenades on vehicles.
  *
  * Parameters:
  * _unit (Object): The killed unit.
- * _killer (Object): The killer object.
- * _instigator (Object): The instigator (may be objNull).
+ * _killer (Object): Engine-reported killer.
+ * _instigator (Object): Engine-reported instigator (may be objNull).
  *
  * Returns:
  * true if saved, false otherwise
@@ -53,6 +53,25 @@ if (
     && _killer == _unit
     && isNull _instigator
 ) exitWith { false };
+
+// Resolve instigator side, handling dead units whose group
+// side has already flipped to civilian.
+private _fn_resolveInstigatorSide =
+{
+    params ["_instigator"];
+    private _side = side (group _instigator);
+    if (_side == sideUnknown
+        || _side == civilian) then // Dead man.
+    {
+        // Might work improperly if zeus changed
+        // player side.
+        _side = getNumber (
+            configFile >> "CfgVehicles"
+                >> typeOf _instigator >> "side"
+        ) call BIS_fnc_sideType;
+    };
+    _side
+};
 
 if (isNull _instigator) then // Backup for unknown cases.
 {
@@ -99,17 +118,8 @@ if (_eventType == VEHICLE_KILL_NUM
             (getPosASL _unit)
                 distance (getPosASL _instigator)
         );
-        private _side = side (group _instigator);
-        if (_side == sideUnknown
-            || _side == civilian) then // Dead man.
-        {
-            // Might work improperly if zeus changed
-            // player side.
-            _side = getNumber (
-                configFile >> "CfgVehicles"
-                    >> typeOf _instigator >> "side"
-            ) call BIS_fnc_sideType;
-        };
+        private _side =
+            [_instigator] call _fn_resolveInstigatorSide;
         _killInfo append [
             [
                 _instigator
@@ -133,21 +143,12 @@ if (_eventType == VEHICLE_KILL_NUM
     };
 };
 
-if !(isNil "_lastHit" && !_override) then
+if (!isNil "_lastHit" && !_override) then
 {
     if !(isNull _instigator) then
     {
-        private _side = side (group _instigator);
-        if (_side == sideUnknown
-            || _side == civilian) then // Dead man.
-        {
-            // Might work improperly if zeus changed
-            // player side.
-            _side = getNumber (
-                configFile >> "CfgVehicles"
-                    >> typeOf _instigator >> "side"
-            ) call BIS_fnc_sideType;
-        };
+        private _side =
+            [_instigator] call _fn_resolveInstigatorSide;
         _lastHit = [
             _instigator call DOTT_tracker_fnc_getName,
             _side

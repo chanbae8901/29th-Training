@@ -45,7 +45,7 @@ _canMark =
         false;
     };
 
-    _size = (boundingBox _x) select 2;
+    _size = (boundingBox _obj) select 2;
 
     _size > 1.5
     && {

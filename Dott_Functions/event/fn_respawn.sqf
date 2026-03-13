@@ -5,7 +5,7 @@
  * the player to the spectate area when they exhaust their
  * limited lives. Optionally strips weapons on final respawn.
  *
- * Paramaters:
+ * Parameters:
  *     _storeDeaths (bool) - When true, records the player's
  *         current death count and exits. Used at round start
  *         to baseline.
@@ -64,7 +64,7 @@ if (_playerDeaths >= DOTT_event_numberOfLives) then
     player enableSimulationGlobal false;
     sleep 0.3;
 
-    private _dir = random 359;
+    private _dir = random 360;
     player SetPosASL [
         (_point select 0) - 6 * sin(_dir),
         (_point select 1) - 6 * cos(_dir),

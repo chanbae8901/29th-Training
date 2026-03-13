@@ -25,7 +25,7 @@
  */
 
 private [
-    "_chatArr", "_seperator", "_commandDone",
+    "_chatArr", "_separator", "_commandDone",
     "_command", "_argument"
 ];
 
@@ -37,13 +37,13 @@ _chatArr = [_this, 0, []] call BIS_fnc_param;
 _chatArr set [0, -1];
 _chatArr = _chatArr - [-1];
 
-_seperator = (toArray " ") select 0;
+_separator = (toArray " ") select 0;
 _commandDone = false;
 _command = [];
 _argument = [];
 
 {
-    if (_x == _seperator && !_commandDone) then
+    if (_x == _separator && !_commandDone) then
     {
         _commandDone = true;
     }

@@ -60,6 +60,7 @@ while {call DOTT_round_fnc_isRoundActive} do
             {
                 _resistancePlayers pushBack _x;
             };
+            default {};
         };
     } forEach _allPlayers;
 

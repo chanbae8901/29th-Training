@@ -165,6 +165,11 @@ private _sideSettings =
     }, _endChecks
 ] call CBA_fnc_addEventHandlerArgs;
 
+if (isNil "DOTT_event_winCheckInterval") then
+{
+    DOTT_event_winCheckInterval = 0.5;
+};
+
 while {call DOTT_round_fnc_isRoundActive} do
 {
     sleep DOTT_event_winCheckInterval;

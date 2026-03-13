@@ -4,9 +4,10 @@
  * Author: Bae [29th ID]
  *
  * Purpose:
- * Adds event handlers client-side for the tracker system.
- * Some of the HitPart and SubmunitionCreated EH may not be
- * necessary.
+ * Adds client-side event handlers for the tracker system.
+ * Attaches instigator/weapon info to projectiles on fire,
+ * propagates that info through submunitions, and handles
+ * non-projectile damage sources (roadkill, fire, explosions).
  *
  * Parameters:
  * None
@@ -41,9 +42,7 @@ player addEventHandler ["FiredMan",
     _projectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];
     _projectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];
 
-    // Shotguns.
-    _projectile addEventHandler
-        ["SubmunitionCreated",
+    _projectile addEventHandler ["SubmunitionCreated",
     {
         params ["_projectile", "_submunitionProjectile"];
         _submunitionProjectile setVariable [
@@ -61,8 +60,7 @@ player addEventHandler ["FiredMan",
         "_unit", "_weapon", "_muzzle", "_mode",
         "_ammo", "_magazine", "_projectile"
     ];
-    // This EH is global so only execute on client who
-    // placed.
+    // Global EH -- only run on the client who threw.
     if (!local _unit) exitWith {};
     private _vehicle = objNull;
     private _realWeapon =
@@ -79,8 +77,7 @@ player addEventHandler ["FiredMan",
     _projectile addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];
     _projectile addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];
 
-    _projectile addEventHandler
-        ["SubmunitionCreated",
+    _projectile addEventHandler ["SubmunitionCreated",
     {
         params ["_projectile", "_submunitionProjectile"];
         _submunitionProjectile setVariable [
@@ -95,8 +92,7 @@ player addEventHandler ["FiredMan",
 ["ace_explosives_place",
 {
     params ["_explosive", "_dir", "_pitch", "_unit"];
-    // This EH is global so only execute on client who
-    // placed.
+    // Global EH -- only run on the client who placed.
     if (!local _unit) exitWith {};
     private _explosiveName = getText (
         configFile >> "CfgMagazines"
@@ -118,9 +114,7 @@ player addEventHandler ["FiredMan",
     _explosive addEventHandler ["HitPart", { call DOTT_tracker_fnc_hit }];
     _explosive addEventHandler ["HitExplosion", { call DOTT_tracker_fnc_hit }];
 
-    // Bouncing mines.
-    _explosive addEventHandler
-        ["SubmunitionCreated",
+    _explosive addEventHandler ["SubmunitionCreated",
     {
         params ["_projectile", "_submunitionProjectile"];
         _submunitionProjectile setVariable [
@@ -133,6 +127,27 @@ player addEventHandler ["FiredMan",
 }] call CBA_fnc_addEventHandler;
 
 DOTT_lastFireCheck = 0;
+
+// Side-lookup that handles dead instigators whose group side
+// has already flipped to civilian. Stored as a global so CBA
+// event handler scopes can reach it.
+DOTT_tracker_fnc_findSide =
+{
+    params ["_instigator"];
+    private _side = side (group _instigator);
+    if (_side == sideUnknown
+        || _side == civilian) then // Dead man.
+    {
+        // Might work improperly if zeus changed
+        // player side.
+        _side = getNumber (
+            configFile >> "CfgVehicles"
+                >> typeOf _instigator >> "side"
+        ) call BIS_fnc_sideType;
+    };
+    _side
+};
+
 // Easiest way to detect roadkill event.
 // Will arrive on server later than projectile hit events
 // however.
@@ -145,31 +160,12 @@ DOTT_lastFireCheck = 0;
         "collision", "burn", "fire",
         "FuelExplosion", "FuelExplosionBig"
     ]) exitWith {};
-    // In this event handler we need more reliable
-    // instigator side info as they may not be alive
-    // during damage.
-    private _fn_findSide =
-    {
-        params ["_instigator"];
-        private _side = side (group _instigator);
-        if (_side == sideUnknown
-            || _side == civilian) then // Dead man.
-        {
-            // Might work improperly if zeus changed
-            // player side.
-            _side = getNumber (
-                configFile >> "CfgVehicles"
-                    >> typeOf _instigator >> "side"
-            ) call BIS_fnc_sideType;
-        };
-        _side
-    };
 
     if (_ammo == "collision") then
     {
         private _driver = driver _instigator;
         private _sideInstigator =
-            _driver call _fn_findSide;
+            _driver call DOTT_tracker_fnc_findSide;
         if (
             isNull _driver
             || { _driver isEqualTo _instigator }
@@ -273,7 +269,7 @@ DOTT_lastFireCheck = 0;
             */
         };
         private _sideInstigator =
-            _instigator call _fn_findSide;
+            _instigator call DOTT_tracker_fnc_findSide;
         private _instigatorInfo = [
             _instigator call DOTT_tracker_fnc_getName,
             _sideInstigator,
@@ -347,7 +343,7 @@ DOTT_lastFireCheck = 0;
         if (_weapon == "?") exitWith {};
 
         private _sideInstigator =
-            _instigator call _fn_findSide;
+            _instigator call DOTT_tracker_fnc_findSide;
         private _instigatorInfo = [
             _instigator call DOTT_tracker_fnc_getName,
             _sideInstigator,
@@ -380,7 +376,7 @@ DOTT_lastFireCheck = 0;
         if (isNull _instigator) exitWith {};
         private _weapon = "Vehicle Explosion";
         private _sideInstigator =
-            _instigator call _fn_findSide;
+            _instigator call DOTT_tracker_fnc_findSide;
         private _instigatorInfo = [
             _instigator call DOTT_tracker_fnc_getName,
             _sideInstigator,

@@ -12,8 +12,8 @@
  *     Diary Record, or nothing if no interface
  *
  * Example:
- *     ["Something Happened", "Log"]
- *         remoteExec ["addDiaryRecord", 0];
+ *     ["Log", "Something Happened"]
+ *         remoteExec ["DOTT_common_fnc_addDiaryRecord", 0];
  */
 
 params ["_subject", "_textInfo"];

@@ -1,8 +1,8 @@
 //no #include defines needed, inherited from description.ext
-class Dott_Loadout
+class DOTT_Loadout
 {
     tag = "DOTT_loadout";
-    class DottsFunctions
+    class LoadoutFunctions
     {
         file = "Dott_Functions\loadout";
         class init {};
@@ -14,7 +14,7 @@ class Dott_Loadout
     };
 };
 
-class Dott_Common
+class DOTT_Common
 {
     tag = "DOTT_common";
     class CommonFunctions
@@ -23,11 +23,10 @@ class Dott_Common
         class addDiaryRecord {};
         class diag_log {};
         class displayMsg {};
-        //class selectPosArea {};
-    };
+};
 };
 
-class Dott_Round
+class DOTT_Round
 {
     tag = "DOTT_round";
     class RoundFunctions
@@ -55,7 +54,7 @@ class Dott_Round
     };
 };
 
-class Dott_Radio
+class DOTT_Radio
 {
     tag = "DOTT_radio";
     class RadioFunctions
@@ -68,7 +67,7 @@ class Dott_Radio
     };
 };
 
-class Dott_Thermals
+class DOTT_Thermals
 {
     tag = "DOTT_thermals";
     class ThermalFunctions
@@ -80,7 +79,7 @@ class Dott_Thermals
     };
 };
 
-class Dott_Ticket
+class DOTT_Ticket
 {
     tag = "DOTT_ticket";
     class TicketFunctions
@@ -92,7 +91,7 @@ class Dott_Ticket
     };
 };
 
-class Dott_Spectator
+class DOTT_Spectator
 {
     tag = "DOTT_spectator";
     class SpectatorFunctions
@@ -170,10 +169,10 @@ class DOTT_Training
     };
 };
 
-class Dott_Tracker
+class DOTT_Tracker
 {
     tag = "DOTT_tracker";
-    class RoundFunctions
+    class TrackerFunctions
     {
         file = "Dott_Functions\tracker";
         class init {};
@@ -201,10 +200,10 @@ class Dott_Tracker
     };
 };
 
-class Dott_Settings
+class DOTT_Settings
 {
     tag = "DOTT_settings";
-    class GUIFunctions
+    class SettingsFunctions
     {
         file = "Dott_Functions\settings";
         class init {};
@@ -212,7 +211,7 @@ class Dott_Settings
     };
 };
 
-class Dott_Parade
+class DOTT_Parade
 {
     tag = "DOTT_parade";
     class ParadeFunctions
@@ -226,10 +225,10 @@ class Dott_Parade
     };
 };
 
-class Dott_Event
+class DOTT_Event
 {
     tag = "DOTT_event";
-    class RoundFunctions
+    class EventFunctions
     {
         file = "Dott_Functions\event";
         class init {};
@@ -243,7 +242,7 @@ class Dott_Event
     };
 };
 
-class Dott_Base
+class DOTT_Base
 {
     tag = "DOTT_base";
     class BaseFunctions

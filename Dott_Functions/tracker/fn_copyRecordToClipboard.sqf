@@ -8,8 +8,8 @@
  * copy clipboard button. Requires ACE 3.
  *
  * Parameters:
- * _roundNum (Number): Number of round to copy information of
- *     to clipboard.
+ * _subject (String): Diary subject name (e.g. "RoundEventLog").
+ * _title (String): Title of the specific diary record to copy.
  *
  * Returns:
  * true

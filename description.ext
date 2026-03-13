@@ -92,6 +92,4 @@ class CfgFunctions
     #include "Dott_Functions\CfgFunctions.hpp"
 };
 
-#include "data\cfgNotifications.hpp"
-
 #include "data\CfgDebriefing.hpp"

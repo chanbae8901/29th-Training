@@ -8,27 +8,19 @@
  * Parameters:
  *     _weaponHolder - String - Display name of the player holding the
  *         bugged weapon.
- *     _observer - String - Display name of the reporting player.
  *
  * Returns:
  *     Nothing
  *
  * Example:
- *     [_name, _observer] call DOTT_round_fnc_collectSilentWeapons;
+ *     [_name] call DOTT_round_fnc_collectSilentWeapons;
  */
 
-params ["_weaponHolder", "_observer"];
+params ["_weaponHolder"];
 
 if (isNil "DOTT_round_clientSilentWeapons") then
 {
     DOTT_round_clientSilentWeapons = createHashMap;
 };
 
-if !(_weaponHolder in DOTT_round_clientSilentWeapons) then
-{
-    DOTT_round_clientSilentWeapons set [_weaponHolder, []];
-};
-
-private _observerArray = DOTT_round_clientSilentWeapons get _weaponHolder;
-
-_observerArray pushBack _observer;
+DOTT_round_clientSilentWeapons set [_weaponHolder, true];
