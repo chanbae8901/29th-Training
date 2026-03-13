@@ -146,6 +146,17 @@ if (isServer) then
             }] call BIS_fnc_addScriptedEventHandler;
         };
     }];
+
+    // Store name as it gets deleted automatically later.
+    addMissionEventHandler ["EntityKilled",
+    {
+        params ["_unit"];
+        if (_unit isKindOf "Man") then
+        {
+
+            _unit setVariable ["DOTT_name", name _unit, true];
+        };
+    }];
 };
 
 if (hasInterface) then
@@ -184,17 +195,5 @@ if (hasInterface) then
         }
     ] call CBA_fnc_addEventHandler;
 };
-
-// Run for both server and client.
-addMissionEventHandler ["EntityKilled",
-{
-    params ["_unit"];
-    if (_unit isKindOf "Man") then
-    {
-        // Store name as it gets deleted automatically
-        // later.
-        _unit setVariable ["DOTT_name", name _unit];
-    };
-}];
 
 true
