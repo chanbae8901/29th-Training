@@ -59,7 +59,7 @@ if (hasInterface) then
             }
         ] call CBA_fnc_addEventHandler;
 
-        [player] remoteExec ["DOTT_curator_fnc_addPlayerEditable", 2];
+        [[player]] remoteExec ["DOTT_curator_fnc_addEditable", 2];
 
         [vehicleVarName player, roleDescription player] remoteExecCall ["DOTT_curator_fnc_createModule", 2];
     };

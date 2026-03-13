@@ -111,7 +111,7 @@ class DOTT_Curator
         file = "Dott_Functions\curator";
         class init {};
         class excludeObjects {};
-        class addPlayerEditable {};
+        class addEditable {};
         class createModule {};
     };
 };

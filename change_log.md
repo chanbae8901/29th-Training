@@ -58,6 +58,9 @@ v4.4.3
 * Commands
   - Move base commands.sqf initialization out of XEH_preInit into fn_init so it's no longer run on server.
 
+* Curator
+  - fn_addPlayerEditable generalized to fn_addEditable
+
 * OCAP
   - Updated folder to remove marker related workarounds to be compatible with OCAP Addon 2.1.0.
 
