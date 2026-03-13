@@ -58,6 +58,9 @@ v4.4.3
 * Commands
   - Move base commands.sqf initialization out of XEH_preInit into fn_init so it's no longer run on server.
 
+* OCAP
+  - Updated folder to remove marker related workarounds to be compatible with OCAP Addon 2.1.0.
+
 * Parade
   - Hopefully fix custom parade uniform not being applied on join by checking if respawn template parade loadout is applied first.
 

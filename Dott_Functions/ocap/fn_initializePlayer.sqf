@@ -27,16 +27,27 @@ if !(_player getVariable ["ocap_isInitialized", false]) then
 {
     _player setVariable ["ocap_id", ocap_recorder_nextId];
 
-    //Modified version
-    [":NEW:UNIT:", [
+    private _newUnit = [
         ocap_recorder_captureFrameNo, //1
         ocap_recorder_nextId, //2
         name _player, //3
         groupID (group _player), //4
         str side group _player, //5
         BOOL(isPlayer _player), //6
-        roleDescription _player // 7
-    ]] call ocap_extension_fnc_sendData;
+        roleDescription _player, // 7
+        typeOf _player, // 8 classname
+        [configOf _player] call BIS_fnc_displayName, // 9 type displayname
+        if (isPlayer _player) then {getPlayerUID _player} else {""}, // 10 player uid
+        [squadParams _player] call CBA_fnc_encodeJSON // 11 squad params
+    ];
+    _player setVariable ["ocap_newUnitData", _newUnit];
+
+    [
+        {missionNamespace getVariable ["ocap_extension_sessionReady", false]},
+        {[":SOLDIER:CREATE:", _this] call ocap_extension_fnc_sendData;},
+        _newUnit,
+        30
+    ] call CBA_fnc_waitUntilAndExecute;
 
     [_player] spawn ocap_recorder_addUnitEventHandlers;
 
