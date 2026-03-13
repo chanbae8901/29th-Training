@@ -129,8 +129,9 @@ player addEventHandler ["FiredMan",
 DOTT_lastFireCheck = 0;
 
 // Side-lookup that handles dead instigators whose group side
-// has already flipped to civilian.
-private _fn_findSide =
+// has already flipped to civilian. Stored as a global so CBA
+// event handler scopes can reach it.
+DOTT_tracker_fnc_findSide =
 {
     params ["_instigator"];
     private _side = side (group _instigator);
@@ -164,7 +165,7 @@ private _fn_findSide =
     {
         private _driver = driver _instigator;
         private _sideInstigator =
-            _driver call _fn_findSide;
+            _driver call DOTT_tracker_fnc_findSide;
         if (
             isNull _driver
             || { _driver isEqualTo _instigator }
@@ -268,7 +269,7 @@ private _fn_findSide =
             */
         };
         private _sideInstigator =
-            _instigator call _fn_findSide;
+            _instigator call DOTT_tracker_fnc_findSide;
         private _instigatorInfo = [
             _instigator call DOTT_tracker_fnc_getName,
             _sideInstigator,
@@ -342,7 +343,7 @@ private _fn_findSide =
         if (_weapon == "?") exitWith {};
 
         private _sideInstigator =
-            _instigator call _fn_findSide;
+            _instigator call DOTT_tracker_fnc_findSide;
         private _instigatorInfo = [
             _instigator call DOTT_tracker_fnc_getName,
             _sideInstigator,
@@ -375,7 +376,7 @@ private _fn_findSide =
         if (isNull _instigator) exitWith {};
         private _weapon = "Vehicle Explosion";
         private _sideInstigator =
-            _instigator call _fn_findSide;
+            _instigator call DOTT_tracker_fnc_findSide;
         private _instigatorInfo = [
             _instigator call DOTT_tracker_fnc_getName,
             _sideInstigator,
