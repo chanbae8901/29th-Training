@@ -48,7 +48,8 @@ DOTT_loadout_fnc_cmdDispatch =
         }
         else
         {
-            _entry params ["_target", "_displayName"];
+            _target = _entry select 0;
+            _displayName = _entry select 1;
         };
     };
 
@@ -210,7 +211,7 @@ DOTT_loadout_fnc_cmdDispatch =
         ],
         [
             "debrief",
-            "ACE Heals and teleports players for debrief." +
+            "ACE Heals and teleports players for debrief."
                 + " '!debrief' to teleport all players to Blufor base,"
                 + " '!debrief here' to teleport all players to your position"
         ],
