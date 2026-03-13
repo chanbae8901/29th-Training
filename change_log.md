@@ -57,6 +57,8 @@ v4.4.3
 
 * Commands
   - Move base commands.sqf initialization out of XEH_preInit into fn_init so it's no longer run on server.
+  - Rewrote arsenal command and moved logic into separate subfolder. 
+    Arsenals created with this command are deleted automatically on round start.
 
 * Curator
   - fn_addPlayerEditable generalized to fn_addEditable

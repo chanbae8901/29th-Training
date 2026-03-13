@@ -90,37 +90,7 @@ pvpfw_chatIntercept_allCommands = [
     [
         "arsenal",
         {
-            //arsenal object array (Fun!)
-            private _arsenalArr = [
-                "Land_ToiletBox_F",
-                "Land_FieldToilet_F"
-            ];
-            private _arsenalObj = selectRandom _arsenalArr;
-
-            private _dir = getDir player;
-            private _offset = player getPos [3, _dir];
-            private _posATL = getPosATL player;
-            private _pos = [
-                _offset select 0,
-                _offset select 1,
-                _posATL select 2
-            ];
-
-            private _arsenal = _arsenalObj createVehicle _pos;
-            _arsenal enableSimulationGlobal false;
-
-            [_arsenal, true] call ace_arsenal_fnc_initBox;
-
-            // Make the arsenal box editable by all curators.
-            [
-                [_arsenal],
-                {
-                    {
-                        _x addCuratorEditableObjects [_this, true];
-                    }
-                    forEach allCurators;
-                }
-            ] remoteExec ["spawn", 2];
+            [getPosATL player, getDir player, 3] call DOTT_commands_fnc_arsenalCreate;
         }
     ],
     [

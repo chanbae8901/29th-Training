@@ -75,3 +75,15 @@ if (hasInterface) then
         }
     ];
 };
+
+/* --- Compile command subfolder functions (not in CfgFunctions) --- */
+
+if (hasInterface) then {
+    DOTT_commands_fnc_arsenalCreate = compileFinal preprocessFileLineNumbers
+        "Dott_Functions\commands\arsenal\fn_create.sqf";
+};
+
+if (isServer) then {
+    DOTT_commands_fnc_arsenalRegister = compileFinal preprocessFileLineNumbers
+        "Dott_Functions\commands\arsenal\fn_register.sqf";
+};
