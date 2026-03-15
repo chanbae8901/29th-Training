@@ -8,12 +8,7 @@
  *   workarounds. Must run on the server.
  *
  * Hardcoded Paths:
- *   Dott_Functions\ocap\fn_handleSector.sqf
- *   Dott_Functions\ocap\fn_createSectorMarkers.sqf
- *   Dott_Functions\ocap\fn_startRecording.sqf
- *   Dott_Functions\ocap\fn_stopRecording.sqf
  *   Dott_Functions\ocap\fn_initializePlayer.sqf
- *   Dott_Functions\ocap\handleMarker.sqf
  *
  * Parameter(s): None
  * Returns: Nothing
@@ -36,37 +31,64 @@
 
 if (isServer) then
 {
-    if !(isClass (configFile >> "CfgPatches" >> "OCAP_recorder"))
-        exitWith {};
+    if !(isClass (configFile >> "CfgPatches" >> "OCAP_recorder")) exitWith {};
 
     DOTT_ocap_roundNum = 1;
 
-    //Order matters, event won't register if recording is not currently happening
-    //However, dont start/pause recordings if autoStart is forced by server config
+    //Dont start/pause recordings if autoStart is forced by server config
     if !(OCAP_settings_autoStart) then
     {
-        DOTT_ocap_fnc_startRecording = compile
-            preprocessFileLineNumbers
-            "DOTT_Functions\ocap\fn_startRecording.sqf";
-
-        DOTT_ocap_fnc_stopRecording = compile
-            preprocessFileLineNumbers
-            "DOTT_Functions\ocap\fn_stopRecording.sqf";
-
         DOTT_ocap_fnc_initializePlayer = compile
             preprocessFileLineNumbers
             "DOTT_Functions\ocap\fn_initializePlayer.sqf";
 
-        // Trigger a waitAndExecute in OCAP init.sqf so we can get rid of it.
-        [{!isNil "ocap_recorder_captureFrameNo"},
+        // Trigger recording start to create captureLoop PFHObject
+        [{missionNamespace getVariable ["ocap_extension_sessionReady", false]},
         {
             ocap_recorder_startTime = time;
         }] call CBA_fnc_waitUntilAndExecute;
 
-        [{ocap_recorder_captureFrameNo > 0},
+        //hijack PFH to start and stop when we want while still saving other events
+        #define SHOULD_SAVE_EVENTS ((missionNamespace getVariable ["ocap_recorder_recording", false]) \
+         && missionNamespace getVariable ["ocap_recorder_startTime", -1] > -1)
+
+        [{!isNil "ocap_recorder_PFHObject"},
         {
-            call DOTT_ocap_fnc_stopRecording;
+            DOTT_ocap_recording = false;
+            ocap_recorder_PFHObject setVariable ["run_condition", {SHOULD_SAVE_EVENTS && DOTT_ocap_recording}];
         }] call CBA_fnc_waitUntilAndExecute;
+
+        #define UPDATE_TIME [] call ocap_recorder_fnc_updateTime
+        #define START_RECORDING DOTT_ocap_recording = true; UPDATE_TIME
+        #define STOP_RECORDING DOTT_ocap_recording = false; UPDATE_TIME
+
+        [
+            "DOTT_round_safeStartBegin",
+            {
+                START_RECORDING;
+            }
+        ] call CBA_fnc_addEventHandler;
+
+        [
+            "DOTT_round_started",
+            {
+                START_RECORDING;
+            }
+        ] call CBA_fnc_addEventHandler;
+
+        [
+            "DOTT_round_safeStartAborted",
+            {
+                STOP_RECORDING;
+            }
+        ] call CBA_fnc_addEventHandler;
+
+        [
+            "DOTT_round_ended",
+            {
+                STOP_RECORDING;
+            }
+        ] call CBA_fnc_addEventHandler;        
     };
 
     [OCAP_settings_autoStart] remoteExecCall
@@ -76,11 +98,6 @@ if (isServer) then
     [
         "DOTT_round_safeStartBegin",
         {
-            if !(OCAP_settings_autoStart) then
-            {
-                call DOTT_ocap_fnc_startRecording;
-            };
-
             ["ocap_customEvent",
                 ["generalEvent", "Safe start began!"]]
                 call CBA_fnc_serverEvent;
@@ -93,23 +110,12 @@ if (isServer) then
             ["ocap_customEvent",
                 ["generalEvent", "Safe start aborted!"]]
                 call CBA_fnc_serverEvent;
-
-            if !(OCAP_settings_autoStart) then
-            {
-                call DOTT_ocap_fnc_stopRecording;
-            };
         }
     ] call CBA_fnc_addEventHandler;
 
     [
         "DOTT_round_started",
         {
-            if !(OCAP_settings_autoStart
-                || OCAP_recorder_recording) then
-            {
-                call DOTT_ocap_fnc_startRecording;
-            };
-
             ["ocap_customEvent",
                 ["generalEvent",
                 format ["Round %1 started!",
@@ -128,7 +134,18 @@ if (isServer) then
                 call CBA_fnc_serverEvent;
 
             DOTT_ocap_roundNum = DOTT_ocap_roundNum + 1;
-            call DOTT_ocap_fnc_stopRecording;
         }
     ] call CBA_fnc_addEventHandler;
+
+    //Curators created mid mission do not trigger OCAP 2 trackSectors
+    //So we must manually add sectors
+    if (ocap_settings_trackSectors) then
+    {
+        addMissionEventHandler ["EntityCreated", 
+        {
+            params ["_entity"];
+            if !(_entity isKindOf "ModuleSector_F") exitWith {};
+            [_entity] call ocap_recorder_fnc_trackSectors;
+        }];
+    };
 };

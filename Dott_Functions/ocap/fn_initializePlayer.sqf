@@ -18,8 +18,7 @@
 #define BOOL(_cond) ([0, 1] select (_cond))
 
 //if recording, let natural loop do below instead
-if (((missionNamespace getVariable ["ocap_recorder_recording", false])
-    && missionNamespace getVariable ["ocap_recorder_startTime", -1] > -1)) exitWith {};
+if (DOTT_ocap_recording) exitWith {};
 
 params ["_player"];
 
