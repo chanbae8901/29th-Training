@@ -67,6 +67,10 @@ v4.4.3
     Care taken to ensure new ready UI system is not hidden when GUI is opened.
   - New "Forced Safe Start" system implemented, admin can start long safe start and teams can ready to reduce to shorter safe start.
 
+* Loadout
+  - Add additional failsafe for flexibleReset teleport, if player is not within 75 meters of teleport point
+    5 seconds after teleport attempts, all players will be notified in chat.
+
 * OCAP
   - Updated folder to remove marker related workarounds to be compatible with OCAP Addon 2.1.0.
 

@@ -174,6 +174,24 @@ else
     };
 
     _teleport = _tries > 0;
+
+    if (_teleport) then
+    {
+        [_point] spawn
+        {
+            params ["_point"];
+            sleep 5;
+            if (player distance2D _point > 75) then
+            {
+                private _msg = format
+                [
+                    "Error: %1 was not teleported",
+                    name player
+                ];
+                _msg remoteExecCall ["systemChat", 0];
+            };
+        };
+    };
 };
 
 if (_msgClass isEqualTo "") exitWith
