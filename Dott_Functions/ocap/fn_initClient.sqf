@@ -3,10 +3,9 @@
  * Author:   Bae [29th ID]
  *
  * Purpose:
- *   Client-side OCAP initialization. Handles JIP player
- *   registration (when autoStart is off) and sets up an ACE
- *   marker-move event handler so moved markers are tracked by
- *   OCAP with correct alpha values.
+ *   Client-side OCAP initialization. 
+ *   Handles JIP player registration.
+ *
  *
  * Parameter(s):
  *   0: BOOL - Whether OCAP autoStart is enabled

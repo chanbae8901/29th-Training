@@ -10,6 +10,7 @@
  *
  * Hardcoded Paths:
  *   Dott_Functions\ocap\fn_initializePlayer.sqf
+ *   Dott_Functions\ocap\handleMarkers.sqf
  *
  * Parameter(s): None
  * Returns: Nothing
@@ -46,14 +47,26 @@ if (isServer) then
         }] call CBA_fnc_waitUntilAndExecute;
 
         //hijack PFH to start and stop when we want while still saving other events
-        #define SHOULD_SAVE_EVENTS ((missionNamespace getVariable ["ocap_recorder_recording", false]) \
+        #define SHOULD_SAVE_EVENTS \
+        ((missionNamespace getVariable ["ocap_recorder_recording", false]) \
          && missionNamespace getVariable ["ocap_recorder_startTime", -1] > -1)
 
         [{!isNil "ocap_recorder_PFHObject"},
         {
             DOTT_ocap_recording = false;
-            ocap_recorder_PFHObject setVariable ["run_condition", {SHOULD_SAVE_EVENTS && DOTT_ocap_recording}];
+            ocap_recorder_PFHObject setVariable
+                ["run_condition",
+                {SHOULD_SAVE_EVENTS && DOTT_ocap_recording}];
         }] call CBA_fnc_waitUntilAndExecute;
+
+        //Add marker workarounds
+        [{!isNil "ocap_listener_markers"},
+            {
+            ["ocap_handleMarker", ocap_listener_markers] 
+                call CBA_fnc_removeEventHandler;
+            call compile preprocessFileLineNumbers 
+                "DOTT_Functions\ocap\handleMarkers.sqf"}] 
+            call CBA_fnc_waitUntilAndExecute;
 
         #define UPDATE_TIME [] call ocap_recorder_fnc_updateTime
         #define START_RECORDING DOTT_ocap_recording = true; UPDATE_TIME
