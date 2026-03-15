@@ -25,22 +25,6 @@ Overall Future Goals
   - Player profile string reading for Cpl, Sgt, etc?
 * FIX: BLUFOR Base right light unintentionally simulation disabled.
 
-* Near Goals
-  - New hint system
-    - Using vanilla hint is limiting due to potential overwrites from different systems, 
-      which can also make how long we want a message to stay up inconsistent.
-    - Potentially take FNF notification system and tweak it.
-    - Potentially use CBA's.
----
-TBD
-
----
-
-* Tweaked "data\cfgNotifications.hpp"
-	- Included new class "FlagTaken"
-	- Included new class "FlagCaptured"
-	- Included new class "FlagReturned"
-
 ---
 v4.5.0
 14 MAR 2026
@@ -74,6 +58,7 @@ v4.5.0
 
 * OCAP
   - Updated folder to remove marker related workarounds to be compatible with OCAP Addon 2.1.0.
+  - Instead of replacing startRecording and startRecording, hijack the PFHObject to run when an additional variable we create is true.
 
 * Parade
   - Hopefully fix custom parade uniform not being applied on join by checking if respawn template parade loadout is applied first.
