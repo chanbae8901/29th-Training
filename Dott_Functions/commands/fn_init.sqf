@@ -8,11 +8,12 @@
  *     Initializes the chat command system on the client.
  *     Compiles and executes each module's commands.sqf to
  *     populate the global command and help arrays, then
- *     converts them to HashMaps for O(1) lookups. Registers
- *     a HandleChatMessage event handler that intercepts
- *     messages beginning with the command marker ("!") and
- *     routes them to fn_execute. Should be initialized after
- *     the round system.
+ *     converts them to HashMaps for O(1) lookups. Uses a
+ *     per-frame handler to detect when the chat display opens
+ *     and adds a KeyDown handler that intercepts messages
+ *     beginning with the command marker ("!"), closes the chat
+ *     to prevent sending, and routes them to fn_execute. Should
+ *     be initialized after the round system.
  *
  * Parameters:
  *     None
@@ -46,34 +47,39 @@ if (hasInterface) then
     DOTT_commands_finishedInit = true;
     ["DOTT_commands_initCompleted", []] call CBA_fnc_localEvent;
 
-    addMissionEventHandler [
-        "HandleChatMessage",
-        {
-            params [
-                "_channel", "_owner", "_from",
-                "_text", "_person", "_name",
-                "_strID", "_forcedDisplay",
-                "_isPlayerMessage", "_sentenceType",
-                "_chatMessageType", "_params"
-            ];
+    DOTT_commands_chatOpen = false;
 
-            private _chatArr = toArray _text;
+    [{
+        private _display = findDisplay 24;
 
-            if ((_chatArr select 0) isEqualTo ((toArray pvpfw_chatIntercept_commandMarker) select 0)) then
-            {
-                //only execute for the player who sent the message
-                if (_strID == getPlayerID player) then
-                {
+        if (isNull _display) then {
+            DOTT_commands_chatOpen = false;
+        } else {
+            if (!DOTT_commands_chatOpen) then {
+                DOTT_commands_chatOpen = true;
+
+                _display displayAddEventHandler ["KeyDown", {
+                    params ["_display", "_key"];
+
+                    // 28 = Enter, 156 = Numpad Enter
+                    if (_key != 28 && _key != 156) exitWith { false };
+
+                    private _text = ctrlText (_display displayCtrl 101);
+                    private _chatArr = toArray _text;
+
+                    if (_chatArr isEqualTo []) exitWith { false };
+                    if !((_chatArr select 0) isEqualTo ((toArray pvpfw_chatIntercept_commandMarker) select 0)) exitWith { false };
+
+                    closeDialog 0;
+                    _display closeDisplay 1;
+
                     [_chatArr] call DOTT_commands_fnc_execute;
-                };
-                true //blocks message from showing up in chat
-            }
-            else
-            {
-                nil //don't do anything to message if it's not a command
+
+                    true
+                }];
             };
-        }
-    ];
+        };
+    }, 0] call CBA_fnc_addPerFrameHandler;
 };
 
 /* --- Compile command subfolder functions (not in CfgFunctions) --- */
