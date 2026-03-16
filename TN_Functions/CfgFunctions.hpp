@@ -4,7 +4,7 @@ class TN_Loadout
     tag = "TN_loadout";
     class LoadoutFunctions
     {
-        file = "Dott_Functions\loadout";
+        file = "TN_Functions\loadout";
         class init {};
         class fullSetUnitLoadout {};
         class resetWeaponState {};
@@ -19,7 +19,7 @@ class TN_Common
     tag = "TN_common";
     class CommonFunctions
     {
-        file = "Dott_Functions\common";
+        file = "TN_Functions\common";
         class addDiaryRecord {};
         class diag_log {};
         class displayMsg {};
@@ -31,7 +31,7 @@ class TN_Round
     tag = "TN_round";
     class RoundFunctions
     {
-        file = "Dott_Functions\round";
+        file = "TN_Functions\round";
         class init {};
         class manageReady {};
         class checkAllSidesReady {};
@@ -59,7 +59,7 @@ class TN_Radio
     tag = "TN_radio";
     class RadioFunctions
     {
-        file = "Dott_Functions\radio";
+        file = "TN_Functions\radio";
         class init {};
         class initTransferSettings {};
         class add {};
@@ -72,7 +72,7 @@ class TN_Thermals
     tag = "TN_thermals";
     class ThermalFunctions
     {
-        file = "Dott_Functions\thermals";
+        file = "TN_Functions\thermals";
         class init {};
         class disablePIP {};
         class blackScreen {};
@@ -84,7 +84,7 @@ class TN_Ticket
     tag = "TN_ticket";
     class TicketFunctions
     {
-        file = "Dott_Functions\ticket";
+        file = "TN_Functions\ticket";
         class init {};
         class add {};
         class count {};
@@ -96,7 +96,7 @@ class TN_Spectator
     tag = "TN_spectator";
     class SpectatorFunctions
     {
-        file = "Dott_Functions\spectator";
+        file = "TN_Functions\spectator";
         class init {};
         class enter {};
         class exit {};
@@ -108,7 +108,7 @@ class TN_Curator
     tag = "TN_curator";
     class CuratorFunctions
     {
-        file = "Dott_Functions\curator";
+        file = "TN_Functions\curator";
         class init {};
         class excludeObjects {};
         class addEditable {};
@@ -121,7 +121,7 @@ class TN_Vehicle
     tag = "TN_vehicle";
     class VehicleFunctions
     {
-        file = "Dott_Functions\vehicle";
+        file = "TN_Functions\vehicle";
         class init {};
     };
 };
@@ -131,7 +131,7 @@ class TN_OCAP
     tag = "TN_ocap";
     class OCAPFunctions
     {
-        file = "Dott_Functions\ocap";
+        file = "TN_Functions\ocap";
         class init {};
         class initClient {};
     };
@@ -142,7 +142,7 @@ class TN_Commands
     tag = "TN_commands";
     class CommandFunctions
     {
-        file = "Dott_Functions\commands";
+        file = "TN_Functions\commands";
         class init {};
         class execute {};
         class addModule {};
@@ -154,7 +154,7 @@ class TN_Training
     tag = "TN_training";
     class TrainingFunctions
     {
-        file = "Dott_Functions\training";
+        file = "TN_Functions\training";
         class init {};
         class initDateAndWeather {};
         class initDefaultLoadouts {};
@@ -163,7 +163,7 @@ class TN_Training
     {
         class overrideFunctions
         {
-            file = "Dott_Functions\training\overrideFunctions.sqf";
+            file = "TN_Functions\training\overrideFunctions.sqf";
             preInit = 1;
         };
     };
@@ -174,7 +174,7 @@ class TN_Tracker
     tag = "TN_tracker";
     class TrackerFunctions
     {
-        file = "Dott_Functions\tracker";
+        file = "TN_Functions\tracker";
         class init {};
         class recordKill {};
         class saveEvent {};
@@ -206,7 +206,7 @@ class TN_Settings
     tag = "TN_settings";
     class SettingsFunctions
     {
-        file = "Dott_Functions\settings";
+        file = "TN_Functions\settings";
         class init {};
         class initDisplayMissionOptions {};
     };
@@ -217,7 +217,7 @@ class TN_Parade
     tag = "TN_parade";
     class ParadeFunctions
     {
-        file = "Dott_Functions\parade";
+        file = "TN_Functions\parade";
         class init {};
         class handleInitialInventory {};
         class forceAll {};
@@ -231,7 +231,7 @@ class TN_Event
     tag = "TN_event";
     class EventFunctions
     {
-        file = "Dott_Functions\event";
+        file = "TN_Functions\event";
         class init {};
         class game {};
         class aliveCheck {};
@@ -249,7 +249,7 @@ class TN_Base
     tag = "TN_base";
     class BaseFunctions
     {
-        file = "Dott_Functions\base";
+        file = "TN_Functions\base";
         class init {};
         class cleaner {};
     };

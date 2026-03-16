@@ -89,7 +89,7 @@ class CfgRoles
 
 class CfgFunctions
 {
-    #include "Dott_Functions\CfgFunctions.hpp"
+    #include "TN_Functions\CfgFunctions.hpp"
 };
 
 #include "data\CfgDebriefing.hpp"

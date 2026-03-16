@@ -85,10 +85,10 @@ if (hasInterface) then
 
 if (hasInterface) then {
     TN_commands_fnc_arsenalCreate = compileFinal preprocessFileLineNumbers
-        "Dott_Functions\commands\arsenal\fn_create.sqf";
+        "TN_Functions\commands\arsenal\fn_create.sqf";
 };
 
 if (isServer) then {
     TN_commands_fnc_arsenalRegister = compileFinal preprocessFileLineNumbers
-        "Dott_Functions\commands\arsenal\fn_register.sqf";
+        "TN_Functions\commands\arsenal\fn_register.sqf";
 };

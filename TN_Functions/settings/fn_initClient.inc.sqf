@@ -3,7 +3,7 @@
 
     if (isNil {uiNamespace getVariable _scriptName}) then
     {
-        private _filePath = format ["Dott_Functions\settings\gui\fn_%1.sqf", _x];
+        private _filePath = format ["TN_Functions\settings\gui\fn_%1.sqf", _x];
         uiNamespace setVariable [_scriptName, compile preprocessFile _filePath];
     };
 }
@@ -19,7 +19,7 @@ forEach [
 
     if (isNil {missionNamespace getVariable _scriptName}) then
     {
-        private _filePath = format ["Dott_Functions\settings\gui\fn_%1.sqf", _x];
+        private _filePath = format ["TN_Functions\settings\gui\fn_%1.sqf", _x];
         missionNamespace setVariable [_scriptName, compile preprocessFile _filePath];
     };
 }

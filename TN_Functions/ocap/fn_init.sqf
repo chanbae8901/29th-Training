@@ -9,8 +9,8 @@
  *   workarounds. Must run on the server.
  *
  * Hardcoded Paths:
- *   Dott_Functions\ocap\fn_initializePlayer.sqf
- *   Dott_Functions\ocap\handleMarkers.sqf
+ *   TN_Functions\ocap\fn_initializePlayer.sqf
+ *   TN_Functions\ocap\handleMarkers.sqf
  *
  * Parameter(s): None
  * Returns: Nothing

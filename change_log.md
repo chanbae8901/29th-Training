@@ -29,6 +29,9 @@ Overall Future Goals
 v4.5.0
 14 MAR 2026
 ---
+* All "DOTT" tags in functions and variables converted to "TN", Dott_Functions folder
+  renamed to TN_Functions per 1Lt. Ericksen request. Months of muscle memory wasted.
+
 * Claude Assisted Restructure of Mission File
   - Fixed spelling mistakes
   - Fixed/standardized indentations and other standards
