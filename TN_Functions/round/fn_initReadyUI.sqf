@@ -155,7 +155,7 @@ if !(isNil "TN_readyUI_initialized") then
     TN_readyUI_dirty = nil;
     TN_readyUI_refreshCounter = nil;
 
-    diag_log "[ReadyUI] Teardown complete — reinitializing...";
+    diag_log text "[ReadyUI] Teardown complete — reinitializing...";
 };
 
 TN_readyUI_initialized = true;

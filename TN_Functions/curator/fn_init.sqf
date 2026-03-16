@@ -98,7 +98,7 @@ if (isServer) then
         //failsafe if zeus_admin isn't defined by now
         if (time > 10) exitWith
         {
-            diag_log "zeus_admin not defined, skipping event handlers";
+            diag_log text "zeus_admin not defined, skipping event handlers";
         };
 
         addMissionEventHandler [

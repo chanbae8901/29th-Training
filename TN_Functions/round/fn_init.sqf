@@ -226,7 +226,7 @@ if (isServer) then
                     "%1 has silent weapon.",
                     keys TN_round_clientSilentWeapons
                 ];
-                diag_log _msg;
+                diag_log text _msg;
                 [_msg] remoteExecCall ["systemChat"];
 
                 TN_round_clientSilentWeapons = nil;
