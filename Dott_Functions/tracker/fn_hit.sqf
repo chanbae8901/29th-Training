@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_hit
+ * Function: TN_tracker_fnc_hit
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -31,7 +31,7 @@ if !(alive _hitEntity
     && _hitEntity isKindOf "AllVehicles") exitWith {};
 
 private _instigatorInfo =
-    _projectile getVariable "DOTT_instigatorInfo";
+    _projectile getVariable "TN_instigatorInfo";
 
 // If projectile hits multiple things it can have time of
 // hit already.
@@ -40,12 +40,12 @@ if (count _instigatorInfo > 4) then
     _instigatorInfo deleteAt 4;
 };
 _instigatorInfo pushBack
-    round(serverTime - DOTT_tracker_startTime);
+    round(serverTime - TN_tracker_startTime);
 
 if (_hitEntity isKindOf "Man") exitWith
 {
     [[_hitEntity], _instigatorInfo] remoteExecCall
-        ["DOTT_tracker_fnc_sendHit", 2];
+        ["TN_tracker_fnc_sendHit", 2];
 };
 
 // If vehicle is already going to blow up don't record any
@@ -58,6 +58,6 @@ private _targets =
     (crew _hitEntity) select { alive _x };
 _targets pushBack _hitEntity;
 [_targets, _instigatorInfo] remoteExecCall
-    ["DOTT_tracker_fnc_sendHit", 2];
+    ["TN_tracker_fnc_sendHit", 2];
 
 true

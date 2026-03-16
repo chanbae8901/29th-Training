@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_radio_fnc_init
+ * Function: TN_radio_fnc_init
  * Author:   Bae [29th ID]
  *
  * Description:
@@ -27,7 +27,7 @@ if (hasInterface) then
         {
             // Skip if Zeus is open (ZEN loadout editing).
             if !(isNull (findDisplay 312)) exitWith {};
-            call DOTT_radio_fnc_add;
+            call TN_radio_fnc_add;
         }
     ] call BIS_fnc_addScriptedEventHandler;
 
@@ -39,25 +39,25 @@ if (hasInterface) then
             {
                 // Skip if Zeus is open (ZEN loadout editing).
                 if !(isNull (findDisplay 312)) exitWith {};
-                call DOTT_radio_fnc_add;
+                call TN_radio_fnc_add;
             }
         ] call CBA_fnc_addEventHandler;
     };
 
     // Strip radios on death when the setting is enabled.
     [
-        "DOTT_radio_removeOnDeath",
+        "TN_radio_removeOnDeath",
         "Killed",
         {
             if (TN_removeRadiosOnDeath) then
             {
-                (_this select 0) call DOTT_radio_fnc_remove;
+                (_this select 0) call TN_radio_fnc_remove;
             };
         }
     ] call CBA_fnc_addBISPlayerEventHandler;
 
     // Persist TFAR radio settings across respawn / loadout swap.
-    call DOTT_radio_fnc_initTransferSettings;
+    call TN_radio_fnc_initTransferSettings;
 };
 
 if (isServer) then
@@ -72,7 +72,7 @@ if (isServer) then
 
             if (TN_removeRadiosOnDeath) then
             {
-                _unit call DOTT_radio_fnc_remove;
+                _unit call TN_radio_fnc_remove;
             };
         }
     ];

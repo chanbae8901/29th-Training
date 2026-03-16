@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_commands_fnc_arsenalRegister
+ * Function: TN_commands_fnc_arsenalRegister
  * Author:   Bae [29th ID]
  *
  * Registers an arsenal object on the server for curator
@@ -16,17 +16,17 @@
 
 params ["_arsenal"];
 
-if (isNil "DOTT_cmd_arsenalObjects") then {
-    DOTT_cmd_arsenalObjects = [];
+if (isNil "TN_cmd_arsenalObjects") then {
+    TN_cmd_arsenalObjects = [];
 
-    ["DOTT_round_started", {
+    ["TN_round_started", {
         {
             deleteVehicle _x;
-        } forEach DOTT_cmd_arsenalObjects;
-        DOTT_cmd_arsenalObjects = [];
+        } forEach TN_cmd_arsenalObjects;
+        TN_cmd_arsenalObjects = [];
     }] call CBA_fnc_addEventHandler;
 };
 
-DOTT_cmd_arsenalObjects pushBack _arsenal;
+TN_cmd_arsenalObjects pushBack _arsenal;
 
-[[_arsenal]] call DOTT_curator_fnc_addEditable;
+[[_arsenal]] call TN_curator_fnc_addEditable;

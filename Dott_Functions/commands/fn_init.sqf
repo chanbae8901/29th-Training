@@ -1,7 +1,7 @@
 #include "..\..\data\defines.hpp"
 
 /*
- * Function: DOTT_commands_fnc_init
+ * Function: TN_commands_fnc_init
  * Author:   Bae [29th ID]
  *
  * Description:
@@ -22,41 +22,41 @@
  *     Nothing
  *
  * Example:
- *     call DOTT_commands_fnc_init;
+ *     call TN_commands_fnc_init;
  */
 
 if (hasInterface) then
 {
-    DOTT_commands_commandMarker = "!"; //Character at the front of the chat input to intercept it
+    TN_commands_commandMarker = "!"; //Character at the front of the chat input to intercept it
 
     #include "commands.sqf"
 
     // Load each module's commands.sqf if it exists.
     {
-        private _commandsFile = format ["DOTT_Functions\%1\commands.sqf", _x];
+        private _commandsFile = format ["TN_Functions\%1\commands.sqf", _x];
         if !(fileExists _commandsFile) then { continue };
 
         call compile preprocessFileLineNumbers _commandsFile;
     }
-    forEach (DOTT_MODULES - ["commands"]);
+    forEach (TN_MODULES - ["commands"]);
 
     // Convert flat arrays to HashMaps for fast lookup.
-    DOTT_commands_allCommands = createHashMapFromArray DOTT_commands_allCommands;
-    DOTT_commands_helpInfo = createHashMapFromArray DOTT_commands_helpInfo;
+    TN_commands_allCommands = createHashMapFromArray TN_commands_allCommands;
+    TN_commands_helpInfo = createHashMapFromArray TN_commands_helpInfo;
 
-    DOTT_commands_finishedInit = true;
-    ["DOTT_commands_initCompleted", []] call CBA_fnc_localEvent;
+    TN_commands_finishedInit = true;
+    ["TN_commands_initCompleted", []] call CBA_fnc_localEvent;
 
-    DOTT_commands_chatOpen = false;
+    TN_commands_chatOpen = false;
 
     [{
         private _display = findDisplay 24;
 
         if (isNull _display) then {
-            DOTT_commands_chatOpen = false;
+            TN_commands_chatOpen = false;
         } else {
-            if (!DOTT_commands_chatOpen) then {
-                DOTT_commands_chatOpen = true;
+            if (!TN_commands_chatOpen) then {
+                TN_commands_chatOpen = true;
 
                 _display displayAddEventHandler ["KeyDown", {
                     params ["_display", "_key"];
@@ -67,12 +67,12 @@ if (hasInterface) then
                     private _text = ctrlText (_display displayCtrl 101);
 
                     if (_text isEqualTo "") exitWith { false };
-                    if !((_text select [0, 1]) isEqualTo DOTT_commands_commandMarker) exitWith { false };
+                    if !((_text select [0, 1]) isEqualTo TN_commands_commandMarker) exitWith { false };
 
                     closeDialog 0;
                     _display closeDisplay 1;
 
-                    [_text] call DOTT_commands_fnc_execute;
+                    [_text] call TN_commands_fnc_execute;
 
                     true
                 }];
@@ -84,11 +84,11 @@ if (hasInterface) then
 /* --- Compile command subfolder functions (not in CfgFunctions) --- */
 
 if (hasInterface) then {
-    DOTT_commands_fnc_arsenalCreate = compileFinal preprocessFileLineNumbers
+    TN_commands_fnc_arsenalCreate = compileFinal preprocessFileLineNumbers
         "Dott_Functions\commands\arsenal\fn_create.sqf";
 };
 
 if (isServer) then {
-    DOTT_commands_fnc_arsenalRegister = compileFinal preprocessFileLineNumbers
+    TN_commands_fnc_arsenalRegister = compileFinal preprocessFileLineNumbers
         "Dott_Functions\commands\arsenal\fn_register.sqf";
 };

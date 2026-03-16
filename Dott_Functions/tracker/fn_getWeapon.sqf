@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_getWeapon
+ * Function: TN_tracker_fnc_getWeapon
  * Author:   Bae [29th ID]
  *
  * Purpose:

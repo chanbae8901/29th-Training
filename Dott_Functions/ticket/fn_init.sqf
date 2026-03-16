@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_ticket_fnc_init
+ * Function: TN_ticket_fnc_init
  * Author:   Bae [29th ID]
  *
  * Description:
@@ -13,37 +13,37 @@
  *   Nothing
  *
  * Example:
- *   call DOTT_ticket_fnc_init;
+ *   call TN_ticket_fnc_init;
  */
 
 // Ensure JIP client is aware of the status of the ticket system.
-if (isNil "DOTT_ticketEnabled") then
+if (isNil "TN_ticketEnabled") then
 {
-    DOTT_ticketEnabled = false;
+    TN_ticketEnabled = false;
 };
-if (isNil "DOTT_ticketWEST") then
+if (isNil "TN_ticketWEST") then
 {
-    DOTT_ticketWEST = 0;
+    TN_ticketWEST = 0;
 };
-if (isNil "DOTT_ticketEAST") then
+if (isNil "TN_ticketEAST") then
 {
-    DOTT_ticketEAST = 0;
+    TN_ticketEAST = 0;
 };
-if (isNil "DOTT_ticketGUER") then
+if (isNil "TN_ticketGUER") then
 {
-    DOTT_ticketGUER = 0;
+    TN_ticketGUER = 0;
 };
 
 if (hasInterface) then
 {
     [
-        "DOTT_ticket_respawnCount",
+        "TN_ticket_respawnCount",
         "Respawn",
         {
-            if (DOTT_ticketEnabled) then
+            if (TN_ticketEnabled) then
             {
                 private _playerSide = playerSide;
-                [_playerSide] remoteExecCall ["DOTT_ticket_fnc_count", 2];
+                [_playerSide] remoteExecCall ["TN_ticket_fnc_count", 2];
             };
         }
     ] call CBA_fnc_addBISPlayerEventHandler;

@@ -1,7 +1,7 @@
 #include "defines.hpp"
 
 /**
- * Function: DOTT_round_fnc_initSafeStart
+ * Function: TN_round_fnc_initSafeStart
  * Author:   Bae [29th ID], modified from Dott [29th ID]
  *
  * Launches safe start before round start. Displays a countdown
@@ -20,30 +20,30 @@
  *     Boolean - true if safe start launched, false otherwise.
  *
  * Example:
- *     [] call DOTT_round_fnc_initSafeStart;
+ *     [] call TN_round_fnc_initSafeStart;
  */
 
 // Server should own the waitAndExecute chain.
 if (!isServer) exitWith
 {
-    _this remoteExecCall ["DOTT_round_fnc_initSafeStart", 2];
+    _this remoteExecCall ["TN_round_fnc_initSafeStart", 2];
 };
 
-if (DOTT_round_safeStartActive) exitWith {false};
-if (call DOTT_round_fnc_isRoundActive) exitWith {false};
+if (TN_round_safeStartActive) exitWith {false};
+if (call TN_round_fnc_isRoundActive) exitWith {false};
 
 params [
     ["_safeStartTime", TN_safeStartTime],
     ["_forced", false]
 ];
 
-DOTT_round_safeStartActive = true;
-publicVariable "DOTT_round_safeStartActive";
+TN_round_safeStartActive = true;
+publicVariable "TN_round_safeStartActive";
 
 /* --- Notification --- */
 private _msgText = format [
     "<t color='#ffffff' size='3'>Live in %1!</t>",
-    [_safeStartTime] call DOTT_round_fnc_formatTime
+    [_safeStartTime] call TN_round_fnc_formatTime
 ];
 
 if (_forced) then
@@ -57,18 +57,18 @@ if (_forced) then
     "PLAIN",
     0.5,
     false
-] remoteExecCall ["DOTT_common_fnc_displayMsg"];
+] remoteExecCall ["TN_common_fnc_displayMsg"];
 
 if (_forced) then
 {
-    DOTT_round_ignoreReadiness = true;
-    publicVariable "DOTT_round_ignoreReadiness";
+    TN_round_ignoreReadiness = true;
+    publicVariable "TN_round_ignoreReadiness";
 };
 
-["DOTT_round_safeStartBegin", []] call CBA_fnc_globalEvent;
+["TN_round_safeStartBegin", []] call CBA_fnc_globalEvent;
 
 [_safeStartTime] call BIS_fnc_countdown;
 
-call DOTT_round_fnc_initSafeStartHelper;
+call TN_round_fnc_initSafeStartHelper;
 
 true

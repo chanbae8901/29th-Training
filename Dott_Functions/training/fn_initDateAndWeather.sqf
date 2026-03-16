@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_training_fnc_initDateAndWeather
+ * Function: TN_training_fnc_initDateAndWeather
  * Author:   Bae [29th ID]
  *
  * Sets date, overcast, and fog on the server. The engine
@@ -20,7 +20,7 @@
  *     private _forcedOvercast = 0.1;
  *     private _forcedFog      = [0.1, 0.01, 0];
  *     [_forcedDate, _forcedOvercast, _forcedFog]
- *         call DOTT_training_fnc_initDateAndWeather;
+ *         call TN_training_fnc_initDateAndWeather;
  */
 
 if (!isServer) exitWith {};

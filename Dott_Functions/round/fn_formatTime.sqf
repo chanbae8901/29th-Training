@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_round_fnc_formatTime
+ * Function: TN_round_fnc_formatTime
  * Author:   Bae [29th ID]
  *
  * Formats a time value in seconds into a human-readable string like
@@ -15,7 +15,7 @@
  *     String - Formatted time string.
  *
  * Example:
- *     [300] call DOTT_round_fnc_formatTime;
+ *     [300] call TN_round_fnc_formatTime;
  */
 
 params ["_seconds", ["_forceNoS", false]];

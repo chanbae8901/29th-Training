@@ -1,13 +1,13 @@
 /**
- * Function: DOTT_spectator_fnc_exit
+ * Function: TN_spectator_fnc_exit
  * Author:   Hill [29th ID]
  *
  * Removes the player from BIS EG Spectator mode and undoes all
- * changes made by DOTT_spectator_fnc_enter. Temporarily disables
+ * changes made by TN_spectator_fnc_enter. Temporarily disables
  * damage to prevent collision kills when multiple players leave
  * the spectator box at once.
  *
- * NOTE: The variable DOTT_loadout_teleporting is a magic string
+ * NOTE: The variable TN_loadout_teleporting is a magic string
  * set by the loadout/teleport system. When present, it means the
  * player is mid-teleport and damage must stay disabled to avoid
  * conflicts. The 2-second re-enable is skipped in that case.
@@ -19,7 +19,7 @@
  *     BOOL - false if not in spectator, true otherwise
  *
  * Example:
- *     call DOTT_spectator_fnc_exit;
+ *     call TN_spectator_fnc_exit;
  */
 
 // --- Bail if spectator was never initialized ---
@@ -42,7 +42,7 @@ player allowDamage false;
     sleep 2;
 
     // Don't conflict with the loadout teleport system.
-    if (!isNil "DOTT_loadout_teleporting") exitWith {};
+    if (!isNil "TN_loadout_teleporting") exitWith {};
 
     player allowDamage true;
 };

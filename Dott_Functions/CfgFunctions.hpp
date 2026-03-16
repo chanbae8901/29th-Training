@@ -1,7 +1,7 @@
 //no #include defines needed, inherited from description.ext
-class DOTT_Loadout
+class TN_Loadout
 {
-    tag = "DOTT_loadout";
+    tag = "TN_loadout";
     class LoadoutFunctions
     {
         file = "Dott_Functions\loadout";
@@ -14,9 +14,9 @@ class DOTT_Loadout
     };
 };
 
-class DOTT_Common
+class TN_Common
 {
-    tag = "DOTT_common";
+    tag = "TN_common";
     class CommonFunctions
     {
         file = "Dott_Functions\common";
@@ -26,9 +26,9 @@ class DOTT_Common
 };
 };
 
-class DOTT_Round
+class TN_Round
 {
-    tag = "DOTT_round";
+    tag = "TN_round";
     class RoundFunctions
     {
         file = "Dott_Functions\round";
@@ -54,9 +54,9 @@ class DOTT_Round
     };
 };
 
-class DOTT_Radio
+class TN_Radio
 {
-    tag = "DOTT_radio";
+    tag = "TN_radio";
     class RadioFunctions
     {
         file = "Dott_Functions\radio";
@@ -67,9 +67,9 @@ class DOTT_Radio
     };
 };
 
-class DOTT_Thermals
+class TN_Thermals
 {
-    tag = "DOTT_thermals";
+    tag = "TN_thermals";
     class ThermalFunctions
     {
         file = "Dott_Functions\thermals";
@@ -79,9 +79,9 @@ class DOTT_Thermals
     };
 };
 
-class DOTT_Ticket
+class TN_Ticket
 {
-    tag = "DOTT_ticket";
+    tag = "TN_ticket";
     class TicketFunctions
     {
         file = "Dott_Functions\ticket";
@@ -91,9 +91,9 @@ class DOTT_Ticket
     };
 };
 
-class DOTT_Spectator
+class TN_Spectator
 {
-    tag = "DOTT_spectator";
+    tag = "TN_spectator";
     class SpectatorFunctions
     {
         file = "Dott_Functions\spectator";
@@ -103,9 +103,9 @@ class DOTT_Spectator
     };
 };
 
-class DOTT_Curator
+class TN_Curator
 {
-    tag = "DOTT_curator";
+    tag = "TN_curator";
     class CuratorFunctions
     {
         file = "Dott_Functions\curator";
@@ -116,9 +116,9 @@ class DOTT_Curator
     };
 };
 
-class DOTT_Vehicle
+class TN_Vehicle
 {
-    tag = "DOTT_vehicle";
+    tag = "TN_vehicle";
     class VehicleFunctions
     {
         file = "Dott_Functions\vehicle";
@@ -126,9 +126,9 @@ class DOTT_Vehicle
     };
 };
 
-class DOTT_OCAP
+class TN_OCAP
 {
-    tag = "DOTT_ocap";
+    tag = "TN_ocap";
     class OCAPFunctions
     {
         file = "Dott_Functions\ocap";
@@ -137,9 +137,9 @@ class DOTT_OCAP
     };
 };
 
-class DOTT_Commands
+class TN_Commands
 {
-    tag = "DOTT_commands";
+    tag = "TN_commands";
     class CommandFunctions
     {
         file = "Dott_Functions\commands";
@@ -149,9 +149,9 @@ class DOTT_Commands
     };
 };
 
-class DOTT_Training
+class TN_Training
 {
-    tag = "DOTT_training";
+    tag = "TN_training";
     class TrainingFunctions
     {
         file = "Dott_Functions\training";
@@ -169,9 +169,9 @@ class DOTT_Training
     };
 };
 
-class DOTT_Tracker
+class TN_Tracker
 {
-    tag = "DOTT_tracker";
+    tag = "TN_tracker";
     class TrackerFunctions
     {
         file = "Dott_Functions\tracker";
@@ -201,9 +201,9 @@ class DOTT_Tracker
     };
 };
 
-class DOTT_Settings
+class TN_Settings
 {
-    tag = "DOTT_settings";
+    tag = "TN_settings";
     class SettingsFunctions
     {
         file = "Dott_Functions\settings";
@@ -212,9 +212,9 @@ class DOTT_Settings
     };
 };
 
-class DOTT_Parade
+class TN_Parade
 {
-    tag = "DOTT_parade";
+    tag = "TN_parade";
     class ParadeFunctions
     {
         file = "Dott_Functions\parade";
@@ -226,9 +226,9 @@ class DOTT_Parade
     };
 };
 
-class DOTT_Event
+class TN_Event
 {
-    tag = "DOTT_event";
+    tag = "TN_event";
     class EventFunctions
     {
         file = "Dott_Functions\event";
@@ -244,9 +244,9 @@ class DOTT_Event
     };
 };
 
-class DOTT_Base
+class TN_Base
 {
-    tag = "DOTT_base";
+    tag = "TN_base";
     class BaseFunctions
     {
         file = "Dott_Functions\base";

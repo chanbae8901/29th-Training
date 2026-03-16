@@ -1,7 +1,7 @@
 #include "defines.hpp"
 
 /**
- * Function: DOTT_round_fnc_initSafeStartHelper
+ * Function: TN_round_fnc_initSafeStartHelper
  * Author:   Bae [29th ID]
  *
  * Helper function for initSafeStart. Polls every 0.2 seconds until
@@ -16,27 +16,27 @@
  *     Boolean - true
  *
  * Example:
- *     call DOTT_round_fnc_initSafeStartHelper;
+ *     call TN_round_fnc_initSafeStartHelper;
  */
 
-if (!DOTT_round_safeStartActive) exitWith {true};
+if (!TN_round_safeStartActive) exitWith {true};
 
 private _allSidesReady =
-    call DOTT_round_fnc_checkAllSidesReady;
+    call TN_round_fnc_checkAllSidesReady;
 
 /* --- Abort if a team unreadied and we're not forced --- */
-if !(_allSidesReady || DOTT_round_ignoreReadiness) exitWith
+if !(_allSidesReady || TN_round_ignoreReadiness) exitWith
 {
     [
         "<t color='#ffffff' size='4'>Timer Aborted!</t>",
         "PLAIN",
         0.5
-    ] remoteExecCall ["DOTT_common_fnc_displayMsg"];
+    ] remoteExecCall ["TN_common_fnc_displayMsg"];
 
     RESET_SAFESTART_VARS;
     [-1] call BIS_fnc_countdown;
 
-    ["DOTT_round_safeStartAborted", []]
+    ["TN_round_safeStartAborted", []]
         call CBA_fnc_globalEvent;
 
     true
@@ -46,7 +46,7 @@ if !(_allSidesReady || DOTT_round_ignoreReadiness) exitWith
 if (([0] call BIS_fnc_countdown) > 0) then
 {
     [
-        {call DOTT_round_fnc_initSafeStartHelper},
+        {call TN_round_fnc_initSafeStartHelper},
         [],
         0.2
     ] call CBA_fnc_waitAndExecute;
@@ -54,7 +54,7 @@ if (([0] call BIS_fnc_countdown) > 0) then
 else
 {
     RESET_SAFESTART_VARS;
-    [] call DOTT_round_fnc_start;
+    [] call TN_round_fnc_start;
 };
 
 true

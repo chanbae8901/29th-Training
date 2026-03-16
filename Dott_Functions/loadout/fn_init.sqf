@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_loadout_fnc_init
+ * Function: TN_loadout_fnc_init
  * Author:   Bae [29th ID]
  *
  * Purpose: Initializes the loadout module on clients. Registers arsenal
@@ -10,7 +10,7 @@
  * Params:  None
  * Returns: Nothing
  *
- * Example: call DOTT_loadout_fnc_init;
+ * Example: call TN_loadout_fnc_init;
  */
 
 if (hasInterface) then
@@ -21,7 +21,7 @@ if (hasInterface) then
         {
             // Don't do if Zeus Open (ZEN Loadout Editing).
             if !(isNull (findDisplay 312)) exitWith {};
-            call DOTT_loadout_fnc_onArsenalClosed;
+            call TN_loadout_fnc_onArsenalClosed;
         }
     ] call BIS_fnc_addScriptedEventHandler;
 
@@ -33,16 +33,16 @@ if (hasInterface) then
             {
                 // Don't do if Zeus Open (ZEN Loadout Editing).
                 if !(isNull (findDisplay 312)) exitWith {};
-                call DOTT_loadout_fnc_onArsenalClosed;
+                call TN_loadout_fnc_onArsenalClosed;
             }
         ] call CBA_fnc_addEventHandler;
     };
 
     [
-        "DOTT_loadout_setInsigniaRespawn",
+        "TN_loadout_setInsigniaRespawn",
         "Respawn",
         {
-            (_this select 0) spawn DOTT_loadout_fnc_setInsignia;
+            (_this select 0) spawn TN_loadout_fnc_setInsignia;
         }
     ] call CBA_fnc_addBISPlayerEventHandler;
 };

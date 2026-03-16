@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_thermals_fnc_disablePIP
+ * Function: TN_thermals_fnc_disablePIP
  * Author:   Bae [29th ID]
  *
  * Iterates every RenderTarget camera on the player's vehicle and
@@ -19,7 +19,7 @@
  *     BOOL - true if at least one PIP camera was disabled
  *
  * Example:
- *     call DOTT_thermals_fnc_disablePIP;
+ *     call TN_thermals_fnc_disablePIP;
  */
 
 private _veh = vehicle player;

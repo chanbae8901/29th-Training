@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_event_fnc_checkWinCondition
+ * Function: TN_event_fnc_checkWinCondition
  * Author:   Bae [29th ID]
  *
  * Evaluates win conditions each tick during an active round.
@@ -14,20 +14,20 @@
  *     Nothing
  *
  * Requires:
- *     DOTT_event_score (global array)
- *     DOTT_event_opforWinConditions (global)
- *     DOTT_event_bluforWinConditions (global)
- *     DOTT_event_grnforWinConditions (global)
- *     DOTT_event_winCheckInterval (global, seconds)
- *     DOTT_event_fnc_game
- *     DOTT_round_fnc_isRoundActive
+ *     TN_event_score (global array)
+ *     TN_event_opforWinConditions (global)
+ *     TN_event_bluforWinConditions (global)
+ *     TN_event_grnforWinConditions (global)
+ *     TN_event_winCheckInterval (global, seconds)
+ *     TN_event_fnc_game
+ *     TN_round_fnc_isRoundActive
  */
 
 private _loopChecks = [[{ false }], [{ false }], [{ false }]];
 private _endChecks = [[{ false }], [{ false }], [{ false }]];
 
 {
-    private _pointValue = _x getVariable ["DOTT_pointValue", 0];
+    private _pointValue = _x getVariable ["TN_pointValue", 0];
 
     if (_pointValue == 0) then { continue };
 
@@ -42,24 +42,24 @@ private _endChecks = [[{ false }], [{ false }], [{ false }]];
                         "_newOwner",
                         "_oldOwner"
                     ];
-                    private _pointValue = _sector getVariable ["DOTT_pointValue", 0];
+                    private _pointValue = _sector getVariable ["TN_pointValue", 0];
                     private _newOwnerId = _newOwner call BIS_fnc_sideId;
                     private _oldOwnerId = _oldOwner call BIS_fnc_sideId;
 
                     if (_newOwnerId <= 2) then
                     {
-                        DOTT_event_score set [
+                        TN_event_score set [
                             _newOwnerId,
-                            (DOTT_event_score
+                            (TN_event_score
                                 select _newOwnerId)
                                 + _pointValue
                         ];
                     };
                     if (_oldOwnerId <= 2) then
                     {
-                        DOTT_event_score set [
+                        TN_event_score set [
                             _oldOwnerId,
-                            (DOTT_event_score
+                            (TN_event_score
                                 select _oldOwnerId)
                                 - _pointValue
                         ];
@@ -71,9 +71,9 @@ private _endChecks = [[{ false }], [{ false }], [{ false }]];
             private _idx = _owner call BIS_fnc_sideID;
             if (_idx <= 2) then
             {
-                DOTT_event_score set [
+                TN_event_score set [
                     _idx,
-                    (DOTT_event_score select _idx)
+                    (TN_event_score select _idx)
                         + _pointValue
                 ];
             };
@@ -85,14 +85,14 @@ private _endChecks = [[{ false }], [{ false }], [{ false }]];
                 params [
                     "_unit", "_killer", "_instigator"
                 ];
-                private _pointValue = _unit getVariable ["DOTT_pointValue", 0];
-                private _awardTeam = _unit getVariable ["DOTT_awardTeam", sideUnknown];
+                private _pointValue = _unit getVariable ["TN_pointValue", 0];
+                private _awardTeam = _unit getVariable ["TN_awardTeam", sideUnknown];
                 private _idx = _awardTeam call BIS_fnc_sideID;
                 if (_idx <= 2) then
                 {
-                    DOTT_event_score set [
+                    TN_event_score set [
                         _idx,
-                        (DOTT_event_score select _idx)
+                        (TN_event_score select _idx)
                             + _pointValue
                     ];
                 };
@@ -104,14 +104,14 @@ private _endChecks = [[{ false }], [{ false }], [{ false }]];
 fn_numPoints =
 {
     params ["_sideId", "_pointsRequired"];
-    DOTT_event_score select _sideId >= _pointsRequired
+    TN_event_score select _sideId >= _pointsRequired
 };
 
 private _sideSettings =
 [
-    DOTT_event_opforWinConditions,
-    DOTT_event_bluforWinConditions,
-    DOTT_event_grnforWinConditions
+    TN_event_opforWinConditions,
+    TN_event_bluforWinConditions,
+    TN_event_grnforWinConditions
 ];
 
 {
@@ -145,7 +145,7 @@ private _sideSettings =
 } forEach _sideSettings;
 
 [
-    "DOTT_round_ended",
+    "TN_round_ended",
     {
         private _endChecks = _thisArgs;
         {
@@ -158,22 +158,22 @@ private _sideSettings =
             if (_args call _fnCheck) exitWith
             {
                 private _winningSide = _forEachIndex call BIS_fnc_sideType;
-                [true, _winningSide] call DOTT_event_fnc_game;
+                [true, _winningSide] call TN_event_fnc_game;
             };
         } forEach _endChecks;
 
-        [true] call DOTT_event_fnc_game;
+        [true] call TN_event_fnc_game;
     }, _endChecks
 ] call CBA_fnc_addEventHandlerArgs;
 
-if (isNil "DOTT_event_winCheckInterval") then
+if (isNil "TN_event_winCheckInterval") then
 {
-    DOTT_event_winCheckInterval = 0.5;
+    TN_event_winCheckInterval = 0.5;
 };
 
-while {call DOTT_round_fnc_isRoundActive} do
+while {call TN_round_fnc_isRoundActive} do
 {
-    sleep DOTT_event_winCheckInterval;
+    sleep TN_event_winCheckInterval;
 
     {
         private _fnCheck = _x select 0;
@@ -185,7 +185,7 @@ while {call DOTT_round_fnc_isRoundActive} do
         if (_args call _fnCheck) exitWith
         {
             private _winningSide = _forEachIndex call BIS_fnc_sideType;
-            [true, _winningSide] call DOTT_event_fnc_game;
+            [true, _winningSide] call TN_event_fnc_game;
         };
     } forEach _loopChecks;
 };

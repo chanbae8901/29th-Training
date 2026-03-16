@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_round_fnc_checkAllSidesReady
+ * Function: TN_round_fnc_checkAllSidesReady
  * Author:   Bae [29th ID]
  *
  * Checks if all sides with active players are ready. Sides with zero
@@ -12,16 +12,16 @@
  *     Boolean - true if all populated sides are ready.
  *
  * Example:
- *     call DOTT_round_fnc_checkAllSidesReady;
+ *     call TN_round_fnc_checkAllSidesReady;
  */
 
 private _bluCount = west countSide allPlayers;
 private _opfCount = east countSide allPlayers;
 private _grnCount = resistance countSide allPlayers;
 
-private _opfReady = DOTT_round_sideReady select 0;
-private _bluReady = DOTT_round_sideReady select 1;
-private _grnReady = DOTT_round_sideReady select 2;
+private _opfReady = TN_round_sideReady select 0;
+private _bluReady = TN_round_sideReady select 1;
+private _grnReady = TN_round_sideReady select 2;
 
 // A side passes if it is ready OR has no players.
 (_bluReady || _bluCount == 0)

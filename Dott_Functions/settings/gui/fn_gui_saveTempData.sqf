@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_settings_fnc_gui_saveTempData
+ * Function: TN_settings_fnc_gui_saveTempData
  * Author:   Bae [29th ID]
  *
  * Applies every pending setting override stored in the
@@ -11,7 +11,7 @@
  */
 
 #define SERVER_TEMP \
-    (uiNamespace getVariable "DOTT_settings_serverTemp")
+    (uiNamespace getVariable "TN_settings_serverTemp")
 
 {
     private _setting = _x;
@@ -38,6 +38,6 @@
         [_setting, _value, _priority, _source, false]
             call cba_settings_fnc_set;
     };
-} forEach DOTT_settings_allSettings;
+} forEach TN_settings_allSettings;
 
 nil

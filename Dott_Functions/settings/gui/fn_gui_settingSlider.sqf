@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_settings_fnc_gui_settingSlider
+ * Function: TN_settings_fnc_gui_settingSlider
  * Author:   Bae [29th ID]
  *
  * Initializes a slider setting row.  Wires the slider drag,
@@ -17,7 +17,7 @@
  */
 
 #define SERVER_TEMP \
-    (uiNamespace getVariable "DOTT_settings_serverTemp")
+    (uiNamespace getVariable "TN_settings_serverTemp")
 
 params [
     "_controlsGroup", "_setting", "_source",
@@ -38,9 +38,9 @@ _ctrlSlider sliderSetSpeed [
 ];
 
 // Shared formatter stored in uiNamespace so event handlers can access it.
-if (isNil {uiNamespace getVariable "DOTT_fnc_formatEditText"}) then
+if (isNil {uiNamespace getVariable "TN_fnc_formatEditText"}) then
 {
-    uiNamespace setVariable ["DOTT_fnc_formatEditText",
+    uiNamespace setVariable ["TN_fnc_formatEditText",
     {
         params ["_val", "_decimals", "_pct"];
         if (_pct) then
@@ -77,7 +77,7 @@ _ctrlSlider ctrlAddEventHandler [
 
         private _editText = [
             _value, _trailingDecimals, _isPercentage
-        ] call (uiNamespace getVariable "DOTT_fnc_formatEditText");
+        ] call (uiNamespace getVariable "TN_fnc_formatEditText");
 
         private _controlsGroup = ctrlParentControlsGroup _ctrlSlider;
         private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl 5121;
@@ -94,7 +94,7 @@ _ctrlSlider ctrlAddEventHandler [
         ];
 
         private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
-        private _defaultValue = (DOTT_settings_default getVariable _setting) select 0;
+        private _defaultValue = (TN_settings_default getVariable _setting) select 0;
         _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 
         private _ctrlSettingName = _controlsGroup controlsGroupCtrl 5010;
@@ -106,7 +106,7 @@ _ctrlSlider ctrlAddEventHandler [
 
 private _editText = [
     _currentValue, _trailingDecimals, _isPercentage
-] call (uiNamespace getVariable "DOTT_fnc_formatEditText");
+] call (uiNamespace getVariable "TN_fnc_formatEditText");
 
 private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl 5121;
 _ctrlSliderEdit ctrlSetText _editText;
@@ -159,7 +159,7 @@ _ctrlSliderEdit ctrlAddEventHandler [
         ];
 
         private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
-        private _defaultValue = (DOTT_settings_default getVariable _setting) select 0;
+        private _defaultValue = (TN_settings_default getVariable _setting) select 0;
         _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 
         private _ctrlSettingName = _controlsGroup controlsGroupCtrl 5010;
@@ -185,12 +185,12 @@ _ctrlSliderEdit ctrlAddEventHandler [
 
         private _editText = [
             _value, _trailingDecimals, _isPercentage
-        ] call (uiNamespace getVariable "DOTT_fnc_formatEditText");
+        ] call (uiNamespace getVariable "TN_fnc_formatEditText");
 
         _ctrlSliderEdit ctrlSetText _editText;
 
         private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
-        private _defaultValue = (DOTT_settings_default getVariable _setting) select 0;
+        private _defaultValue = (TN_settings_default getVariable _setting) select 0;
         _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 
         private _ctrlSettingName = _controlsGroup controlsGroupCtrl 5010;
@@ -216,12 +216,12 @@ _controlsGroup setVariable [
 
         private _editText = [
             _value, _trailingDecimals, _isPercentage
-        ] call (uiNamespace getVariable "DOTT_fnc_formatEditText");
+        ] call (uiNamespace getVariable "TN_fnc_formatEditText");
 
         _ctrlSliderEdit ctrlSetText _editText;
 
         private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
-        private _defaultValue = (DOTT_settings_default getVariable _setting) select 0;
+        private _defaultValue = (TN_settings_default getVariable _setting) select 0;
         _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
     }
 ];

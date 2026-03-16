@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_round_fnc_roundEvents
+ * Function: TN_round_fnc_roundEvents
  * Author:   Bae [29th ID]
  *
  * Manages timed round events (time warnings). Polls each second and
@@ -14,32 +14,32 @@
  *     Nothing
  *
  * Example:
- *     call DOTT_round_fnc_roundEvents;
+ *     call TN_round_fnc_roundEvents;
  */
 
 if (!hasInterface) exitWith {};
 
-DOTT_round_timeAdded = false;
+TN_round_timeAdded = false;
 
 /* --- Event table: [triggerSeconds, function, args] --- */
 private _events = [
-    [5 * 60, DOTT_round_fnc_timeWarning, []],
-    [1 * 60, DOTT_round_fnc_timeWarning, []]
+    [5 * 60, TN_round_fnc_timeWarning, []],
+    [1 * 60, TN_round_fnc_timeWarning, []]
 ];
 
-private _timeLeft = call DOTT_round_fnc_getTime;
+private _timeLeft = call TN_round_fnc_getTime;
 private _eventIndex = 0;
 
 while
 {
-    _timeLeft > 0 || DOTT_round_overtimeEnabled == true
+    _timeLeft > 0 || TN_round_overtimeEnabled == true
 } do
 {
     // Reset event index when addTime extends the clock.
-    if (DOTT_round_timeAdded) then
+    if (TN_round_timeAdded) then
     {
         _eventIndex = 0;
-        DOTT_round_timeAdded = false;
+        TN_round_timeAdded = false;
     };
 
     /* --- Fire events whose trigger time has been reached --- */
@@ -73,5 +73,5 @@ while
     };
 
     uiSleep 1;
-    _timeLeft = call DOTT_round_fnc_getTime;
+    _timeLeft = call TN_round_fnc_getTime;
 };

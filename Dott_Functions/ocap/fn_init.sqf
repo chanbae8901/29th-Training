@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_ocap_fnc_init
+ * Function: TN_ocap_fnc_init
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -16,7 +16,7 @@
  * Returns: Nothing
  *
  * Example:
- *   call DOTT_ocap_fnc_init;
+ *   call TN_ocap_fnc_init;
  */
 
 /*
@@ -31,16 +31,16 @@ if (isServer) then
 {
     if !(isClass (configFile >> "CfgPatches" >> "OCAP_recorder")) exitWith {};
 
-    DOTT_ocap_roundNum = 1;
+    TN_ocap_roundNum = 1;
 
-    DOTT_ocap_recording = false;
+    TN_ocap_recording = false;
 
     //Dont start/pause recordings if autoStart is forced by server config
     if !(OCAP_settings_autoStart) then
     {
-        DOTT_ocap_fnc_initializePlayer = compile
+        TN_ocap_fnc_initializePlayer = compile
             preprocessFileLineNumbers
-            "DOTT_Functions\ocap\fn_initializePlayer.sqf";
+            "TN_Functions\ocap\fn_initializePlayer.sqf";
 
         // Trigger recording start to create captureLoop PFHObject
         [{missionNamespace getVariable ["ocap_extension_sessionReady", false]},
@@ -57,7 +57,7 @@ if (isServer) then
         {
             ocap_recorder_PFHObject setVariable
                 ["run_condition",
-                {SHOULD_SAVE_EVENTS && DOTT_ocap_recording}];
+                {SHOULD_SAVE_EVENTS && TN_ocap_recording}];
         }] call CBA_fnc_waitUntilAndExecute;
 
         //Add marker workarounds
@@ -66,36 +66,36 @@ if (isServer) then
             ["ocap_handleMarker", ocap_listener_markers] 
                 call CBA_fnc_removeEventHandler;
             call compile preprocessFileLineNumbers 
-                "DOTT_Functions\ocap\handleMarkers.sqf"}] 
+                "TN_Functions\ocap\handleMarkers.sqf"}] 
             call CBA_fnc_waitUntilAndExecute;
 
         #define UPDATE_TIME [] call ocap_recorder_fnc_updateTime
-        #define START_RECORDING DOTT_ocap_recording = true; UPDATE_TIME
-        #define STOP_RECORDING DOTT_ocap_recording = false; UPDATE_TIME
+        #define START_RECORDING TN_ocap_recording = true; UPDATE_TIME
+        #define STOP_RECORDING TN_ocap_recording = false; UPDATE_TIME
 
         [
-            "DOTT_round_safeStartBegin",
+            "TN_round_safeStartBegin",
             {
                 START_RECORDING;
             }
         ] call CBA_fnc_addEventHandler;
 
         [
-            "DOTT_round_started",
+            "TN_round_started",
             {
                 START_RECORDING;
             }
         ] call CBA_fnc_addEventHandler;
 
         [
-            "DOTT_round_safeStartAborted",
+            "TN_round_safeStartAborted",
             {
                 STOP_RECORDING;
             }
         ] call CBA_fnc_addEventHandler;
 
         [
-            "DOTT_round_ended",
+            "TN_round_ended",
             {
                 STOP_RECORDING;
             }
@@ -103,11 +103,11 @@ if (isServer) then
     };
 
     [OCAP_settings_autoStart] remoteExecCall
-        ["DOTT_ocap_fnc_initClient",
+        ["TN_ocap_fnc_initClient",
         [0, -2] select isDedicated, true];
 
     [
-        "DOTT_round_safeStartBegin",
+        "TN_round_safeStartBegin",
         {
             ["ocap_customEvent",
                 ["generalEvent", "Safe start began!"]]
@@ -116,7 +116,7 @@ if (isServer) then
     ] call CBA_fnc_addEventHandler;
 
     [
-        "DOTT_round_safeStartAborted",
+        "TN_round_safeStartAborted",
         {
             ["ocap_customEvent",
                 ["generalEvent", "Safe start aborted!"]]
@@ -125,26 +125,26 @@ if (isServer) then
     ] call CBA_fnc_addEventHandler;
 
     [
-        "DOTT_round_started",
+        "TN_round_started",
         {
             ["ocap_customEvent",
                 ["generalEvent",
                 format ["Round %1 started!",
-                    DOTT_ocap_roundNum]]]
+                    TN_ocap_roundNum]]]
                 call CBA_fnc_serverEvent;
         }
     ] call CBA_fnc_addEventHandler;
 
     [
-        "DOTT_round_ended",
+        "TN_round_ended",
         {
             ["ocap_customEvent",
                 ["generalEvent",
                 format ["Round %1 ended!",
-                    DOTT_ocap_roundNum]]]
+                    TN_ocap_roundNum]]]
                 call CBA_fnc_serverEvent;
 
-            DOTT_ocap_roundNum = DOTT_ocap_roundNum + 1;
+            TN_ocap_roundNum = TN_ocap_roundNum + 1;
         }
     ] call CBA_fnc_addEventHandler;
 

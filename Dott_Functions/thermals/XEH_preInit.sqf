@@ -11,14 +11,14 @@
         if (hasInterface) then
         {
             ace_javelin_ignoreVisionMode = _this;
-            [] spawn DOTT_thermals_fnc_blackScreen;
+            [] spawn TN_thermals_fnc_blackScreen;
 
             if (!alive player
                 || {isNull (objectParent player)}) exitWith {};
 
             if (_this) then
             {
-                call DOTT_thermals_fnc_disablePIP;
+                call TN_thermals_fnc_disablePIP;
             }
             else
             {

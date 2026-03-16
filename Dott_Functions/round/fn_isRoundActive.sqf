@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_round_fnc_isRoundActive
+ * Function: TN_round_fnc_isRoundActive
  * Author:   Bae [29th ID], modified from Dott [29th ID]
  *
  * Checks if the round is currently active.
@@ -11,7 +11,7 @@
  *     Boolean - true if the round is active, false otherwise.
  *
  * Example:
- *     call DOTT_round_fnc_isRoundActive;
+ *     call TN_round_fnc_isRoundActive;
  */
 
-[true] call BIS_fnc_countdown && !DOTT_round_safeStartActive
+[true] call BIS_fnc_countdown && !TN_round_safeStartActive

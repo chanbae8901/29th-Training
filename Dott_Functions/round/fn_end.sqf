@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_round_fnc_end
+ * Function: TN_round_fnc_end
  * Author:   Bae [29th ID], modified from Dott [29th ID]
  *
  * Transitions to overtime if applicable, otherwise ends the round
@@ -12,44 +12,44 @@
  *     Boolean - true
  *
  * Example:
- *     [true] call DOTT_round_fnc_end;
+ *     [true] call TN_round_fnc_end;
  */
 
 params [["_force", false, [false]]];
 
-if (DOTT_round_overtimeEnabled && !_force) then
+if (TN_round_overtimeEnabled && !_force) then
 {
     [
         "<t color='#ffffff' size='3'><br/>%1 Minute OVERTIME</t>",
         "PLAIN",
         0.5,
         true,
-        DOTT_round_overtimePeriod / 60
-    ] remoteExecCall ["DOTT_common_fnc_displayMsg"];
+        TN_round_overtimePeriod / 60
+    ] remoteExecCall ["TN_common_fnc_displayMsg"];
 
-    [DOTT_round_overtimePeriod] call BIS_fnc_countdown;
+    [TN_round_overtimePeriod] call BIS_fnc_countdown;
 
     // Prevents overtime from repeating forever.
-    DOTT_round_overtimeEnabled = false;
-    publicVariable "DOTT_round_overtimeEnabled";
+    TN_round_overtimeEnabled = false;
+    publicVariable "TN_round_overtimeEnabled";
 
-    DOTT_round_timeAdded = true;
-    publicVariable "DOTT_round_timeAdded";
+    TN_round_timeAdded = true;
+    publicVariable "TN_round_timeAdded";
 
     [
-        {(call DOTT_round_fnc_getTime) <= 0},
-        {call DOTT_round_fnc_end},
+        {(call TN_round_fnc_getTime) <= 0},
+        {call TN_round_fnc_end},
         []
     ] call CBA_fnc_waitUntilAndExecute;
 }
 else
 {
     // Let waitUntilAndExecute in fn_start call end.
-    if (call DOTT_round_fnc_isRoundActive) exitWith
+    if (call TN_round_fnc_isRoundActive) exitWith
     {
         // In case manual end was called.
-        DOTT_round_overtimeEnabled = false;
-        publicVariable "DOTT_round_overtimeEnabled";
+        TN_round_overtimeEnabled = false;
+        publicVariable "TN_round_overtimeEnabled";
         [-1] call BIS_fnc_countdown;
         true
     };
@@ -62,10 +62,10 @@ else
         "<t color='#ffffff' size='5'>GAME!</t>",
         "PLAIN",
         0.4
-    ] remoteExecCall ["DOTT_common_fnc_displayMsg"];
+    ] remoteExecCall ["TN_common_fnc_displayMsg"];
 
     [-1] call BIS_fnc_countdown;
-    ["DOTT_round_ended", []] call CBA_fnc_globalEvent;
+    ["TN_round_ended", []] call CBA_fnc_globalEvent;
 };
 
 true

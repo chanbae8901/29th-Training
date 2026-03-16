@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_event_fnc_respawn
+ * Function: TN_event_fnc_respawn
  * Author:   Bae [29th ID], modified from Dott [29th ID]
  *
  * Tracks player deaths during a live round and teleports
@@ -15,11 +15,11 @@
  *     Nothing
  *
  * Requires:
- *     DOTT_event_numberOfLives (global)
- *     DOTT_event_spectateArea (global object)
- *     DOTT_event_liveDeaths (global, set at round start)
- *     DOTT_event_respawnDisarmPlayers (global bool)
- *     DOTT_round_fnc_isRoundActive
+ *     TN_event_numberOfLives (global)
+ *     TN_event_spectateArea (global object)
+ *     TN_event_liveDeaths (global, set at round start)
+ *     TN_event_respawnDisarmPlayers (global bool)
+ *     TN_round_fnc_isRoundActive
  */
 
 params
@@ -31,27 +31,27 @@ if (!hasInterface) exitWith {};
 
 //exit script if the number of lives setting should
 //permit unlimited respawns (just in case)
-if (DOTT_event_numberOfLives isEqualTo 0) exitWith {};
+if (TN_event_numberOfLives isEqualTo 0) exitWith {};
 
-if !(call DOTT_round_fnc_isRoundActive) exitWith {};
+if !(call TN_round_fnc_isRoundActive) exitWith {};
 
 if (_storeDeaths) exitWith
 {
-    DOTT_event_liveDeaths = getPlayerScores Player select 4;
+    TN_event_liveDeaths = getPlayerScores Player select 4;
 };
 
 private _playerDeaths = getPlayerScores player select 4;
 
-if (isNil "DOTT_event_liveDeaths") then
+if (isNil "TN_event_liveDeaths") then
 {
-    DOTT_event_liveDeaths = 0;
+    TN_event_liveDeaths = 0;
 };
 
-_playerDeaths = (_playerDeaths - DOTT_event_liveDeaths);
+_playerDeaths = (_playerDeaths - TN_event_liveDeaths);
 
-if (_playerDeaths >= DOTT_event_numberOfLives) then
+if (_playerDeaths >= TN_event_numberOfLives) then
 {
-    private _point = getPosASL DOTT_event_spectateArea;
+    private _point = getPosASL TN_event_spectateArea;
 
     titleText [
         "<t color='#ffffff' size='4'>"
@@ -107,7 +107,7 @@ if (_playerDeaths >= DOTT_event_numberOfLives) then
         "BLACK IN", 0.5, true, true
     ];
 
-    if (DOTT_event_respawnDisarmPlayers) then
+    if (TN_event_respawnDisarmPlayers) then
     {
         removeAllWeapons player;
     };

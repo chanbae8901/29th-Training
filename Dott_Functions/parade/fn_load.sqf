@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_parade_fnc_load
+ * Function: TN_parade_fnc_load
  * Author:   Bae [29th ID]
  *
  * Description:
@@ -51,7 +51,7 @@ else
     };
 };
 
-player spawn DOTT_loadout_fnc_setInsignia;
+player spawn TN_loadout_fnc_setInsignia;
 systemChat "Parade loadout applied.";
 
 true

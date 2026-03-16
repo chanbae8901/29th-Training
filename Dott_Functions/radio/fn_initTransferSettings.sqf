@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_radio_fnc_initTransferSettings
+ * Function: TN_radio_fnc_initTransferSettings
  * Author:   Bae [29th ID]
  *
  * Description:
@@ -34,7 +34,7 @@ private _fn_saveSwSettings =
     private _sw = call TFAR_fnc_activeSwRadio;
     if (isNil "_sw") exitWith {};
 
-    DOTT_saved_active_sr_settings =
+    TN_saved_active_sr_settings =
         _sw call TFAR_fnc_getSwSettings;
 };
 
@@ -49,7 +49,7 @@ private _fn_saveLrSettings =
     private _lr = player call TFAR_fnc_backpackLr;
     if (isNil "_lr") exitWith {};
 
-    DOTT_saved_active_lr_settings =
+    TN_saved_active_lr_settings =
         _lr call TFAR_fnc_getLrSettings;
 };
 
@@ -85,14 +85,14 @@ private _fn_saveLrSettings =
         private _sw = call TFAR_fnc_activeSwRadio;
         if (_sw isEqualTo _radio) exitWith
         {
-            DOTT_saved_active_sr_settings =
+            TN_saved_active_sr_settings =
                 _sw call TFAR_fnc_getSwSettings;
         };
 
         private _lr = call TFAR_fnc_activeLrRadio;
         if (_lr isEqualTo _radio) exitWith
         {
-            DOTT_saved_active_lr_settings =
+            TN_saved_active_lr_settings =
                 _lr call TFAR_fnc_getLrSettings;
         };
     }
@@ -115,7 +115,7 @@ private _fn_saveLrSettings =
         if (_unit != player) exitWith {};
 
         {
-            private _settings = DOTT_saved_active_sr_settings;
+            private _settings = TN_saved_active_sr_settings;
             if (isNil "_settings") then
             {
                 _settings = _x call TFAR_fnc_getSwSettings;
@@ -157,7 +157,7 @@ private _fn_saveLrSettings =
         private _lr = player call TFAR_fnc_backpackLr;
         if (isNil "_lr") exitWith {};
 
-        private _settings = DOTT_saved_active_lr_settings;
+        private _settings = TN_saved_active_lr_settings;
         if (isNil "_settings") then
         {
             _settings = _lr call TFAR_fnc_getLrSettings;
@@ -198,13 +198,13 @@ private _fn_fixVehicleRadio =
 };
 
 [
-    "DOTT_getInVicRadio",
+    "TN_getInVicRadio",
     "GetInMan",
     _fn_fixVehicleRadio
 ] call CBA_fnc_addBISPlayerEventHandler;
 
 [
-    "DOTT_seatSwitchVicRadio",
+    "TN_seatSwitchVicRadio",
     "SeatSwitchedMan",
     _fn_fixVehicleRadio
 ] call CBA_fnc_addBISPlayerEventHandler;

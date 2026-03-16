@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_createDiaryEntries
+ * Function: TN_tracker_fnc_createDiaryEntries
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -9,10 +9,10 @@
  * a scoreboard.
  *
  * Parameters:
- * _events (Array): DOTT_tracker_events from server.
- * _names (Array): DOTT_tracker_names from server.
- * _sides (Array): DOTT_tracker_sides from server.
- * _weapons (Array): DOTT_tracker_weapons from server.
+ * _events (Array): TN_tracker_events from server.
+ * _names (Array): TN_tracker_names from server.
+ * _sides (Array): TN_tracker_sides from server.
+ * _weapons (Array): TN_tracker_weapons from server.
  * _roundNum (Number): Round number label for diary.
  *
  * Returns:
@@ -58,14 +58,14 @@ for "_i" from (_numEvents - 1) to 0 step -1 do
     private _event = _events select _i;
     private _eventString = [
         _event, _names, _sides, _weapons
-    ] call DOTT_tracker_fnc_eventToString;
+    ] call TN_tracker_fnc_eventToString;
     _eventStrings pushBack _eventString;
 };
 
 // Find all player relevant events.
 private _playerEventIndexes =
     [_playerIndex, _events]
-        call DOTT_tracker_fnc_findPlayerEvents;
+        call TN_tracker_fnc_findPlayerEvents;
 
 // "Reverse" numbers so they conform with _eventStrings indexes.
 for "_i" from 0
@@ -93,7 +93,7 @@ private _title = format [
 ];
 private _copyButton = format [
     "<execute expression='[""%1"",""%2""]"
-    + " call DOTT_tracker_fnc_copyRecordToClipboard;'>"
+    + " call TN_tracker_fnc_copyRecordToClipboard;'>"
     + "Copy to Clipboard</execute>",
     "RoundEventLog", _title
 ];
@@ -108,7 +108,7 @@ _title = format [
 ];
 _copyButton = format [
     "<execute expression='[""%1"",""%2""]"
-    + " call DOTT_tracker_fnc_copyRecordToClipboard;'>"
+    + " call TN_tracker_fnc_copyRecordToClipboard;'>"
     + "Copy to Clipboard</execute>",
     "RoundEventLog", _title
 ];
@@ -119,7 +119,7 @@ player createDiaryRecord
 
 if !(player diarySubjectExists "RoundScoreboard") then
 {
-    DOTT_tracker_diary_subject =
+    TN_tracker_diary_subject =
         player createDiarySubject
             ["RoundScoreboard", "Round Scoreboard"];
     private _infoLines = [
@@ -145,13 +145,13 @@ if !(player diarySubjectExists "RoundScoreboard") then
 
 private _killCounts =
     [_events, _sides]
-        call DOTT_tracker_fnc_getKillCounts;
+        call TN_tracker_fnc_getKillCounts;
 _title = format ["Round %1", _roundNum];
 _text = [_killCounts, _names]
-    call DOTT_tracker_fnc_killCountsToString;
+    call TN_tracker_fnc_killCountsToString;
 _copyButton = format [
     "<br /><execute expression='[""%1"",""%2""]"
-    + " call DOTT_tracker_fnc_copyRecordToClipboard;'>"
+    + " call TN_tracker_fnc_copyRecordToClipboard;'>"
     + "Copy to Clipboard</execute>",
     "RoundScoreboard", _title
 ];

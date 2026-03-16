@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_round_fnc_collectSilentWeapons
+ * Function: TN_round_fnc_collectSilentWeapons
  * Author:   Bae [29th ID]
  *
  * Collects the name of a player detected with the silent weapon bug
@@ -14,14 +14,14 @@
  *     Nothing
  *
  * Example:
- *     [_name] call DOTT_round_fnc_collectSilentWeapons;
+ *     [_name] call TN_round_fnc_collectSilentWeapons;
  */
 
 params ["_weaponHolder"];
 
-if (isNil "DOTT_round_clientSilentWeapons") then
+if (isNil "TN_round_clientSilentWeapons") then
 {
-    DOTT_round_clientSilentWeapons = createHashMap;
+    TN_round_clientSilentWeapons = createHashMap;
 };
 
-DOTT_round_clientSilentWeapons set [_weaponHolder, true];
+TN_round_clientSilentWeapons set [_weaponHolder, true];

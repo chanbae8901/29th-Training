@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_loadout_fnc_onArsenalClosed
+ * Function: TN_loadout_fnc_onArsenalClosed
  * Author:   Hill [29th ID]
  *
  * Purpose: Post-arsenal cleanup. Saves the player's current inventory
@@ -10,7 +10,7 @@
  * Params:  None
  * Returns: true
  *
- * Example: call DOTT_loadout_fnc_onArsenalClosed;
+ * Example: call TN_loadout_fnc_onArsenalClosed;
  */
 
 [player, [missionNamespace, "Current Inventory"]]
@@ -46,7 +46,7 @@ resetLoadout = [player] call CBA_fnc_getLoadout;
     } forEach _primaryMags;
 };
 
-player spawn DOTT_loadout_fnc_setInsignia;
+player spawn TN_loadout_fnc_setInsignia;
 
 if !(weaponLowered player) then
 {

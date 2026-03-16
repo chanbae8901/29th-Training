@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_round_fnc_timeWarning
+ * Function: TN_round_fnc_timeWarning
  * Author:   Bae [29th ID], modified from Dott [29th ID]
  *
  * Displays a time remaining notification via BIS notification system.
@@ -12,13 +12,13 @@
  *     Nothing
  *
  * Example:
- *     call DOTT_round_fnc_timeWarning;
+ *     call TN_round_fnc_timeWarning;
  */
 
 // Admin-only for now.
 if (!serverCommandAvailable "#lock") exitWith {};
 
-private _secondsLeft = call DOTT_round_fnc_getTime;
+private _secondsLeft = call TN_round_fnc_getTime;
 private _minutes = ceil(_secondsLeft / 60);
 private _actualMinutes = _secondsLeft / 60;
 

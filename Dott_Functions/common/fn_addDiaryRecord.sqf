@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_common_fnc_addDiaryRecord
+ * Function: TN_common_fnc_addDiaryRecord
  * Author:   Bae [29th ID]
  *
  * Wrapper for createDiaryRecord intended to be remoteExec'd.
@@ -14,7 +14,7 @@
  *
  * Example:
  *     ["Log", "Something Happened"]
- *         remoteExec ["DOTT_common_fnc_addDiaryRecord", 0];
+ *         remoteExec ["TN_common_fnc_addDiaryRecord", 0];
  */
 
 params ["_subject", "_textInfo"];

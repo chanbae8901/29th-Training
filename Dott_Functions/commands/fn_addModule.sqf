@@ -1,5 +1,5 @@
 /*
- * Name:	DOTT_commands_fnc_addModule
+ * Name:	TN_commands_fnc_addModule
  * Date:	12/30/2025
  * Version: 1.0
  * Author:   Bae [29th ID]
@@ -15,16 +15,15 @@
  * true if commands added, false otherwise
  *
  * Example:
- * call DOTT_commands_fnc_init;
+ * call TN_commands_fnc_init;
  * 
  */
 
-if (isNil "DOTT_commands_allCommands") exitWith { false };
+if (isNil "TN_commands_allCommands") exitWith { false };
 
 params [["_commands", [], [[]]], ["_helpInfo", [], [[]]]];
 
-DOTT_commands_allCommands append _commands;
-DOTT_commands_helpInfo append _helpInfo;
+TN_commands_allCommands append _commands;
+TN_commands_helpInfo append _helpInfo;
 
 true
-

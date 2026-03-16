@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_getSideAtTime
+ * Function: TN_tracker_fnc_getSideAtTime
  * Author:   Bae [29th ID]
  *
  * Purpose:

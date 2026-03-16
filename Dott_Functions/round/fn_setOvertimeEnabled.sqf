@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_round_fnc_setOvertimeEnabled
+ * Function: TN_round_fnc_setOvertimeEnabled
  * Author:   Bae [29th ID], modified from Dott [29th ID]
  *
  * Enables or disables overtime for the current round.
@@ -11,12 +11,12 @@
  *     Boolean - true
  *
  * Example:
- *     [true] call DOTT_round_fnc_setOvertimeEnabled;
+ *     [true] call TN_round_fnc_setOvertimeEnabled;
  */
 
 params ["_enabled"];
 
-DOTT_round_overtimeEnabled = _enabled;
-publicVariable "DOTT_round_overtimeEnabled";
+TN_round_overtimeEnabled = _enabled;
+publicVariable "TN_round_overtimeEnabled";
 
 true

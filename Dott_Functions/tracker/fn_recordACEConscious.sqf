@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_recordACEConscious
+ * Function: TN_tracker_fnc_recordACEConscious
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -18,11 +18,11 @@
 
 #include "eventNumbers.hpp"
 params ["_unit", "_state"];
-if (DOTT_tracker_startTime == -1) exitWith { false };
+if (TN_tracker_startTime == -1) exitWith { false };
 if (!isPlayer _unit) exitWith { false };
 
 private _timeStamp =
-    round(serverTime - DOTT_tracker_startTime);
+    round(serverTime - TN_tracker_startTime);
 
 // Need group since ACE3? sets unconscious men to CIV but
 // not the group.
@@ -34,12 +34,12 @@ private _eventType = ACE_CONSCIOUSNESS_NUM;
 if (_state) then
 {
     private _lastHit =
-        _unit getVariable "DOTT_lastHit";
+        _unit getVariable "TN_lastHit";
 
     if !(isNil "_lastHit") then
     {
         _lastHit append
-            ((_unit getVariable "DOTT_hitMap")
+            ((_unit getVariable "TN_hitMap")
                 get _lastHit);
 
         // [name, side, distance, weapon, time]
@@ -62,6 +62,6 @@ if (_state) then
 };
 
 private _event = [_eventType, _timeStamp, _eventInfo];
-[_event] call DOTT_tracker_fnc_saveEvent;
+[_event] call TN_tracker_fnc_saveEvent;
 
 true

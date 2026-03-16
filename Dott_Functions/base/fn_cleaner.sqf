@@ -1,11 +1,11 @@
 /*
- * Function: DOTT_base_fnc_cleaner
+ * Function: TN_base_fnc_cleaner
  * Author:   Rellikplug AKA Hill [29th ID]
  *
  * Description:
  *     Removes all dead bodies globally and deletes loose
  *     ground items (weapons, magazines) within 250 meters
- *     of each garbage can object in DOTT_garbages. Intended
+ *     of each garbage can object in TN_garbages. Intended
  *     to be attached to garbage cans via addAction.
  *
  * Parameters:
@@ -15,7 +15,7 @@
  *     Boolean - false if nothing was deleted, true otherwise
  *
  * Example:
- *     call DOTT_base_fnc_cleaner;
+ *     call TN_base_fnc_cleaner;
  */
 
 private _dead = allDeadMen;
@@ -24,7 +24,7 @@ private _dead = allDeadMen;
 private _nearObjects = [];
 {
     _nearObjects append (nearestObjects [_x, ["WeaponHolder", "GroundWeaponHolder"], 250]);
-} forEach DOTT_garbages;
+} forEach TN_garbages;
 
 private _countObjects = count _nearObjects;
 private _countDead = count _dead;

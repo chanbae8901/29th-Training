@@ -5,13 +5,13 @@
 // systemChat is the best way to give feedback to the local player executing commands
 
 /*
-    DOTT_commands_noLogCommands
-    DOTT_commands_adminCommands
-    DOTT_commands_restrictedCommands
+    TN_commands_noLogCommands
+    TN_commands_adminCommands
+    TN_commands_restrictedCommands
     created in XEH_preInit.sqf
 */
 
-DOTT_commands_helpInfo = [
+TN_commands_helpInfo = [
     [
         "help",
         "Gives help on how to use commands"
@@ -39,14 +39,14 @@ DOTT_commands_helpInfo = [
 ];
 
 
-DOTT_commands_allCommands = [
+TN_commands_allCommands = [
     [
         "commands",
         {
             private _commands = "";
             {
-                _commands = _commands + (DOTT_commands_commandMarker + _x) + ", ";
-            } forEach (keys DOTT_commands_allCommands);
+                _commands = _commands + (TN_commands_commandMarker + _x) + ", ";
+            } forEach (keys TN_commands_allCommands);
 
             systemChat format ["Available Commands: %1", _commands];
             systemChat "Use !help followed by the command name to see how to use it";
@@ -58,18 +58,18 @@ DOTT_commands_allCommands = [
             private _argument = _this select 0;
             _argument = toLower _argument;
 
-            private _helpInfo = DOTT_commands_helpInfo get _argument;
+            private _helpInfo = TN_commands_helpInfo get _argument;
 
             if !(isNil "_helpInfo") then
             {
                 private _restrictionStr =
                     switch (true) do
                 {
-                    case (DOTT_commands_adminCommands find _argument != -1):
+                    case (TN_commands_adminCommands find _argument != -1):
                     {
                         "(ADMIN ONLY)";
                     };
-                    case (DOTT_commands_restrictedCommands find _argument != -1):
+                    case (TN_commands_restrictedCommands find _argument != -1):
                     {
                         "(RESTRICTED)";
                     };
@@ -90,7 +90,7 @@ DOTT_commands_allCommands = [
     [
         "arsenal",
         {
-            [getPosATL player, getDir player, 3] call DOTT_commands_fnc_arsenalCreate;
+            [getPosATL player, getDir player, 3] call TN_commands_fnc_arsenalCreate;
         }
     ],
     [

@@ -1,7 +1,7 @@
 #include "defines.hpp"
 
 /*
- * Name:    DOTT_round_fnc_initReadyUI
+ * Name:    TN_round_fnc_initReadyUI
  * Date:    03/06/2026
  * Version: 1.0
  * Author:  PFC Wells [29th ID] being nagged at by Bae [29th ID]
@@ -24,11 +24,11 @@
  *   (Curator) automatically so the overlay stays visible inside Zeus.
  *
  * Layout:
- *   "SAFE START" header (gold, centered) when DOTT_round_safeStartActive exists
+ *   "SAFE START" header (gold, centered) when TN_round_safeStartActive exists
  *   Per-team row: side name (team color, left) + status (right)
  *     - "READY"    (#8BC34A green)  — team has readied
  *     - "READY UP" (#C8A030 amber)  — team still needs to ready
- *   Teams with zero players are hidden unless DOTT_readyUI_showAllSides is set.
+ *   Teams with zero players are hidden unless TN_readyUI_showAllSides is set.
  *
  * Effects:
  *   Pulse — 2s breathing cycle during safe start. Cycles through unready teams;
@@ -41,24 +41,24 @@
  *           CBA per-frame handler for smooth frame-accurate animation.
  *
  * Globals written:
- *   DOTT_readyUI_initialized      — recompile sentinel
- *   DOTT_readyUI_pfhHandle        — PFH handle (update loop)
- *   DOTT_readyUI_shinePFH         — PFH handle (shine animation, transient)
- *   DOTT_readyUI_dirty            — content rebuild flag (text caching)
- *   DOTT_readyUI_refreshCounter   — periodic refresh counter (~2s cycle)
- *   DOTT_readyUI_ehReady          — CBA EH handle (DOTT_round_manageReadyChange)
- *   DOTT_readyUI_ehSafeStart      — CBA EH handle (DOTT_round_safeStartBegin)
- *   DOTT_readyUI_ehAborted        — CBA EH handle (DOTT_round_safeStartAborted)
- *   DOTT_readyUI_ehStarted        — CBA EH handle (DOTT_round_started)
- *   uiNamespace: DOTT_readyUI_bg, DOTT_readyUI_content,
- *                DOTT_readyUI_shineSlices, DOTT_readyUI_display,
- *                DOTT_readyUI_flashActive
+ *   TN_readyUI_initialized      — recompile sentinel
+ *   TN_readyUI_pfhHandle        — PFH handle (update loop)
+ *   TN_readyUI_shinePFH         — PFH handle (shine animation, transient)
+ *   TN_readyUI_dirty            — content rebuild flag (text caching)
+ *   TN_readyUI_refreshCounter   — periodic refresh counter (~2s cycle)
+ *   TN_readyUI_ehReady          — CBA EH handle (TN_round_manageReadyChange)
+ *   TN_readyUI_ehSafeStart      — CBA EH handle (TN_round_safeStartBegin)
+ *   TN_readyUI_ehAborted        — CBA EH handle (TN_round_safeStartAborted)
+ *   TN_readyUI_ehStarted        — CBA EH handle (TN_round_started)
+ *   uiNamespace: TN_readyUI_bg, TN_readyUI_content,
+ *                TN_readyUI_shineSlices, TN_readyUI_display,
+ *                TN_readyUI_flashActive
  *
  * Dependencies:
  *   CBA_fnc_addPerFrameHandler, CBA_fnc_removePerFrameHandler,
  *   CBA_fnc_addEventHandler, CBA_fnc_removeEventHandler
- *   DOTT_round_sideReady (array — set by fn_init / fn_manageReady)
- *   DOTT_round_fnc_isRoundActive
+ *   TN_round_sideReady (array — set by fn_init / fn_manageReady)
+ *   TN_round_fnc_isRoundActive
  *
  * Logging:
  *   All status messages go to RPT via diag_log (no systemChat).
@@ -74,7 +74,7 @@
  * true
  *
  * Example:
- * call DOTT_round_fnc_initReadyUI;
+ * call TN_round_fnc_initReadyUI;
  *
  * Hot-reload (debug console one-liner):
  * call compile preprocessFileLineNumbers "round\fn_initReadyUI.sqf";
@@ -84,81 +84,81 @@
 if (!hasInterface) exitWith {};
 
 // --- Recompile teardown: clean up previous instance before reinitializing ---
-if !(isNil "DOTT_readyUI_initialized") then
+if !(isNil "TN_readyUI_initialized") then
 {
-    if !(isNil "DOTT_readyUI_pfhHandle") then
+    if !(isNil "TN_readyUI_pfhHandle") then
     {
-        [DOTT_readyUI_pfhHandle]
+        [TN_readyUI_pfhHandle]
             call CBA_fnc_removePerFrameHandler;
-        DOTT_readyUI_pfhHandle = nil;
+        TN_readyUI_pfhHandle = nil;
     };
-    if !(isNil "DOTT_readyUI_shinePFH") then
+    if !(isNil "TN_readyUI_shinePFH") then
     {
-        [DOTT_readyUI_shinePFH]
+        [TN_readyUI_shinePFH]
             call CBA_fnc_removePerFrameHandler;
-        DOTT_readyUI_shinePFH = nil;
+        TN_readyUI_shinePFH = nil;
     };
 
-    if !(isNil "DOTT_readyUI_ehReady") then
+    if !(isNil "TN_readyUI_ehReady") then
     {
         [
-            "DOTT_round_manageReadyChange",
-            DOTT_readyUI_ehReady
+            "TN_round_manageReadyChange",
+            TN_readyUI_ehReady
         ] call CBA_fnc_removeEventHandler;
-        DOTT_readyUI_ehReady = nil;
+        TN_readyUI_ehReady = nil;
     };
-    if !(isNil "DOTT_readyUI_ehSafeStart") then
+    if !(isNil "TN_readyUI_ehSafeStart") then
     {
         [
-            "DOTT_round_safeStartBegin",
-            DOTT_readyUI_ehSafeStart
+            "TN_round_safeStartBegin",
+            TN_readyUI_ehSafeStart
         ] call CBA_fnc_removeEventHandler;
-        DOTT_readyUI_ehSafeStart = nil;
+        TN_readyUI_ehSafeStart = nil;
     };
-    if !(isNil "DOTT_readyUI_ehAborted") then
+    if !(isNil "TN_readyUI_ehAborted") then
     {
         [
-            "DOTT_round_safeStartAborted",
-            DOTT_readyUI_ehAborted
+            "TN_round_safeStartAborted",
+            TN_readyUI_ehAborted
         ] call CBA_fnc_removeEventHandler;
-        DOTT_readyUI_ehAborted = nil;
+        TN_readyUI_ehAborted = nil;
     };
-    if !(isNil "DOTT_readyUI_ehStarted") then
+    if !(isNil "TN_readyUI_ehStarted") then
     {
         [
-            "DOTT_round_started",
-            DOTT_readyUI_ehStarted
+            "TN_round_started",
+            TN_readyUI_ehStarted
         ] call CBA_fnc_removeEventHandler;
-        DOTT_readyUI_ehStarted = nil;
+        TN_readyUI_ehStarted = nil;
     };
 
     private _oldBg = uiNamespace getVariable [
-        "DOTT_readyUI_bg", controlNull
+        "TN_readyUI_bg", controlNull
     ];
     private _oldContent = uiNamespace getVariable [
-        "DOTT_readyUI_content", controlNull
+        "TN_readyUI_content", controlNull
     ];
     if !(isNull _oldBg) then { ctrlDelete _oldBg };
     if !(isNull _oldContent) then { ctrlDelete _oldContent };
     {
         if !(isNull _x) then { ctrlDelete _x };
     } forEach (uiNamespace getVariable [
-        "DOTT_readyUI_shineSlices", []
+        "TN_readyUI_shineSlices", []
     ]);
 
-    uiNamespace setVariable ["DOTT_readyUI_bg", nil];
-    uiNamespace setVariable ["DOTT_readyUI_content", nil];
-    uiNamespace setVariable ["DOTT_readyUI_shineSlices", nil];
-    uiNamespace setVariable ["DOTT_readyUI_display", nil];
-    uiNamespace setVariable ["DOTT_readyUI_flashActive", nil];
+    uiNamespace setVariable ["TN_readyUI_bg", nil];
+    uiNamespace setVariable ["TN_readyUI_content", nil];
+    uiNamespace setVariable ["TN_readyUI_shineSlices", nil];
+    uiNamespace setVariable ["TN_readyUI_display", nil];
+    uiNamespace setVariable ["TN_readyUI_flashActive", nil];
 
-    DOTT_readyUI_dirty = nil;
-    DOTT_readyUI_refreshCounter = nil;
+    TN_readyUI_dirty = nil;
+    TN_readyUI_refreshCounter = nil;
 
     diag_log "[ReadyUI] Teardown complete — reinitializing...";
 };
 
-DOTT_readyUI_initialized = true;
+TN_readyUI_initialized = true;
 
 // Side definitions: [side, sideReady index, display name, hex color, pulse tint RGB, flash RGBA]
 // Text colors matched to 29th ID forum theme
@@ -211,7 +211,7 @@ DOTT_readyUI_initialized = true;
 
 // Returns whichever display is on top — Zeus (312) if open, otherwise game (46).
 // Controls must live on the topmost display or they render behind it.
-DOTT_round_fnc_getActiveDisplay =
+TN_round_fnc_getActiveDisplay =
 {
     private _zeus = findDisplay 312;
     if (!isNull _zeus) exitWith {_zeus};
@@ -219,9 +219,9 @@ DOTT_round_fnc_getActiveDisplay =
 };
 
 // Creates or recreates UI controls on the active display (game or Zeus)
-DOTT_round_fnc_createReadyUIControls =
+TN_round_fnc_createReadyUIControls =
 {
-    private _display = call DOTT_round_fnc_getActiveDisplay;
+    private _display = call TN_round_fnc_getActiveDisplay;
     if (isNull _display) exitWith {false};
 
     private _bg = _display ctrlCreate ["RscText", -1];
@@ -246,82 +246,82 @@ DOTT_round_fnc_createReadyUIControls =
     };
 
     uiNamespace setVariable [
-        "DOTT_readyUI_bg", _bg
+        "TN_readyUI_bg", _bg
     ];
     uiNamespace setVariable [
-        "DOTT_readyUI_content", _content
+        "TN_readyUI_content", _content
     ];
     uiNamespace setVariable [
-        "DOTT_readyUI_shineSlices", _shineSlices
+        "TN_readyUI_shineSlices", _shineSlices
     ];
     uiNamespace setVariable [
-        "DOTT_readyUI_display", _display
+        "TN_readyUI_display", _display
     ];
     uiNamespace setVariable [
-        "DOTT_readyUI_flashActive", false
+        "TN_readyUI_flashActive", false
     ];
     true
 };
 
 // Starts the update PFH if it isn't already running.
 // Called from event handlers when conditions might require the panel.
-DOTT_round_fnc_startReadyUIPFH =
+TN_round_fnc_startReadyUIPFH =
 {
-    if !(isNil "DOTT_readyUI_pfhHandle") exitWith {};
-    DOTT_readyUI_dirty = true;
-    DOTT_readyUI_refreshCounter = 0;
-    DOTT_readyUI_pfhHandle = [
-        {call DOTT_round_fnc_updateReadyUI}, 0
+    if !(isNil "TN_readyUI_pfhHandle") exitWith {};
+    TN_readyUI_dirty = true;
+    TN_readyUI_refreshCounter = 0;
+    TN_readyUI_pfhHandle = [
+        {call TN_round_fnc_updateReadyUI}, 0
     ] call CBA_fnc_addPerFrameHandler;
 };
 
 // Stops the update PFH and hides all controls.
 // Called EXTERNALLY by event handlers — never from within the PFH itself.
-DOTT_round_fnc_stopReadyUIPFH =
+TN_round_fnc_stopReadyUIPFH =
 {
-    if (isNil "DOTT_readyUI_pfhHandle") exitWith {};
-    [DOTT_readyUI_pfhHandle]
+    if (isNil "TN_readyUI_pfhHandle") exitWith {};
+    [TN_readyUI_pfhHandle]
         call CBA_fnc_removePerFrameHandler;
-    DOTT_readyUI_pfhHandle = nil;
+    TN_readyUI_pfhHandle = nil;
 
     // Hide controls
     private _bg = uiNamespace getVariable [
-        "DOTT_readyUI_bg", controlNull
+        "TN_readyUI_bg", controlNull
     ];
     private _content = uiNamespace getVariable [
-        "DOTT_readyUI_content", controlNull
+        "TN_readyUI_content", controlNull
     ];
     if !(isNull _bg) then { _bg ctrlShow false };
     if !(isNull _content) then { _content ctrlShow false };
     {
         _x ctrlShow false;
     } forEach (uiNamespace getVariable [
-        "DOTT_readyUI_shineSlices", []
+        "TN_readyUI_shineSlices", []
     ]);
     uiNamespace setVariable [
-        "DOTT_readyUI_flashActive", false
+        "TN_readyUI_flashActive", false
     ];
 
     // Kill in-flight shine animation
-    if !(isNil "DOTT_readyUI_shinePFH") then
+    if !(isNil "TN_readyUI_shinePFH") then
     {
-        [DOTT_readyUI_shinePFH]
+        [TN_readyUI_shinePFH]
             call CBA_fnc_removePerFrameHandler;
-        DOTT_readyUI_shinePFH = nil;
+        TN_readyUI_shinePFH = nil;
     };
 };
 
 // Main update function, called by PFH.
 // Three-phase structure: (A) display check, (B) content rebuild, (C) pulse animation.
 // Phase B only runs when dirty flag is set — avoids rebuilding text every frame.
-DOTT_round_fnc_updateReadyUI =
+TN_round_fnc_updateReadyUI =
 {
     // === Phase A: Display transition (Zeus enter/exit) ===
     // If the active display changed, destroy old controls so they rebuild below.
     private _activeDisplay =
-        call DOTT_round_fnc_getActiveDisplay;
+        call TN_round_fnc_getActiveDisplay;
     private _createdOn = uiNamespace getVariable [
-        "DOTT_readyUI_display", displayNull
+        "TN_readyUI_display", displayNull
     ];
     if (
         !isNull _createdOn
@@ -329,10 +329,10 @@ DOTT_round_fnc_updateReadyUI =
     ) then
     {
         private _oldBg = uiNamespace getVariable [
-            "DOTT_readyUI_bg", controlNull
+            "TN_readyUI_bg", controlNull
         ];
         private _oldContent = uiNamespace getVariable [
-            "DOTT_readyUI_content", controlNull
+            "TN_readyUI_content", controlNull
         ];
         if !(isNull _oldBg) then { ctrlDelete _oldBg };
         if !(isNull _oldContent) then
@@ -342,64 +342,64 @@ DOTT_round_fnc_updateReadyUI =
         {
             if !(isNull _x) then { ctrlDelete _x };
         } forEach (uiNamespace getVariable [
-            "DOTT_readyUI_shineSlices", []
+            "TN_readyUI_shineSlices", []
         ]);
         uiNamespace setVariable [
-            "DOTT_readyUI_bg", controlNull
+            "TN_readyUI_bg", controlNull
         ];
         uiNamespace setVariable [
-            "DOTT_readyUI_content", controlNull
+            "TN_readyUI_content", controlNull
         ];
         uiNamespace setVariable [
-            "DOTT_readyUI_shineSlices", []
+            "TN_readyUI_shineSlices", []
         ];
         uiNamespace setVariable [
-            "DOTT_readyUI_display", displayNull
+            "TN_readyUI_display", displayNull
         ];
         // Kill in-flight shine — those slices no longer exist
-        if !(isNil "DOTT_readyUI_shinePFH") then
+        if !(isNil "TN_readyUI_shinePFH") then
         {
-            [DOTT_readyUI_shinePFH]
+            [TN_readyUI_shinePFH]
                 call CBA_fnc_removePerFrameHandler;
-            DOTT_readyUI_shinePFH = nil;
+            TN_readyUI_shinePFH = nil;
         };
         uiNamespace setVariable [
-            "DOTT_readyUI_flashActive", false
+            "TN_readyUI_flashActive", false
         ];
-        DOTT_readyUI_dirty = true;
+        TN_readyUI_dirty = true;
     };
 
     private _bg = uiNamespace getVariable [
-        "DOTT_readyUI_bg", controlNull
+        "TN_readyUI_bg", controlNull
     ];
     private _content = uiNamespace getVariable [
-        "DOTT_readyUI_content", controlNull
+        "TN_readyUI_content", controlNull
     ];
 
     // Recreate controls if destroyed (display transitions, respawn, etc.)
     if (isNull _bg || isNull _content) then
     {
-        if !(call DOTT_round_fnc_createReadyUIControls)
+        if !(call TN_round_fnc_createReadyUIControls)
             exitWith {};
-        _bg = uiNamespace getVariable "DOTT_readyUI_bg";
+        _bg = uiNamespace getVariable "TN_readyUI_bg";
         _content = uiNamespace getVariable
-            "DOTT_readyUI_content";
-        DOTT_readyUI_dirty = true;
+            "TN_readyUI_content";
+        TN_readyUI_dirty = true;
     };
 
     // Guard: sideReady array must exist (JIP race condition / init order)
-    if (isNil "DOTT_round_sideReady") exitWith
+    if (isNil "TN_round_sideReady") exitWith
     {
         _bg ctrlShow false;
         _content ctrlShow false;
     };
 
     private _isSafeStart =
-        DOTT_round_safeStartActive;
+        TN_round_safeStartActive;
     private _anyReady =
-        ({_x} count DOTT_round_sideReady) > 0;
+        ({_x} count TN_round_sideReady) > 0;
     private _isRoundActive =
-        call DOTT_round_fnc_isRoundActive;
+        call TN_round_fnc_isRoundActive;
 
     // Safety net: hide if PFH is somehow still running when panel shouldn't show.
     // Primary lifecycle control is via external event handlers.
@@ -412,32 +412,32 @@ DOTT_round_fnc_updateReadyUI =
         {
             _x ctrlShow false;
         } forEach (uiNamespace getVariable [
-            "DOTT_readyUI_shineSlices", []
+            "TN_readyUI_shineSlices", []
         ]);
         uiNamespace setVariable [
-            "DOTT_readyUI_flashActive", false
+            "TN_readyUI_flashActive", false
         ];
-        if !(isNil "DOTT_readyUI_shinePFH") then
+        if !(isNil "TN_readyUI_shinePFH") then
         {
-            [DOTT_readyUI_shinePFH]
+            [TN_readyUI_shinePFH]
                 call CBA_fnc_removePerFrameHandler;
-            DOTT_readyUI_shinePFH = nil;
+            TN_readyUI_shinePFH = nil;
         };
     };
 
     // Periodic refresh — catches player count changes (join/leave/side switch)
     // Every ~60 frames (~2s at 30fps) mark dirty to recheck team populations
-    DOTT_readyUI_refreshCounter =
-        (DOTT_readyUI_refreshCounter + 1) mod 60;
-    if (DOTT_readyUI_refreshCounter == 0) then
+    TN_readyUI_refreshCounter =
+        (TN_readyUI_refreshCounter + 1) mod 60;
+    if (TN_readyUI_refreshCounter == 0) then
     {
-        DOTT_readyUI_dirty = true;
+        TN_readyUI_dirty = true;
     };
 
     // === Phase B: Content rebuild (only when dirty) ===
-    if (DOTT_readyUI_dirty) then
+    if (TN_readyUI_dirty) then
     {
-        DOTT_readyUI_dirty = false;
+        TN_readyUI_dirty = false;
 
         private _lines = [];
 
@@ -457,17 +457,17 @@ DOTT_round_fnc_updateReadyUI =
             ];
             if (
                 _side countSide allPlayers == 0
-                && {isNil "DOTT_readyUI_showAllSides"}
+                && {isNil "TN_readyUI_showAllSides"}
             ) then { continue };
 
             // Bounds check sideReady array before accessing
-            if (_idx >= count DOTT_round_sideReady) then
+            if (_idx >= count TN_round_sideReady) then
             {
                 continue;
             };
 
             private _ready =
-                DOTT_round_sideReady select _idx;
+                TN_round_sideReady select _idx;
             private _status = if (_ready) then
             {
                 "<t color='#8BC34A' size='0.85' align='right'>READY</t>"
@@ -535,7 +535,7 @@ DOTT_round_fnc_updateReadyUI =
     if !(ctrlShown _bg) exitWith {};
 
     private _flashActive = uiNamespace getVariable [
-        "DOTT_readyUI_flashActive", false
+        "TN_readyUI_flashActive", false
     ];
 
     // Flash overrides pulse — don't touch background color while shine is active
@@ -551,15 +551,15 @@ DOTT_round_fnc_updateReadyUI =
                 ];
                 if (
                     _side countSide allPlayers > 0
-                    || {!(isNil "DOTT_readyUI_showAllSides")}
+                    || {!(isNil "TN_readyUI_showAllSides")}
                 ) then
                 {
                     if (
-                        _idx < count DOTT_round_sideReady
+                        _idx < count TN_round_sideReady
                     ) then
                     {
                         if !(
-                            DOTT_round_sideReady select _idx
+                            TN_round_sideReady select _idx
                         ) then
                         {
                             _unreadyTints pushBack
@@ -616,15 +616,15 @@ DOTT_round_fnc_updateReadyUI =
 // to form a diagonal band of light (upper-left to lower-right angle).
 // Each slice is clipped to the panel bounds so nothing leaks outside.
 // Accepts: [flashColorRGBA] — the readied team's bright color
-DOTT_round_fnc_flashReadyUI =
+TN_round_fnc_flashReadyUI =
 {
     params [["_flashColor", [0.91, 0.78, 0.25, 0.8]]];
 
     private _bg = uiNamespace getVariable [
-        "DOTT_readyUI_bg", controlNull
+        "TN_readyUI_bg", controlNull
     ];
     private _shineSlices = uiNamespace getVariable [
-        "DOTT_readyUI_shineSlices", []
+        "TN_readyUI_shineSlices", []
     ];
     if (
         isNull _bg || count _shineSlices == 0
@@ -634,15 +634,15 @@ DOTT_round_fnc_flashReadyUI =
     if !(ctrlShown _bg) exitWith {};
 
     // Cancel any in-progress shine animation
-    if !(isNil "DOTT_readyUI_shinePFH") then
+    if !(isNil "TN_readyUI_shinePFH") then
     {
-        [DOTT_readyUI_shinePFH]
+        [TN_readyUI_shinePFH]
             call CBA_fnc_removePerFrameHandler;
-        DOTT_readyUI_shinePFH = nil;
+        TN_readyUI_shinePFH = nil;
     };
 
     uiNamespace setVariable [
-        "DOTT_readyUI_flashActive", true
+        "TN_readyUI_flashActive", true
     ];
 
     // Get current panel bounds
@@ -667,7 +667,7 @@ DOTT_round_fnc_flashReadyUI =
     } forEach _shineSlices;
 
     // Per-frame animation: sweep the diagonal band across the panel
-    DOTT_readyUI_shinePFH = [
+    TN_readyUI_shinePFH = [
         {
             params ["_args", "_pfhHandle"];
             _args params [
@@ -730,9 +730,9 @@ DOTT_round_fnc_flashReadyUI =
                     _x ctrlCommit 0;
                 } forEach _shineSlices;
                 uiNamespace setVariable [
-                    "DOTT_readyUI_flashActive", false
+                    "TN_readyUI_flashActive", false
                 ];
-                DOTT_readyUI_shinePFH = nil;
+                TN_readyUI_shinePFH = nil;
                 [_pfhHandle]
                     call CBA_fnc_removePerFrameHandler;
             };
@@ -754,38 +754,38 @@ DOTT_round_fnc_flashReadyUI =
 {
     waitUntil {!isNull findDisplay 46};
     sleep 0.1;
-    call DOTT_round_fnc_createReadyUIControls;
+    call TN_round_fnc_createReadyUIControls;
 
     // Only start PFH at init if UI is actually needed right now (JIP into safe start, etc.)
     if (
-        DOTT_round_safeStartActive
+        TN_round_safeStartActive
         || {
-            !(isNil "DOTT_round_sideReady")
-            && {({_x} count DOTT_round_sideReady) > 0}
+            !(isNil "TN_round_sideReady")
+            && {({_x} count TN_round_sideReady) > 0}
         }
     ) then
     {
-        call DOTT_round_fnc_startReadyUIPFH;
+        call TN_round_fnc_startReadyUIPFH;
     };
 
     // --- Event handlers drive PFH lifecycle ---
 
     // Safe start begins -> wake PFH so panel appears
-    DOTT_readyUI_ehSafeStart = [
-        "DOTT_round_safeStartBegin",
+    TN_readyUI_ehSafeStart = [
+        "TN_round_safeStartBegin",
         {
-            DOTT_readyUI_dirty = true;
-            call DOTT_round_fnc_startReadyUIPFH;
+            TN_readyUI_dirty = true;
+            call TN_round_fnc_startReadyUIPFH;
         }
     ] call CBA_fnc_addEventHandler;
 
     // Ready state changes -> wake PFH, flash on ready, stop if nothing to show
-    DOTT_readyUI_ehReady = [
-        "DOTT_round_manageReadyChange",
+    TN_readyUI_ehReady = [
+        "TN_round_manageReadyChange",
         {
             params ["_side", "_isReady"];
-            DOTT_readyUI_dirty = true;
-            call DOTT_round_fnc_startReadyUIPFH;
+            TN_readyUI_dirty = true;
+            call TN_round_fnc_startReadyUIPFH;
             if (_isReady) then
             {
                 // Find flash color for the team that just readied (index 5 in SIDE_DEFS)
@@ -801,36 +801,36 @@ DOTT_round_fnc_flashReadyUI =
                     };
                 } forEach SIDE_DEFS;
                 [_flashColor]
-                    call DOTT_round_fnc_flashReadyUI;
+                    call TN_round_fnc_flashReadyUI;
             }
             else
             {
                 // Team unreadied — if no teams ready and no safe start, stop PFH
                 if (
-                    !(isNil "DOTT_round_sideReady")
+                    !(isNil "TN_round_sideReady")
                     && {
                         ({_x} count
-                            DOTT_round_sideReady) == 0
+                            TN_round_sideReady) == 0
                     }
-                    && {!DOTT_round_safeStartActive}
+                    && {!TN_round_safeStartActive}
                 ) then
                 {
-                    call DOTT_round_fnc_stopReadyUIPFH;
+                    call TN_round_fnc_stopReadyUIPFH;
                 };
             };
         }
     ] call CBA_fnc_addEventHandler;
 
     // Safe start aborted -> stop PFH if no teams are still ready
-    DOTT_readyUI_ehAborted = [
-        "DOTT_round_safeStartAborted",
+    TN_readyUI_ehAborted = [
+        "TN_round_safeStartAborted",
         {
-            DOTT_readyUI_dirty = true;
+            TN_readyUI_dirty = true;
             if (
-                !(isNil "DOTT_round_sideReady")
+                !(isNil "TN_round_sideReady")
                 && {
                     ({_x} count
-                        DOTT_round_sideReady) > 0
+                        TN_round_sideReady) > 0
                 }
             ) then
             {
@@ -838,16 +838,16 @@ DOTT_round_fnc_flashReadyUI =
             }
             else
             {
-                call DOTT_round_fnc_stopReadyUIPFH;
+                call TN_round_fnc_stopReadyUIPFH;
             };
         }
     ] call CBA_fnc_addEventHandler;
 
     // Round started -> unconditionally stop PFH (fn_start.sqf already unreadies all sides)
-    DOTT_readyUI_ehStarted = [
-        "DOTT_round_started",
+    TN_readyUI_ehStarted = [
+        "TN_round_started",
         {
-            call DOTT_round_fnc_stopReadyUIPFH;
+            call TN_round_fnc_stopReadyUIPFH;
         }
     ] call CBA_fnc_addEventHandler;
 };

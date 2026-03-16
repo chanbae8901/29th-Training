@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_ocap_fnc_initClient
+ * Function: TN_ocap_fnc_initClient
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -25,6 +25,6 @@ if !(_autoStart) then
         waitUntil {!isNull player};
         
         [player] remoteExecCall
-            ["DOTT_ocap_fnc_initializePlayer", 2];
+            ["TN_ocap_fnc_initializePlayer", 2];
     };
 };

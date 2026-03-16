@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_eventToString
+ * Function: TN_tracker_fnc_eventToString
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -54,9 +54,9 @@ private _fn_formatKill =
     private _unitName = _names select _unitIndex;
     private _unitSide = [
         _unitIndex, _eventTime, _sides
-    ] call DOTT_tracker_fnc_getSideAtTime;
+    ] call TN_tracker_fnc_getSideAtTime;
     _unitName = [_unitName, _unitSide]
-        call DOTT_tracker_fnc_colorNameWithSide;
+        call TN_tracker_fnc_colorNameWithSide;
 
     if (count _eventInfo > 1) then
     {
@@ -66,10 +66,10 @@ private _fn_formatKill =
             _names select (_instigatorIndex);
         private _instigatorSide = [
             _instigatorIndex, _eventTime, _sides
-        ] call DOTT_tracker_fnc_getSideAtTime;
+        ] call TN_tracker_fnc_getSideAtTime;
         _instigatorName = [
             _instigatorName, _instigatorSide
-        ] call DOTT_tracker_fnc_colorNameWithSide;
+        ] call TN_tracker_fnc_colorNameWithSide;
         private _distance = _eventInfo select 2;
         private _weapon =
             _weapons select (_eventInfo select 3);
@@ -106,9 +106,9 @@ switch (_eventType) do
         private _unitName = _names select _unitIndex;
         private _unitSide = [
             _unitIndex, _eventTime select 0, _sides
-        ] call DOTT_tracker_fnc_getSideAtTime;
+        ] call TN_tracker_fnc_getSideAtTime;
         _unitName = [_unitName, _unitSide]
-            call DOTT_tracker_fnc_colorNameWithSide;
+            call TN_tracker_fnc_colorNameWithSide;
 
         private _instigatorIndex =
             _eventInfo select 1;
@@ -117,10 +117,10 @@ switch (_eventType) do
         // Note we use the hitTime here.
         private _instigatorSide = [
             _instigatorIndex, _eventTime select 1, _sides
-        ] call DOTT_tracker_fnc_getSideAtTime;
+        ] call TN_tracker_fnc_getSideAtTime;
         _instigatorName = [
             _instigatorName, _instigatorSide
-        ] call DOTT_tracker_fnc_colorNameWithSide;
+        ] call TN_tracker_fnc_colorNameWithSide;
 
         private _distance = _eventInfo select 2;
         private _weapon =
@@ -145,7 +145,7 @@ switch (_eventType) do
         private _newOwnerName =
             _newOwner call BIS_fnc_sideName;
         _newOwnerName = [_newOwnerName, _newOwner]
-            call DOTT_tracker_fnc_colorNameWithSide;
+            call TN_tracker_fnc_colorNameWithSide;
         _eventString = format [
             "%1:%2 - %3 captured by %4.",
             _minutes, _secondStr,
@@ -159,9 +159,9 @@ switch (_eventType) do
         private _unitName = _names select _unitIndex;
         private _unitSide = [
             _unitIndex, _eventTime, _sides
-        ] call DOTT_tracker_fnc_getSideAtTime;
+        ] call TN_tracker_fnc_getSideAtTime;
         _unitName = [_unitName, _unitSide]
-            call DOTT_tracker_fnc_colorNameWithSide;
+            call TN_tracker_fnc_colorNameWithSide;
         private _state = _eventInfo select 1;
         if (_state) then
         {
@@ -173,10 +173,10 @@ switch (_eventType) do
                     _names select (_instigatorIndex);
                 private _instigatorSide = [
                     _instigatorIndex, _eventTime, _sides
-                ] call DOTT_tracker_fnc_getSideAtTime;
+                ] call TN_tracker_fnc_getSideAtTime;
                 _instigatorName = [
                     _instigatorName, _instigatorSide
-                ] call DOTT_tracker_fnc_colorNameWithSide;
+                ] call TN_tracker_fnc_colorNameWithSide;
                 private _distance =
                     _eventInfo select 3;
                 private _weapon =
@@ -211,9 +211,9 @@ switch (_eventType) do
         private _unitName = _names select _unitIndex;
         private _unitSide = [
             _unitIndex, _eventTime select 0, _sides
-        ] call DOTT_tracker_fnc_getSideAtTime;
+        ] call TN_tracker_fnc_getSideAtTime;
         _unitName = [_unitName, _unitSide]
-            call DOTT_tracker_fnc_colorNameWithSide;
+            call TN_tracker_fnc_colorNameWithSide;
 
         private _state = _eventInfo select 1;
 
@@ -224,10 +224,10 @@ switch (_eventType) do
         // Note we use the hitTime here.
         private _instigatorSide = [
             _instigatorIndex, _eventTime select 1, _sides
-        ] call DOTT_tracker_fnc_getSideAtTime;
+        ] call TN_tracker_fnc_getSideAtTime;
         _instigatorName = [
             _instigatorName, _instigatorSide
-        ] call DOTT_tracker_fnc_colorNameWithSide;
+        ] call TN_tracker_fnc_colorNameWithSide;
 
         private _distance = _eventInfo select 3;
         private _weapon =

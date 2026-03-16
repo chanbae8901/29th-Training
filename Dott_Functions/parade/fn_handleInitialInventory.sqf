@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_parade_fnc_handleInitialInventory
+ * Function: TN_parade_fnc_handleInitialInventory
  * Author:   Hill [29th ID]
  *
  * Description:
@@ -13,7 +13,7 @@
  *   Nothing
  *
  * Example:
- *   call DOTT_parade_fnc_handleInitialInventory;
+ *   call TN_parade_fnc_handleInitialInventory;
  */
 
 if (!hasInterface) exitWith {};
@@ -26,7 +26,7 @@ private _fn_loadParade =
     {
         case WEST:
         {
-            call DOTT_parade_fnc_load;
+            call TN_parade_fnc_load;
         };
         case EAST:
         {

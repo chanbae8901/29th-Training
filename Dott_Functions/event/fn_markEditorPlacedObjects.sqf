@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_event_fnc_markEditorPlacedObjects
+ * Function: TN_event_fnc_markEditorPlacedObjects
  * Author:   Mallen [FNF], modified by Bae [29th ID]
  *
  * Creates local map markers for editor-placed static objects
@@ -28,7 +28,7 @@ _canMark =
     params ["_obj"];
 
     if (_obj getVariable
-        ["DOTT_autoMarkForceInclude", false]) exitWith
+        ["TN_autoMarkForceInclude", false]) exitWith
     {
         true;
     };
@@ -41,7 +41,7 @@ _canMark =
     ];
 
     if (_obj getVariable
-        ["DOTT_autoMarkExclude", false]) exitWith
+        ["TN_autoMarkExclude", false]) exitWith
     {
         false;
     };
@@ -71,7 +71,7 @@ _createMarker =
 
     // Create marker locally to save network bandwidth
     _marker = createMarkerLocal [
-        "DOTT_ObjectMarker" + str _markerNum,
+        "TN_ObjectMarker" + str _markerNum,
         _obj
     ];
 

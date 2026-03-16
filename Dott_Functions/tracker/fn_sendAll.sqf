@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_sendAll
+ * Function: TN_tracker_fnc_sendAll
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -16,8 +16,8 @@
 
 params ["_player"];
 
-[DOTT_tracker_previous] remoteExecCall [
-    "DOTT_tracker_fnc_receiveAll",
+[TN_tracker_previous] remoteExecCall [
+    "TN_tracker_fnc_receiveAll",
     _player
 ];
 

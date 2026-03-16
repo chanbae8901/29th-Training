@@ -4,7 +4,7 @@
             "parade",
             {
                 // 125m hardcoded radius around the calling player.
-                [player, 125] spawn DOTT_parade_fnc_forceAll;
+                [player, 125] spawn TN_parade_fnc_forceAll;
             }
         ]
     ],
@@ -14,4 +14,4 @@
             "Sets all players' loadout within 125m of your position to parade."
         ]
     ]
-] call DOTT_commands_fnc_addModule;
+] call TN_commands_fnc_addModule;

@@ -12,7 +12,7 @@ private _defaultAdminCommands = "['reset', 'debrief', 'goto', 'measure', 'ticket
     _defaultNoLog,
 	1,
 	{
-		DOTT_commands_noLogCommands = parseSimpleArray _this;
+		TN_commands_noLogCommands = parseSimpleArray _this;
 	}
 ] call CBA_fnc_addSetting;
 
@@ -24,7 +24,7 @@ private _defaultAdminCommands = "['reset', 'debrief', 'goto', 'measure', 'ticket
 	_defaultRestrictedCommands,
 	1,
 	{
-		DOTT_commands_restrictedCommands = parseSimpleArray _this;
+		TN_commands_restrictedCommands = parseSimpleArray _this;
 	}
 ] call CBA_fnc_addSetting;
 
@@ -36,7 +36,7 @@ private _defaultAdminCommands = "['reset', 'debrief', 'goto', 'measure', 'ticket
 	_defaultAdminCommands,
 	1,
 	{
-		DOTT_commands_adminCommands = parseSimpleArray _this;
+		TN_commands_adminCommands = parseSimpleArray _this;
 	}
 ] call CBA_fnc_addSetting;
 
@@ -48,6 +48,6 @@ private _defaultAdminCommands = "['reset', 'debrief', 'goto', 'measure', 'ticket
 	"[]",
 	1,
 	{
-		DOTT_commands_removedCommands = parseSimpleArray _this;
+		TN_commands_removedCommands = parseSimpleArray _this;
 	}
 ] call CBA_fnc_addSetting;

@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_radio_fnc_add
+ * Function: TN_radio_fnc_add
  * Author:   Hill [29th ID]
  *
  * Description:

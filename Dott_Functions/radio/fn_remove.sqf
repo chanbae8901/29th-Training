@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_radio_fnc_remove
+ * Function: TN_radio_fnc_remove
  * Author:   Rellikplug AKA Hill [29th ID]
  *
  * Description:

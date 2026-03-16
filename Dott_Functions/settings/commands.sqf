@@ -16,4 +16,4 @@
     [],
     [],
     ["s"]
-] call DOTT_commands_fnc_addModule;
+] call TN_commands_fnc_addModule;

@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_receiveAll
+ * Function: TN_tracker_fnc_receiveAll
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -8,7 +8,7 @@
  * Called via remoteExec from fn_sendAll.
  *
  * Parameters:
- * _allRounds (Array): DOTT_tracker_previous from server.
+ * _allRounds (Array): TN_tracker_previous from server.
  *     Each element is [events, names, sides, weapons].
  *
  * Returns:
@@ -27,7 +27,7 @@ params ["_allRounds"];
     [
         _events, _names, _sides,
         _weapons, _roundNum
-    ] call DOTT_tracker_fnc_createDiaryEntries;
+    ] call TN_tracker_fnc_createDiaryEntries;
 } forEach _allRounds;
 
 true

@@ -1,11 +1,11 @@
 /*
- * Function: DOTT_curator_fnc_createModule
+ * Function: TN_curator_fnc_createModule
  * Author:   Bae [29th ID]
  *
  * Description:
  *     Creates a curator (Zeus) module for the specified
  *     player if their variable name is listed in
- *     DOTT_curator_units. Deletes any existing module for
+ *     TN_curator_units. Deletes any existing module for
  *     that player first to avoid duplicates. Must be called
  *     in an unscheduled environment so the module is created
  *     atomically. If called before mission time > 0, defers
@@ -20,11 +20,11 @@
  *
  * Returns:
  *     Object - The created curator logic, or nothing if
- *         the player is not in DOTT_curator_units
+ *         the player is not in TN_curator_units
  *
  * Example:
  *     [vehicleVarName player, roleDescription player]
- *         call DOTT_curator_fnc_createModule;
+ *         call TN_curator_fnc_createModule;
  */
 
 params ["_playerVarName", "_roleDescription"];
@@ -34,24 +34,24 @@ if (time == 0) exitWith
 {
     [
         { time > 0 },
-        { _this call DOTT_curator_fnc_createModule },
+        { _this call TN_curator_fnc_createModule },
         _this
     ] call CBA_fnc_waitUntilAndExecute;
 };
 
 _playerVarName = toLower _playerVarName;
 
-if (DOTT_curator_units find _playerVarName == -1) exitWith {};
+if (TN_curator_units find _playerVarName == -1) exitWith {};
 
 if !(isServer) exitWith
 {
     _this remoteExecCall [
-        "DOTT_curator_fnc_createModule", 2
+        "TN_curator_fnc_createModule", 2
     ];
 };
 
 private _curatorModuleName = format [
-    "DOTT_curator_zeus_%1", _playerVarName
+    "TN_curator_zeus_%1", _playerVarName
 ];
 
 if !(isNil _curatorModuleName) then

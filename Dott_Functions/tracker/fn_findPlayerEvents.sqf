@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_findPlayerEvents
+ * Function: TN_tracker_fnc_findPlayerEvents
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -11,7 +11,7 @@
  * Parameters:
  * _playerIndex (Number): Reference index of player in stored
  *     event arrays. Can be -1 to indicate player is not there.
- * _events (Array): DOTT_tracker_events from server.
+ * _events (Array): TN_tracker_events from server.
  *
  * Returns:
  * Array with indexes of relevant events in _events

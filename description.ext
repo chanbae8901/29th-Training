@@ -1,6 +1,6 @@
 #include "data\defines.hpp"
 
-#ifdef DOTT_EVENT
+#ifdef TN_EVENT
 
 OnLoadName = "YOUR MISSION NAME HERE"; //CHANGE THIS
 briefingName = "YOUR MISSION NAME HERE"; //CHANGE THIS
@@ -13,7 +13,7 @@ OverviewText = "YOUR DESCRIPTION HERE"; //CHANGE THIS
 
 /***** IGNORE BELOW THIS LINE FOR EVENT UNLESS YOU KNOW WHAT YOU ARE DOING *****/
 
-#ifdef DOTT_TRAINING
+#ifdef TN_TRAINING
 
 OnLoadName = "29th Training V4.5.0";
 briefingName = "29th Training V4.5.0";

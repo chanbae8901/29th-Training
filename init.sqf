@@ -6,8 +6,8 @@ diag_log text format [
 #include "data\defines.hpp"
 
 {
-    private _moduleInitName = format ["DOTT_%1_fnc_init", _x];
+    private _moduleInitName = format ["TN_%1_fnc_init", _x];
     private _function =
         missionNamespace getVariable [_moduleInitName, {}];
     call _function;
-} forEach DOTT_MODULES;
+} forEach TN_MODULES;

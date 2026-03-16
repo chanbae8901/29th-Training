@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_round_fnc_setTimer
+ * Function: TN_round_fnc_setTimer
  * Author:   Bae [29th ID], modified from Dott [29th ID]
  *
  * Sets the round timer length. Cannot be used while the round is
@@ -12,16 +12,16 @@
  *     Boolean - true on success, false if rejected.
  *
  * Example:
- *     [1200] call DOTT_round_fnc_setTimer;
+ *     [1200] call TN_round_fnc_setTimer;
  */
 
 params ["_time"];
 
 if (
-    _time <= 0 || call DOTT_round_fnc_isRoundActive
+    _time <= 0 || call TN_round_fnc_isRoundActive
 ) exitWith {false};
 
-DOTT_round_timerLength = _time;
-publicVariable "DOTT_round_timerLength";
+TN_round_timerLength = _time;
+publicVariable "TN_round_timerLength";
 
 true

@@ -3,7 +3,7 @@
 		[
 			"cleanup",
 			{
-				call DOTT_base_fnc_cleaner;
+				call TN_base_fnc_cleaner;
 				systemChat "Cleaning up!"
 			}
 		]
@@ -11,4 +11,4 @@
 	[
 		["cleanup", "Cleans up bodies (trash can function)"]
 	]
-] call DOTT_commands_fnc_addModule;
+] call TN_commands_fnc_addModule;

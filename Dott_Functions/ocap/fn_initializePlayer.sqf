@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_ocap_fnc_initializePlayer
+ * Function: TN_ocap_fnc_initializePlayer
  * Author:   Bae [29th ID], modified from OCAP Addon
  *
  * Purpose:
@@ -19,7 +19,7 @@
 #define BOOL(_cond) ([0, 1] select (_cond))
 
 //if recording, let natural loop do below instead
-if (DOTT_ocap_recording) exitWith {};
+if (TN_ocap_recording) exitWith {};
 
 params ["_player"];
 

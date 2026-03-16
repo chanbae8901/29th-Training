@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_training_fnc_initDefaultLoadouts
+ * Function: TN_training_fnc_initDefaultLoadouts
  * Author:   Bae [29th ID]
  *
  * Registers default ACE Arsenal loadouts for each faction.
@@ -26,7 +26,7 @@
  *     true
  *
  * Example:
- *     call DOTT_training_fnc_initDefaultLoadouts;
+ *     call TN_training_fnc_initDefaultLoadouts;
  */
 
 /*

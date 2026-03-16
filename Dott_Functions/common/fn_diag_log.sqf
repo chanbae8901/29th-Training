@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_common_fnc_diag_log
+ * Function: TN_common_fnc_diag_log
  * Author:   Bae [29th ID]
  *
  * Wrapper for diag_log intended to be remoteExec'd.
@@ -14,7 +14,7 @@
  *
  * Example:
  *     "Something Happened"
- *         remoteExec ["DOTT_common_fnc_diag_log", 2];
+ *         remoteExec ["TN_common_fnc_diag_log", 2];
  */
 
 params ["_str"];

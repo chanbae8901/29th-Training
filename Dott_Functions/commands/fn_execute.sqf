@@ -1,5 +1,5 @@
 /*
- * Function: DOTT_commands_fnc_execute
+ * Function: TN_commands_fnc_execute
  * Author:   Bae [29th ID]
  *
  * Description:
@@ -34,34 +34,34 @@ if (_spaceIdx == -1) then {
     _argument = _text select [_spaceIdx + 1, count _text - _spaceIdx - 1];
 };
 
-private _commandCode = DOTT_commands_allCommands get _command;
+private _commandCode = TN_commands_allCommands get _command;
 
 if !(isNil "_commandCode") then
 {
-    if (DOTT_commands_removedCommands find _command != -1) exitWith
+    if (TN_commands_removedCommands find _command != -1) exitWith
     {
         systemChat "Command has been disabled by server!";
     };
 
     private _isAdmin = serverCommandAvailable "#lock";
 
-    if (DOTT_commands_adminCommands find _command != -1 && !_isAdmin) exitWith
+    if (TN_commands_adminCommands find _command != -1 && !_isAdmin) exitWith
     {
         systemChat "You must be the logged in admin to do that!";
     };
 
-    if (DOTT_commands_restrictedCommands find _command != -1 && !_isAdmin && (call DOTT_round_fnc_isRoundActive)) exitWith
+    if (TN_commands_restrictedCommands find _command != -1 && !_isAdmin && (call TN_round_fnc_isRoundActive)) exitWith
     {
         systemChat "Restricted command! Round has started and you are not admin.";
     };
 
     [_argument] call _commandCode;
 
-    if (DOTT_commands_noLogCommands find _command == -1) then
+    if (TN_commands_noLogCommands find _command == -1) then
     {
         private _msg = format ["%1 executed command !%2 %3", name player, _command, _argument];
-        _msg remoteExecCall ["DOTT_common_fnc_diag_log", 2];
-        ["Log", ["Commands", _msg]] remoteExecCall ["DOTT_common_fnc_addDiaryRecord"];
+        _msg remoteExecCall ["TN_common_fnc_diag_log", 2];
+        ["Log", ["Commands", _msg]] remoteExecCall ["TN_common_fnc_addDiaryRecord"];
     };
 }
 else

@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_getKillCounts
+ * Function: TN_tracker_fnc_getKillCounts
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -8,8 +8,8 @@
  * to whoever knocked them unconscious.
  *
  * Parameters:
- * _events (Array): DOTT_tracker_events from server.
- * _sides (Array): DOTT_tracker_sides from server.
+ * _events (Array): TN_tracker_events from server.
+ * _sides (Array): TN_tracker_sides from server.
  *
  * Returns:
  * Sorted kill count array with elements
@@ -39,12 +39,12 @@ private _killCounts = createHashMap;
             private _unitIndex = _eventInfo select 0;
             private _unitSide = [
                 _unitIndex, _eventTime, _sides
-            ] call DOTT_tracker_fnc_getSideAtTime;
+            ] call TN_tracker_fnc_getSideAtTime;
             private _instigatorIndex =
                 _eventInfo select 1;
             private _instigatorSide = [
                 _instigatorIndex, _eventTime, _sides
-            ] call DOTT_tracker_fnc_getSideAtTime;
+            ] call TN_tracker_fnc_getSideAtTime;
 
             private _findUnconIdx =
                 _unconsciousAtEnd findIf {
@@ -77,13 +77,13 @@ private _killCounts = createHashMap;
             private _unitIndex = _eventInfo select 0;
             private _unitSide = [
                 _unitIndex, _eventTime select 0, _sides
-            ] call DOTT_tracker_fnc_getSideAtTime;
+            ] call TN_tracker_fnc_getSideAtTime;
             private _instigatorIndex =
                 _eventInfo select 1;
             private _instigatorSide = [
                 _instigatorIndex, _eventTime select 1,
                 _sides
-            ] call DOTT_tracker_fnc_getSideAtTime;
+            ] call TN_tracker_fnc_getSideAtTime;
 
             private _findUnconIdx =
                 _unconsciousAtEnd findIf {
@@ -114,7 +114,7 @@ private _killCounts = createHashMap;
             private _unitIndex = _eventInfo select 0;
             private _unitSide = [
                 _unitIndex, _eventTime, _sides
-            ] call DOTT_tracker_fnc_getSideAtTime;
+            ] call TN_tracker_fnc_getSideAtTime;
             private _state = _eventInfo select 1;
             if (_state && (count _eventInfo) > 2) then
             {
@@ -122,7 +122,7 @@ private _killCounts = createHashMap;
                     _eventInfo select 2;
                 private _instigatorSide = [
                     _instigatorIndex, _eventTime, _sides
-                ] call DOTT_tracker_fnc_getSideAtTime;
+                ] call TN_tracker_fnc_getSideAtTime;
                 _unconsciousAtEnd pushBack [
                     [_unitIndex, _unitSide],
                     [_instigatorIndex, _instigatorSide]
@@ -148,14 +148,14 @@ private _killCounts = createHashMap;
             private _unitIndex = _eventInfo select 0;
             private _unitSide = [
                 _unitIndex, _eventTime select 0, _sides
-            ] call DOTT_tracker_fnc_getSideAtTime;
+            ] call TN_tracker_fnc_getSideAtTime;
 
             private _instigatorIndex =
                 _eventInfo select 2;
             private _instigatorSide = [
                 _instigatorIndex, _eventTime select 1,
                 _sides
-            ] call DOTT_tracker_fnc_getSideAtTime;
+            ] call TN_tracker_fnc_getSideAtTime;
             _unconsciousAtEnd pushBack [
                 [_unitIndex, _unitSide],
                 [_instigatorIndex, _instigatorSide]

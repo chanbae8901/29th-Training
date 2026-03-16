@@ -1,5 +1,5 @@
 /*
- * Function: DOTT_curator_fnc_excludeObjects
+ * Function: TN_curator_fnc_excludeObjects
  * Author:   Bae [29th ID], modified from Dott/Hill [29th ID]
  *
  * Description:
@@ -21,12 +21,12 @@
  *     Nothing (runs indefinitely in a spawned loop)
  *
  * Example:
- *     [] spawn DOTT_curator_fnc_excludeObjects;
+ *     [] spawn TN_curator_fnc_excludeObjects;
  */
 
 if (!isServer) exitWith {};
 
-DOTT_script_curatorExcludedObjects = [] spawn
+TN_script_curatorExcludedObjects = [] spawn
 {
     { //forEach object placed in editor
         // Skip local-only objects (not network-synced).

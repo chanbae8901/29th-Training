@@ -1,5 +1,5 @@
 /*
- * Function: DOTT_curator_fnc_addEditable
+ * Function: TN_curator_fnc_addEditable
  * Author:   Hill [29th ID]
  *
  * Description:
@@ -15,7 +15,7 @@
  *
  * Example:
  *     [[player]] remoteExec [
- *         "DOTT_curator_fnc_addEditable", 2
+ *         "TN_curator_fnc_addEditable", 2
  *     ];
  */
 

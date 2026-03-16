@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_init
+ * Function: TN_tracker_fnc_init
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -21,33 +21,33 @@ if (("enableRoundEventLog" call BIS_fnc_getParamValue) != 1) exitWith {};
 
 if (isServer) then
 {
-    DOTT_tracker_previous = [];
-    DOTT_tracker_events = [];
-    DOTT_tracker_names = [];
-    DOTT_tracker_sides = [];
-    DOTT_tracker_weapons = [];
-    DOTT_tracker_currentRound = 1;
+    TN_tracker_previous = [];
+    TN_tracker_events = [];
+    TN_tracker_names = [];
+    TN_tracker_sides = [];
+    TN_tracker_weapons = [];
+    TN_tracker_currentRound = 1;
 
-    DOTT_tracker_startTime = -1;
-    publicVariable "DOTT_tracker_startTime";
+    TN_tracker_startTime = -1;
+    publicVariable "TN_tracker_startTime";
 
     [
-        "DOTT_round_started",
+        "TN_round_started",
         {
-            DOTT_tracker_startTime = serverTime;
-            publicVariable "DOTT_tracker_startTime";
+            TN_tracker_startTime = serverTime;
+            publicVariable "TN_tracker_startTime";
 
-            DOTT_tracker_events = [];
-            DOTT_tracker_names = [];
-            DOTT_tracker_sides = [];
-            DOTT_tracker_weapons = [];
+            TN_tracker_events = [];
+            TN_tracker_names = [];
+            TN_tracker_sides = [];
+            TN_tracker_weapons = [];
 
             // Reset all hit info on players at start
             // of round.
             private _players = allPlayers - entities "HeadlessClient_F";
             {
-                _x setVariable ["DOTT_lastHit", nil];
-                _x setVariable ["DOTT_hitMap", createHashMap];
+                _x setVariable ["TN_lastHit", nil];
+                _x setVariable ["TN_hitMap", createHashMap];
             }
             forEach _players;
         }
@@ -66,7 +66,7 @@ if (isServer) then
         // frame later so wait.
         [
             {
-                _this call DOTT_tracker_fnc_recordKill;
+                _this call TN_tracker_fnc_recordKill;
             },
             _this, 0.75 // Delay to wait for info from clients.
         ] call CBA_fnc_waitAndExecute;
@@ -75,8 +75,8 @@ if (isServer) then
     addMissionEventHandler ["EntityRespawned",
     {
         params ["_unit"];
-        _unit setVariable ["DOTT_lastHit", nil];
-        _unit setVariable ["DOTT_hitMap", nil];
+        _unit setVariable ["TN_lastHit", nil];
+        _unit setVariable ["TN_hitMap", nil];
     }];
 
     // --- Consciousness --- //
@@ -87,7 +87,7 @@ if (isServer) then
             // frame later so wait.
             [
                 {
-                    _this call DOTT_tracker_fnc_recordACEConscious;
+                    _this call TN_tracker_fnc_recordACEConscious;
                 },
                 _this, 0.5
             ] call CBA_fnc_waitAndExecute;
@@ -96,32 +96,32 @@ if (isServer) then
 
     // --- Tracker Diary --- //
     [
-        "DOTT_round_ended",
+        "TN_round_ended",
         {
-            DOTT_tracker_startTime = -1;
+            TN_tracker_startTime = -1;
             [] spawn
             {
                 // Wait for any last second events from
                 // the network.
                 sleep 1;
-                publicVariable "DOTT_tracker_startTime";
+                publicVariable "TN_tracker_startTime";
                 [
-                    DOTT_tracker_events,
-                    DOTT_tracker_names,
-                    DOTT_tracker_sides,
-                    DOTT_tracker_weapons,
-                    DOTT_tracker_currentRound
-                ] remoteExecCall ["DOTT_tracker_fnc_createDiaryEntries"];
+                    TN_tracker_events,
+                    TN_tracker_names,
+                    TN_tracker_sides,
+                    TN_tracker_weapons,
+                    TN_tracker_currentRound
+                ] remoteExecCall ["TN_tracker_fnc_createDiaryEntries"];
 
-                DOTT_tracker_previous pushBack
+                TN_tracker_previous pushBack
                 [
-                    +DOTT_tracker_events,
-                    +DOTT_tracker_names,
-                    +DOTT_tracker_sides,
-                    +DOTT_tracker_weapons
+                    +TN_tracker_events,
+                    +TN_tracker_names,
+                    +TN_tracker_sides,
+                    +TN_tracker_weapons
                 ];
 
-                DOTT_tracker_currentRound = DOTT_tracker_currentRound + 1;
+                TN_tracker_currentRound = TN_tracker_currentRound + 1;
             };
         }
     ] call CBA_fnc_addEventHandler;
@@ -130,7 +130,7 @@ if (isServer) then
     {
         [_x, "ownerChanged",
         {
-            _this call DOTT_tracker_fnc_recordSectorCapture;
+            _this call TN_tracker_fnc_recordSectorCapture;
         }] call BIS_fnc_addScriptedEventHandler;
     } forEach (allMissionObjects "ModuleSector_F");
 
@@ -141,7 +141,7 @@ if (isServer) then
         {
             [_entity, "ownerChanged",
             {
-                _this call DOTT_tracker_fnc_recordSectorCapture;
+                _this call TN_tracker_fnc_recordSectorCapture;
             }] call BIS_fnc_addScriptedEventHandler;
         };
     }];
@@ -153,7 +153,7 @@ if (isServer) then
         if (_unit isKindOf "Man") then
         {
 
-            _unit setVariable ["DOTT_name", name _unit, true];
+            _unit setVariable ["TN_name", name _unit, true];
         };
     }];
 };
@@ -161,32 +161,32 @@ if (isServer) then
 if (hasInterface) then
 {
     // --- Attacker Info --- //
-    DOTT_tracker_cookOffs = [];
+    TN_tracker_cookOffs = [];
 
     [] spawn
     {
         waitUntil { !isNull player };
-        call DOTT_tracker_fnc_addEventHandlersClient;
+        call TN_tracker_fnc_addEventHandlersClient;
     };
 
-    DOTT_weaponNameCache = createHashMap;
+    TN_weaponNameCache = createHashMap;
     // --- Remove Statistics from Map, Send All
     //     Round Histories --- //
     addMissionEventHandler ["PreloadFinished",
     {
-        [player] remoteExecCall ["DOTT_tracker_fnc_sendAll", 2];
+        [player] remoteExecCall ["TN_tracker_fnc_sendAll", 2];
         player removeDiarySubject "Statistics";
         removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
     }];
 
     // --- Fire/Burn Related Information --- //
     [
-        "DOTT_round_started",
+        "TN_round_started",
         {
-            DOTT_tracker_cookOffs = [];
-            player setVariable ["DOTT_burnInstigator", nil];
-            player setVariable ["DOTT_burnInstigatorTime", nil];
-            player setVariable ["DOTT_burnWeapon", nil];
+            TN_tracker_cookOffs = [];
+            player setVariable ["TN_burnInstigator", nil];
+            player setVariable ["TN_burnInstigatorTime", nil];
+            player setVariable ["TN_burnWeapon", nil];
             // Burn info of other players locally is not
             // reset, but should be fine.
         }

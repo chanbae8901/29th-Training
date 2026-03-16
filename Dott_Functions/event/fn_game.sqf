@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_event_fnc_game
+ * Function: TN_event_fnc_game
  * Author:   Bae [29th ID], modified from Dott [29th ID]
  *
  * Manages round endings by forcing a specific side victory,
@@ -29,7 +29,7 @@ params
 
 if (!isServer) exitWith
 {
-    _this remoteExecCall ["DOTT_event_fnc_game", 2];
+    _this remoteExecCall ["TN_event_fnc_game", 2];
 };
 
 /******** CONFIG ********/
@@ -49,7 +49,7 @@ if (isNil "gameCalled") then
 if (gameCalled) exitWith {};
 gameCalled = true;
 publicVariable "gameCalled";
-["DOTT_event_gameCalled", []] call CBA_fnc_globalEvent;
+["TN_event_gameCalled", []] call CBA_fnc_globalEvent;
 
 if (_forceEnding) exitWith
 {

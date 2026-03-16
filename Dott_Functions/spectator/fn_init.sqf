@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_spectator_fnc_init
+ * Function: TN_spectator_fnc_init
  * Author:   Bae [29th ID]
  *
  * Initializes the spectator module on clients.
@@ -13,13 +13,13 @@
  *     Nothing
  *
  * Example:
- *     call DOTT_spectator_fnc_init;
+ *     call TN_spectator_fnc_init;
  */
 
 if (!hasInterface) exitWith {};
 
 // --- Auto-spectate on respawn ---
-["DOTT_spectator_autoSpectate", "Respawn",
+["TN_spectator_autoSpectate", "Respawn",
 {
     params ["_newUnit", "_oldUnit"];
 
@@ -28,7 +28,7 @@ if (!hasInterface) exitWith {};
         if (TN_autoSpectate) then
         {
             systemChat "AutoSpectate is ON.";
-            [_newUnit] spawn DOTT_spectator_fnc_enter;
+            [_newUnit] spawn TN_spectator_fnc_enter;
         };
     };
 }] call CBA_fnc_addBISPlayerEventHandler;

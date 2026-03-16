@@ -22,7 +22,7 @@
                 showScoretable -1;
             };
 
-            if !(call DOTT_round_fnc_isRoundActive) exitWith {};
+            if !(call TN_round_fnc_isRoundActive) exitWith {};
 
             if !(isNull (
                 uiNamespace getVariable [
@@ -48,7 +48,7 @@
                 {
                     if (
                         visibleScoretable
-                        && call DOTT_round_fnc_isRoundActive
+                        && call TN_round_fnc_isRoundActive
                         && TN_disableScoreboard
                     ) then
                     {

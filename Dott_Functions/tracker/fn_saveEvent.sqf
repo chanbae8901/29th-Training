@@ -1,12 +1,12 @@
 /**
- * Function: DOTT_tracker_fnc_saveEvent
+ * Function: TN_tracker_fnc_saveEvent
  * Author:   Bae [29th ID]
  *
  * Purpose:
  * Server-side function that converts an event array's human-
  * readable names/sides/weapons into compact numeric indices
- * (referencing DOTT_tracker_names, _sides, _weapons) and stores
- * the result in DOTT_tracker_events.
+ * (referencing TN_tracker_names, _sides, _weapons) and stores
+ * the result in TN_tracker_events.
  *
  * Parameters:
  * _event (Array): Event array created by other tracker functions.
@@ -32,7 +32,7 @@ private _fn_convertEventInfo =
     private _unit = _eventInfo select 0;
     private _unitName = _unit select 0;
     private _unitSide = _unit select 1;
-    _eventInfo set [0, [_unitName, _unitSide, _unitTime] call DOTT_tracker_fnc_nameToNum];
+    _eventInfo set [0, [_unitName, _unitSide, _unitTime] call TN_tracker_fnc_nameToNum];
 
     // Kill types: instigator at 1, weapon at 3.
     // Consciousness types: instigator at 2, weapon at 4.
@@ -46,9 +46,9 @@ private _fn_convertEventInfo =
         private _instigatorSide = _instigator select 1;
         private _weaponName = _eventInfo select _weaponIdx;
         _eventInfo set [_instigatorIdx,
-            [_instigatorName, _instigatorSide, _instigatorTime] call DOTT_tracker_fnc_nameToNum
+            [_instigatorName, _instigatorSide, _instigatorTime] call TN_tracker_fnc_nameToNum
         ];
-        _eventInfo set [_weaponIdx, [_weaponName] call DOTT_tracker_fnc_weaponToNum];
+        _eventInfo set [_weaponIdx, [_weaponName] call TN_tracker_fnc_weaponToNum];
     };
 };
 
@@ -59,10 +59,10 @@ private _fn_convertEventInfo =
 private _fn_scanRecentEvents =
 {
     params ["_filterTypes", "_afterTime", "_unitNum", "_action"];
-    for "_i" from (count DOTT_tracker_events - 1)
+    for "_i" from (count TN_tracker_events - 1)
         to 0 step -1 do
     {
-        private _pastEvent = DOTT_tracker_events select _i;
+        private _pastEvent = TN_tracker_events select _i;
         private _pastType = _pastEvent select 0;
         private _pastTime = _pastEvent select 1;
         if (_pastType == DELAY_KILL_NUM
@@ -118,7 +118,7 @@ switch (_eventType) do
             [ACE_CONSCIOUSNESS_NUM, DELAY_ACE_CONSCIOUSNESS_NUM],
             _eventTime - 2,
             _eventInfo select 0,
-            { DOTT_tracker_events deleteAt _this }
+            { TN_tracker_events deleteAt _this }
         ] call _fn_scanRecentEvents;
     };
 
@@ -130,7 +130,7 @@ switch (_eventType) do
             [ACE_CONSCIOUSNESS_NUM, DELAY_ACE_CONSCIOUSNESS_NUM],
             (_eventTime select 0) - 2,
             _eventInfo select 0,
-            { DOTT_tracker_events deleteAt _this }
+            { TN_tracker_events deleteAt _this }
         ] call _fn_scanRecentEvents;
     };
 
@@ -144,6 +144,6 @@ switch (_eventType) do
 
 if (!_saveEvent) exitWith { false };
 
-DOTT_tracker_events pushBack _event;
+TN_tracker_events pushBack _event;
 
 true

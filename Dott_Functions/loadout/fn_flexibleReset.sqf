@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_loadout_fnc_flexibleReset
+ * Function: TN_loadout_fnc_flexibleReset
  * Author:   Dott [29th ID]
  *
  * Purpose: Optionally loads saved inventory, heals player, teleports
@@ -21,7 +21,7 @@
  *
  * Example:
  *   [resetLoadout, true, getPosASL _pos]
- *       spawn DOTT_loadout_fnc_flexibleReset;
+ *       spawn TN_loadout_fnc_flexibleReset;
  */
 
 params
@@ -56,7 +56,7 @@ if (count _inventory != 0) then
         systemChat "Player in base, skipping rearm.";
     };
 
-    [player, _inventory, true] spawn DOTT_loadout_fnc_fullSetUnitLoadout;
+    [player, _inventory, true] spawn TN_loadout_fnc_fullSetUnitLoadout;
 
     _resetInventory = true;
 };
@@ -78,7 +78,7 @@ if (_pointCount < 3) then
 {
     if (_point isNotEqualTo []) then
     {
-        hint "DOTT_fnc_roundReset Error: Position Array wrong size!";
+        hint "TN_fnc_roundReset Error: Position Array wrong size!";
     };
 }
 else
@@ -93,9 +93,9 @@ else
             || (!isNull player && alive player)
     };
 
-    call DOTT_spectator_fnc_exit;
+    call TN_spectator_fnc_exit;
 
-    DOTT_loadout_teleporting = true;
+    TN_loadout_teleporting = true;
 
     private _tries = 0;
 
@@ -171,7 +171,7 @@ else
     {
         sleep 2;
         player allowDamage true;
-        DOTT_loadout_teleporting = nil;
+        TN_loadout_teleporting = nil;
     };
 
     _teleport = _tries > 0;

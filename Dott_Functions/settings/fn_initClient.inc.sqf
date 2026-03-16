@@ -1,5 +1,5 @@
 {
-    private _scriptName = format ["DOTT_settings_fnc_%1", _x];
+    private _scriptName = format ["TN_settings_fnc_%1", _x];
 
     if (isNil {uiNamespace getVariable _scriptName}) then
     {
@@ -15,7 +15,7 @@ forEach [
 ];
 
 {
-    private _scriptName = format ["DOTT_settings_fnc_%1", _x];
+    private _scriptName = format ["TN_settings_fnc_%1", _x];
 
     if (isNil {missionNamespace getVariable _scriptName}) then
     {

@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_event_fnc_init
+ * Function: TN_event_fnc_init
  * Author:   Bae [29th ID]
  *
  * Initializes the event variation of the mission template.
@@ -16,63 +16,63 @@
  *     Nothing
  *
  * Example:
- *     call DOTT_event_fnc_init;
+ *     call TN_event_fnc_init;
  */
 
 /******** CONFIG ********/
 call compile preprocessFileLineNumbers "eventSettings.sqf";
 
 /******* Timer ********/
-if (DOTT_event_hasTimer) then
+if (TN_event_hasTimer) then
 {
     if (hasInterface) then
     {
         [{!isNull player}, {
-            call DOTT_event_fnc_flagActions;
+            call TN_event_fnc_flagActions;
         }] call CBA_fnc_waitUntilAndExecute;
     };
 
     if (isServer) then
     {
         [
-            "DOTT_round_started",
+            "TN_round_started",
             {
-                [] spawn DOTT_event_fnc_checkWinCondition;
+                [] spawn TN_event_fnc_checkWinCondition;
             }
         ] call CBA_fnc_addEventHandler;
     };
 };
 
 /******* AliveCheck ********/
-if (DOTT_event_hasAliveCheck || DOTT_event_numberOfLives > 0) then
+if (TN_event_hasAliveCheck || TN_event_numberOfLives > 0) then
 {
-    if (isNil "DOTT_event_spectateArea") then
+    if (isNil "TN_event_spectateArea") then
     {
         systemChat "WARNING: Spectate area object (spectateArea) not found!";
     };
 };
 
-if (DOTT_event_hasAliveCheck) then
+if (TN_event_hasAliveCheck) then
 {
     if (isServer) then
     {
         [
-            "DOTT_round_started",
+            "TN_round_started",
             {
-                [] spawn DOTT_event_fnc_aliveCheck;
+                [] spawn TN_event_fnc_aliveCheck;
             }
         ] call CBA_fnc_addEventHandler;
     };
 };
 
-if (DOTT_event_numberOfLives > 0) then
+if (TN_event_numberOfLives > 0) then
 {
     if (hasInterface) then
     {
         [
-            "DOTT_event_respawn",
+            "TN_event_respawn",
             "Respawn",
-            { [] spawn DOTT_event_fnc_respawn }
+            { [] spawn TN_event_fnc_respawn }
         ] call CBA_fnc_addBISPlayerEventHandler;
     };
 };
@@ -81,9 +81,9 @@ if (DOTT_event_numberOfLives > 0) then
 if (isServer) then
 {
     [
-        "DOTT_round_started",
+        "TN_round_started",
         {
-            setTimeMultiplier DOTT_event_timeAcc;
+            setTimeMultiplier TN_event_timeAcc;
         }
     ] call CBA_fnc_addEventHandler;
 };
@@ -91,9 +91,9 @@ if (isServer) then
 /******* Auto Mark Editor Objects ********/
 if (hasInterface) then
 {
-    if (DOTT_event_autoMarkObjects) then
+    if (TN_event_autoMarkObjects) then
     {
-        call DOTT_event_fnc_markEditorPlacedObjects;
+        call TN_event_fnc_markEditorPlacedObjects;
     };
 };
 

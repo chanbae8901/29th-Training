@@ -1,7 +1,7 @@
 #include "defines.hpp"
 
 /**
- * Function: DOTT_round_fnc_init
+ * Function: TN_round_fnc_init
  * Author:   Bae [29th ID], modified from Dott [29th ID]
  *
  * Sets up the initial state of the round management system. Configures
@@ -16,33 +16,33 @@
  *     Boolean - true
  *
  * Example:
- *     call DOTT_round_fnc_init;
+ *     call TN_round_fnc_init;
  */
 
 /* ---- Server-side initialization ---- */
 if (isServer) then
 {
-    DOTT_round_safeStartActive = false;
-    publicVariable "DOTT_round_safeStartActive";
+    TN_round_safeStartActive = false;
+    publicVariable "TN_round_safeStartActive";
 
-    DOTT_round_sideReady = [false, false, false];
-    publicVariable "DOTT_round_sideReady";
+    TN_round_sideReady = [false, false, false];
+    publicVariable "TN_round_sideReady";
 
-    DOTT_round_timerLength = DEFAULT_TIMER;
-    publicVariable "DOTT_round_timerLength";
+    TN_round_timerLength = DEFAULT_TIMER;
+    publicVariable "TN_round_timerLength";
 
-    DOTT_round_overtimeEnabled = false;
-    publicVariable "DOTT_round_overtimeEnabled";
+    TN_round_overtimeEnabled = false;
+    publicVariable "TN_round_overtimeEnabled";
 
-    DOTT_round_overtimePeriod = DEFAULT_OVERTIME;
-    publicVariable "DOTT_round_overtimePeriod";
+    TN_round_overtimePeriod = DEFAULT_OVERTIME;
+    publicVariable "TN_round_overtimePeriod";
 
-    DOTT_round_ignoreReadiness = false;
-    publicVariable "DOTT_round_ignoreReadiness";
+    TN_round_ignoreReadiness = false;
+    publicVariable "TN_round_ignoreReadiness";
 
     /* --- Prevent scores showing up on right side UI --- */
     [
-        "DOTT_round_started",
+        "TN_round_started",
         {
             {
                 _x addScoreSide -SCORE_REDUCE_VALUE;
@@ -51,7 +51,7 @@ if (isServer) then
     ] call CBA_fnc_addEventHandler;
 
     [
-        "DOTT_round_ended",
+        "TN_round_ended",
         {
             {
                 _x addScoreSide SCORE_REDUCE_VALUE;
@@ -63,7 +63,7 @@ if (isServer) then
 /* ---- Client-side initialization ---- */
 if (hasInterface) then
 {
-    call DOTT_round_fnc_initReadyUI;
+    call TN_round_fnc_initReadyUI;
 
     /* --- JIP scoreboard suppression ---
      * showScoreTable silently fails if called too early. */
@@ -71,7 +71,7 @@ if (hasInterface) then
         "PreloadFinished",
         {
             if (
-                call DOTT_round_fnc_isRoundActive
+                call TN_round_fnc_isRoundActive
                 && TN_disableScoreboard
             ) then
             {
@@ -83,7 +83,7 @@ if (hasInterface) then
 
     /* --- Prevent scoreboard in respawn menu --- */
     [
-        "DOTT_round_scoreboardRespawnMenuStart",
+        "TN_round_scoreboardRespawnMenuStart",
         "Killed",
         {
             disableRespawnScoreboard = addMissionEventHandler [
@@ -91,7 +91,7 @@ if (hasInterface) then
                 {
                     if (
                         visibleScoretable
-                        && call DOTT_round_fnc_isRoundActive
+                        && call TN_round_fnc_isRoundActive
                         && TN_disableScoreboard
                     ) then
                     {
@@ -104,11 +104,11 @@ if (hasInterface) then
 
     // Re-added every life
     [
-        "DOTT_round_scoreboardRespawnMenuEnd",
+        "TN_round_scoreboardRespawnMenuEnd",
         "Respawn",
         {
             if (
-                call DOTT_round_fnc_isRoundActive
+                call TN_round_fnc_isRoundActive
                 && TN_disableScoreboard
             ) then
             {
@@ -132,7 +132,7 @@ if (hasInterface) then
 
     /* --- Fix countdown not showing after leaving curator --- */
     [
-        "DOTT_exitedZeus",
+        "TN_exitedZeus",
         {
             [] spawn
             {
@@ -145,15 +145,15 @@ if (hasInterface) then
 
     /* --- Allow player in Zeus to see scoreboard --- */
     [
-        "DOTT_enteredZeus",
+        "TN_enteredZeus",
         {showScoretable -1}
     ] call CBA_fnc_addEventHandler;
 
     [
-        "DOTT_exitedZeus",
+        "TN_exitedZeus",
         {
             if (
-                call DOTT_round_fnc_isRoundActive
+                call TN_round_fnc_isRoundActive
                 && TN_disableScoreboard
             ) then
             {
@@ -164,7 +164,7 @@ if (hasInterface) then
 
     /* --- Hide scoreboard when round starts --- */
     [
-        "DOTT_round_started",
+        "TN_round_started",
         {
             if !(TN_disableScoreboard) exitWith {};
             if !(isNull (uiNamespace getVariable ["RscDisplayCurator", displayNull])) exitWith {};
@@ -180,7 +180,7 @@ if (hasInterface) then
         "exitedSpectator",
         {
             if (
-                call DOTT_round_fnc_isRoundActive
+                call TN_round_fnc_isRoundActive
                 && TN_disableScoreboard
             ) then
             {
@@ -200,7 +200,7 @@ if (hasInterface) then
     ] call CBA_fnc_addEventHandler;
 
     [
-        "DOTT_round_ended",
+        "TN_round_ended",
         {
             showScoretable -1;
         }
@@ -212,24 +212,24 @@ if (isServer) then
 {
     /* --- Collect client-side silent weapons and notify --- */
     [
-        "DOTT_round_started",
+        "TN_round_started",
         {
-            DOTT_round_clientSilentWeapons = nil;
+            TN_round_clientSilentWeapons = nil;
 
             [] spawn
             {
                 sleep 3;
-                if (isNil "DOTT_round_clientSilentWeapons")
+                if (isNil "TN_round_clientSilentWeapons")
                     exitWith {};
 
                 private _msg = format [
                     "%1 has silent weapon.",
-                    keys DOTT_round_clientSilentWeapons
+                    keys TN_round_clientSilentWeapons
                 ];
                 diag_log _msg;
                 [_msg] remoteExecCall ["systemChat"];
 
-                DOTT_round_clientSilentWeapons = nil;
+                TN_round_clientSilentWeapons = nil;
             };
         }
     ] call CBA_fnc_addEventHandler;
@@ -239,7 +239,7 @@ if (hasInterface) then
 {
     /* --- Fix invulnerable players at round start --- */
     [
-        "DOTT_round_started",
+        "TN_round_started",
         {
             if (
                 isDamageAllowed player
@@ -261,7 +261,7 @@ if (hasInterface) then
 
     /* --- Detect silent weapon bug --- */
     [
-        "DOTT_round_started",
+        "TN_round_started",
         {
             if !(TN_notifyFinalCheck) exitWith {};
 
@@ -279,7 +279,7 @@ if (hasInterface) then
                     {
                         continue;
                     };
-                    [name _x] remoteExecCall ["DOTT_round_fnc_collectSilentWeapons", 2];
+                    [name _x] remoteExecCall ["TN_round_fnc_collectSilentWeapons", 2];
                 } forEach _players;
             };
         }

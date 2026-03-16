@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_training_fnc_init
+ * Function: TN_training_fnc_init
  * Author:   Bae [29th ID]
  *
  * Initializes the training variation of the mission template.
@@ -14,13 +14,13 @@
  *     Nothing
  *
  * Example:
- *     call DOTT_training_fnc_init;
+ *     call TN_training_fnc_init;
  */
 
 //for curator module, make sure training init is put before curator
 //maybe not the cleanest way, but won't break anything if curator module isn't used
 //all lower case
-DOTT_curator_units =
+TN_curator_units =
 [
     "#adminlogged",
     "blu_reg_o_1", "blu_reg_o_2",
@@ -39,7 +39,7 @@ private _findCenterObjs =
     [base_res_blu, base_action_arsenal_blu],
     [base_res_grn, base_action_arsenal_grn]
 ];
-DOTT_arsenal_centers = [];
+TN_arsenal_centers = [];
 
 {
     private _respawnPos = getPosASL (_x select 0);
@@ -51,20 +51,20 @@ DOTT_arsenal_centers = [];
         (_respawnPos#1 + _arsenalPos#1) / 2,
         (_respawnPos#2 + _arsenalPos#2) / 2
     ];
-    DOTT_arsenal_centers pushBack _centerPos;
+    TN_arsenal_centers pushBack _centerPos;
 } forEach _findCenterObjs;
 
 if (hasInterface) then
 {
     /* Draw base locations on map for curator */
-    DOTT_training_curatorBaseLogic = objNull;
+    TN_training_curatorBaseLogic = objNull;
 
-    ["DOTT_enteredZeus",
+    ["TN_enteredZeus",
     {
         //check if curator module changes (admin swap), if so we need to do this to new module
-        if (DOTT_training_curatorBaseLogic isEqualTo getAssignedCuratorLogic player) exitWith {};
+        if (TN_training_curatorBaseLogic isEqualTo getAssignedCuratorLogic player) exitWith {};
 
-        DOTT_training_curatorBaseLogic = getAssignedCuratorLogic player;
+        TN_training_curatorBaseLogic = getAssignedCuratorLogic player;
 
         private _locationColors =
         [
@@ -75,7 +75,7 @@ if (hasInterface) then
 
         {
             [
-                DOTT_training_curatorBaseLogic,
+                TN_training_curatorBaseLogic,
                 [
                     "\A3\ui_f\data\map\markers\nato\b_unknown.paa",
                     _locationColors select _forEachIndex,
@@ -90,12 +90,12 @@ if (hasInterface) then
                 true,
                 true
             ] call bis_fnc_addcuratoricon;
-        } forEach DOTT_arsenal_centers;
+        } forEach TN_arsenal_centers;
     }
     ] call CBA_fnc_addEventHandler;
     /* ---------------------------------- */
 
-    [] spawn DOTT_training_fnc_initDefaultLoadouts;
+    [] spawn TN_training_fnc_initDefaultLoadouts;
 };
 
 if (isServer) then
@@ -105,7 +105,7 @@ if (isServer) then
     private _forcedDate = [2018, 3, 30, 12, 0];
     private _forcedOvercast = 0.1;
     private _forcedFog = [0.1, 0.01, 0];
-    [_forcedDate, _forcedOvercast, _forcedFog] call DOTT_training_fnc_initDateAndWeather;
+    [_forcedDate, _forcedOvercast, _forcedFog] call TN_training_fnc_initDateAndWeather;
 
     addMissionEventHandler ["HandleDisconnect",
     {
@@ -120,7 +120,7 @@ if (isServer) then
             {
                 deleteVehicle _unit;
             };
-        } forEach DOTT_arsenal_centers;
+        } forEach TN_arsenal_centers;
 
         false //make sure true isn't the return, would make the units AI controlled
     }];

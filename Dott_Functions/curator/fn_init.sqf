@@ -1,5 +1,5 @@
 /*
- * Function: DOTT_curator_fnc_init
+ * Function: TN_curator_fnc_init
  * Author:   Bae [29th ID]
  *
  * Description:
@@ -7,7 +7,7 @@
  *     and the server. On the client side, registers death
  *     marker drawing, Zeus enter/exit event logging, adds the
  *     player as editable, and requests a curator module. On
- *     the server side, ensures DOTT_curator_units exists,
+ *     the server side, ensures TN_curator_units exists,
  *     merges any editor-placed curator modules into the unit
  *     list, creates the admin curator module, and sets up
  *     admin login/logout handlers that reassign the shared
@@ -21,9 +21,9 @@
  *     Nothing
  *
  * Events Used:
- *     DOTT_enteredZeus - Fired by cfgEventHandlers when a
+ *     TN_enteredZeus - Fired by cfgEventHandlers when a
  *         player opens the Zeus interface. Logged to server.
- *     DOTT_exitedZeus  - Fired when a player closes Zeus.
+ *     TN_exitedZeus  - Fired when a player closes Zeus.
  *
  * Admin Login/Logout Handler:
  *     OnUserAdminStateChanged mission event handler manages
@@ -32,14 +32,14 @@
  *     handle edge cases). On logout, zeus_admin is unassigned
  *     and a personal curator module is recreated for the unit
  *     so they keep Zeus access if their role is in
- *     DOTT_curator_units.
+ *     TN_curator_units.
  */
 
-//Note: Events DOTT_enteredZeus and DOTT_exitedZeus are defined in cfgEventHandlers
+//Note: Events TN_enteredZeus and TN_exitedZeus are defined in cfgEventHandlers
 
 #define CREATE_CURATOR_MODULE(_obj) \
     [vehicleVarName _obj, roleDescription _obj] \
-    call DOTT_curator_fnc_createModule
+    call TN_curator_fnc_createModule
 
 if (hasInterface) then
 {
@@ -51,31 +51,31 @@ if (hasInterface) then
         player call BIS_fnc_drawCuratorDeaths;
 
         [
-            "DOTT_enteredZeus",
+            "TN_enteredZeus",
             {
                 private _curatorName = name player;
                 private _msg = format ["CURATOR INTERFACE OPENED: %1", _curatorName];
-                _msg remoteExecCall ["DOTT_common_fnc_diag_log", 2];
+                _msg remoteExecCall ["TN_common_fnc_diag_log", 2];
             }
         ] call CBA_fnc_addEventHandler;
 
-        [[player]] remoteExecCall ["DOTT_curator_fnc_addEditable", 2];
+        [[player]] remoteExecCall ["TN_curator_fnc_addEditable", 2];
 
-        [vehicleVarName player, roleDescription player] remoteExecCall ["DOTT_curator_fnc_createModule", 2];
+        [vehicleVarName player, roleDescription player] remoteExecCall ["TN_curator_fnc_createModule", 2];
     };
 };
 
 if (isServer) then
 {
-    if (isNil "DOTT_curator_units") then //in case curator units aren't defined for some reason
+    if (isNil "TN_curator_units") then //in case curator units aren't defined for some reason
     {
-        DOTT_curator_units = ["#adminLogged"];
+        TN_curator_units = ["#adminLogged"];
     };
 
     //add curator modules that exist in sqm to unit list to fix Zeus not working for JIP players until they die or respawn (primarily for event template)
     {
         private _owner = _x getVariable "owner";
-        DOTT_curator_units pushBackUnique _owner;
+        TN_curator_units pushBackUnique _owner;
     }
     forEach (allMissionObjects "ModuleCurator_F");
 
@@ -86,7 +86,7 @@ if (isServer) then
         [
             { time > 0 },
             {
-                zeus_admin = ["#adminLogged", "Admin"] call DOTT_curator_fnc_createModule;
+                zeus_admin = ["#adminLogged", "Admin"] call TN_curator_fnc_createModule;
             }
         ] call CBA_fnc_waitUntilAndExecute;
     };
@@ -147,5 +147,5 @@ if (isServer) then
         ];
     };
 
-    [] spawn DOTT_curator_fnc_excludeObjects;
+    [] spawn TN_curator_fnc_excludeObjects;
 };

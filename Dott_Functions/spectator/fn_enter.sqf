@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_spectator_fnc_enter
+ * Function: TN_spectator_fnc_enter
  * Author:   Bae [29th ID], modified from Hill [29th ID]
  *
  * Places the player into BIS EG Spectator mode and registers a
@@ -19,7 +19,7 @@
  *     BOOL - true if spectator entered, false if blocked
  *
  * Example:
- *     [] spawn DOTT_spectator_fnc_enter;
+ *     [] spawn TN_spectator_fnc_enter;
  */
 
 /*
@@ -100,19 +100,19 @@ private _startPos = getPosATL player;
     // Reload key pressed.
     if (inputAction "ReloadMagazine" > 0) exitWith
     {
-        call DOTT_spectator_fnc_exit;
+        call TN_spectator_fnc_exit;
     };
 
     // Player drifted away from start position.
     if (getPosATL player distanceSqr _startPos > 25) exitWith
     {
-        call DOTT_spectator_fnc_exit;
+        call TN_spectator_fnc_exit;
     };
 
     // Player respawned while in spectator (known issue).
     if (!alive player) exitWith
     {
-        call DOTT_spectator_fnc_exit;
+        call TN_spectator_fnc_exit;
     };
 }, [_startPos]] call BIS_fnc_addStackedEventHandler;
 

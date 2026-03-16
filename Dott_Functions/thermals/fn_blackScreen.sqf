@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_thermals_fnc_blackScreen
+ * Function: TN_thermals_fnc_blackScreen
  * Author:   Hill [29th ID]
  *
  * Blacks out the screen with a warning message whenever the player
@@ -16,7 +16,7 @@
  *     BOOL - false if no interface, true otherwise
  *
  * Example:
- *     [] spawn DOTT_thermals_fnc_blackScreen;
+ *     [] spawn TN_thermals_fnc_blackScreen;
  */
 
 #define MESSAGE "FLIR Mode is disallowed. Please Turn off Thermals."

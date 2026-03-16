@@ -1,15 +1,15 @@
 #include "..\..\data\defines.hpp"
 
 /*
- * Function: DOTT_base_fnc_init
+ * Function: TN_base_fnc_init
  * Author:   Bae [29th ID], modified from Hill [29th ID]
  *
  * Description:
  *     Initializes all base interaction objects on the client.
  *     Scans every editor-placed object for a variable name
  *     matching the "base_action_<type>_<id>" convention and
- *     sorts them into global arrays (DOTT_terminals,
- *     DOTT_arsenals, DOTT_garbages). Then sets up:
+ *     sorts them into global arrays (TN_terminals,
+ *     TN_arsenals, TN_garbages). Then sets up:
  *       - Spectator addActions on terminal objects
  *       - Proximity triggers for terminal animations
  *       - Radius-based ACE/vanilla arsenal with environment
@@ -31,15 +31,15 @@
  *     Nothing
  *
  * Example:
- *     call DOTT_base_fnc_init;
+ *     call TN_base_fnc_init;
  */
 
 if !(hasInterface) exitWith {};
 
 //Add actions to spectator terminals
-DOTT_terminals = [];
-DOTT_arsenals = [];
-DOTT_garbages = []; //global variable for cleaner function
+TN_terminals = [];
+TN_arsenals = [];
+TN_garbages = []; //global variable for cleaner function
 
 { //forEach object placed in editor
     private _vicString = vehicleVarName _x;
@@ -64,15 +64,15 @@ DOTT_garbages = []; //global variable for cleaner function
     {
         case "arsenal":
         {
-            DOTT_arsenals pushBack _x;
+            TN_arsenals pushBack _x;
         };
         case "terminal":
         {
-            DOTT_terminals pushBack _x;
+            TN_terminals pushBack _x;
         };
         case "garbage":
         {
-            DOTT_garbages pushBack _x;
+            TN_garbages pushBack _x;
         };
         default {};
     };
@@ -82,7 +82,7 @@ forEach allMissionObjects "All";
 {
     _x addAction [
         "<img image='\A3\Ui_f\data\GUI\Rsc\RscDisplayEGSpectator\Follow.paa'/><t color='#00ff00'>  Spectator</t>",
-        "[] spawn DOTT_spectator_fnc_enter",
+        "[] spawn TN_spectator_fnc_enter",
         nil, 6, false, true, "", "true", 4
     ];
 
@@ -94,7 +94,7 @@ forEach allMissionObjects "All";
     private _activate = format ["[%1,3] call BIS_fnc_dataTerminalAnimate;", _x];
     private _deActivate = format ["[%1,0] call BIS_fnc_dataTerminalAnimate;", _x];
     _trg setTriggerStatements [_condition, _activate, _deActivate];
-} forEach DOTT_terminals;
+} forEach TN_terminals;
 
 //Very messy area below but I'm lazy
 //------- ACE Arsenal via radius from box -------//
@@ -104,20 +104,20 @@ arsenalActionId = -1;
 
 #define ENV_ON 1 fadeEnvironment 1
 #define ENV_OFF 1 fadeEnvironment 0
-DOTT_keepEnvironmentSounds = false;
+TN_keepEnvironmentSounds = false;
 
 [
-    "DOTT_enteredZeus",
+    "TN_enteredZeus",
     {
-        DOTT_keepEnvironmentSounds = true;
+        TN_keepEnvironmentSounds = true;
         ENV_ON;
     }
 ] call CBA_fnc_addEventHandler;
 
 [
-    "DOTT_exitedZeus",
+    "TN_exitedZeus",
     {
-        DOTT_keepEnvironmentSounds = false;
+        TN_keepEnvironmentSounds = false;
         if (arsenalActionId != -1) then { ENV_OFF };
     }
 ] call CBA_fnc_addEventHandler;
@@ -125,7 +125,7 @@ DOTT_keepEnvironmentSounds = false;
 [
     "enteredSpectator",
     {
-        DOTT_keepEnvironmentSounds = true;
+        TN_keepEnvironmentSounds = true;
         ENV_ON;
     }
 ] call CBA_fnc_addEventHandler;
@@ -133,35 +133,35 @@ DOTT_keepEnvironmentSounds = false;
 [
     "exitedSpectator",
     {
-        DOTT_keepEnvironmentSounds = false;
+        TN_keepEnvironmentSounds = false;
         if (arsenalActionId != -1) then { ENV_OFF };
     }
 ] call CBA_fnc_addEventHandler;
 
 
-if (isNil "DOTT_arsenal_centers") then
+if (isNil "TN_arsenal_centers") then
 {
-    DOTT_arsenal_centers = [];
+    TN_arsenal_centers = [];
 
     {
-        DOTT_arsenal_centers pushBack (getPosASL _x);
-    } forEach DOTT_arsenals;
+        TN_arsenal_centers pushBack (getPosASL _x);
+    } forEach TN_arsenals;
 };
 
 [] spawn
 {
-    if (count DOTT_arsenal_centers == 0) exitWith {};
+    if (count TN_arsenal_centers == 0) exitWith {};
 
     waitUntil { !isNull player };
 
     private _radius =
-        if (isNil "DOTT_event_arsenalRadius") then
+        if (isNil "TN_event_arsenalRadius") then
     {
         75
     }
     else
     {
-        DOTT_event_arsenalRadius
+        TN_event_arsenalRadius
     };
     private _radiusSquared = _radius * _radius;
 
@@ -174,14 +174,14 @@ if (isNil "DOTT_arsenal_centers") then
             {
                 _inZone = true;
             };
-        } forEach DOTT_arsenal_centers;
+        } forEach TN_arsenal_centers;
 
         if (_inZone) then
         {
             if (arsenalActionId == -1) then
             {
                 //put inside arsenalActionId since I'm too lazy to put a check for inZone change
-                if !(DOTT_keepEnvironmentSounds) then
+                if !(TN_keepEnvironmentSounds) then
                 {
                     ENV_OFF;
                 };
@@ -223,7 +223,7 @@ if (isNil "DOTT_arsenal_centers") then
 };
 
 [
-    "DOTT_base_respawnArsenalActionId",
+    "TN_base_respawnArsenalActionId",
     "Respawn",
     {
         arsenalActionId = -1;
@@ -231,14 +231,14 @@ if (isNil "DOTT_arsenal_centers") then
 ] call CBA_fnc_addBISPlayerEventHandler;
 
 //- Add Force Parade to BLUFOR Ammo Box, maybe belongs in parade module instead -//
-if (DOTT_MODULES find "parade" != -1) then
+if (TN_MODULES find "parade" != -1) then
 {
     lastDebriefTime = -10;
     base_action_arsenal_blu addAction [
         "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#3f8eff'>  Force Parade</t>",
         {
             params ["_target"];
-            [_target, 125] call DOTT_parade_fnc_forceAll;
+            [_target, 125] call TN_parade_fnc_forceAll;
         },
         nil,
         0.9,
@@ -255,7 +255,7 @@ if (DOTT_MODULES find "parade" != -1) then
 {
     _x addAction [
         "<img image='\A3\Ui_f\data\IGUI\Cfg\simpleTasks\types\repair_ca.paa'/><t color='#FF0080'>  Clean-Up</t>",
-        "call DOTT_base_fnc_cleaner",
+        "call TN_base_fnc_cleaner",
         nil, 1, false, true, "", "true", 2
     ];
-} forEach DOTT_garbages;
+} forEach TN_garbages;

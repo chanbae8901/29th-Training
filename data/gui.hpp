@@ -330,7 +330,7 @@ class RscDisplayMissionOptions
         };
     };
     enableDisplay = 1;
-    onLoad = "_this call DOTT_settings_fnc_initDisplayMissionOptions;";
+    onLoad = "_this call TN_settings_fnc_initDisplayMissionOptions;";
     onUnload = "";
     class controlsBackground
     {
@@ -534,9 +534,9 @@ class RscDisplayMissionOptions
     enableSimulation = 0;
 };
 
-class DOTT_settings_Row_Checkbox
+class TN_settings_Row_Checkbox
 {
-    cba_settings_script = "DOTT_settings_fnc_gui_settingCheckbox";
+    cba_settings_script = "TN_settings_fnc_gui_settingCheckbox";
     class controls
     {
         class Name
@@ -685,9 +685,9 @@ class DOTT_settings_Row_Checkbox
     style = 16;
 };
 
-class DOTT_settings_Row_List
+class TN_settings_Row_List
 {
-    cba_settings_script = "DOTT_settings_fnc_gui_settingList";
+    cba_settings_script = "TN_settings_fnc_gui_settingList";
     class controls
     {
         class Name
@@ -856,9 +856,9 @@ class DOTT_settings_Row_List
     style = 16;
 };
 
-class DOTT_settings_Row_Slider
+class TN_settings_Row_Slider
 {
-    cba_settings_script = "DOTT_settings_fnc_gui_settingSlider";
+    cba_settings_script = "TN_settings_fnc_gui_settingSlider";
     class controls
     {
         class Name
@@ -1063,9 +1063,9 @@ class DOTT_settings_Row_Slider
     style = 16;
 };
 
-class DOTT_settings_Row_Time
+class TN_settings_Row_Time
 {
-    cba_settings_script = "DOTT_settings_fnc_gui_settingTime";
+    cba_settings_script = "TN_settings_fnc_gui_settingTime";
     h = "((2) * ((((safeZoneW / safeZoneH) min 1.2) / 1.2) / 25)) + ((0.4) * ((((safeZoneW / safeZoneH) min 1.2) / 1.2) / 25))";
     class controls
     {
@@ -1370,7 +1370,7 @@ class DOTT_settings_Row_Time
 };
 
 
-class DOTT_RscDisplayFlagMenu
+class TN_RscDisplayFlagMenu
 {
     idd = 29140;
     movingEnable = 0;
@@ -1378,7 +1378,7 @@ class DOTT_RscDisplayFlagMenu
     class controls {};
 };
 
-class DOTT_RscDisplaySafeStartTime
+class TN_RscDisplaySafeStartTime
 {
     idd = 29141;
     movingEnable = 0;

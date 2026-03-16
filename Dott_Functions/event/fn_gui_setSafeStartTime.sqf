@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_event_fnc_gui_setSafeStartTime
+ * Function: TN_event_fnc_gui_setSafeStartTime
  * Author:   Bae [29th ID]
  *
  * Opens a GUI dialog that lets an admin adjust the remaining
@@ -7,7 +7,7 @@
  * input. The new time is applied via BIS_fnc_countdown and
  * broadcast to all clients via displayMsg.
  *
- * Uses createDialog (DOTT_RscDisplaySafeStartTime, IDD 29141)
+ * Uses createDialog (TN_RscDisplaySafeStartTime, IDD 29141)
  * which overlays on display 46 — readyUI stays visible.
  *
  * Parameters:
@@ -17,20 +17,20 @@
  *     Nothing
  */
 
-createDialog "DOTT_RscDisplaySafeStartTime";
+createDialog "TN_RscDisplaySafeStartTime";
 private _display = findDisplay 29141;
 //declare early to put in the back
 private _bg = _display ctrlCreate ["RscText", 50000];
-private _timeCtrl = _display ctrlCreate ["DOTT_settings_Row_Time", 5000];
+private _timeCtrl = _display ctrlCreate ["TN_settings_Row_Time", 5000];
 private _sliderCtrl = _display displayCtrl 5140;
 
-private _h = getNumber (missionConfigFile >> "DOTT_settings_Row_Time" >> "h");
-private _w = getNumber (missionConfigFile >> "DOTT_settings_Row_Time" >> "w");
+private _h = getNumber (missionConfigFile >> "TN_settings_Row_Time" >> "h");
+private _w = getNumber (missionConfigFile >> "TN_settings_Row_Time" >> "w");
 private _wName = getNumber (
-    missionConfigFile >> "DOTT_settings_Row_Time" >> "controls" >> "Name" >> "w"
+    missionConfigFile >> "TN_settings_Row_Time" >> "controls" >> "Name" >> "w"
 );
 private _wSlider = getNumber (
-    missionConfigFile >> "DOTT_settings_Row_Time" >> "controls" >> "Slider" >> "w"
+    missionConfigFile >> "TN_settings_Row_Time" >> "controls" >> "Slider" >> "w"
 );
 
 private _ctrlSettingName = _timeCtrl controlsGroupCtrl 5010;
@@ -89,7 +89,7 @@ _btnOK ctrlAddEventHandler [
         private _display = ctrlParent _ctrl;
         private _sliderCtrl = _display displayCtrl 5140;
 
-        if (!DOTT_round_safeStartActive) then
+        if (!TN_round_safeStartActive) then
         {
             systemChat "Safe start has already ended! Input ignored.";
         }
@@ -101,12 +101,12 @@ _btnOK ctrlAddEventHandler [
             [
                 format [
                     "<t color='#ffffff' size='2.5'>Safe Start Time changed to %1!</t>",
-                    (round _newTime) call DOTT_round_fnc_formatTime
+                    (round _newTime) call TN_round_fnc_formatTime
                 ],
                 "PLAIN",
                 0.5,
                 false
-            ] remoteExecCall ["DOTT_common_fnc_displayMsg"];
+            ] remoteExecCall ["TN_common_fnc_displayMsg"];
         };
         (ctrlParent _ctrl) closeDisplay 1;
     }

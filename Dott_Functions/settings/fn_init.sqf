@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_settings_fnc_init
+ * Function: TN_settings_fnc_init
  * Author:   Bae [29th ID]
  *
  * Server-side initialization for the DOTT settings system.
@@ -16,11 +16,11 @@
 if (isServer) then
 {
     missionNamespace setVariable [
-        "DOTT_settings_default",
+        "TN_settings_default",
         true call CBA_fnc_createNamespace,
         true
     ];
-    DOTT_settings_allSettings = [];
+    TN_settings_allSettings = [];
 
     private _missionAddonStrLen = count MISSION_ADDON;
 
@@ -58,11 +58,11 @@ if (isServer) then
             0,
             [_x, "server"] call CBA_settings_fnc_get
         ];
-        DOTT_settings_default setVariable [_x, _setting, true];
+        TN_settings_default setVariable [_x, _setting, true];
 
-        DOTT_settings_allSettings pushBack _x;
+        TN_settings_allSettings pushBack _x;
     }
     forEach cba_settings_allSettings;
 
-    publicVariable "DOTT_settings_allSettings";
+    publicVariable "TN_settings_allSettings";
 };

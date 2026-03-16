@@ -1,10 +1,10 @@
 /**
- * Function: DOTT_tracker_fnc_getName
+ * Function: TN_tracker_fnc_getName
  * Author:   Bae [29th ID]
  *
  * Purpose:
  * Returns the display name for a unit. For infantry, uses the
- * player name (falling back to cached DOTT_name if dead). For
+ * player name (falling back to cached TN_name if dead). For
  * vehicles, uses the config display name.
  *
  * Parameters:
@@ -29,7 +29,7 @@ if (_unit isKindOf "Man") then
     }
     else
     {
-        _name = _unit getVariable ["DOTT_name", "?"];
+        _name = _unit getVariable ["TN_name", "?"];
     };
 }
 else

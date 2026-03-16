@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_event_fnc_gui_flagMenu
+ * Function: TN_event_fnc_gui_flagMenu
  * Author:   Claude prompted by Bae [29th ID]
  *
  * Opens a centered GUI menu showing admin-only event actions
@@ -9,7 +9,7 @@
  * Listens to CBA round-state events and rebuilds the menu
  * in-place whenever the state changes while the GUI is open.
  *
- * Uses createDialog (DOTT_RscDisplayFlagMenu, IDD 29140)
+ * Uses createDialog (TN_RscDisplayFlagMenu, IDD 29140)
  * which overlays on display 46 — readyUI stays visible.
  *
  * Parameters:
@@ -19,13 +19,13 @@
  *     Nothing
  *
  * Requires:
- *     DOTT_round_fnc_isRoundActive
- *     DOTT_round_fnc_manageReady
- *     DOTT_round_fnc_initSafeStart
- *     DOTT_round_fnc_start
- *     DOTT_event_fnc_gui_setSafeStartTime
- *     DOTT_event_fnc_game
- *     DOTT_event_timerLength (global)
+ *     TN_round_fnc_isRoundActive
+ *     TN_round_fnc_manageReady
+ *     TN_round_fnc_initSafeStart
+ *     TN_round_fnc_start
+ *     TN_event_fnc_gui_setSafeStartTime
+ *     TN_event_fnc_game
+ *     TN_event_timerLength (global)
  *     CBA_fnc_addEventHandler
  *     CBA_fnc_removeEventHandler
  */
@@ -33,27 +33,27 @@
 // Prevent double-open
 if !(isNull (findDisplay 29140)) exitWith {};
 
-createDialog "DOTT_RscDisplayFlagMenu";
+createDialog "TN_RscDisplayFlagMenu";
 private _display = findDisplay 29140;
 if (isNull _display) exitWith {};
 
 /* --- Close function (define once) --- */
 
-if (isNil "DOTT_event_fnc_closeFlagMenu") then {
-    DOTT_event_fnc_closeFlagMenu =
+if (isNil "TN_event_fnc_closeFlagMenu") then {
+    TN_event_fnc_closeFlagMenu =
     {
         // Remove CBA event handlers
         {
             _x call CBA_fnc_removeEventHandler;
         } forEach (uiNamespace getVariable [
-            "DOTT_flagMenu_ehIds", []
+            "TN_flagMenu_ehIds", []
         ]);
 
         uiNamespace setVariable [
-            "DOTT_flagMenu_ehIds", nil
+            "TN_flagMenu_ehIds", nil
         ];
         uiNamespace setVariable [
-            "DOTT_flagMenu_rebuild", nil
+            "TN_flagMenu_rebuild", nil
         ];
 
         // Close the dialog — destroys all controls with it
@@ -70,18 +70,18 @@ private _fnc_rebuild =
 
     /* Delete old menu controls */
     private _oldControls = uiNamespace getVariable [
-        "DOTT_flagMenu_controls", []
+        "TN_flagMenu_controls", []
     ];
     { ctrlDelete _x } forEach _oldControls;
 
     /* Determine current state */
     private _currentState = switch (true) do
     {
-        case (call DOTT_round_fnc_isRoundActive):
+        case (call TN_round_fnc_isRoundActive):
         {
             2;
         };
-        case (DOTT_round_safeStartActive):
+        case (TN_round_safeStartActive):
         {
             1;
         };
@@ -100,9 +100,9 @@ private _fnc_rebuild =
                 "Begin Safe Start",
                 {
                     params ["_ctrl"];
-                    [DOTT_event_forcedSafeStart, true]
-                        call DOTT_round_fnc_initSafeStart;
-                    call DOTT_event_fnc_closeFlagMenu;
+                    [TN_event_forcedSafeStart, true]
+                        call TN_round_fnc_initSafeStart;
+                    call TN_event_fnc_closeFlagMenu;
                 },
                 [0.75, 0.25, 1, 1]
             ];
@@ -115,16 +115,16 @@ private _fnc_rebuild =
                 "Cancel Safestart",
                 {
                     params ["_ctrl"];
-                    [0] call DOTT_round_fnc_changeForcedSafeStart;
-                    if (call DOTT_round_fnc_checkAllSidesReady) then
+                    [0] call TN_round_fnc_changeForcedSafeStart;
+                    if (call TN_round_fnc_checkAllSidesReady) then
                     {
                         {
-                            [_x, false] call DOTT_round_fnc_manageReady;
+                            [_x, false] call TN_round_fnc_manageReady;
                         }
                         forEach [west, east, resistance];
                         systemChat "Unreadied all sides!";
                     };
-                    call DOTT_event_fnc_closeFlagMenu;
+                    call TN_event_fnc_closeFlagMenu;
                 },
                 [0.75, 0.25, 1, 1]
             ];
@@ -134,8 +134,8 @@ private _fnc_rebuild =
                 "Change Safestart Time",
                 {
                     params ["_ctrl"];
-                    call DOTT_event_fnc_closeFlagMenu;
-                    call DOTT_event_fnc_gui_setSafeStartTime;
+                    call TN_event_fnc_closeFlagMenu;
+                    call TN_event_fnc_gui_setSafeStartTime;
                 },
                 [0.75, 0.25, 1, 1]
             ];
@@ -145,9 +145,9 @@ private _fnc_rebuild =
                 "Force Live",
                 {
                     params ["_ctrl"];
-                    [DOTT_event_timerLength]
-                        call DOTT_round_fnc_start;
-                    call DOTT_event_fnc_closeFlagMenu;
+                    [TN_event_timerLength]
+                        call TN_round_fnc_start;
+                    call TN_event_fnc_closeFlagMenu;
                 },
                 [0.75, 0.25, 1, 1]
             ];
@@ -159,8 +159,8 @@ private _fnc_rebuild =
                 "Neutral Ending",
                 {
                     params ["_ctrl"];
-                    [true] call DOTT_event_fnc_game;
-                    call DOTT_event_fnc_closeFlagMenu;
+                    [true] call TN_event_fnc_game;
+                    call TN_event_fnc_closeFlagMenu;
                 },
                 [0.75, 0.25, 1, 1]
             ];
@@ -187,8 +187,8 @@ private _fnc_rebuild =
                     private _btn_code = compile format [
                         "params ['_ctrl'];"
                         + "[true, %1]"
-                        + " call DOTT_event_fnc_game;"
-                        + "call DOTT_event_fnc_closeFlagMenu;",
+                        + " call TN_event_fnc_game;"
+                        + "call TN_event_fnc_closeFlagMenu;",
                         _side
                     ];
 
@@ -204,7 +204,7 @@ private _fnc_rebuild =
 
     if (count _actions == 0) exitWith
     {
-        call DOTT_event_fnc_closeFlagMenu;
+        call TN_event_fnc_closeFlagMenu;
     };
 
     /* --- Layout constants --- */
@@ -279,14 +279,14 @@ private _fnc_rebuild =
     } forEach _actions;
 
     uiNamespace setVariable [
-        "DOTT_flagMenu_controls", _controls
+        "TN_flagMenu_controls", _controls
     ];
 };
 
 /* --- Store rebuild fn in uiNamespace for CBA handlers --- */
 
 uiNamespace setVariable [
-    "DOTT_flagMenu_rebuild", _fnc_rebuild
+    "TN_flagMenu_rebuild", _fnc_rebuild
 ];
 
 /* --- Initial build --- */
@@ -296,10 +296,10 @@ uiNamespace setVariable [
 /* --- Subscribe to round-state CBA events --- */
 
 private _stateEvents = [
-    "DOTT_round_safeStartBegin",
-    "DOTT_round_safeStartAborted",
-    "DOTT_round_started",
-    "DOTT_round_ended"
+    "TN_round_safeStartBegin",
+    "TN_round_safeStartAborted",
+    "TN_round_started",
+    "TN_round_ended"
 ];
 
 private _ehIds = [];
@@ -311,7 +311,7 @@ private _ehIds = [];
         if !(isNull _dlg) then
         {
             [_dlg] call (uiNamespace getVariable
-                "DOTT_flagMenu_rebuild");
+                "TN_flagMenu_rebuild");
         };
     }] call CBA_fnc_addEventHandler;
 
@@ -319,7 +319,7 @@ private _ehIds = [];
 } forEach _stateEvents;
 
 uiNamespace setVariable [
-    "DOTT_flagMenu_ehIds", _ehIds
+    "TN_flagMenu_ehIds", _ehIds
 ];
 
 /* --- Close on ESC --- */
@@ -330,7 +330,7 @@ _display displayAddEventHandler [
         params ["_display", "_key"];
         if (_key == 1) then
         {
-            call DOTT_event_fnc_closeFlagMenu;
+            call TN_event_fnc_closeFlagMenu;
             true
         }
         else
@@ -348,17 +348,17 @@ _display displayAddEventHandler [
         {
             _x call CBA_fnc_removeEventHandler;
         } forEach (uiNamespace getVariable [
-            "DOTT_flagMenu_ehIds", []
+            "TN_flagMenu_ehIds", []
         ]);
 
         uiNamespace setVariable [
-            "DOTT_flagMenu_controls", nil
+            "TN_flagMenu_controls", nil
         ];
         uiNamespace setVariable [
-            "DOTT_flagMenu_ehIds", nil
+            "TN_flagMenu_ehIds", nil
         ];
         uiNamespace setVariable [
-            "DOTT_flagMenu_rebuild", nil
+            "TN_flagMenu_rebuild", nil
         ];
     }
 ];

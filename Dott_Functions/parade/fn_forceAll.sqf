@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_parade_fnc_forceAll
+ * Function: TN_parade_fnc_forceAll
  * Author:   Bae [29th ID]
  *
  * Description:
@@ -25,7 +25,7 @@ private _targets = _allPlayers select
 };
 
 {
-    [] remoteExecCall ["DOTT_parade_fnc_load", _x];
+    [] remoteExecCall ["TN_parade_fnc_load", _x];
 } forEach _targets;
 
 true

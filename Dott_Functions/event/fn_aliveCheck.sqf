@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_event_fnc_aliveCheck
+ * Function: TN_event_fnc_aliveCheck
  * Author:   Bae [29th ID], modified from Dott [29th ID]
  *
  * Monitors alive player counts per side and triggers game end
@@ -13,10 +13,10 @@
  *     Nothing
  *
  * Requires:
- *     DOTT_event_fnc_game
- *     DOTT_round_fnc_isRoundActive
- *     DOTT_event_spectateArea (global, if respawn-based)
- *     DOTT_event_spectateAreaRadius (global, if respawn-based)
+ *     TN_event_fnc_game
+ *     TN_round_fnc_isRoundActive
+ *     TN_event_spectateArea (global, if respawn-based)
+ *     TN_event_spectateAreaRadius (global, if respawn-based)
  */
 
 if (!isServer) exitWith {};
@@ -31,11 +31,11 @@ private _remainDead = (_respawnType == 1);
 
 waitUntil {
     sleep 10;
-    call DOTT_round_fnc_isRoundActive
+    call TN_round_fnc_isRoundActive
 };
 
 
-while {call DOTT_round_fnc_isRoundActive} do
+while {call TN_round_fnc_isRoundActive} do
 {
     sleep 5;
 
@@ -78,15 +78,15 @@ while {call DOTT_round_fnc_isRoundActive} do
     else
     {
         _numBluforDead = {
-            (_x distance2D DOTT_event_spectateArea) < DOTT_event_spectateAreaRadius
+            (_x distance2D TN_event_spectateArea) < TN_event_spectateAreaRadius
         } count _bluforPlayers;
 
         _numOpforDead = {
-            (_x distance2D DOTT_event_spectateArea) < DOTT_event_spectateAreaRadius
+            (_x distance2D TN_event_spectateArea) < TN_event_spectateAreaRadius
         } count _opforPlayers;
 
         _numResistanceDead = {
-            (_x distance2D DOTT_event_spectateArea) < DOTT_event_spectateAreaRadius
+            (_x distance2D TN_event_spectateArea) < TN_event_spectateAreaRadius
         } count _resistancePlayers;
     };
 
@@ -130,7 +130,7 @@ while {call DOTT_round_fnc_isRoundActive} do
 
     if (_winnerSide != civilian) then
     {
-        [true, _winnerSide] call DOTT_event_fnc_game;
+        [true, _winnerSide] call TN_event_fnc_game;
         breakTo "main";
     };
 };

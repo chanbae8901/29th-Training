@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_thermals_fnc_init
+ * Function: TN_thermals_fnc_init
  * Author:   Bae [29th ID]
  *
  * Initializes the thermal restriction module.
@@ -15,7 +15,7 @@
  *     Nothing
  *
  * Example:
- *     call DOTT_thermals_fnc_init;
+ *     call TN_thermals_fnc_init;
  */
 
 // --- Client-side: vision mode monitoring and PIP disable ---
@@ -23,16 +23,16 @@ if (hasInterface) then
 {
     ["visionMode",
     {
-        [] spawn DOTT_thermals_fnc_blackScreen;
+        [] spawn TN_thermals_fnc_blackScreen;
     }] call CBA_fnc_addPlayerEventHandler;
 
-    ["DOTT_disablePIPThermalsEvent", "GetInMan",
+    ["TN_disablePIPThermalsEvent", "GetInMan",
     {
         if !(TN_disableTI) exitWith {};
 
         // Brief delay required or PIP cameras won't shut off.
         [{
-            call DOTT_thermals_fnc_disablePIP;
+            call TN_thermals_fnc_disablePIP;
         }, [], 0.1] call CBA_fnc_waitAndExecute;
     }] call CBA_fnc_addBISPlayerEventHandler;
 };

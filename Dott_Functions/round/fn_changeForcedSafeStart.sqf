@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_round_fnc_changeForcedSafeStart
+ * Function: TN_round_fnc_changeForcedSafeStart
  * Author:   Bae [29th ID]
  *
  * Changes or cancels/unforces a currently active safe start. Will not
@@ -14,7 +14,7 @@
  *     Boolean - true if safe start was changed, false otherwise.
  *
  * Example:
- *     [60] call DOTT_round_fnc_changeForcedSafeStart;
+ *     [60] call TN_round_fnc_changeForcedSafeStart;
  */
 
 params [["_seconds", 0, [0]]];
@@ -23,15 +23,15 @@ private _changed = false;
 
 if (_seconds > 0) then
 {
-    if (call DOTT_round_fnc_isRoundActive) exitWith {};
+    if (call TN_round_fnc_isRoundActive) exitWith {};
 
     // Don't call a new safe start; redirect to initSafeStart for that.
-    if (!DOTT_round_safeStartActive) exitWith {};
+    if (!TN_round_safeStartActive) exitWith {};
 
     [_seconds] call BIS_fnc_countdown;
 
     private _formattedTime =
-        [_seconds] call DOTT_round_fnc_formatTime;
+        [_seconds] call TN_round_fnc_formatTime;
     private _text = format [
         "<t color='#ffffff' size='2'>Forced Safe Start changed to %1!</t>",
         _formattedTime
@@ -42,16 +42,16 @@ if (_seconds > 0) then
         "PLAIN",
         0.5,
         false
-    ] remoteExecCall ["DOTT_common_fnc_displayMsg"];
+    ] remoteExecCall ["TN_common_fnc_displayMsg"];
 
     _changed = true;
 }
 else
 {
-    if (DOTT_round_safeStartActive) then
+    if (TN_round_safeStartActive) then
     {
-        DOTT_round_ignoreReadiness = false;
-        publicVariable "DOTT_round_ignoreReadiness";
+        TN_round_ignoreReadiness = false;
+        publicVariable "TN_round_ignoreReadiness";
         _changed = true;
     };
 };

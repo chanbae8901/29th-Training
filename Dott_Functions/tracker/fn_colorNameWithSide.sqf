@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_colorNameWithSide
+ * Function: TN_tracker_fnc_colorNameWithSide
  * Author:   Bae [29th ID]
  *
  * Purpose:

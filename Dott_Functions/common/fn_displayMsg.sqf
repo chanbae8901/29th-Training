@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_common_fnc_displayMsg
+ * Function: TN_common_fnc_displayMsg
  * Author:   Dott [29th ID]
  *
  * Displays titleText messages, typically remoteExec'd for global use.
@@ -21,7 +21,7 @@
  *
  * Example:
  *     ["<t color='#ffffff' size='4'>Timer Started!</t><br/>%1 Minute Time Limit", "PLAIN", 0.5, true, timerLength]
- *         remoteExec ["DOTT_common_fnc_displayMsg"];
+ *         remoteExec ["TN_common_fnc_displayMsg"];
  */
 
 params

@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_loadout_fnc_setInsignia
+ * Function: TN_loadout_fnc_setInsignia
  * Author:   Bae [29th ID], modified from Hill [29th ID]
  *
  * Purpose: If a unit has a valid 29th squad.xml configuration, applies
@@ -9,7 +9,7 @@
  * Params:  _target - Object, local unit wearing a uniform
  * Returns: true if insignia was applied, false otherwise
  *
- * Example: player spawn DOTT_loadout_fnc_setInsignia
+ * Example: player spawn TN_loadout_fnc_setInsignia
  */
 
 if !(TN_setInsignia) exitWith { false };
@@ -82,7 +82,7 @@ _targetInsignia = _foundInsignias select 0;
 if (count _foundInsignias == 2) then
 {
     // BLUFOR parade gear, dress blues, or no weapon.
-    private _isNotCombatLoadout = _target call DOTT_parade_fnc_checkNonCombatLoadout;
+    private _isNotCombatLoadout = _target call TN_parade_fnc_checkNonCombatLoadout;
 
     // Use non-combat version.
     if (_isNotCombatLoadout) then

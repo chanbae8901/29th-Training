@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_copyRecordToClipboard
+ * Function: TN_tracker_fnc_copyRecordToClipboard
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -23,7 +23,7 @@ private _recordText =
     (_allRoundRecords select _idx) select 2;
 _recordText =
     _recordText select [0, _recordText find "<execute"];
-_recordText call DOTT_tracker_fnc_copyToClipboard;
+_recordText call TN_tracker_fnc_copyToClipboard;
 systemChat "Copied to clipboard. (HTML format)";
 
 true

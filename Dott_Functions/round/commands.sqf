@@ -6,7 +6,7 @@
             {
                 private _argument = _this select 0;
                 private _minutes = abs (parseNumber _argument);
-                [_minutes * 60] call DOTT_round_fnc_setTimer;
+                [_minutes * 60] call TN_round_fnc_setTimer;
                 systemChat format ["Timer set for %1 Minutes", _minutes];
             }
         ],
@@ -15,7 +15,7 @@
         [
             "live",
             {
-                if ([] call DOTT_round_fnc_start) then
+                if ([] call TN_round_fnc_start) then
                 {
                     systemChat "Starting Round!";
                 }
@@ -32,7 +32,7 @@
             {
                 private _argument = _this select 0;
                 private _timerQuick = abs (parseNumber _argument);
-                if ([_timerQuick * 60] call DOTT_round_fnc_start) then
+                if ([_timerQuick * 60] call TN_round_fnc_start) then
                 {
                     systemChat format ["Starting %1 Minute round!", _timerQuick];
                 }
@@ -49,7 +49,7 @@
             {
                 private _argument = _this select 0;
                 private _timeAdd = parseNumber _argument;
-                if ([_timeAdd * 60] call DOTT_round_fnc_addTime != -1) then
+                if ([_timeAdd * 60] call TN_round_fnc_addTime != -1) then
                 {
                     systemChat format ["Adding %1 Minutes to the time limit!", _timeAdd];
                 }
@@ -64,18 +64,18 @@
         [
             "game",
             {
-                if !(call DOTT_round_fnc_isRoundActive) then
+                if !(call TN_round_fnc_isRoundActive) then
                 {
                     [
                         "<t color='#ffffff' size='5'>GAME!</t>",
                         "PLAIN",
                         0.4
-                    ] remoteExecCall ["DOTT_common_fnc_displayMsg"];
+                    ] remoteExecCall ["TN_common_fnc_displayMsg"];
                     systemChat "No timer running! Only displaying end game message!";
                 }
                 else
                 {
-                    [true] call DOTT_round_fnc_end;
+                    [true] call TN_round_fnc_end;
                     systemChat "Calling Game!";
                 };
             }
@@ -90,13 +90,13 @@
                 private _minutes = abs (parseNumber _argument);
                 if (_minutes > 0) then
                 {
-                    [true] call DOTT_round_fnc_setOvertimeEnabled;
-                    [_minutes * 60] call DOTT_round_fnc_setOverTimePeriod;
+                    [true] call TN_round_fnc_setOvertimeEnabled;
+                    [_minutes * 60] call TN_round_fnc_setOverTimePeriod;
                     systemChat format ["Overtime set for %1 Minutes", _minutes];
                 }
                 else
                 {
-                    [false] call DOTT_round_fnc_setOvertimeEnabled;
+                    [false] call TN_round_fnc_setOvertimeEnabled;
                     systemChat "Overtime Disabled";
                 };
             }
@@ -107,7 +107,7 @@
             "ready",
             {
                 // Works based off of local player's side.
-                private _result = [playerSide, true] call DOTT_round_fnc_manageReady;
+                private _result = [playerSide, true] call TN_round_fnc_manageReady;
                 switch (_result) do
                 {
                     case 0:
@@ -131,7 +131,7 @@
         [
             "unready",
             {
-                private _result = [playerSide, false] call DOTT_round_fnc_manageReady;
+                private _result = [playerSide, false] call TN_round_fnc_manageReady;
                 switch (_result) do
                 {
                     case 0:
@@ -162,29 +162,29 @@
                 {
                     switch (true) do
                     {
-                        case (call DOTT_round_fnc_isRoundActive):
+                        case (call TN_round_fnc_isRoundActive):
                         {
                             systemChat "Error: Round is currently active!";
                         };
-                        case (!DOTT_round_safeStartActive):
+                        case (!TN_round_safeStartActive):
                         {
-                            [_minutes * 60, true] call DOTT_round_fnc_initSafeStart;
+                            [_minutes * 60, true] call TN_round_fnc_initSafeStart;
                             systemChat "Forcing Safe Start!";
                         };
                         default
                         {
-                            if (call DOTT_round_fnc_checkAllSidesReady) exitWith
+                            if (call TN_round_fnc_checkAllSidesReady) exitWith
                             {
                                 systemChat "Error: All teams are already ready!";
                             };
-                            [_minutes * 60] call DOTT_round_fnc_changeForcedSafeStart;
+                            [_minutes * 60] call TN_round_fnc_changeForcedSafeStart;
                             systemChat "Changing forced safestart!";
                         };
                     };
                 }
                 else
                 {
-                    if ([0] call DOTT_round_fnc_changeForcedSafeStart) then
+                    if ([0] call TN_round_fnc_changeForcedSafeStart) then
                     {
                         systemChat "Safe start is no longer forced and will end if all teams are not ready!";
                     }
@@ -207,4 +207,4 @@
         ["unready", "Cancels the ready status for the player's side"],
         ["safe", "Forces safe start with a specified time in minutes, or unforce safe start if given 0 (E.G. '!safe 1' forces a 1 minute safe start)"]
     ]
-] call DOTT_commands_fnc_addModule;
+] call TN_commands_fnc_addModule;

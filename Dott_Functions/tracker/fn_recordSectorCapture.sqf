@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_recordSectorCapture
+ * Function: TN_tracker_fnc_recordSectorCapture
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -21,11 +21,11 @@ params ["_sector", "_owner", "_ownerOld"];
 
 // sideUnknown check to prevent logging when sector is
 // placed down.
-if (DOTT_tracker_startTime == -1
+if (TN_tracker_startTime == -1
     || _owner == sideUnknown) exitWith { false };
 
 private _timeStamp =
-    round(serverTime - DOTT_tracker_startTime);
+    round(serverTime - TN_tracker_startTime);
 private _sectorName =
     _sector getVariable ["name", "sector"];
 private _event = [
@@ -33,6 +33,6 @@ private _event = [
     _timeStamp,
     [_sectorName, _owner]
 ];
-DOTT_tracker_events pushBack _event;
+TN_tracker_events pushBack _event;
 
 true

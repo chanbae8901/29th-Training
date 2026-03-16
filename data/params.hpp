@@ -1,4 +1,4 @@
-#ifdef DOTT_TRAINING
+#ifdef TN_TRAINING
 
 class enableRoundEventLog
 {

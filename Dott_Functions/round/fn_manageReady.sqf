@@ -1,7 +1,7 @@
 #include "defines.hpp"
 
 /**
- * Function: DOTT_round_fnc_manageReady
+ * Function: TN_round_fnc_manageReady
  * Author:   Bae [29th ID], modified from Dott [29th ID]
  *
  * Changes the ready state of a side and checks if all sides are ready
@@ -17,12 +17,12 @@
  *         already started, 0 otherwise.
  *
  * Example:
- *     [west, true] call DOTT_round_fnc_manageReady;
+ *     [west, true] call TN_round_fnc_manageReady;
  */
 
 params ["_side", "_isReady"];
 
-if (call DOTT_round_fnc_isRoundActive) exitWith {1};
+if (call TN_round_fnc_isRoundActive) exitWith {1};
 
 private _sideIdx = _side call BIS_fnc_sideID;
 
@@ -31,21 +31,21 @@ if (_sideIdx > 2) exitWith
     systemChat "Error: Invalid side to change ready state.";
 };
 
-private _playerSideReady = DOTT_round_sideReady select _sideIdx;
+private _playerSideReady = TN_round_sideReady select _sideIdx;
 
 if (_playerSideReady == _isReady) exitWith {2};
 
-DOTT_round_sideReady set [_sideIdx, _isReady];
-publicVariable "DOTT_round_sideReady";
+TN_round_sideReady set [_sideIdx, _isReady];
+publicVariable "TN_round_sideReady";
 
-["DOTT_round_manageReadyChange", _this] call CBA_fnc_globalEvent;
+["TN_round_manageReadyChange", _this] call CBA_fnc_globalEvent;
 
 /* --- Check if all sides ready and handle safe start --- */
-if (call DOTT_round_fnc_checkAllSidesReady) then
+if (call TN_round_fnc_checkAllSidesReady) then
 {
-    if (!DOTT_round_safeStartActive) then
+    if (!TN_round_safeStartActive) then
     {
-        [] call DOTT_round_fnc_initSafeStart;
+        [] call TN_round_fnc_initSafeStart;
     }
     else
     {
@@ -55,12 +55,12 @@ if (call DOTT_round_fnc_checkAllSidesReady) then
         ) exitWith {};
 
         // Save forced timer state so we can restore if a team unreadies.
-        DOTT_round_forcedTimeRemaining = [0] call BIS_fnc_countdown;
-        DOTT_round_shortenedAt = serverTime;
+        TN_round_forcedTimeRemaining = [0] call BIS_fnc_countdown;
+        TN_round_shortenedAt = serverTime;
 
         private _msgText = format [
             "<t color='#ffffff'><t size='3'>All teams ready! Shortening safe start.</t><br/><t size='2'>Live in %1!</t></t>",
-            [TN_safeStartTime] call DOTT_round_fnc_formatTime
+            [TN_safeStartTime] call TN_round_fnc_formatTime
         ];
 
         [
@@ -68,7 +68,7 @@ if (call DOTT_round_fnc_checkAllSidesReady) then
             "PLAIN",
             0.5,
             false
-        ] remoteExecCall ["DOTT_common_fnc_displayMsg"];
+        ] remoteExecCall ["TN_common_fnc_displayMsg"];
 
         [TN_safeStartTime] call BIS_fnc_countdown;
     };
@@ -78,17 +78,17 @@ else
     // A team unreadied. If we're in a forced safe start that was shortened,
     // restore the original forced timer adjusted for total elapsed time.
     if (
-        DOTT_round_safeStartActive
-        && {DOTT_round_ignoreReadiness}
-        && {!(isNil "DOTT_round_shortenedAt")}
+        TN_round_safeStartActive
+        && {TN_round_ignoreReadiness}
+        && {!(isNil "TN_round_shortenedAt")}
     ) then
     {
-        private _elapsed = serverTime - DOTT_round_shortenedAt;
-        private _restoredTime = (DOTT_round_forcedTimeRemaining - _elapsed) max 1;
+        private _elapsed = serverTime - TN_round_shortenedAt;
+        private _restoredTime = (TN_round_forcedTimeRemaining - _elapsed) max 1;
         private _currentTime = [0] call BIS_fnc_countdown;
 
-        DOTT_round_shortenedAt = nil;
-        DOTT_round_forcedTimeRemaining = nil;
+        TN_round_shortenedAt = nil;
+        TN_round_forcedTimeRemaining = nil;
 
         // Don't restore if the adjusted original would be shorter than current.
         if (_restoredTime <= _currentTime) exitWith {};
@@ -97,7 +97,7 @@ else
 
         private _msgText = format [
             "<t color='#ffffff'><t size='2.5'>Team unreadied! Restoring longer safe start.</t><br/><t size='2'>Live in %1!</t></t>",
-            [round _restoredTime] call DOTT_round_fnc_formatTime
+            [round _restoredTime] call TN_round_fnc_formatTime
         ];
 
         [
@@ -105,7 +105,7 @@ else
             "PLAIN",
             0.5,
             false
-        ] remoteExecCall ["DOTT_common_fnc_displayMsg"];
+        ] remoteExecCall ["TN_common_fnc_displayMsg"];
     };
 };
 

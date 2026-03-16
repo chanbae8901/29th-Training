@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_ocap_fnc_init
+ * Function: TN_ocap_fnc_init
  * Author:   OCAP Addon very slightly modified by Bae [29th ID]
  *
  * Purpose:
@@ -13,7 +13,7 @@
  * Returns: Nothing
  *
  * Example:
- *   call compile preprocessFileLineNumbers "DOTT_Functions\ocap\handleMarkers.sqf"
+ *   call compile preprocessFileLineNumbers "TN_Functions\ocap\handleMarkers.sqf"
  */
 
 ocap_listener_markers = ["ocap_handleMarker", {

@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_parade_fnc_init
+ * Function: TN_parade_fnc_init
  * Author:   Bae [29th ID]
  *
  * Description:
@@ -28,7 +28,7 @@ if (hasInterface) then
         //prevent race condition where sometimes default parade loadout
         //is applied after custom parade loadout
         waitUntil { primaryWeapon player == "rhs_weap_m1garand_sa43"}; 
-        isNil { call DOTT_parade_fnc_handleInitialInventory };
+        isNil { call TN_parade_fnc_handleInitialInventory };
     };
 };
 

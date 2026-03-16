@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_loadout_fnc_fullSetUnitLoadout
+ * Function: TN_loadout_fnc_fullSetUnitLoadout
  * Author:   Bae [29th ID]
  *
  * Purpose: Wrapper around CBA_fnc_setLoadout that also resets weapon
@@ -42,7 +42,7 @@ if (primaryWeapon _unit == "") then
 };
 
 private _scriptHandle =
-    [_unit] spawn DOTT_loadout_fnc_resetWeaponState;
+    [_unit] spawn TN_loadout_fnc_resetWeaponState;
 
 // Wait so that setInsignia does not correctly assume
 // non-combat loadout.
@@ -50,7 +50,7 @@ private _scriptHandle =
 {
     params ["_unit", "_scriptHandle"];
     waitUntil { scriptDone _scriptHandle };
-    _unit spawn DOTT_loadout_fnc_setInsignia;
+    _unit spawn TN_loadout_fnc_setInsignia;
 };
 
 true

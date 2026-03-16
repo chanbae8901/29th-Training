@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_round_fnc_addTime
+ * Function: TN_round_fnc_addTime
  * Author:   Bae [29th ID], modified from Dott [29th ID]
  *
  * Adds (or subtracts) time from the currently running round. Cannot
@@ -13,18 +13,18 @@
  *     Number - New time remaining, or -1 if round not active.
  *
  * Example:
- *     [120] call DOTT_round_fnc_addTime;
+ *     [120] call TN_round_fnc_addTime;
  */
 
 params ["_timeDelta"];
 
-if !(call DOTT_round_fnc_isRoundActive) exitWith {-1};
+if !(call TN_round_fnc_isRoundActive) exitWith {-1};
 
-private _timeLeft = call DOTT_round_fnc_getTime;
+private _timeLeft = call TN_round_fnc_getTime;
 [_timeDelta + _timeLeft] call BIS_fnc_countdown;
 
-DOTT_round_timeAdded = true;
-publicVariable "DOTT_round_timeAdded";
+TN_round_timeAdded = true;
+publicVariable "TN_round_timeAdded";
 
 private _hintMsg = format [
     "Added %1 minutes to the time limit!",
@@ -32,4 +32,4 @@ private _hintMsg = format [
 ];
 [_hintMsg] remoteExecCall ["hint"];
 
-call DOTT_round_fnc_getTime
+call TN_round_fnc_getTime

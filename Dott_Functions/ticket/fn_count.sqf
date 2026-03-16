@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_ticket_fnc_count
+ * Function: TN_ticket_fnc_count
  * Author:   Dott [29th ID]
  *
  * Description:
@@ -15,7 +15,7 @@
  *
  * Example:
  *   private _playerSide = playerSide;
- *   [_playerSide] remoteExec ["DOTT_ticket_fnc_count", 2];
+ *   [_playerSide] remoteExec ["TN_ticket_fnc_count", 2];
  */
 
 params
@@ -52,17 +52,17 @@ switch (_playerSide) do
 {
     case west:
     {
-        _varName = "DOTT_ticketWEST";
+        _varName = "TN_ticketWEST";
         _adminLabel = "Blufor";
     };
     case east:
     {
-        _varName = "DOTT_ticketEAST";
+        _varName = "TN_ticketEAST";
         _adminLabel = "Opfor";
     };
     case resistance:
     {
-        _varName = "DOTT_ticketGUER";
+        _varName = "TN_ticketGUER";
         _adminLabel = "Grnfor";
     };
     case civilian: {};
@@ -81,7 +81,7 @@ if (_tickets isEqualTo 0) then
         "PLAIN",
         0.8
     ] remoteExecCall [
-        "DOTT_common_fnc_displayMsg",
+        "TN_common_fnc_displayMsg",
         _clientOwner
     ];
 }
@@ -101,7 +101,7 @@ else
             "<t color='#ffffff' size='2'>You are the last player allowed to leave spawn!</t>",
             "PLAIN",
             0.8
-        ] remoteExecCall ["DOTT_common_fnc_displayMsg", _clientOwner];
+        ] remoteExecCall ["TN_common_fnc_displayMsg", _clientOwner];
     }
     else
     {
@@ -114,6 +114,6 @@ else
             "<t color='#ffffff' size='2'>You may leave spawn!</t>",
             "PLAIN",
             0.5
-        ] remoteExecCall ["DOTT_common_fnc_displayMsg", _clientOwner];
+        ] remoteExecCall ["TN_common_fnc_displayMsg", _clientOwner];
     };
 };

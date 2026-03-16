@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_round_fnc_setOvertimePeriod
+ * Function: TN_round_fnc_setOvertimePeriod
  * Author:   Bae [29th ID], modified from Dott [29th ID]
  *
  * Sets the overtime period duration. Rejects non-positive values.
@@ -11,14 +11,14 @@
  *     Boolean - true on success, false if rejected.
  *
  * Example:
- *     [300] call DOTT_round_fnc_setOvertimePeriod;
+ *     [300] call TN_round_fnc_setOvertimePeriod;
  */
 
 params ["_time"];
 
 if (_time <= 0) exitWith {false};
 
-DOTT_round_overtimePeriod = _time;
-publicVariable "DOTT_round_overtimePeriod";
+TN_round_overtimePeriod = _time;
+publicVariable "TN_round_overtimePeriod";
 
 true

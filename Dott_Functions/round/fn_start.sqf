@@ -1,7 +1,7 @@
 #include "defines.hpp"
 
 /**
- * Function: DOTT_round_fnc_start
+ * Function: TN_round_fnc_start
  * Author:   Bae [29th ID], modified from Dott [29th ID]
  *
  * Starts the round with a specified timer length. Displays a LIVE
@@ -10,25 +10,25 @@
  *
  * Parameters:
  *     _roundLength - Number - Round duration in seconds.
- *         Default: DOTT_round_timerLength
+ *         Default: TN_round_timerLength
  *
  * Returns:
  *     Boolean - false if round already active, true otherwise.
  *
  * Example:
- *     [] call DOTT_round_fnc_start;
+ *     [] call TN_round_fnc_start;
  */
 
-params [["_roundLength", DOTT_round_timerLength, [0]]];
+params [["_roundLength", TN_round_timerLength, [0]]];
 
-if (call DOTT_round_fnc_isRoundActive) exitWith {false};
+if (call TN_round_fnc_isRoundActive) exitWith {false};
 
 [_roundLength] call BIS_fnc_countdown;
 
 /* --- LIVE notification --- */
 private _msgText = format [
     "<t color='#ffffff'><t size='4'>LIVE LIVE LIVE</t><br/><t size='2'>%1 Time Limit</t></t>",
-    [_roundLength, true] call DOTT_round_fnc_formatTime
+    [_roundLength, true] call TN_round_fnc_formatTime
 ];
 
 [
@@ -36,13 +36,13 @@ private _msgText = format [
     "PLAIN",
     0.5,
     false
-] remoteExecCall ["DOTT_common_fnc_displayMsg"];
+] remoteExecCall ["TN_common_fnc_displayMsg"];
 
 /* --- Schedule end-of-round check on server --- */
 [{
     [
-        {(call DOTT_round_fnc_getTime) <= 0},
-        {call DOTT_round_fnc_end},
+        {(call TN_round_fnc_getTime) <= 0},
+        {call TN_round_fnc_end},
         []
     ] call CBA_fnc_waitUntilAndExecute;
 }] remoteExecCall ["call", 2];
@@ -50,11 +50,11 @@ private _msgText = format [
 /* --- Reset state --- */
 UNREADY_ALL_SIDES;
 
-DOTT_round_safeStartActive = false;
-publicVariable "DOTT_round_safeStartActive";
+TN_round_safeStartActive = false;
+publicVariable "TN_round_safeStartActive";
 
-[] remoteExec ["DOTT_round_fnc_roundEvents"];
+[] remoteExec ["TN_round_fnc_roundEvents"];
 
-["DOTT_round_started", []] call CBA_fnc_globalEvent;
+["TN_round_started", []] call CBA_fnc_globalEvent;
 
 true

@@ -3,13 +3,13 @@
 #define SCORE_REDUCE_VALUE 9999
 
 #define UNREADY_ALL_SIDES \
-    DOTT_round_sideReady = [false, false, false]; \
-    publicVariable "DOTT_round_sideReady";
+    TN_round_sideReady = [false, false, false]; \
+    publicVariable "TN_round_sideReady";
 
 #define RESET_SAFESTART_VARS \
-    DOTT_round_safeStartActive = false; \
-    publicVariable "DOTT_round_safeStartActive"; \
-    DOTT_round_ignoreReadiness = false; \
-    publicVariable "DOTT_round_ignoreReadiness"; \
-    DOTT_round_forcedTimeRemaining = nil; \
-    DOTT_round_shortenedAt = nil;
+    TN_round_safeStartActive = false; \
+    publicVariable "TN_round_safeStartActive"; \
+    TN_round_ignoreReadiness = false; \
+    publicVariable "TN_round_ignoreReadiness"; \
+    TN_round_forcedTimeRemaining = nil; \
+    TN_round_shortenedAt = nil;

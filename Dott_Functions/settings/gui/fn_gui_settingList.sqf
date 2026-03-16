@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_settings_fnc_gui_settingList
+ * Function: TN_settings_fnc_gui_settingList
  * Author:   Bae [29th ID]
  *
  * Initializes a list (dropdown) setting row and wires the
@@ -16,7 +16,7 @@
  */
 
 #define SERVER_TEMP \
-    (uiNamespace getVariable "DOTT_settings_serverTemp")
+    (uiNamespace getVariable "TN_settings_serverTemp")
 
 params [
     "_controlsGroup", "_setting", "_source",
@@ -92,7 +92,7 @@ _ctrlList ctrlAddEventHandler [
         private _ctrlDefault =
             _controlsGroup controlsGroupCtrl 5020;
         private _defaultValue =
-            (DOTT_settings_default
+            (TN_settings_default
                 getVariable _setting) select 0;
         _ctrlDefault ctrlEnable (
             _value isNotEqualTo _defaultValue
@@ -126,7 +126,7 @@ _controlsGroup setVariable [
         private _ctrlDefault =
             _controlsGroup controlsGroupCtrl 5020;
         private _defaultValue =
-            (DOTT_settings_default
+            (TN_settings_default
                 getVariable _setting) select 0;
         _ctrlDefault ctrlEnable (
             _value isNotEqualTo _defaultValue

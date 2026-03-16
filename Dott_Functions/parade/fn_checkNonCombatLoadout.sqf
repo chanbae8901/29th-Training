@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_parade_fnc_checkNonCombatLoadout
+ * Function: TN_parade_fnc_checkNonCombatLoadout
  * Author:   Bae [29th ID]
  *
  * Description:
@@ -14,7 +14,7 @@
  *             false otherwise
  *
  * Example:
- *   [player] call DOTT_parade_fnc_checkNonCombatLoadout;
+ *   [player] call TN_parade_fnc_checkNonCombatLoadout;
  */
 
 params ["_unit"];

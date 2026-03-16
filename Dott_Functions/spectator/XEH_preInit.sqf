@@ -34,6 +34,6 @@
         systemChat
             "Spectator settings changed."
             + " Kicking out player to apply changes.";
-        call DOTT_spectator_fnc_exit;
+        call TN_spectator_fnc_exit;
     }
 ] call CBA_fnc_addSetting;

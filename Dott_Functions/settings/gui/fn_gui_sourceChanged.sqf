@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_settings_fnc_gui_sourceChanged
+ * Function: TN_settings_fnc_gui_sourceChanged
  * Author:   Bae [29th ID]
  *
  * Shows/hides the options-group controls so only the
@@ -21,7 +21,7 @@ uiNamespace setVariable [
 ];
 
 private _selectedAddon =
-    uiNamespace getVariable "DOTT_settings_addon";
+    uiNamespace getVariable "TN_settings_addon";
 
 {
     (_x splitString "$") params [

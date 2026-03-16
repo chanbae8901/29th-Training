@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_settings_fnc_gui_addonChanged
+ * Function: TN_settings_fnc_gui_addonChanged
  * Author:   Bae [29th ID]
  *
  * Fired when the user selects a different addon/category in
@@ -14,7 +14,7 @@
  */
 
 #define SERVER_TEMP \
-    (uiNamespace getVariable "DOTT_settings_serverTemp")
+    (uiNamespace getVariable "TN_settings_serverTemp")
 
 params ["_control", "_index"];
 
@@ -27,12 +27,12 @@ if (isNil "_selectedAddon") exitWith {};
 if (_selectedAddon isEqualType "") then
 {
     uiNamespace setVariable [
-        "DOTT_settings_addon", _selectedAddon
+        "TN_settings_addon", _selectedAddon
     ];
 };
 
 uiNamespace setVariable [
-    "DOTT_settings_addonIndex", _index
+    "TN_settings_addonIndex", _index
 ];
 
 private _selectedSource = "server";
@@ -80,7 +80,7 @@ if !(_display getVariable [_selectedAddon, false]) then
     private _categorySettings = [];
 
     {
-        (DOTT_settings_default getVariable _x) params [
+        (TN_settings_default getVariable _x) params [
             "", "_setting", "", "",
             "_category", "", "", "", "",
             "_subCategory"
@@ -100,7 +100,7 @@ if !(_display getVariable [_selectedAddon, false]) then
                 _setting
             ];
         };
-    } forEach DOTT_settings_allSettings;
+    } forEach TN_settings_allSettings;
 
     _categorySettings sort true;
     private _lastSubCategory = "$START";
@@ -118,7 +118,7 @@ if !(_display getVariable [_selectedAddon, false]) then
             _createHeader = true;
         };
 
-        (DOTT_settings_default getVariable _setting)
+        (TN_settings_default getVariable _setting)
             params [
                 "_defaultValue", "",
                 "_settingType", "_settingData",
@@ -172,7 +172,7 @@ if !(_display getVariable [_selectedAddon, false]) then
             };
 
             private _list = [
-                "DOTT_settings_list",
+                "TN_settings_list",
                 toLower _category,
                 _source
             ] joinString "$";
@@ -238,7 +238,7 @@ if !(_display getVariable [_selectedAddon, false]) then
                     case "CHECKBOX":
                     {
                         _display ctrlCreate [
-                            "DOTT_settings_Row_Checkbox",
+                            "TN_settings_Row_Checkbox",
                             5000,
                             _ctrlOptionsGroup
                         ]
@@ -246,7 +246,7 @@ if !(_display getVariable [_selectedAddon, false]) then
                     case "LIST":
                     {
                         _display ctrlCreate [
-                            "DOTT_settings_Row_List",
+                            "TN_settings_Row_List",
                             5000,
                             _ctrlOptionsGroup
                         ]
@@ -254,7 +254,7 @@ if !(_display getVariable [_selectedAddon, false]) then
                     case "SLIDER":
                     {
                         _display ctrlCreate [
-                            "DOTT_settings_Row_Slider",
+                            "TN_settings_Row_Slider",
                             5000,
                             _ctrlOptionsGroup
                         ]
@@ -262,7 +262,7 @@ if !(_display getVariable [_selectedAddon, false]) then
                     case "TIME":
                     {
                         _display ctrlCreate [
-                            "DOTT_settings_Row_Time",
+                            "TN_settings_Row_Time",
                             5000,
                             _ctrlOptionsGroup
                         ]
@@ -412,7 +412,7 @@ if !(_display getVariable [_selectedAddon, false]) then
                 _ctrlSettingGroup, _setting,
                 _source, _currentValue, _defaultValue
             ] call
-                DOTT_settings_fnc_gui_settingDefault;
+                TN_settings_fnc_gui_settingDefault;
         } forEach ["server"];
     } forEach _categorySettings;
 

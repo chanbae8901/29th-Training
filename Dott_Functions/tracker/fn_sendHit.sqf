@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_sendHit
+ * Function: TN_tracker_fnc_sendHit
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -32,13 +32,13 @@ private _value = [
 
 {
     private _hitMap =
-        _x getVariable "DOTT_hitMap";
+        _x getVariable "TN_hitMap";
     if (isNil "_hitMap") then
     {
         _hitMap = createHashMap;
     };
     _hitMap set [_key, _value];
-    _x setVariable ["DOTT_lastHit", _key];
-    _x setVariable ["DOTT_hitMap", _hitMap];
+    _x setVariable ["TN_lastHit", _key];
+    _x setVariable ["TN_hitMap", _hitMap];
 }
 forEach _units;

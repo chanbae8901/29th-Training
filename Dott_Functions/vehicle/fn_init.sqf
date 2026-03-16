@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_vehicle_fnc_init
+ * Function: TN_vehicle_fnc_init
  * Author:   Bae [29th ID]
  *
  * Initializes vehicle settings on the server.
@@ -14,7 +14,7 @@
  *     Nothing
  *
  * Example:
- *     call DOTT_vehicle_fnc_init;
+ *     call TN_vehicle_fnc_init;
  */
 
 if (!isServer) exitWith {};

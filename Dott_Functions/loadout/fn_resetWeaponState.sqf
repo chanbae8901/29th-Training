@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_loadout_fnc_resetWeaponState
+ * Function: TN_loadout_fnc_resetWeaponState
  * Author:   Bae [29th ID]
  *
  * Purpose: Fully removes and re-adds the primary and handgun weapons
@@ -12,7 +12,7 @@
  * Params:  _unit - Object, local unit whose weapons need resetting
  * Returns: Nothing
  *
- * Example: [_unit] spawn DOTT_loadout_fnc_resetWeaponState;
+ * Example: [_unit] spawn TN_loadout_fnc_resetWeaponState;
  */
 
 params ["_unit"];

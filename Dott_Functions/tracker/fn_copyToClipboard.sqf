@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_copyToClipboard
+ * Function: TN_tracker_fnc_copyToClipboard
  * Author:   Bae [29th ID]
  *
  * Purpose:

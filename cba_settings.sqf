@@ -1,10 +1,10 @@
 #include "data\defines.hpp"
 
-#ifdef DOTT_TRAINING
+#ifdef TN_TRAINING
     #define OCAP_SAVETAG "Training"
 #endif
 
-#ifdef DOTT_EVENT
+#ifdef TN_EVENT
     #define OCAP_SAVETAG "Event"
 #endif
 

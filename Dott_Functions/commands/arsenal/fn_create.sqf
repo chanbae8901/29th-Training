@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_commands_fnc_arsenalCreate
+ * Function: TN_commands_fnc_arsenalCreate
  * Author:   Bae [29th ID]
  *
  * Creates an ACE arsenal box at a given position and
@@ -16,7 +16,7 @@
  *     Nothing
  *
  * Example:
- *     [getPosATL player, getDir player, 3] call DOTT_commands_fnc_arsenalCreate;
+ *     [getPosATL player, getDir player, 3] call TN_commands_fnc_arsenalCreate;
  */
 
 params ["_pos", ["_dir", 0, [0]], ["_offset", 0, [0]]];
@@ -38,4 +38,4 @@ _arsenal enableSimulationGlobal false;
 
 [_arsenal, true] call ace_arsenal_fnc_initBox;
 
-[_arsenal] remoteExecCall ["DOTT_commands_fnc_arsenalRegister", 2];
+[_arsenal] remoteExecCall ["TN_commands_fnc_arsenalRegister", 2];

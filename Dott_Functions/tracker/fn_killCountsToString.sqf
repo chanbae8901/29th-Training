@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_killCountsToString
+ * Function: TN_tracker_fnc_killCountsToString
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -25,7 +25,7 @@ private _lines = [];
     private _unitName = _names select _unitIndex;
     private _unitSide = _unit select 1;
     _unitName = [_unitName, _unitSide]
-        call DOTT_tracker_fnc_colorNameWithSide;
+        call TN_tracker_fnc_colorNameWithSide;
 
     private _killCount = _x select 1;
     private _line =

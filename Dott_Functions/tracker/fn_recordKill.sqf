@@ -1,5 +1,5 @@
 /**
- * Function: DOTT_tracker_fnc_recordKill
+ * Function: TN_tracker_fnc_recordKill
  * Author:   Bae [29th ID]
  *
  * Purpose:
@@ -19,10 +19,10 @@
 
 #include "eventNumbers.hpp"
 params ["_unit", "_killer", "_instigator"];
-if (DOTT_tracker_startTime == -1) exitWith { false };
+if (TN_tracker_startTime == -1) exitWith { false };
 
 private _timeStamp =
-    round (serverTime - DOTT_tracker_startTime);
+    round (serverTime - TN_tracker_startTime);
 
 private _eventType =
     if (_unit isKindOf "Man")
@@ -30,7 +30,7 @@ private _eventType =
         else { VEHICLE_KILL_NUM };
 
 private _unitName =
-    [_unit] call DOTT_tracker_fnc_getName;
+    [_unit] call TN_tracker_fnc_getName;
 
 // Need group since ACE3? sets uncon men to CIV but not
 // the group.
@@ -38,11 +38,11 @@ private _unitSide = side (group _unit);
 
 private _killInfo = [[_unitName, _unitSide]];
 
-private _lastHit = _unit getVariable "DOTT_lastHit";
+private _lastHit = _unit getVariable "TN_lastHit";
 if !(isNil "_lastHit") then
 {
     _lastHit append (
-        (_unit getVariable "DOTT_hitMap") get _lastHit
+        (_unit getVariable "TN_hitMap") get _lastHit
     );
 };
 
@@ -122,7 +122,7 @@ if (_eventType == VEHICLE_KILL_NUM
         _killInfo append [
             [
                 _instigator
-                    call DOTT_tracker_fnc_getName,
+                    call TN_tracker_fnc_getName,
                 _side
             ],
             _distance,
@@ -130,7 +130,7 @@ if (_eventType == VEHICLE_KILL_NUM
         ];
 
         private _instigatorInfo = [
-            _instigator call DOTT_tracker_fnc_getName,
+            _instigator call TN_tracker_fnc_getName,
             _side,
             getPosASL _instigator,
             _weapon,
@@ -138,7 +138,7 @@ if (_eventType == VEHICLE_KILL_NUM
         ];
 
         [crew _unit, _instigatorInfo]
-            call DOTT_tracker_fnc_sendHit;
+            call TN_tracker_fnc_sendHit;
     };
 };
 
@@ -149,11 +149,11 @@ if (!isNil "_lastHit" && !_override) then
         private _side =
             [_instigator] call _fn_resolveInstigatorSide;
         _lastHit = [
-            _instigator call DOTT_tracker_fnc_getName,
+            _instigator call TN_tracker_fnc_getName,
             _side
         ];
         private _hitInfo =
-            (_unit getVariable "DOTT_hitMap")
+            (_unit getVariable "TN_hitMap")
                 get _lastHit;
         if (isNil "_hitInfo") then
         {
@@ -216,6 +216,6 @@ if (!isNil "_lastHit" && !_override) then
 
 private _event = [_eventType, _timeStamp, _killInfo];
 
-[_event] call DOTT_tracker_fnc_saveEvent;
+[_event] call TN_tracker_fnc_saveEvent;
 
 true
