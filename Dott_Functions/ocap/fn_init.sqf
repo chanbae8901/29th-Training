@@ -33,6 +33,8 @@ if (isServer) then
 
     DOTT_ocap_roundNum = 1;
 
+    DOTT_ocap_recording = false;
+
     //Dont start/pause recordings if autoStart is forced by server config
     if !(OCAP_settings_autoStart) then
     {
@@ -53,7 +55,6 @@ if (isServer) then
 
         [{!isNil "ocap_recorder_PFHObject"},
         {
-            DOTT_ocap_recording = false;
             ocap_recorder_PFHObject setVariable
                 ["run_condition",
                 {SHOULD_SAVE_EVENTS && DOTT_ocap_recording}];

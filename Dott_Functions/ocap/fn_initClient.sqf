@@ -23,9 +23,7 @@ if !(_autoStart) then
     [] spawn
     {
         waitUntil {!isNull player};
-
-        if !(didJIP) exitWith {};
-
+        
         [player] remoteExecCall
             ["DOTT_ocap_fnc_initializePlayer", 2];
     };
