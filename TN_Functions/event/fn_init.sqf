@@ -124,5 +124,17 @@ if (hasInterface) then
 
 if (isServer) then
 {
+    addMissionEventHandler ["HandleDisconnect",
+    {
+        params ["_unit"];
 
+        if (isNull _unit) exitWith {};
+
+        if !(call TN_round_fnc_isRoundActive) then
+        {
+            deleteVehicle _unit;
+        };
+
+        false
+    }];
 };

@@ -58,6 +58,7 @@ v4.5.0
     Care taken to ensure new ready UI system is not hidden when GUI is opened.
   - New "Forced Safe Start" system implemented, admin can start long safe start and teams can ready to reduce to shorter safe start.
   - fn_markEditorPlacedObjects: fix wrong variable (_x -> _obj) in boundingBox call
+  - Delete disconnecting bodies if round has not started yet.
 
 * Loadout
   - Add additional failsafe for flexibleReset teleport, if player is not within 75 meters of teleport point
