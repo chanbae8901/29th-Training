@@ -34,6 +34,11 @@
  *     call TN_base_fnc_init;
  */
 
+/*
+ * Editor-placed objects referenced in this module:
+ *     base_action_arsenal_blu - Conitionally if parade module in DOTT_MODULES
+ */
+
 if !(hasInterface) exitWith {};
 
 //Add actions to spectator terminals

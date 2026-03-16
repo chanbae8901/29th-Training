@@ -13,6 +13,16 @@
  * Example: call TN_loadout_fnc_init;
  */
 
+/*
+ * Editor-placed objects referenced in this module:
+ *     base_res_blu
+ *     base_res_red
+ *     base_res_grn
+ *     base_action_arsenal_blu
+ *     base_action_arsenal_red
+ *     base_action_arsenal_grn
+ */
+
 if (hasInterface) then
 {
     [

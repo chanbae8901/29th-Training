@@ -17,6 +17,16 @@
  *     call TN_training_fnc_init;
  */
 
+/*
+ * Editor-placed objects referenced in this module:
+ *     base_res_red
+ *     base_res_blu
+ *     base_res_grn
+ *     base_action_arsenal_red
+ *     base_action_arsenal_blu
+ *     base_action_arsenal_grn
+ */
+
 //for curator module, make sure training init is put before curator
 //maybe not the cleanest way, but won't break anything if curator module isn't used
 //all lower case
