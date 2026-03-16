@@ -36,6 +36,7 @@ v4.5.0
   - Fixed spelling mistakes
   - Fixed/standardized indentations and other standards
   - Deduplicate code and remove dead code
+  - Reduce size of gui.hpp by using inheritance
 
 * description.ext: Removed duplicate cfgNotifications include
 
