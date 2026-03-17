@@ -23,7 +23,7 @@ private _lr = false;
 // Remove the first SW radio found in the linked slot.
 private _swRadios = [_unit] call TFAR_fnc_getRadioItems;
 
-if (count _swRadios > 0) then
+if (_swRadios isNotEqualTo []) then
 {
     _unit unlinkItem (_swRadios select 0);
     _sw = true;

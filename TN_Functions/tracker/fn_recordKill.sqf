@@ -75,7 +75,7 @@ private _fn_resolveInstigatorSide =
 if (isNull _instigator) then // Backup for unknown cases.
 {
     private _crew = crew _killer;
-    if (count _crew > 0) then
+    if (_crew isNotEqualTo []) then
     {
         _instigator = _crew select 0;
     }

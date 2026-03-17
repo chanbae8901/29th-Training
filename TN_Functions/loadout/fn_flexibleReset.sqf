@@ -44,7 +44,7 @@ if (_inventory isEqualTo true) then
     _inventory = missionNamespace getVariable ["resetLoadout", []];
 };
 
-if (count _inventory != 0) then
+if (_inventory isNotEqualTo []) then
 {
     if (!isNil {missionNamespace getVariable "BIS_EGSpectator_initialized"}) exitWith
     {

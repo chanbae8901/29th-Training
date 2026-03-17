@@ -66,7 +66,7 @@ TN_script_curatorExcludedObjects = [] spawn
                 };
             } forEach _editableObjs;
 
-            if (count _objsToRemove > 0) then
+            if (_objsToRemove isNotEqualTo []) then
             {
                 _curator removeCuratorEditableObjects [
                     _objsToRemove, true

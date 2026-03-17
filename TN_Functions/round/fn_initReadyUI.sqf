@@ -397,7 +397,7 @@ TN_round_fnc_updateReadyUI =
     private _isSafeStart =
         TN_round_safeStartActive;
     private _anyReady =
-        ({_x} count TN_round_sideReady) > 0;
+        (TN_round_sideReady findIf {_x}) != -1;
     private _isRoundActive =
         call TN_round_fnc_isRoundActive;
 
@@ -484,7 +484,7 @@ TN_round_fnc_updateReadyUI =
         } forEach SIDE_DEFS;
 
         // Nothing to show (no players on any side)
-        if (count _lines == 0) then
+        if (_lines isEqualTo []) then
         {
             _bg ctrlShow false;
             _content ctrlShow false;
@@ -569,7 +569,7 @@ TN_round_fnc_updateReadyUI =
                 };
             } forEach SIDE_DEFS;
 
-            if (count _unreadyTints > 0) then
+            if (_unreadyTints isNotEqualTo []) then
             {
                 // Cycle through unready teams — each gets one full breath
                 private _cycleIdx =
@@ -627,7 +627,7 @@ TN_round_fnc_flashReadyUI =
         "TN_readyUI_shineSlices", []
     ];
     if (
-        isNull _bg || count _shineSlices == 0
+        isNull _bg || _shineSlices isEqualTo []
     ) exitWith {};
 
     // Don't flash if panel isn't visible (round is live, etc.)
@@ -761,7 +761,7 @@ TN_round_fnc_flashReadyUI =
         TN_round_safeStartActive
         || {
             !(isNil "TN_round_sideReady")
-            && {({_x} count TN_round_sideReady) > 0}
+            && {(TN_round_sideReady findIf {_x}) != -1}
         }
     ) then
     {
@@ -809,8 +809,8 @@ TN_round_fnc_flashReadyUI =
                 if (
                     !(isNil "TN_round_sideReady")
                     && {
-                        ({_x} count
-                            TN_round_sideReady) == 0
+                        (TN_round_sideReady findIf
+                            {_x}) == -1
                     }
                     && {!TN_round_safeStartActive}
                 ) then
@@ -829,8 +829,8 @@ TN_round_fnc_flashReadyUI =
             if (
                 !(isNil "TN_round_sideReady")
                 && {
-                    ({_x} count
-                        TN_round_sideReady) > 0
+                    (TN_round_sideReady findIf
+                        {_x}) != -1
                 }
             ) then
             {

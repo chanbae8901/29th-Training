@@ -93,7 +93,7 @@ switch _mode do {
         //--- Wait until previous sectors are initialized to maintain the same order as in editor
         waituntil {
             _sectors = (entities "ModuleSector_F") - (missionnamespace getvariable ["BIS_fnc_moduleSector_sectors",[]]) - (missionnamespace getvariable ["BIS_fnc_moduleSector_sectorsError",[]]);
-            if (count _sectors > 0) then {(_sectors select 0) == _logic} else {true};
+            if (_sectors isNotEqualTo []) then {(_sectors select 0) == _logic} else {true};
         };
 
         _logicParent = _logic;
@@ -298,7 +298,7 @@ switch _mode do {
         } foreach (synchronizedobjects _logic);
 
         //--- No synced triggers found - create a default one
-        if (count _areas == 0) then {
+        if (_areas isEqualTo []) then {
             _areaTrigger = createtrigger ["emptydetector",position _logic];
             (_logic getvariable ["objectArea",[50,50,0,false]]) call bis_fnc_log;
             _areaTrigger settriggerarea (_logic getvariable ["objectArea",[50,50,0,false]]);
@@ -337,7 +337,7 @@ switch _mode do {
             };
         } foreach ([_logic,[typeof _logic]] call bis_fnc_allSynchronizedObjects);
 
-        if (count _sides == 0 && _useDefaultSides) then {_sides = [east,west,resistance,civilian];};
+        if (_sides isEqualTo [] && _useDefaultSides) then {_sides = [east,west,resistance,civilian];};
         //if (count _sides == 0) exitwith {["No sides defined for %1",_logic] call bis_fnc_error; [] call _exitCode};
         if (_defaultOwner >= 0 && !((_defaultOwner call bis_fnc_sidetype) in _sides)) then {["Default owner %1 is not a competing side for sector %2. No default owner used instead.",_defaultOwner call bis_fnc_sidetype,_name] call bis_fnc_error;};
 
@@ -495,7 +495,7 @@ switch _mode do {
                 };
 
                 //--- Show / hide markers
-                if (count _sides > 0) then {
+                if (_sides isNotEqualTo []) then {
                     if (markeralpha _markerIcon == 0) then {
                         {_x setmarkeralpha 1;} foreach [_markerIcon,_markerIconText];
                         {if (markerColor _x == "colorblack") then {_x setmarkeralpha 0.25;} else {_x setmarkeralpha 0.5;};} foreach _markersArea;
@@ -703,7 +703,7 @@ switch _mode do {
                         ""
                     } else {
                         _units = _sideUnitsLocal select _ownerID;
-                        if (count _units > 0) then {
+                        if (_units isNotEqualTo []) then {
                             _ownerFaction = gettext (configfile >> "cfgvehicles" >> typeof effectivecommander (_units select 0) >> "faction");
                             gettext (configfile >> "cfgfactionclasses" >> _ownerFaction >> "flag");
                         } else {

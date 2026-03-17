@@ -202,7 +202,7 @@ private _fnc_rebuild =
         };
     };
 
-    if (count _actions == 0) exitWith
+    if (_actions isEqualTo []) exitWith
     {
         call TN_event_fnc_closeFlagMenu;
     };

@@ -155,7 +155,7 @@ if (isNil "TN_arsenal_centers") then
 
 [] spawn
 {
-    if (count TN_arsenal_centers == 0) exitWith {};
+    if (TN_arsenal_centers isEqualTo []) exitWith {};
 
     waitUntil { !isNull player };
 

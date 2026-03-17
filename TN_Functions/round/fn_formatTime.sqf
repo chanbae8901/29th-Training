@@ -47,7 +47,7 @@ if (_mins > 0) then
 };
 
 /* --- Seconds (always shown if nothing else) --- */
-if (_secs > 0 || count _timeParts == 0) then
+if (_secs > 0 || _timeParts isEqualTo []) then
 {
     private _secWord = ["Seconds", "Second"]
         select (_secs == 1 || _forceNoS);

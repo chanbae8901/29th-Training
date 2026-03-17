@@ -414,7 +414,7 @@ TN_tracker_fnc_findSide =
             nearObjects [
                 "ACE_G_M14", INFANTRY_GRENADE_DISTANCE
             ];
-        if (count _grenades > 0) then
+        if (_grenades isNotEqualTo []) then
         {
             private _grenade = _grenades select 0;
             _unit setVariable [

@@ -59,7 +59,7 @@ private [
 
 _sqdParams = squadParams _target;
 
-if (count _sqdParams == 0) exitWith
+if (_sqdParams isEqualTo []) exitWith
 {
     //["squad.xml info not found."] call BIS_fnc_error;
     false;
@@ -69,7 +69,7 @@ if (count _sqdParams == 0) exitWith
 _targetSquad = ((_sqdParams select 1) select 4);
 _foundInsignias = _insigniaMap getOrDefault [_targetSquad, []];
 
-if (count _foundInsignias == 0) exitWith
+if (_foundInsignias isEqualTo []) exitWith
 {
     //["Insignia matching %1 not found", _targetSquad] call BIS_fnc_error; //Can be from other company, don't throw error
     false;
