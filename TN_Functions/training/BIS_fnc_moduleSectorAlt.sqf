@@ -900,7 +900,7 @@ switch _mode do {
         ("RscMPProgress" call bis_fnc_rscLayer) cutrsc ["RscMPProgress","plain"];
 
         // Custom code begin
-        if (isNil "TN_sectorlastVic") then {TN_sectorlastVic = ""};
+        if (isNil "TN_training_sectorLastVic") then {TN_training_sectorLastVic = ""};
 
         [_logic] spawn {
             params ["_logic"];
@@ -912,7 +912,7 @@ switch _mode do {
                 if !(alive player && {(side group player) in _sides}) then { continue }; //don't show if player not in a side that can capture
 
                 private _vehicle = objectParent player;
-                if (isNull _vehicle || {typeOf _vehicle == TN_sectorlastVic}) then { continue };
+                if (isNull _vehicle || {typeOf _vehicle == TN_training_sectorLastVic}) then { continue };
 
                 _simulation = tolower (gettext (configfile >> "cfgvehicles" >> typeof _vehicle >> "simulation"));
 
@@ -969,7 +969,7 @@ switch _mode do {
                 {
                     if (player inArea _x) exitWith {
                         systemChat "Warning: You cannot capture or hold a sector while in this vehicle.";
-                        TN_sectorlastVic = typeOf _vehicle;
+                        TN_training_sectorLastVic = typeOf _vehicle;
                     };
                 } forEach _areas;
             };

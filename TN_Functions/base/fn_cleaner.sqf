@@ -5,7 +5,7 @@
  * Description:
  *     Removes all dead bodies globally and deletes loose
  *     ground items (weapons, magazines) within 250 meters
- *     of each garbage can object in TN_garbages. Intended
+ *     of each garbage can object in TN_base_garbages. Intended
  *     to be attached to garbage cans via addAction.
  *
  * Parameters:
@@ -24,7 +24,7 @@ private _dead = allDeadMen;
 private _nearObjects = [];
 {
     _nearObjects append (nearestObjects [_x, ["WeaponHolder", "GroundWeaponHolder"], 250]);
-} forEach TN_garbages;
+} forEach TN_base_garbages;
 
 private _countObjects = count _nearObjects;
 private _countDead = count _dead;

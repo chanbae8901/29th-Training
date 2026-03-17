@@ -52,17 +52,17 @@ switch (_playerSide) do
 {
     case west:
     {
-        _varName = "TN_ticketWEST";
+        _varName = "TN_ticket_WEST";
         _adminLabel = "Blufor";
     };
     case east:
     {
-        _varName = "TN_ticketEAST";
+        _varName = "TN_ticket_EAST";
         _adminLabel = "Opfor";
     };
     case resistance:
     {
-        _varName = "TN_ticketGUER";
+        _varName = "TN_ticket_GUER";
         _adminLabel = "Grnfor";
     };
     case civilian: {};

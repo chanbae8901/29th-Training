@@ -17,21 +17,21 @@
  */
 
 // Ensure JIP client is aware of the status of the ticket system.
-if (isNil "TN_ticketEnabled") then
+if (isNil "TN_ticket_enabled") then
 {
-    TN_ticketEnabled = false;
+    TN_ticket_enabled = false;
 };
-if (isNil "TN_ticketWEST") then
+if (isNil "TN_ticket_WEST") then
 {
-    TN_ticketWEST = 0;
+    TN_ticket_WEST = 0;
 };
-if (isNil "TN_ticketEAST") then
+if (isNil "TN_ticket_EAST") then
 {
-    TN_ticketEAST = 0;
+    TN_ticket_EAST = 0;
 };
-if (isNil "TN_ticketGUER") then
+if (isNil "TN_ticket_GUER") then
 {
-    TN_ticketGUER = 0;
+    TN_ticket_GUER = 0;
 };
 
 if (hasInterface) then
@@ -40,7 +40,7 @@ if (hasInterface) then
         "TN_ticket_respawnCount",
         "Respawn",
         {
-            if (TN_ticketEnabled) then
+            if (TN_ticket_enabled) then
             {
                 private _playerSide = playerSide;
                 [_playerSide] remoteExecCall ["TN_ticket_fnc_count", 2];

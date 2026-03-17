@@ -169,7 +169,7 @@ if (hasInterface) then
         call TN_tracker_fnc_addEventHandlersClient;
     };
 
-    TN_weaponNameCache = createHashMap;
+    TN_tracker_weaponNameCache = createHashMap;
     // --- Remove Statistics from Map, Send All
     //     Round Histories --- //
     addMissionEventHandler ["PreloadFinished",

@@ -21,43 +21,43 @@ params
     ["_ticketAmount", 0, [0]]
 ];
 
-if (!TN_ticketEnabled) exitWith
+if (!TN_ticket_enabled) exitWith
 {
     systemChat "Error: Ticket system disabled!";
 };
 
-private _ticketWEST = TN_ticketWEST;
-private _ticketEAST = TN_ticketEAST;
-private _ticketGUER = TN_ticketGUER;
+private _ticketWEST = TN_ticket_WEST;
+private _ticketEAST = TN_ticket_EAST;
+private _ticketGUER = TN_ticket_GUER;
 
 switch (_ticketSide) do
 {
     case "WEST":
     {
-        TN_ticketWEST = (_ticketWEST + _ticketAmount);
-        publicVariable "TN_ticketWEST";
-        format ["Blufor tickets set to %1", TN_ticketWEST] remoteExecCall ["hint"];
+        TN_ticket_WEST = (_ticketWEST + _ticketAmount);
+        publicVariable "TN_ticket_WEST";
+        format ["Blufor tickets set to %1", TN_ticket_WEST] remoteExecCall ["hint"];
     };
     case "EAST":
     {
-        TN_ticketEAST = (_ticketEAST + _ticketAmount);
-        publicVariable "TN_ticketEAST";
-        format ["Opfor tickets set to %1", TN_ticketEAST] remoteExecCall ["hint"];
+        TN_ticket_EAST = (_ticketEAST + _ticketAmount);
+        publicVariable "TN_ticket_EAST";
+        format ["Opfor tickets set to %1", TN_ticket_EAST] remoteExecCall ["hint"];
     };
     case "GUER":
     {
-        TN_ticketGUER = (_ticketGUER + _ticketAmount);
-        publicVariable "TN_ticketGUER";
-        format ["Grnfor tickets set to %1", TN_ticketGUER] remoteExecCall ["hint"];
+        TN_ticket_GUER = (_ticketGUER + _ticketAmount);
+        publicVariable "TN_ticket_GUER";
+        format ["Grnfor tickets set to %1", TN_ticket_GUER] remoteExecCall ["hint"];
     };
     case "reset":
     {
-        TN_ticketWEST = 0;
-        publicVariable "TN_ticketWEST";
-        TN_ticketEAST = 0;
-        publicVariable "TN_ticketEAST";
-        TN_ticketGUER = 0;
-        publicVariable "TN_ticketGUER";
+        TN_ticket_WEST = 0;
+        publicVariable "TN_ticket_WEST";
+        TN_ticket_EAST = 0;
+        publicVariable "TN_ticket_EAST";
+        TN_ticket_GUER = 0;
+        publicVariable "TN_ticket_GUER";
         "All tickets reset to zero!" remoteExecCall ["hint"];
     };
     default

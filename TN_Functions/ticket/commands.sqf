@@ -10,13 +10,13 @@
                 if (_argument isEqualTo "enable") exitWith
                 {
                     systemChat "Ticket system enabled!";
-                    TN_ticketEnabled = true;
-                    publicVariable "TN_ticketEnabled";
+                    TN_ticket_enabled = true;
+                    publicVariable "TN_ticket_enabled";
                 };
 
                 // Only allow '!tickets enable' if system
                 // is disabled.
-                if (!TN_ticketEnabled) exitWith
+                if (!TN_ticket_enabled) exitWith
                 {
                     systemChat "Error: You must enable the ticket system first with '!tickets enable'";
                 };
@@ -27,9 +27,9 @@
                 {
                     systemChat format [
                         "Current Tickets: Blu: %1, Opf: %2, Grn: %3",
-                        TN_ticketWEST,
-                        TN_ticketEAST,
-                        TN_ticketGUER
+                        TN_ticket_WEST,
+                        TN_ticket_EAST,
+                        TN_ticket_GUER
                     ];
                 };
 
@@ -77,14 +77,14 @@
                     {
                         // Case for disable at the end.
                         systemChat "Ticket system disabled!";
-                        TN_ticketEnabled = false;
-                        publicVariable "TN_ticketEnabled";
-                        TN_ticketWEST = 0;
-                        publicVariable "TN_ticketWEST";
-                        TN_ticketEAST = 0;
-                        publicVariable "TN_ticketEAST";
-                        TN_ticketGUER = 0;
-                        publicVariable "TN_ticketGUER";
+                        TN_ticket_enabled = false;
+                        publicVariable "TN_ticket_enabled";
+                        TN_ticket_WEST = 0;
+                        publicVariable "TN_ticket_WEST";
+                        TN_ticket_EAST = 0;
+                        publicVariable "TN_ticket_EAST";
+                        TN_ticket_GUER = 0;
+                        publicVariable "TN_ticket_GUER";
                     };
                     default
                     {

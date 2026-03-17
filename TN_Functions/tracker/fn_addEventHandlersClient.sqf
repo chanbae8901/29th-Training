@@ -27,7 +27,7 @@ player addEventHandler ["FiredMan",
         "_ammo", "_magazine", "_projectile", "_vehicle"
     ];
     private _realWeapon =
-        TN_weaponNameCache getOrDefaultCall [
+        TN_tracker_weaponNameCache getOrDefaultCall [
             [_weapon, _muzzle, _magazine, _ammo, _vehicle],
             { call TN_tracker_fnc_getWeapon },
             true
@@ -63,7 +63,7 @@ player addEventHandler ["FiredMan",
     if (!local _unit) exitWith {};
     private _vehicle = objNull;
     private _realWeapon =
-        TN_weaponNameCache getOrDefaultCall [
+        TN_tracker_weaponNameCache getOrDefaultCall [
             [_weapon, _muzzle, _magazine, _ammo, _vehicle],
             { call TN_tracker_fnc_getWeapon },
             true
@@ -125,7 +125,7 @@ player addEventHandler ["FiredMan",
     }];
 }] call CBA_fnc_addEventHandler;
 
-TN_lastFireCheck = 0;
+TN_tracker_lastFireCheck = 0;
 
 // Side-lookup that handles dead instigators whose group side
 // has already flipped to civilian. Stored as a global so CBA
@@ -284,7 +284,7 @@ TN_tracker_fnc_findSide =
     {
         if (!alive _unit) exitWith {};
         // Throttle to avoid spam.
-        if (time - TN_lastFireCheck < 2) exitWith {};
+        if (time - TN_tracker_lastFireCheck < 2) exitWith {};
 
         private _weapon = "?";
         // Look for ACE/RHS incendiary grenade.
@@ -330,7 +330,7 @@ TN_tracker_fnc_findSide =
             forEach TN_tracker_cookOffs;
         };
 
-        TN_lastFireCheck = time;
+        TN_tracker_lastFireCheck = time;
 
         if (_weapon == "?") exitWith {};
 

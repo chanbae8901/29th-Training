@@ -8,8 +8,8 @@
  *     Initializes all base interaction objects on the client.
  *     Scans every editor-placed object for a variable name
  *     matching the "base_action_<type>_<id>" convention and
- *     sorts them into global arrays (TN_terminals,
- *     TN_arsenals, TN_garbages). Then sets up:
+ *     sorts them into global arrays (TN_base_terminals,
+ *     TN_base_arsenals, TN_base_garbages). Then sets up:
  *       - Spectator addActions on terminal objects
  *       - Proximity triggers for terminal animations
  *       - Radius-based ACE/vanilla arsenal with environment
@@ -42,9 +42,9 @@
 if !(hasInterface) exitWith {};
 
 //Add actions to spectator terminals
-TN_terminals = [];
-TN_arsenals = [];
-TN_garbages = []; //global variable for cleaner function
+TN_base_terminals = [];
+TN_base_arsenals = [];
+TN_base_garbages = []; //global variable for cleaner function
 
 { //forEach object placed in editor
     private _vicString = vehicleVarName _x;
@@ -69,15 +69,15 @@ TN_garbages = []; //global variable for cleaner function
     {
         case "arsenal":
         {
-            TN_arsenals pushBack _x;
+            TN_base_arsenals pushBack _x;
         };
         case "terminal":
         {
-            TN_terminals pushBack _x;
+            TN_base_terminals pushBack _x;
         };
         case "garbage":
         {
-            TN_garbages pushBack _x;
+            TN_base_garbages pushBack _x;
         };
         default {};
     };
@@ -99,7 +99,7 @@ forEach allMissionObjects "All";
     private _activate = format ["[%1,3] call BIS_fnc_dataTerminalAnimate;", _x];
     private _deActivate = format ["[%1,0] call BIS_fnc_dataTerminalAnimate;", _x];
     _trg setTriggerStatements [_condition, _activate, _deActivate];
-} forEach TN_terminals;
+} forEach TN_base_terminals;
 
 //Very messy area below but I'm lazy
 //------- ACE Arsenal via radius from box -------//
@@ -109,12 +109,12 @@ arsenalActionId = -1;
 
 #define ENV_ON 1 fadeEnvironment 1
 #define ENV_OFF 1 fadeEnvironment 0
-TN_keepEnvironmentSounds = false;
+TN_base_keepEnvironmentSounds = false;
 
 [
     "TN_enteredZeus",
     {
-        TN_keepEnvironmentSounds = true;
+        TN_base_keepEnvironmentSounds = true;
         ENV_ON;
     }
 ] call CBA_fnc_addEventHandler;
@@ -122,7 +122,7 @@ TN_keepEnvironmentSounds = false;
 [
     "TN_exitedZeus",
     {
-        TN_keepEnvironmentSounds = false;
+        TN_base_keepEnvironmentSounds = false;
         if (arsenalActionId != -1) then { ENV_OFF };
     }
 ] call CBA_fnc_addEventHandler;
@@ -130,7 +130,7 @@ TN_keepEnvironmentSounds = false;
 [
     "enteredSpectator",
     {
-        TN_keepEnvironmentSounds = true;
+        TN_base_keepEnvironmentSounds = true;
         ENV_ON;
     }
 ] call CBA_fnc_addEventHandler;
@@ -138,7 +138,7 @@ TN_keepEnvironmentSounds = false;
 [
     "exitedSpectator",
     {
-        TN_keepEnvironmentSounds = false;
+        TN_base_keepEnvironmentSounds = false;
         if (arsenalActionId != -1) then { ENV_OFF };
     }
 ] call CBA_fnc_addEventHandler;
@@ -150,7 +150,7 @@ if (isNil "TN_arsenal_centers") then
 
     {
         TN_arsenal_centers pushBack (getPosASL _x);
-    } forEach TN_arsenals;
+    } forEach TN_base_arsenals;
 };
 
 [] spawn
@@ -186,7 +186,7 @@ if (isNil "TN_arsenal_centers") then
             if (arsenalActionId == -1) then
             {
                 //put inside arsenalActionId since I'm too lazy to put a check for inZone change
-                if !(TN_keepEnvironmentSounds) then
+                if !(TN_base_keepEnvironmentSounds) then
                 {
                     ENV_OFF;
                 };
@@ -263,4 +263,4 @@ if ("parade" in TN_MODULES) then
         "call TN_base_fnc_cleaner",
         nil, 1, false, true, "", "true", 2
     ];
-} forEach TN_garbages;
+} forEach TN_base_garbages;
