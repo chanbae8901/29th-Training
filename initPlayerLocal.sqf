@@ -10,22 +10,22 @@ diag_log text format [
     missionName
 ];
 
-params ["_theClient", "_didJIP"];
+params ["_unit", "_didJIP"];
 
 enableSentences false;
 enableEnvironment [false, true];
 
 //maintains a neutral rating in the event of "accidental" team kills
-_theClient addEventHandler ["HandleRating", {0}];
+_unit addEventHandler ["HandleRating", {0}];
 
 // ====== Misfire prevention. ==========
-[_theClient] spawn
+[_unit] spawn
 {
-    params ["_theMan"];
-    waitUntil {currentWeapon _theMan != ""};
-    if (!(weaponLowered _theMan)) then
+    params ["_unit"];
+    waitUntil {currentWeapon _unit != ""};
+    if (!(weaponLowered _unit)) then
     {
-        _theMan action ["WeaponOnBack", _theMan];
+        _unit action ["WeaponOnBack", _unit];
     };
 };
 
