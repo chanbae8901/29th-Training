@@ -79,7 +79,7 @@ else
     // restore the original forced timer adjusted for total elapsed time.
     if (
         TN_round_safeStartActive
-        && {TN_round_ignoreReadiness}
+        && TN_round_ignoreReadiness
         && {!(isNil "TN_round_shortenedAt")}
     ) then
     {

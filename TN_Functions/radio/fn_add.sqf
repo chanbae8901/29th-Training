@@ -25,7 +25,7 @@ if (isClass (configFile >> "CfgPatches" >> "task_force_radio_items")) then
     private _hasNoRadio =
         (((getUnitLoadout player) select 9) select 2) == "";
 
-    if (TN_addRadio == 2 || { _hasNoRadio }) then
+    if (TN_addRadio == 2 || _hasNoRadio) then
     {
         switch (side (group player)) do
         {

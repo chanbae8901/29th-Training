@@ -812,7 +812,7 @@ TN_round_fnc_flashReadyUI =
                         (TN_round_sideReady findIf
                             {_x}) == -1
                     }
-                    && {!TN_round_safeStartActive}
+                    && !TN_round_safeStartActive
                 ) then
                 {
                     call TN_round_fnc_stopReadyUIPFH;
