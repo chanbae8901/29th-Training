@@ -17,12 +17,31 @@
  *     Nothing
  */
 
+#define IDD_SAFE_START_TIME 29141
+#define IDC_BG 50000
+#define IDC_TIME_ROW 5000
+#define IDC_SLIDER 5140
+#define IDC_NAME 5010
+#define IDC_DEFAULT 5020
+#define IDC_BTN_CANCEL 5100
+#define IDC_BTN_OK 5101
+#define IDC_EDIT_HOURS 5141
+#define IDC_EDIT_MINUTES 5142
+#define IDC_EDIT_SECONDS 5143
+#define DIK_RETURN 28
+#define DIK_NUMPADENTER 156
+#define SLIDER_MIN 10
+#define SLIDER_MAX 3600
+#define SLIDER_SPEED 60
+#define BG_ALPHA 0.7
+#define BTN_WIDTH_MULT 6.2
+
 createDialog "TN_RscDisplaySafeStartTime";
-private _display = findDisplay 29141;
+private _display = findDisplay IDD_SAFE_START_TIME;
 //declare early to put in the back
-private _bg = _display ctrlCreate ["RscText", 50000];
-private _timeCtrl = _display ctrlCreate ["TN_settings_Row_Time", 5000];
-private _sliderCtrl = _display displayCtrl 5140;
+private _bg = _display ctrlCreate ["RscText", IDC_BG];
+private _timeCtrl = _display ctrlCreate ["TN_settings_Row_Time", IDC_TIME_ROW];
+private _sliderCtrl = _display displayCtrl IDC_SLIDER;
 
 private _h = getNumber (missionConfigFile >> "TN_settings_Row_Time" >> "h");
 private _w = getNumber (missionConfigFile >> "TN_settings_Row_Time" >> "w");
@@ -33,7 +52,7 @@ private _wSlider = getNumber (
     missionConfigFile >> "TN_settings_Row_Time" >> "controls" >> "Slider" >> "w"
 );
 
-private _ctrlSettingName = _timeCtrl controlsGroupCtrl 5010;
+private _ctrlSettingName = _timeCtrl controlsGroupCtrl IDC_NAME;
 _ctrlSettingName ctrlSetText "New Safe Start Time:";
 
 //Annoying to center since name ctrl is oversized
@@ -44,16 +63,16 @@ private _xCenter = 0.5 - (_leftEmpty + (_textWidth + _wSlider) / 2);
 _timeCtrl ctrlSetPosition [_xCenter, 0.5 - _h];
 
 //no need for default button in this context
-private _ctrlDefault = _timeCtrl controlsGroupCtrl 5020;
+private _ctrlDefault = _timeCtrl controlsGroupCtrl IDC_DEFAULT;
 _ctrlDefault ctrlEnable false;
 _ctrlDefault ctrlShow false;
 _timeCtrl ctrlCommit 0;
 
 /* --- Cancel button --- */
 
-private _btnCancel = _display ctrlCreate ["RscButtonMenuCancel", 5100];
+private _btnCancel = _display ctrlCreate ["RscButtonMenuCancel", IDC_BTN_CANCEL];
 //same sizes for OK button
-private _wCancel = 6.2 * (((safezoneW / safezoneH) min 1.2) / 40);
+private _wCancel = BTN_WIDTH_MULT * (((safezoneW / safezoneH) min 1.2) / 40);
 private _hCancel = getNumber (configFile >> "RscButtonMenuCancel" >> "h");
 _btnCancel ctrlSetPosition [
     _xCenter + (_leftEmpty) * 0.95,
@@ -72,7 +91,7 @@ _btnCancel ctrlAddEventHandler [
 
 /* --- OK button --- */
 
-private _btnOK = _display ctrlCreate ["RscButtonMenuOK", 5101];
+private _btnOK = _display ctrlCreate ["RscButtonMenuOK", IDC_BTN_OK];
 private _sliderPos = ctrlPosition _sliderCtrl;
 _btnOK ctrlSetPosition [
     (_sliderPos select 0)
@@ -87,7 +106,7 @@ _btnOK ctrlAddEventHandler [
     {
         params ["_ctrl"];
         private _display = ctrlParent _ctrl;
-        private _sliderCtrl = _display displayCtrl 5140;
+        private _sliderCtrl = _display displayCtrl IDC_SLIDER;
 
         if (!TN_round_safeStartActive) then
         {
@@ -125,21 +144,21 @@ _bg ctrlSetPosition [
     _h + _hCancel
 ];
 _bg ctrlCommit 0;
-_bg ctrlSetBackgroundColor [0, 0, 0, 0.7];
+_bg ctrlSetBackgroundColor [0, 0, 0, BG_ALPHA];
 
 /* --- Slider configuration --- */
 
 //modified gui_settingTime
-private _min = 10;
-private _max = 3600;
+private _min = SLIDER_MIN;
+private _max = SLIDER_MAX;
 private _currentValue = (floor ([0] call BIS_fnc_countdown)) max _min;
 
-private _ctrlSlider = _timeCtrl controlsGroupCtrl 5140;
+private _ctrlSlider = _timeCtrl controlsGroupCtrl IDC_SLIDER;
 
 _ctrlSlider sliderSetRange [_min, _max];
 _ctrlSlider sliderSetPosition _currentValue;
 private _range = _max - _min;
-_ctrlSlider sliderSetSpeed [60, 60];
+_ctrlSlider sliderSetSpeed [SLIDER_SPEED, SLIDER_SPEED];
 
 /* --- Slider change handler --- */
 
@@ -150,17 +169,17 @@ _ctrlSlider ctrlAddEventHandler [
         _value = round _value;
 
         private _timeCtrl = ctrlParentControlsGroup _ctrlSlider;
-        (_timeCtrl controlsGroupCtrl 5141)
+        (_timeCtrl controlsGroupCtrl IDC_EDIT_HOURS)
             ctrlSetText (
                 [floor (_value / 3600), 2]
                     call CBA_fnc_formatNumber
             );
-        (_timeCtrl controlsGroupCtrl 5142)
+        (_timeCtrl controlsGroupCtrl IDC_EDIT_MINUTES)
             ctrlSetText (
                 [floor (_value / 60 % 60), 2]
                     call CBA_fnc_formatNumber
             );
-        (_timeCtrl controlsGroupCtrl 5143)
+        (_timeCtrl controlsGroupCtrl IDC_EDIT_SECONDS)
             ctrlSetText (
                 [floor (_value % 60), 2]
                     call CBA_fnc_formatNumber
@@ -184,10 +203,10 @@ _ctrlSlider ctrlAddEventHandler [
             params ["_ctrlEdit"];
 
             private _timeCtrl = ctrlParentControlsGroup _ctrlEdit;
-            private _ctrlSlider = _timeCtrl controlsGroupCtrl 5140;
-            private _ctrlEditHours = _timeCtrl controlsGroupCtrl 5141;
-            private _ctrlEditMinutes = _timeCtrl controlsGroupCtrl 5142;
-            private _ctrlEditSeconds = _timeCtrl controlsGroupCtrl 5143;
+            private _ctrlSlider = _timeCtrl controlsGroupCtrl IDC_SLIDER;
+            private _ctrlEditHours = _timeCtrl controlsGroupCtrl IDC_EDIT_HOURS;
+            private _ctrlEditMinutes = _timeCtrl controlsGroupCtrl IDC_EDIT_MINUTES;
+            private _ctrlEditSeconds = _timeCtrl controlsGroupCtrl IDC_EDIT_SECONDS;
 
             private _value = round (
                 parseNumber ctrlText
@@ -215,9 +234,9 @@ _ctrlSlider ctrlAddEventHandler [
         }
     ];
 } forEach [
-    [5141, floor (_currentValue / 3600)],
-    [5142, floor (_currentValue / 60 % 60)],
-    [5143, floor (_currentValue % 60)]
+    [IDC_EDIT_HOURS, floor (_currentValue / 3600)],
+    [IDC_EDIT_MINUTES, floor (_currentValue / 60 % 60)],
+    [IDC_EDIT_SECONDS, floor (_currentValue % 60)]
 ];
 
 /* --- CBA settings UI update callback --- */
@@ -227,19 +246,19 @@ _timeCtrl setVariable [
     {
         params ["_timeCtrl", "_value"];
 
-        (_timeCtrl controlsGroupCtrl 5140)
+        (_timeCtrl controlsGroupCtrl IDC_SLIDER)
             sliderSetPosition _value;
-        (_timeCtrl controlsGroupCtrl 5141)
+        (_timeCtrl controlsGroupCtrl IDC_EDIT_HOURS)
             ctrlSetText (
                 [floor (_value / 3600), 2]
                     call CBA_fnc_formatNumber
             );
-        (_timeCtrl controlsGroupCtrl 5142)
+        (_timeCtrl controlsGroupCtrl IDC_EDIT_MINUTES)
             ctrlSetText (
                 [floor (_value / 60 % 60), 2]
                     call CBA_fnc_formatNumber
             );
-        (_timeCtrl controlsGroupCtrl 5143)
+        (_timeCtrl controlsGroupCtrl IDC_EDIT_SECONDS)
             ctrlSetText (
                 [floor (_value % 60), 2]
                     call CBA_fnc_formatNumber
@@ -257,8 +276,6 @@ _display displayAddEventHandler [
             "_shift", "_ctrl", "_alt"
         ];
 
-        // DIK_RETURN = 28,
-        // DIK_NUMPADENTER = 156
-        (_key in [28, 156]);
+        (_key in [DIK_RETURN, DIK_NUMPADENTER]);
     }
 ];

@@ -16,6 +16,8 @@
  *     Nothing
  */
 
+#define MIN_MARK_SIZE 1.5
+
 //anything that is a subtype of these classes and is
 //big enough will be marked
 _baseClasses = ["Static", "Cargo_base_F"];
@@ -48,7 +50,7 @@ _canMark =
 
     _size = (boundingBox _obj) select 2;
 
-    _size > 1.5
+    _size > MIN_MARK_SIZE
     && {
         {
             if (_obj isKindOf _x) exitWith { false };

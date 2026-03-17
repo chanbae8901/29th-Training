@@ -1,5 +1,7 @@
 #include "defines.hpp"
 
+#define SAFE_START_POLL_INTERVAL 0.2
+
 /**
  * Function: TN_round_fnc_initSafeStartHelper
  * Author:   Bae [29th ID]
@@ -48,7 +50,7 @@ if (([0] call BIS_fnc_countdown) > 0) then
     [
         {call TN_round_fnc_initSafeStartHelper},
         [],
-        0.2
+        SAFE_START_POLL_INTERVAL
     ] call CBA_fnc_waitAndExecute;
 }
 else

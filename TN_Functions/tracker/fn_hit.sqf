@@ -23,6 +23,8 @@
  * true
  */
 
+#define INSTIGATOR_TIME_INDEX 4
+
 params ["_projectile", "_hitEntity"];
 
 // Things like buildings are considered alive.
@@ -35,9 +37,9 @@ private _instigatorInfo =
 
 // If projectile hits multiple things it can have time of
 // hit already.
-if (count _instigatorInfo > 4) then
+if (count _instigatorInfo > INSTIGATOR_TIME_INDEX) then
 {
-    _instigatorInfo deleteAt 4;
+    _instigatorInfo deleteAt INSTIGATOR_TIME_INDEX;
 };
 _instigatorInfo pushBack
     round(serverTime - TN_tracker_startTime);

@@ -18,6 +18,11 @@
 
 #define SERVER_TEMP \
     (uiNamespace getVariable "TN_settings_serverTemp")
+#define IDC_SLIDER 5120
+#define IDC_SLIDER_EDIT 5121
+#define IDC_NAME 5010
+#define IDC_DEFAULT 5020
+#define COLOR_MODIFIED [0.95, 0.95, 0.1, 1]
 
 params [
     "_controlsGroup", "_setting", "_source",
@@ -30,7 +35,7 @@ _settingData params [
 
 private _range = _max - _min;
 
-private _ctrlSlider = _controlsGroup controlsGroupCtrl 5120;
+private _ctrlSlider = _controlsGroup controlsGroupCtrl IDC_SLIDER;
 _ctrlSlider sliderSetRange [_min, _max];
 _ctrlSlider sliderSetPosition _currentValue;
 _ctrlSlider sliderSetSpeed [
@@ -80,7 +85,7 @@ _ctrlSlider ctrlAddEventHandler [
         ] call (uiNamespace getVariable "TN_fnc_formatEditText");
 
         private _controlsGroup = ctrlParentControlsGroup _ctrlSlider;
-        private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl 5121;
+        private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl IDC_SLIDER_EDIT;
         _ctrlSliderEdit ctrlSetText _editText;
 
         SERVER_TEMP setVariable [
@@ -93,14 +98,12 @@ _ctrlSlider ctrlAddEventHandler [
             ]
         ];
 
-        private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
+        private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_DEFAULT;
         private _defaultValue = (TN_settings_default getVariable _setting) select 0;
         _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 
-        private _ctrlSettingName = _controlsGroup controlsGroupCtrl 5010;
-        _ctrlSettingName ctrlSetTextColor [
-            0.95, 0.95, 0.1, 1
-        ];
+        private _ctrlSettingName = _controlsGroup controlsGroupCtrl IDC_NAME;
+        _ctrlSettingName ctrlSetTextColor COLOR_MODIFIED;
     }
 ];
 
@@ -108,7 +111,7 @@ private _editText = [
     _currentValue, _trailingDecimals, _isPercentage
 ] call (uiNamespace getVariable "TN_fnc_formatEditText");
 
-private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl 5121;
+private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl IDC_SLIDER_EDIT;
 _ctrlSliderEdit ctrlSetText _editText;
 
 _ctrlSliderEdit setVariable [
@@ -143,7 +146,7 @@ _ctrlSliderEdit ctrlAddEventHandler [
         };
 
         private _controlsGroup = ctrlParentControlsGroup _ctrlSliderEdit;
-        private _ctrlSlider = _controlsGroup controlsGroupCtrl 5120;
+        private _ctrlSlider = _controlsGroup controlsGroupCtrl IDC_SLIDER;
 
         _ctrlSlider sliderSetPosition _value;
         _value = sliderPosition _ctrlSlider;
@@ -158,14 +161,12 @@ _ctrlSliderEdit ctrlAddEventHandler [
             ]
         ];
 
-        private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
+        private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_DEFAULT;
         private _defaultValue = (TN_settings_default getVariable _setting) select 0;
         _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 
-        private _ctrlSettingName = _controlsGroup controlsGroupCtrl 5010;
-        _ctrlSettingName ctrlSetTextColor [
-            0.95, 0.95, 0.1, 1
-        ];
+        private _ctrlSettingName = _controlsGroup controlsGroupCtrl IDC_NAME;
+        _ctrlSettingName ctrlSetTextColor COLOR_MODIFIED;
     }
 ];
 
@@ -179,7 +180,7 @@ _ctrlSliderEdit ctrlAddEventHandler [
         ];
 
         private _controlsGroup = ctrlParentControlsGroup _ctrlSliderEdit;
-        private _ctrlSlider = _controlsGroup controlsGroupCtrl 5120;
+        private _ctrlSlider = _controlsGroup controlsGroupCtrl IDC_SLIDER;
 
         private _value = sliderPosition _ctrlSlider;
 
@@ -189,14 +190,12 @@ _ctrlSliderEdit ctrlAddEventHandler [
 
         _ctrlSliderEdit ctrlSetText _editText;
 
-        private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
+        private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_DEFAULT;
         private _defaultValue = (TN_settings_default getVariable _setting) select 0;
         _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
 
-        private _ctrlSettingName = _controlsGroup controlsGroupCtrl 5010;
-        _ctrlSettingName ctrlSetTextColor [
-            0.95, 0.95, 0.1, 1
-        ];
+        private _ctrlSettingName = _controlsGroup controlsGroupCtrl IDC_NAME;
+        _ctrlSettingName ctrlSetTextColor COLOR_MODIFIED;
     }
 ];
 
@@ -209,8 +208,8 @@ _controlsGroup setVariable [
             "_trailingDecimals", "_isPercentage"
         ];
 
-        private _ctrlSlider = _controlsGroup controlsGroupCtrl 5120;
-        private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl 5121;
+        private _ctrlSlider = _controlsGroup controlsGroupCtrl IDC_SLIDER;
+        private _ctrlSliderEdit = _controlsGroup controlsGroupCtrl IDC_SLIDER_EDIT;
 
         _ctrlSlider sliderSetPosition _value;
 
@@ -220,7 +219,7 @@ _controlsGroup setVariable [
 
         _ctrlSliderEdit ctrlSetText _editText;
 
-        private _ctrlDefault = _controlsGroup controlsGroupCtrl 5020;
+        private _ctrlDefault = _controlsGroup controlsGroupCtrl IDC_DEFAULT;
         private _defaultValue = (TN_settings_default getVariable _setting) select 0;
         _ctrlDefault ctrlEnable (_value isNotEqualTo _defaultValue);
     }

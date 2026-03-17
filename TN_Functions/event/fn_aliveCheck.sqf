@@ -19,6 +19,10 @@
  *     TN_event_spectateAreaRadius (global, if respawn-based)
  */
 
+#define RESPAWN_BIRD 1
+#define ALIVE_CHECK_INITIAL_DELAY 10
+#define ALIVE_CHECK_INTERVAL 5
+
 if (!isServer) exitWith {};
 
 scopeName "main";
@@ -27,17 +31,17 @@ scopeName "main";
 
 private _respawnType = 0 call BIS_fnc_missionRespawnType;
 // BIRD respawn = players remain dead.
-private _remainDead = (_respawnType == 1);
+private _remainDead = (_respawnType == RESPAWN_BIRD);
 
 waitUntil {
-    sleep 10;
+    sleep ALIVE_CHECK_INITIAL_DELAY;
     call TN_round_fnc_isRoundActive
 };
 
 
 while {call TN_round_fnc_isRoundActive} do
 {
-    sleep 5;
+    sleep ALIVE_CHECK_INTERVAL;
 
     private _allPlayers = call BIS_fnc_listPlayers;
 

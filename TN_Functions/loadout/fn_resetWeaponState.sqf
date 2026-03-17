@@ -15,6 +15,8 @@
  * Example: [_unit] spawn TN_loadout_fnc_resetWeaponState;
  */
 
+#define WEAPON_SWITCH_DELAY 1
+
 params ["_unit"];
 
 private _primary = primaryWeapon _unit;
@@ -49,7 +51,7 @@ _unit removeWeapon _handgun;
 } forEach _backpackItems;
 
 // Wait until unit is not switching weapon.
-waitUntil { sleep 1; !isSwitchingWeapon _unit };
+waitUntil { sleep WEAPON_SWITCH_DELAY; !isSwitchingWeapon _unit };
 
 _unit addWeapon _primary;
 
@@ -68,7 +70,7 @@ _unit addWeapon _handgun;
     _unit addHandgunItem _x;
 } forEach _handgunItems;
 
-sleep 1;
+sleep WEAPON_SWITCH_DELAY;
 
 {
     _unit addPrimaryWeaponItem _x;
