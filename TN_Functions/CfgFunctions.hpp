@@ -52,6 +52,14 @@ class TN_Round
         class collectSilentWeapons {};
         class initReadyUI {};
     };
+    class ReadyUI
+    {
+        file = "TN_Functions\round\readyui";
+        class createReadyUIControls {};
+        class stopReadyUIPFH {};
+        class updateReadyUI {};
+        class flashReadyUI {};
+    };
 };
 
 class TN_Radio
