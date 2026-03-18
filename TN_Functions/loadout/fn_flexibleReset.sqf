@@ -163,21 +163,17 @@ else
         _tries = _tries + 1;
     };
 
-    [] spawn
-    {
-        sleep 2;
+    [{
         player allowDamage true;
         TN_loadout_teleporting = nil;
-    };
+    }, [], 2] call CBA_fnc_waitAndExecute;
 
     _teleport = _tries > 0;
 
     if (_teleport) then
     {
-        [_point] spawn
-        {
+        [{
             params ["_point"];
-            sleep 5;
             if (player distance2D _point > 75) then
             {
                 private _msg = format
@@ -187,7 +183,7 @@ else
                 ];
                 _msg remoteExecCall ["systemChat", 0];
             };
-        };
+        }, [_point], 5] call CBA_fnc_waitAndExecute;
     };
 };
 
