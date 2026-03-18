@@ -188,27 +188,31 @@ class TN_Tracker
         class recordKill {};
         class saveEvent {};
         class recordSectorCapture {};
-        class eventToString {};
-        class killCountsToString {};
         class recordACEConscious {};
         class getName {};
         class nameToNum {};
         class weaponToNum {};
-        class createDiaryEntries {};
-        class colorNameWithSide {};
         class getSideAtTime {};
-        class copyToClipboard {};
-        class copyRecordToClipboard {};
-        class getKillCounts {};
-        class findPlayerEvents {};
         class getWeapon {};
-        class sendAll {};
-        class receiveAll {};
         class addEventHandlersClient {};
         class handleFired {};
         class handleVehicleKilled {};
         class hit {};
         class sendHit {};
+    };
+    class DiaryFunctions
+    {
+        file = "TN_Functions\tracker\diary";
+        class createDiaryEntries {};
+        class eventToString {};
+        class killCountsToString {};
+        class colorNameWithSide {};
+        class findPlayerEvents {};
+        class getKillCounts {};
+        class copyRecordToClipboard {};
+        class copyToClipboard {};
+        class sendAll {};
+        class receiveAll {};
     };
 };
 
