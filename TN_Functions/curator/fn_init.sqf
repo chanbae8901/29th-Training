@@ -8,8 +8,8 @@
  * merges any editor-placed curator modules into the unit
  * list, creates the admin curator module, and sets up
  * admin login/logout handlers that reassign the shared
- * zeus_admin module. Also spawns the object exclusion
- * loop.
+ * zeus_admin module. Also starts the object exclusion
+ * perFrameHandler.
  *
  * Events Used:
  *     TN_enteredZeus - Fired by cfgEventHandlers when a
@@ -99,5 +99,5 @@ if (isServer) then
             { call TN_curator_fnc_handleAdminStateChanged }];
     }] call CBA_fnc_waitUntilAndExecute;
 
-    [] spawn TN_curator_fnc_excludeObjects;
+    call TN_curator_fnc_excludeObjects;
 };

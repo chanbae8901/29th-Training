@@ -2,75 +2,69 @@
  * Author: Bae [29th ID], modified from Dott/Hill [29th ID]
  * Prevents important mission objects (those whose
  * variable name starts with "base_") from being editable
- * in Zeus. On first run, iterates all editor-placed
- * objects and flags qualifying ones with
- * "isCuratorExcluded". Then enters a 3-second polling
- * loop that strips flagged objects from every curator's
- * editable list. The 3-second interval is a balance
- * between responsiveness (newly added objects get removed
- * quickly) and performance (polling all curators and
- * their editable objects is not free).
+ * in Zeus. Iterates all editor-placed objects and flags
+ * qualifying ones with "isCuratorExcluded". Then registers
+ * a 3-second perFrameHandler that strips flagged objects
+ * from every curator's editable list. The 3-second
+ * interval is a balance between responsiveness (newly
+ * added objects get removed quickly) and performance
+ * (polling all curators and their editable objects is not
+ * free).
  *
  * Arguments:
  * None
  *
  * Return Value:
- * Nothing (runs indefinitely in a spawned loop)
+ * Nothing
  *
  * Example:
- * [] spawn TN_curator_fnc_excludeObjects;
+ * call TN_curator_fnc_excludeObjects;
  */
 
 if (!isServer) exitWith {};
 
-TN_script_curatorExcludedObjects = [] spawn
-{
-    { //forEach object placed in editor
-        // Skip local-only objects (not network-synced).
-        if (netId _x == "0:0") then { continue };
+{ //forEach object placed in editor
+    // Skip local-only objects (not network-synced).
+    if (netId _x == "0:0") then { continue };
 
-        private _vicString = vehicleVarName _x;
-        if (_vicString isEqualTo "") then { continue };
+    private _vicString = vehicleVarName _x;
+    if (_vicString isEqualTo "") then { continue };
 
-        _vicString = toLowerANSI _vicString;
+    _vicString = toLowerANSI _vicString;
 
-        private _tags = _vicString splitString "_";
+    private _tags = _vicString splitString "_";
 
-        private _baseObject = _tags select 0;
-        if (_baseObject isNotEqualTo "base") then { continue };
+    private _baseObject = _tags select 0;
+    if (_baseObject isNotEqualTo "base") then { continue };
 
-        _x setVariable ["isCuratorExcluded", true, false];
-    }
-    forEach allMissionObjects "All";
+    _x setVariable ["isCuratorExcluded", true, false];
+}
+forEach allMissionObjects "All";
 
-    while { true } do
+[{
     {
+        private _curator = _x;
+        private _editableObjs =
+            curatorEditableObjects _curator;
+        private _objsToRemove = [];
+
         {
-            private _curator = _x;
-            private _editableObjs =
-                curatorEditableObjects _curator;
-            private _objsToRemove = [];
-
+            if (
+                !isNull _x
+                && { _x getVariable [
+                    "isCuratorExcluded", false
+                ] }
+            ) then
             {
-                if (
-                    !isNull _x
-                    && { _x getVariable [
-                        "isCuratorExcluded", false
-                    ] }
-                ) then
-                {
-                    _objsToRemove pushBack _x;
-                };
-            } forEach _editableObjs;
-
-            if (_objsToRemove isNotEqualTo []) then
-            {
-                _curator removeCuratorEditableObjects [
-                    _objsToRemove, true
-                ];
+                _objsToRemove pushBack _x;
             };
-        } forEach allCurators;
+        } forEach _editableObjs;
 
-        sleep 3;
-    };
-};
+        if (_objsToRemove isNotEqualTo []) then
+        {
+            _curator removeCuratorEditableObjects [
+                _objsToRemove, true
+            ];
+        };
+    } forEach allCurators;
+}, 3] call CBA_fnc_addPerFrameHandler;
