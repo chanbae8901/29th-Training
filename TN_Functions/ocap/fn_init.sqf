@@ -152,11 +152,9 @@ if (isServer) then
     //So we must manually add sectors
     if (ocap_settings_trackSectors) then
     {
-        addMissionEventHandler ["EntityCreated", 
-        {
+        ["ModuleSector_F", "Init", {
             params ["_entity"];
-            if !(_entity isKindOf "ModuleSector_F") exitWith {};
             [_entity] call ocap_recorder_fnc_trackSectors;
-        }];
+        }] call CBA_fnc_addClassEventHandler;
     };
 };

@@ -38,21 +38,8 @@ if (hasInterface) then
 // --- Server-side: disable TI on vehicles ---
 if (isServer) then
 {
-    addMissionEventHandler ["EntityCreated",
-    {
-        private _objectCreated = _this;
-
-        if (_objectCreated isKindOf "AllVehicles"
-            && {!(_objectCreated isKindOf "Man")}) then
-        {
-            _objectCreated disableTIEquipment TN_disableTI;
-        };
-    }];
-
-    {
-        if !(_x isKindOf "Man") then
-        {
-            _x disableTIEquipment TN_disableTI;
-        };
-    } forEach allMissionObjects "AllVehicles";
+    ["AllVehicles", "Init", {
+        params ["_objectCreated"];
+        _objectCreated disableTIEquipment TN_disableTI;
+    }, true, ["Man"], true] call CBA_fnc_addClassEventHandler;
 };

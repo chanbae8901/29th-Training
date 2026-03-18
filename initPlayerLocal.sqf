@@ -31,16 +31,14 @@ _unit addEventHandler ["HandleRating", {0}];
 }, [_unit]] call CBA_fnc_waitUntilAndExecute;
 
 // ====== Prevent respawn showing up on old unit for split second.==========
-addMissionEventHandler ["EntityCreated",
-{
+["Man", "Init", {
     params ["_entity"];
-    if (!(_entity isKindOf "Man") || local _entity) exitWith {};
+    if (local _entity) exitWith {};
     _entity hideObject true;
     [{
         (_this select 0) hideObject false;
     }, [_entity], HIDE_ENTITY_DELAY] call CBA_fnc_waitAndExecute;
-    //prev 0.5, worked fine unless server/network overload
-}];
+}] call CBA_fnc_addClassEventHandler;
 
 // ====== Fix inconsistent bug where chat is no longer displayed after leaving main menu ======
 ["TN_exitedPauseMenu", {

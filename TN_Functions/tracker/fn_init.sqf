@@ -124,24 +124,12 @@ if (isServer) then
     ] call CBA_fnc_addEventHandler;
 
     // --- Sector Capture --- //
-    {
-        [_x, "ownerChanged",
-        {
+    ["ModuleSector_F", "Init", {
+        params ["_entity"];
+        [_entity, "ownerChanged", {
             call TN_tracker_fnc_recordSectorCapture;
         }] call BIS_fnc_addScriptedEventHandler;
-    } forEach (allMissionObjects "ModuleSector_F");
-
-    addMissionEventHandler ["EntityCreated",
-    {
-        params ["_entity"];
-        if (_entity isKindOf "ModuleSector_F") then
-        {
-            [_entity, "ownerChanged",
-            {
-                call TN_tracker_fnc_recordSectorCapture;
-            }] call BIS_fnc_addScriptedEventHandler;
-        };
-    }];
+    }, true, [], true] call CBA_fnc_addClassEventHandler;
 
     // Store name as it gets deleted automatically later.
     addMissionEventHandler ["EntityKilled",

@@ -19,46 +19,20 @@ if (!isServer) exitWith {};
 
 if (isClass (configFile >> "CfgPatches" >> "ace_main")) then
 {
-    addMissionEventHandler ["EntityCreated",
-    {
+    //Note that we do not retroactively apply to editor placed helicopters.
+    ["Helicopter", "Init", {
         if (!TN_autoAddFRIES) exitWith {};
-
-        private _objectCreated = _this;
-
-        if !(isNumber (
-            (configOf _objectCreated) >> "ace_fastroping_enabled"
-        )) exitWith {};
-
-        if (_objectCreated isKindOf "Helicopter") then
-        {
-            [_objectCreated] call ace_fastroping_fnc_equipFRIES;
-        };
-    }];
+        params ["_objectCreated"];
+        if !(isNumber ((configOf _objectCreated) >> "ace_fastroping_enabled")) exitWith {};
+        [_objectCreated] call ace_fastroping_fnc_equipFRIES;
+    }] call CBA_fnc_addClassEventHandler;
 };
 
-addMissionEventHandler ["EntityCreated",
-{
+["AllVehicles", "Init", {
     if !(TN_removeDefaultVehicleInventories) exitWith {};
-
-    private _objectCreated = _this;
-
-    if (_objectCreated isKindOf "AllVehicles"
-        && {!(_objectCreated isKindOf "Man")}) then
-    {
-        clearWeaponCargoGlobal _objectCreated;
-        clearMagazineCargoGlobal _objectCreated;
-        clearItemCargoGlobal _objectCreated;
-        clearBackpackCargoGlobal _objectCreated;
-    };
-}];
-
-if !(TN_removeDefaultVehicleInventories) exitWith {};
-
-{
-    if (_x isKindOf "Man") then { continue };
-
-    clearWeaponCargoGlobal _x;
-    clearMagazineCargoGlobal _x;
-    clearItemCargoGlobal _x;
-    clearBackpackCargoGlobal _x;
-} forEach allMissionObjects "AllVehicles";
+    params ["_objectCreated"];
+    clearWeaponCargoGlobal _objectCreated;
+    clearMagazineCargoGlobal _objectCreated;
+    clearItemCargoGlobal _objectCreated;
+    clearBackpackCargoGlobal _objectCreated;
+}, true, ["Man"], true] call CBA_fnc_addClassEventHandler;
