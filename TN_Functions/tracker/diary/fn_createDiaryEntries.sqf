@@ -16,7 +16,7 @@
  * true <BOOL>
  */
 
-#include "eventNumbers.hpp"
+#include "..\eventNumbers.hpp"
 if (!hasInterface) exitWith {};
 params [
     "_events", "_names", "_sides",

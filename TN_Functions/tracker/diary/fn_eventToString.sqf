@@ -13,7 +13,7 @@
  * Formatted event text with HTML color tags <STRING>
  */
 
-#include "eventNumbers.hpp"
+#include "..\eventNumbers.hpp"
 params ["_event", "_names", "_sides", "_weapons"];
 _event params ["_eventType", "_eventTime", "_eventInfo"];
 

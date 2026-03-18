@@ -12,7 +12,7 @@
  * Sorted kill count array with elements [[unit number, side of unit], numKills] <ARRAY>
  */
 
-#include "eventNumbers.hpp"
+#include "..\eventNumbers.hpp"
 params ["_events", "_sides"];
 // [[unit number, side of unit],
 //  [instigator number, side of instigator]]

@@ -13,7 +13,7 @@
  * Indexes of relevant events in _events <ARRAY>
  */
 
-#include "eventNumbers.hpp"
+#include "..\eventNumbers.hpp"
 params ["_playerIndex", "_events"];
 if (_playerIndex == -1) exitWith { [] };
 
