@@ -24,31 +24,19 @@ if (_loggedIn) exitWith
 {
     if (isNull getAssignedCuratorLogic _unit) then
     {
-        [_unit] spawn
-        {
-            params ["_unit"];
-            unassignCurator zeus_admin;
-            sleep .1;
-            _unit assignCurator zeus_admin;
-        };
+        unassignCurator zeus_admin;
+        [{
+            _this assignCurator zeus_admin;
+        }, _unit, 0.1] call CBA_fnc_waitAndExecute;
     };
 };
 
 //logging out
-[_unit] spawn
+if (getAssignedCuratorLogic _unit == zeus_admin) then
 {
-    params ["_unit"];
-    if (getAssignedCuratorLogic _unit == zeus_admin) then
-    {
-        [_unit] spawn
-        {
-            params ["_unit"];
-            unassignCurator zeus_admin;
-            sleep .1;
-            isNil {
-                [vehicleVarName _unit, roleDescription _unit]
-                    call TN_curator_fnc_createModule;
-            };
-        };
-    };
+    unassignCurator zeus_admin;
+    [{
+        [vehicleVarName _this, roleDescription _this]
+            call TN_curator_fnc_createModule;
+    }, _unit, 0.1] call CBA_fnc_waitAndExecute;
 };
