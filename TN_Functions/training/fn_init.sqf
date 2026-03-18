@@ -103,7 +103,7 @@ if (hasInterface) then
     ] call CBA_fnc_addEventHandler;
     /* ---------------------------------- */
 
-    [] spawn TN_training_fnc_initDefaultLoadouts;
+    call TN_training_fnc_initDefaultLoadouts;
 };
 
 if (isServer) then

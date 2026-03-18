@@ -72,7 +72,7 @@ if (TN_event_numberOfLives > 0) then
         [
             "TN_event_respawn",
             "Respawn",
-            { [] spawn TN_event_fnc_respawn }
+            { call TN_event_fnc_respawn }
         ] call CBA_fnc_addBISPlayerEventHandler;
     };
 };

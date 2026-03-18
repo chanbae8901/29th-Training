@@ -4,7 +4,7 @@
             "parade",
             {
                 // 125m hardcoded radius around the calling player.
-                [player, 125] spawn TN_parade_fnc_forceAll;
+                [player, 125] call TN_parade_fnc_forceAll;
             }
         ]
     ],
