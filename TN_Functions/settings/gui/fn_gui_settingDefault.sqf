@@ -58,8 +58,6 @@ _ctrlDefault ctrlAddEventHandler [
         private _controlsGroup = ctrlParentControlsGroup _ctrlDefault;
         [_controlsGroup, _defaultValue] call (_controlsGroup getVariable "cba_settings_fnc_updateUI");
 
-        //[_controlsGroup] call (_controlsGroup getVariable "cba_settings_fnc_updateUI_locked");
-
         private _ctrlSettingName = _controlsGroup controlsGroupCtrl 5010;
         _ctrlSettingName ctrlSetTextColor [
             0.95, 0.95, 0.1, 1

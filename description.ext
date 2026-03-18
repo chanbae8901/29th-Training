@@ -27,7 +27,6 @@ OverviewText = "<t align='center'><t size='1.5' color='#2A1ADC'>BLUFOR</t><t siz
 dev = "29th Engineers";
 OnLoadMissionTime = 1;
 loadScreen = "Pictures\116Inf InsigniaAlpha.paa";
-//OverviewPicture = "Pictures\116Inf InsigniaAlpha.paa"; //doesn't work on a dedicated server
 
 class Header
 {
@@ -46,7 +45,6 @@ respawnTemplates[] = {"MenuPosition", "MenuInventory"};
 enableDebugConsole = 1;
 disabledAI = 1;
 forceRotorLibSimulation = 0;
-//disableChannels[] = {{0,false,false},{1,false,true},{2,true,true},{3,false,true},{4,false,true},{5,false,true},{6,false,false}};
 saving = 0;
 
 debriefing = 1;

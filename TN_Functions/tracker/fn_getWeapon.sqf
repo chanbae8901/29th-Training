@@ -102,12 +102,10 @@ else
     _strs pushBack _weaponName;
 
     if (
-        //getNumber (configFile >> "CfgAmmo" >> _ammo >> "explosive") > 0 ||
         getText (
             configFile >> "CfgAmmo"
                 >> _ammo >> "simulation"
         ) != "shotBullet"
-        //getText (configFile >> "CfgAmmo" >> _ammo >> "weaponType") == "cannon"
         || count getArray (
             _weaponCfg >> "magazineWell"
         ) > 0

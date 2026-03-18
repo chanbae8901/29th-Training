@@ -48,7 +48,6 @@ if (!local _target) exitWith
 if (!isClass (configFile >> "CfgPatches" >> "29th_Insignias"))
     exitWith
 {
-    //["29th Insignias not found."] call BIS_fnc_error;
     false;
 };
 
@@ -63,7 +62,6 @@ _sqdParams = squadParams _target;
 
 if (_sqdParams isEqualTo []) exitWith
 {
-    //["squad.xml info not found."] call BIS_fnc_error;
     false;
 };
 
@@ -73,7 +71,6 @@ _foundInsignias = _insigniaMap getOrDefault [_targetSquad, []];
 
 if (_foundInsignias isEqualTo []) exitWith
 {
-    //["Insignia matching %1 not found", _targetSquad] call BIS_fnc_error; //Can be from other company, don't throw error
     false;
 };
 

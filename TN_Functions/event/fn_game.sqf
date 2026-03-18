@@ -77,16 +77,3 @@ if (_forceEnding) exitWith
         };
     };
 };
-
-//NO EVAL RIGHT NOW - WILL BE WRITTEN LATER - Dott
-
-//private _eventSectors =
-//    missionnamespace getvariable
-//        ["BIS_fnc_moduleSector_sectors", []];
-//private _eventSectorCount =
-//    count _eventSectors;
-
-//["end1"] remoteExecCall ["BIS_fnc_endMission"];
-
-//call{t_sector_1 getVariable "owner" == WEST}
-//call{t_sector_1 enablesimulation false;}
