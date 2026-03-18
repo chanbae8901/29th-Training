@@ -96,30 +96,31 @@ if (isServer) then
         "TN_round_ended",
         {
             TN_tracker_startTime = -1;
-            [] spawn
-            {
-                // Wait for any last second events from
-                // the network.
-                sleep 1;
-                publicVariable "TN_tracker_startTime";
-                [
-                    TN_tracker_events,
-                    TN_tracker_names,
-                    TN_tracker_sides,
-                    TN_tracker_weapons,
-                    TN_tracker_currentRound
-                ] remoteExecCall ["TN_tracker_fnc_createDiaryEntries"];
+            // Wait for any last second events from
+            // the network.
+            [
+                {
+                    publicVariable "TN_tracker_startTime";
+                    [
+                        TN_tracker_events,
+                        TN_tracker_names,
+                        TN_tracker_sides,
+                        TN_tracker_weapons,
+                        TN_tracker_currentRound
+                    ] remoteExecCall ["TN_tracker_fnc_createDiaryEntries"];
 
-                TN_tracker_previous pushBack
-                [
-                    +TN_tracker_events,
-                    +TN_tracker_names,
-                    +TN_tracker_sides,
-                    +TN_tracker_weapons
-                ];
+                    TN_tracker_previous pushBack
+                    [
+                        +TN_tracker_events,
+                        +TN_tracker_names,
+                        +TN_tracker_sides,
+                        +TN_tracker_weapons
+                    ];
 
-                TN_tracker_currentRound = TN_tracker_currentRound + 1;
-            };
+                    TN_tracker_currentRound = TN_tracker_currentRound + 1;
+                },
+                [], 1
+            ] call CBA_fnc_waitAndExecute;
         }
     ] call CBA_fnc_addEventHandler;
 
@@ -148,11 +149,10 @@ if (hasInterface) then
     // --- Attacker Info --- //
     TN_tracker_cookOffs = [];
 
-    [] spawn
-    {
-        waitUntil { !isNull player };
-        call TN_tracker_fnc_addEventHandlersClient;
-    };
+    [
+        { !isNull player },
+        { call TN_tracker_fnc_addEventHandlersClient }
+    ] call CBA_fnc_waitUntilAndExecute;
 
     TN_tracker_weaponNameCache = createHashMap;
     // --- Remove Statistics from Map, Send All

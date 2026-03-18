@@ -20,16 +20,12 @@ if (!isClass (configFile >> "CfgPatches" >> "29thID_Uniforms"))
 
 if (hasInterface) then
 {
-    // Wait for player object, then apply initial parade loadout
-    // in unscheduled scope via isNil trick.
-    [] spawn
-    {
-        waitUntil { !isNull player };
-        //prevent race condition where sometimes default parade loadout
-        //is applied after custom parade loadout
-        waitUntil { primaryWeapon player == "rhs_weap_m1garand_sa43"}; 
-        isNil { call TN_parade_fnc_handleInitialInventory };
-    };
+    // Wait for default parade loadout, then apply initial
+    // parade inventory.
+    [
+        { primaryWeapon player == "rhs_weap_m1garand_sa43" },
+        { call TN_parade_fnc_handleInitialInventory }
+    ] call CBA_fnc_waitUntilAndExecute;
 };
 
 if (isServer) then
