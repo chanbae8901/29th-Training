@@ -21,9 +21,7 @@
  */
 
 // --- Bail if spectator was never initialized ---
-if (isNil {
-    missionNamespace getVariable "BIS_EGSpectator_initialized"
-}) exitWith { false };
+if (isNil "BIS_EGSpectator_initialized") exitWith { false };
 
 ["Terminate"] call BIS_fnc_EGSpectator;
 [player, false] remoteExecCall ["hideObjectGlobal", 2];
@@ -35,20 +33,16 @@ hintSilent "";
 // to survive collision with other players leaving the box.
 player allowDamage false;
 
-[] spawn
-{
-    sleep 2;
-
+[{
     // Don't conflict with the loadout teleport system.
     if (!isNil "TN_loadout_teleporting") exitWith {};
 
     player allowDamage true;
-};
+}, [], 2] call CBA_fnc_waitAndExecute;
 
 player switchCamera "internal";
 
-["exitSpectator", "onEachFrame"]
-    call BIS_fnc_removeStackedEventHandler;
+[TN_spectator_exitPFH] call CBA_fnc_removePerFrameHandler;
 
 if !(weaponLowered player) then
 {

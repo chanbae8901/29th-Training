@@ -4,20 +4,18 @@
  * per-frame handler that exits spectator when the player presses
  * Reload, moves too far from the start position, or dies.
  *
- * Must be spawned, not called.
- *
  * KNOWN ISSUE: The player can sometimes respawn while still in the
  * spectator box. The onEachFrame handler catches this via an
  * !alive check and forces an exit to prevent a stuck state.
  *
  * Arguments:
- * None
+ * 0: Unit to place into spectator (default: player) <OBJECT>
  *
  * Return Value:
  * True if spectator entered, false if blocked <BOOL>
  *
  * Example:
- * [] spawn TN_spectator_fnc_enter
+ * [] call TN_spectator_fnc_enter
  */
 
 /*
@@ -39,6 +37,8 @@
  * _this select 9 : Whether to show entities / locations lists
  */
 
+params [["_unit", player]];
+
 if (isDedicated || !hasInterface) exitWith
 {
     ["Player must not be dedicated server or HC."]
@@ -56,44 +56,36 @@ if (TN_limitSpectator == 2) exitWith
 hintSilent "SPECTATOR\n----------\nPress RELOAD to exit";
 
 // --- Periodic reminder while spectating ---
-[] spawn
-{
-    while {
-        !isNil {
-            missionNamespace getVariable
-                "BIS_EGSpectator_initialized"
-        }
-    } do
-    {
-        cutText [
-            "SPECTATOR\n----------\nPress RELOAD to exit",
-            "PLAIN DOWN"
-        ];
-        sleep 30;
-    };
-};
+[{
+    cutText [
+        "SPECTATOR\n----------\nPress RELOAD to exit",
+        "PLAIN DOWN"
+    ];
+}, 30, [], {}, {}, {true}, {
+    isNil "BIS_EGSpectator_initialized"
+}] call CBA_fnc_createPerFrameHandlerObject;
 
-[player, true] remoteExecCall ["hideObjectGlobal", 2];
+[_unit, true] remoteExecCall ["hideObjectGlobal", 2];
 
 // --- Build params based on spectator restriction level ---
 private _params = switch (TN_limitSpectator) do
 {
-    case 0: { [player, [], false] };
+    case 0: { [_unit, [], false] };
     case 1:
     {
-        [player, [side player], false, false, false, false]
+        [_unit, [side _unit], false, false, false, false]
     };
-    default { [player, [], false] };
+    default { [_unit, [], false] };
 };
 
 ["Initialize", _params] call BIS_fnc_EGSpectator;
 
 // --- Per-frame exit checks ---
-private _startPos = getPosATL player;
+private _startPos = getPosATL _unit;
 
-["exitSpectator", "onEachFrame",
-{
-    params ["_startPos"];
+TN_spectator_exitPFH = [{
+    params ["_args"];
+    _args params ["_startPos", "_unit"];
 
     // Reload key pressed.
     if (inputAction "ReloadMagazine" > 0) exitWith
@@ -102,17 +94,17 @@ private _startPos = getPosATL player;
     };
 
     // Player drifted away from start position.
-    if (getPosATL player distanceSqr _startPos > 25) exitWith
+    if (getPosATL _unit distanceSqr _startPos > 25) exitWith
     {
         call TN_spectator_fnc_exit;
     };
 
     // Player respawned while in spectator (known issue).
-    if (!alive player) exitWith
+    if (!alive _unit) exitWith
     {
         call TN_spectator_fnc_exit;
     };
-}, [_startPos]] call BIS_fnc_addStackedEventHandler;
+}, 0, [_startPos, _unit]] call CBA_fnc_addPerFrameHandler;
 
 ["enteredSpectator", []] call CBA_fnc_localEvent;
 

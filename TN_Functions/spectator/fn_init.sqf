@@ -26,7 +26,7 @@ if (!hasInterface) exitWith {};
         if (TN_autoSpectate) then
         {
             systemChat "AutoSpectate is ON.";
-            [_newUnit] spawn TN_spectator_fnc_enter;
+            [_newUnit] call TN_spectator_fnc_enter;
         };
     };
 }] call CBA_fnc_addBISPlayerEventHandler;

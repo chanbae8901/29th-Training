@@ -84,7 +84,7 @@ forEach allMissionObjects "All";
 {
     _x addAction [
         "<img image='\A3\Ui_f\data\GUI\Rsc\RscDisplayEGSpectator\Follow.paa'/><t color='#00ff00'>  Spectator</t>",
-        "[] spawn TN_spectator_fnc_enter",
+        "[] call TN_spectator_fnc_enter",
         nil, 6, false, true, "", "true", 4
     ];
 
