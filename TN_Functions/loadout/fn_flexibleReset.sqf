@@ -52,7 +52,7 @@ if (_inventory isNotEqualTo []) then
         systemChat "Player in base, skipping rearm.";
     };
 
-    [player, _inventory, true] spawn TN_loadout_fnc_fullSetUnitLoadout;
+    [player, _inventory, true] call TN_loadout_fnc_fullSetUnitLoadout;
 
     _resetInventory = true;
 };

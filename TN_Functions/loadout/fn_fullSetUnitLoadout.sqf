@@ -2,7 +2,7 @@
  * Author: Bae [29th ID]
  * Wrapper around CBA_fnc_setLoadout that also resets weapon
  * state (silent weapon bug fix) and reapplies insignia once
- * the reset finishes. Prefer spawning this over calling
+ * the reset finishes. Prefer calling this over calling
  * setUnitLoadout directly.
  *
  * Arguments:
@@ -14,7 +14,7 @@
  * False if unit is not local or alive, true otherwise <BOOL>
  *
  * Example:
- * [player, _loadout, true] spawn TN_loadout_fnc_fullSetUnitLoadout;
+ * [player, _loadout, true] call TN_loadout_fnc_fullSetUnitLoadout;
  */
 
 params ["_unit", "_loadout", "_fullMagazines"];
@@ -27,12 +27,7 @@ if (!local _unit) exitWith
 
 if (!alive _unit) exitWith { false };
 
-// Run in unscheduled environment.
-isNil
-{
-    [_unit, _loadout, _fullMagazines]
-        call CBA_fnc_setLoadout;
-};
+[_unit, _loadout, _fullMagazines] call CBA_fnc_setLoadout;
 
 // Don't pull out weapon if no primary.
 if (primaryWeapon _unit == "") then
