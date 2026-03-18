@@ -1,4 +1,4 @@
-#include "..\..\data\defines.hpp"
+#include "..\..\data\templates.hpp"
 
 /*
  * Author: Bae [29th ID], modified from Hill [29th ID]

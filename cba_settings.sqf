@@ -1,4 +1,4 @@
-#include "data\defines.hpp"
+#include "data\templates.hpp"
 
 #ifdef TN_TRAINING
     #define OCAP_SAVETAG "Training"

@@ -3,7 +3,7 @@ diag_log text format [
     missionName
 ];
 
-#include "data\defines.hpp"
+#include "data\templates.hpp"
 
 {
     private _moduleInitName = format ["TN_%1_fnc_init", _x];

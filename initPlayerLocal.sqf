@@ -1,4 +1,4 @@
-#include "data\defines.hpp"
+#include "data\templates.hpp"
 
 #define HIDE_ENTITY_DELAY 1.0
 #define CHAT_FIX_DELAY 0.1
