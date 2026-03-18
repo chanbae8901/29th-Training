@@ -110,34 +110,28 @@ if (hasInterface) then
                 && TN_disableScoreboard
             ) then
             {
-                [] spawn
-                {
-                    waitUntil {shownScoreTable == -1};
+                [{shownScoreTable == -1}, {
                     showScoretable 0;
-                };
+                }] call CBA_fnc_waitUntilAndExecute;
             };
             removeMissionEventHandler ["Draw2D", disableRespawnScoreboard];
         }
     ] call CBA_fnc_addBISPlayerEventHandler;
 
     /* --- Fix countdown not showing if no sectors placed --- */
-    [] spawn
-    {
-        waitUntil {!isNull (findDisplay 46)};
+    [{!isNull (findDisplay 46)}, {
         ("RscMPProgress" call BIS_fnc_rscLayer)
             cutRsc ["RscMPProgress", "plain"];
-    };
+    }] call CBA_fnc_waitUntilAndExecute;
 
     /* --- Fix countdown not showing after leaving curator --- */
     [
         "TN_exitedZeus",
         {
-            [] spawn
-            {
-                sleep 0.1;
+            [{
                 ("RscMPProgress" call BIS_fnc_rscLayer)
                     cutRsc ["RscMPProgress", "plain"];
-            };
+            }, [], 0.1] call CBA_fnc_waitAndExecute;
         }
     ] call CBA_fnc_addEventHandler;
 
@@ -214,11 +208,8 @@ if (isServer) then
         {
             TN_round_clientSilentWeapons = nil;
 
-            [] spawn
-            {
-                sleep 3;
-                if (isNil "TN_round_clientSilentWeapons")
-                    exitWith {};
+            [{
+                if (isNil "TN_round_clientSilentWeapons") exitWith {};
 
                 private _msg = format [
                     "%1 has silent weapon.",
@@ -228,7 +219,7 @@ if (isServer) then
                 [_msg] remoteExecCall ["systemChat"];
 
                 TN_round_clientSilentWeapons = nil;
-            };
+            }, [], 3] call CBA_fnc_waitAndExecute;
         }
     ] call CBA_fnc_addEventHandler;
 };
@@ -263,9 +254,7 @@ if (hasInterface) then
         {
             if !(TN_notifyFinalCheck) exitWith {};
 
-            [] spawn
-            {
-                sleep 0.5;
+            [{
                 private _players = allPlayers - entities "HeadlessClient_F";
                 _players = _players select {alive _x};
 
@@ -279,7 +268,7 @@ if (hasInterface) then
                     };
                     [name _x] remoteExecCall ["TN_round_fnc_collectSilentWeapons", 2];
                 } forEach _players;
-            };
+            }, [], 0.5] call CBA_fnc_waitAndExecute;
         }
     ] call CBA_fnc_addEventHandler;
 };
