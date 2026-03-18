@@ -108,22 +108,7 @@
             {
                 // Works based off of local player's side.
                 private _result = [playerSide, true] call TN_round_fnc_manageReady;
-                switch (_result) do
-                {
-                    case 0:
-                    {
-                        systemChat "Setting side ready!";
-                    };
-                    case 1:
-                    {
-                        systemChat "Error: Round already started!";
-                    };
-                    case 2:
-                    {
-                        systemChat "Error: Side is already ready!";
-                    };
-                    default {};
-                };
+                systemChat (["Setting side ready!", "Error: Round already started!", "Error: Side is already ready!"] select _result);
             }
         ],
 
@@ -132,22 +117,7 @@
             "unready",
             {
                 private _result = [playerSide, false] call TN_round_fnc_manageReady;
-                switch (_result) do
-                {
-                    case 0:
-                    {
-                        systemChat "Setting side unready!";
-                    };
-                    case 1:
-                    {
-                        systemChat "Error: Round already started!";
-                    };
-                    case 2:
-                    {
-                        systemChat "Error: Side is already unready!";
-                    };
-                    default {};
-                };
+                systemChat (["Setting side unready!", "Error: Round already started!", "Error: Side is already unready!"] select _result);
             }
         ],
 

@@ -22,12 +22,7 @@
     true,
     1,
     {
-        RHS_ENGINE_STARTUP_OFF = switch (_this) do
-        {
-            case true: { true };
-            case false: { nil };
-            default { nil };
-        };
+        RHS_ENGINE_STARTUP_OFF = [nil, true] select _this;
     }
 ] call CBA_fnc_addSetting;
 
