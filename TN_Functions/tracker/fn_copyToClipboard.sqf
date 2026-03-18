@@ -1,18 +1,15 @@
-/**
- * Function: TN_tracker_fnc_copyToClipboard
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Copies a string to the system clipboard using ACE's extension
  * API. Vanilla copyToClipboard does not work in multiplayer,
  * so this is the workaround.
  * Requires ACE 3.
  *
- * Parameters:
- * _str (String): Text to copy to clipboard.
+ * Arguments:
+ * 0: Text to copy to clipboard <STRING>
  *
- * Returns:
- * true
+ * Return Value:
+ * true <BOOL>
  */
 
 params ["_str"];

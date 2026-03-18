@@ -1,18 +1,14 @@
-/**
- * Function: TN_ticket_fnc_add
- * Author:   Dott [29th ID]
+/*
+ * Author: Dott [29th ID]
+ * Handles adding tickets to either side. Does not use
+ * BIS_fnc_respawnTickets.
  *
- * Description:
- *   Handles adding tickets to either side. Does not use
- *   BIS_fnc_respawnTickets.
+ * Arguments:
+ * 0: The side to apply the tickets to <STRING>
+ * 1: The amount of tickets to be added (or subtracted) <NUMBER>
  *
- * Parameters:
- *   _ticketSide   (String) - The side to apply the tickets to
- *   _ticketAmount (Number) - The amount of tickets to be added
- *                            (or subtracted)
- *
- * Returns:
- *   Nothing
+ * Return Value:
+ * Nothing
  */
 
 params

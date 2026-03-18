@@ -1,19 +1,17 @@
-/**
- * Function: TN_spectator_fnc_init
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Initializes the spectator module on clients.
  * Registers a respawn event handler that automatically places
  * the player into spectator mode when TN_autoSpectate is enabled.
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
  *
  * Example:
- *     call TN_spectator_fnc_init;
+ * call TN_spectator_fnc_init
  */
 
 if (!hasInterface) exitWith {};

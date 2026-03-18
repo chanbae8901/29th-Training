@@ -1,19 +1,19 @@
-/**
- * Function: TN_radio_fnc_init
- * Author:   Bae [29th ID]
+/*
+ * Author: Bae [29th ID]
+ * Initializes the radio module. Registers arsenal-close handlers
+ * to auto-add radios, a death handler to strip radios, a
+ * disconnect handler for the same, and sets up TFAR settings
+ * persistence. No-ops if TFAR Beta is not loaded.
+ * Should be initialized before loadout.
  *
- * Description:
- *   Initializes the radio module. Registers arsenal-close handlers
- *   to auto-add radios, a death handler to strip radios, a
- *   disconnect handler for the same, and sets up TFAR settings
- *   persistence. No-ops if TFAR Beta is not loaded.
- *   Should be initialized before loadout.
+ * Arguments:
+ * None
  *
- * Parameters:
- *   None
+ * Return Value:
+ * Nothing
  *
- * Returns:
- *   Nothing
+ * Example:
+ * call TN_radio_fnc_init;
  */
 
 if !(isClass (configFile >> "CfgPatches" >> "tfar_core")) exitWith {};

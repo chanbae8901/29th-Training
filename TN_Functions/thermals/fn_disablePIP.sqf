@@ -1,7 +1,5 @@
-/**
- * Function: TN_thermals_fnc_disablePIP
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Iterates every RenderTarget camera on the player's vehicle and
  * terminates any that use thermal vision (renderVisionMode == 2)
  * unless the camera belongs to the gunner turret.
@@ -12,14 +10,14 @@
  * Vehicles with non-standard turret layouts (e.g. gunner on a
  * different index) will not have their gunner camera preserved.
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     BOOL - true if at least one PIP camera was disabled
+ * Return Value:
+ * True if at least one PIP camera was disabled <BOOL>
  *
  * Example:
- *     call TN_thermals_fnc_disablePIP;
+ * call TN_thermals_fnc_disablePIP
  */
 
 private _veh = vehicle player;

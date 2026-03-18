@@ -1,17 +1,18 @@
-/**
- * Function: TN_commands_fnc_arsenalRegister
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Registers an arsenal object on the server for curator
  * editing and auto-deletion when the round starts.
  * Initializes tracking and the round-start cleanup handler
  * on first call.
  *
- * Parameters:
- *     _arsenal - Object - The arsenal object to register
+ * Arguments:
+ * 0: The arsenal object to register <OBJECT>
  *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
+ *
+ * Example:
+ * N/A
  */
 
 params ["_arsenal"];

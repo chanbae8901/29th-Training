@@ -1,17 +1,17 @@
-/**
- * Function: TN_parade_fnc_forceAll
- * Author:   Bae [29th ID]
+/*
+ * Author: Bae [29th ID]
+ * Forces all players within a given radius of an object into
+ * parade loadout by remotely executing fn_load on each client.
  *
- * Description:
- *   Forces all players within a given radius of an object into
- *   parade loadout by remotely executing fn_load on each client.
+ * Arguments:
+ * 0: Center object to measure distance from <OBJECT>
+ * 1: Radius in meters around _obj <NUMBER>
  *
- * Parameters:
- *   _obj    (Object) - Center object to measure distance from
- *   _radius (Number) - Radius in meters around _obj
+ * Return Value:
+ * true <BOOL>
  *
- * Returns:
- *   true
+ * Example:
+ * [myObj, 100] call TN_parade_fnc_forceAll;
  */
 
 params ["_obj", "_radius"];

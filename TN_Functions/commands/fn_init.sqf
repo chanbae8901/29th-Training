@@ -1,28 +1,25 @@
 #include "..\..\data\defines.hpp"
 
 /*
- * Function: TN_commands_fnc_init
- * Author:   Bae [29th ID]
+ * Author: Bae [29th ID]
+ * Initializes the chat command system on the client.
+ * Compiles and executes each module's commands.sqf to
+ * populate the global command and help arrays, then
+ * converts them to HashMaps for O(1) lookups. Uses a
+ * per-frame handler to detect when the chat display opens
+ * and adds a KeyDown handler that intercepts messages
+ * beginning with the command marker ("!"), closes the chat
+ * to prevent sending, and routes them to fn_execute. Should
+ * be initialized after the round system.
  *
- * Description:
- *     Initializes the chat command system on the client.
- *     Compiles and executes each module's commands.sqf to
- *     populate the global command and help arrays, then
- *     converts them to HashMaps for O(1) lookups. Uses a
- *     per-frame handler to detect when the chat display opens
- *     and adds a KeyDown handler that intercepts messages
- *     beginning with the command marker ("!"), closes the chat
- *     to prevent sending, and routes them to fn_execute. Should
- *     be initialized after the round system.
+ * Arguments:
+ * None
  *
- * Parameters:
- *     None
- *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
  *
  * Example:
- *     call TN_commands_fnc_init;
+ * call TN_commands_fnc_init;
  */
 
 #define COMMAND_MARKER "!"

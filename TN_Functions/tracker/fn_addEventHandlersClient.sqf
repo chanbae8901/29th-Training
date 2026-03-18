@@ -1,18 +1,15 @@
-/**
- * Function: TN_tracker_fnc_addEventHandlersClient
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Adds client-side event handlers for the tracker system.
  * Attaches instigator/weapon info to projectiles on fire,
  * propagates that info through submunitions, and handles
  * non-projectile damage sources (roadkill, fire, explosions).
  *
- * Parameters:
+ * Arguments:
  * None
  *
- * Returns:
- * true
+ * Return Value:
+ * true <BOOL>
  */
 
 #define EXPLOSION_DISTANCE 20

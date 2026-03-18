@@ -1,19 +1,15 @@
-/**
- * Function: TN_tracker_fnc_getKillCounts
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Finds kill count at end of round from events. Units left
  * unconscious at end of round will have their death credited
  * to whoever knocked them unconscious.
  *
- * Parameters:
- * _events (Array): TN_tracker_events from server.
- * _sides (Array): TN_tracker_sides from server.
+ * Arguments:
+ * 0: TN_tracker_events from server <ARRAY>
+ * 1: TN_tracker_sides from server <ARRAY>
  *
- * Returns:
- * Sorted kill count array with elements
- * [[unit number, side of unit], numKills]
+ * Return Value:
+ * Sorted kill count array with elements [[unit number, side of unit], numKills] <ARRAY>
  */
 
 #include "eventNumbers.hpp"

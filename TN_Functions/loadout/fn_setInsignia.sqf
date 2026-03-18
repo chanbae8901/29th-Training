@@ -1,15 +1,17 @@
-/**
- * Function: TN_loadout_fnc_setInsignia
- * Author:   Bae [29th ID], modified from Hill [29th ID]
+/*
+ * Author: Bae [29th ID], modified from Hill [29th ID]
+ * If a unit has a valid 29th squad.xml configuration, applies
+ * the appropriate insignia to their uniform. Members get
+ * the non-drab/non-combat variant when not in a combat loadout.
  *
- * Purpose: If a unit has a valid 29th squad.xml configuration, applies
- *          the appropriate insignia to their uniform. Members get
- *          the non-drab/non-combat variant when not in a combat loadout.
+ * Arguments:
+ * 0: Local unit wearing a uniform <OBJECT> (default: objNull)
  *
- * Params:  _target - Object, local unit wearing a uniform
- * Returns: true if insignia was applied, false otherwise
+ * Return Value:
+ * True if insignia was applied, false otherwise <BOOL>
  *
- * Example: player spawn TN_loadout_fnc_setInsignia
+ * Example:
+ * player spawn TN_loadout_fnc_setInsignia;
  */
 
 if !(TN_setInsignia) exitWith { false };

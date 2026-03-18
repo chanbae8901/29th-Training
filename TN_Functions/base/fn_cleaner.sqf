@@ -1,21 +1,18 @@
 /*
- * Function: TN_base_fnc_cleaner
- * Author:   Rellikplug AKA Hill [29th ID]
+ * Author: Rellikplug AKA Hill [29th ID]
+ * Removes all dead bodies globally and deletes loose
+ * ground items (weapons, magazines) within 250 meters
+ * of each garbage can object in TN_base_garbages. Intended
+ * to be attached to garbage cans via addAction.
  *
- * Description:
- *     Removes all dead bodies globally and deletes loose
- *     ground items (weapons, magazines) within 250 meters
- *     of each garbage can object in TN_base_garbages. Intended
- *     to be attached to garbage cans via addAction.
+ * Arguments:
+ * None
  *
- * Parameters:
- *     None
- *
- * Returns:
- *     Boolean - false if nothing was deleted, true otherwise
+ * Return Value:
+ * false if nothing was deleted, true otherwise <BOOL>
  *
  * Example:
- *     call TN_base_fnc_cleaner;
+ * call TN_base_fnc_cleaner;
  */
 
 private _dead = allDeadMen;

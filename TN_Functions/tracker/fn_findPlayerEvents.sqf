@@ -1,20 +1,16 @@
-/**
- * Function: TN_tracker_fnc_findPlayerEvents
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Finds all events relevant to a specific player from the event
  * list. Includes direct involvement (killed, knocked out, etc.)
  * and also tracks the fate of anyone the player incapacitated
  * (regain consciousness or death).
  *
- * Parameters:
- * _playerIndex (Number): Reference index of player in stored
- *     event arrays. Can be -1 to indicate player is not there.
- * _events (Array): TN_tracker_events from server.
+ * Arguments:
+ * 0: Reference index of player in stored event arrays, can be -1 to indicate player is not there <NUMBER>
+ * 1: TN_tracker_events from server <ARRAY>
  *
- * Returns:
- * Array with indexes of relevant events in _events
+ * Return Value:
+ * Indexes of relevant events in _events <ARRAY>
  */
 
 #include "eventNumbers.hpp"

@@ -1,7 +1,5 @@
-/**
- * Function: TN_thermals_fnc_blackScreen
- * Author:   Hill [29th ID]
- *
+/*
+ * Author: Hill [29th ID]
  * Blacks out the screen with a warning message whenever the player
  * activates thermal vision (infantry or vehicle optics) while
  * thermals are disabled. Holds the black screen until the player
@@ -9,14 +7,14 @@
  *
  * Must be spawned, not called, because of the waitUntil loop.
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     BOOL - false if no interface, true otherwise
+ * Return Value:
+ * False if no interface, true otherwise <BOOL>
  *
  * Example:
- *     [] spawn TN_thermals_fnc_blackScreen;
+ * [] spawn TN_thermals_fnc_blackScreen
  */
 
 #define MESSAGE "FLIR Mode is disallowed. Please Turn off Thermals."

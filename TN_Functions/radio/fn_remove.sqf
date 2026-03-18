@@ -1,16 +1,16 @@
-/**
- * Function: TN_radio_fnc_remove
- * Author:   Rellikplug AKA Hill [29th ID]
+/*
+ * Author: Rellikplug AKA Hill [29th ID]
+ * Deletes the SR radio in the linked slot and the LR backpack
+ * radio, if either exist on the given unit.
  *
- * Description:
- *   Deletes the SR radio in the linked slot and the LR backpack
- *   radio, if either exist on the given unit.
+ * Arguments:
+ * 0: Local unit to strip radios from <OBJECT>
  *
- * Parameters:
- *   _unit (Object) - Local unit to strip radios from
+ * Return Value:
+ * [removedSR, removedLR] <ARRAY>
  *
- * Returns:
- *   Array - [removedSR <Bool>, removedLR <Bool>]
+ * Example:
+ * [player] call TN_radio_fnc_remove;
  */
 
 if !(isClass (configFile >> "CfgPatches" >> "task_force_radio_items")) exitWith {};

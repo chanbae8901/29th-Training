@@ -1,20 +1,17 @@
-/**
- * Function: TN_round_fnc_changeForcedSafeStart
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Changes or cancels/unforces a currently active safe start. Will not
  * start a new safe start if one is not already active. Passing 0 or
  * less unforces the safe start so it ends if teams are not all ready.
  *
- * Parameters:
- *     _seconds - Number - New safe start duration in seconds. 0 or less
- *         cancels/unforces. Default: 0
+ * Arguments:
+ * 0: New safe start duration in seconds. 0 or less cancels/unforces (default: 0) <NUMBER>
  *
- * Returns:
- *     Boolean - true if safe start was changed, false otherwise.
+ * Return Value:
+ * true if safe start was changed, false otherwise <BOOL>
  *
  * Example:
- *     [60] call TN_round_fnc_changeForcedSafeStart;
+ * [60] call TN_round_fnc_changeForcedSafeStart;
  */
 
 params [["_seconds", 0, [0]]];

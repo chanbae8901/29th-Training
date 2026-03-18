@@ -1,17 +1,14 @@
-/**
- * Function: TN_tracker_fnc_getName
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Returns the display name for a unit. For infantry, uses the
  * player name (falling back to cached TN_name if dead). For
  * vehicles, uses the config display name.
  *
- * Parameters:
- * _unit (Object): Player or vehicle to get the name of.
+ * Arguments:
+ * 0: Player or vehicle to get the name of <OBJECT>
  *
- * Returns:
- * String -- the unit's display name, or "?" if null.
+ * Return Value:
+ * The unit's display name, or "?" if null <STRING>
  */
 
 params ["_unit"];

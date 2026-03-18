@@ -1,19 +1,16 @@
-/**
- * Function: TN_tracker_fnc_recordSectorCapture
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Records a sector ownership change event. Bypasses the
  * conversion logic in fn_saveEvent since sector events use
  * raw names/sides rather than indexed references.
  *
- * Parameters:
- * _sector (Object): The sector module.
- * _owner (Side): New owning side.
- * _ownerOld (Side): Previous owning side.
+ * Arguments:
+ * 0: The sector module <OBJECT>
+ * 1: New owning side <SIDE>
+ * 2: Previous owning side <SIDE>
  *
- * Returns:
- * true if saved, false otherwise
+ * Return Value:
+ * true if saved, false otherwise <BOOL>
  */
 
 #include "eventNumbers.hpp"

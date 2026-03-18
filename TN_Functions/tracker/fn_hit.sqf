@@ -1,8 +1,5 @@
-/**
- * Function: TN_tracker_fnc_hit
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * HitExplosion/HitPart projectile event handler for the tracker.
  * Transfers weapon/killer info from the projectile to the hit
  * entity so the server can attribute kills correctly.
@@ -15,12 +12,12 @@
  * in fn_init.sqf). In practice this works, but under extreme
  * network conditions it could theoretically fail.
  *
- * Parameters:
- * _projectile (Object): The projectile that hit.
- * _hitEntity (Object): The entity that was hit.
+ * Arguments:
+ * 0: The projectile that hit <OBJECT>
+ * 1: The entity that was hit <OBJECT>
  *
- * Returns:
- * true
+ * Return Value:
+ * true <BOOL>
  */
 
 #define INSTIGATOR_TIME_INDEX 4

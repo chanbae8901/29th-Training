@@ -1,30 +1,23 @@
 /*
- * Function: TN_curator_fnc_createModule
- * Author:   Bae [29th ID]
+ * Author: Bae [29th ID]
+ * Creates a curator (Zeus) module for the specified
+ * player if their variable name is listed in
+ * TN_curator_units. Deletes any existing module for
+ * that player first to avoid duplicates. Must be called
+ * in an unscheduled environment so the module is created
+ * atomically. If called before mission time > 0, defers
+ * via CBA_fnc_waitUntilAndExecute. If called on a client
+ * it forwards to the server.
  *
- * Description:
- *     Creates a curator (Zeus) module for the specified
- *     player if their variable name is listed in
- *     TN_curator_units. Deletes any existing module for
- *     that player first to avoid duplicates. Must be called
- *     in an unscheduled environment so the module is created
- *     atomically. If called before mission time > 0, defers
- *     via CBA_fnc_waitUntilAndExecute. If called on a client
- *     it forwards to the server.
+ * Arguments:
+ * 0: Variable name of the player unit (from mission.sqm) <STRING>
+ * 1: Role description shown in the Zeus interface <STRING>
  *
- * Parameters:
- *     _playerVarName  - String - Variable name of the player
- *         unit (from mission.sqm)
- *     _roleDescription - String - Role description shown in
- *         the Zeus interface
- *
- * Returns:
- *     Object - The created curator logic, or nothing if
- *         the player is not in TN_curator_units
+ * Return Value:
+ * The created curator logic, or nothing if the player is not in TN_curator_units <OBJECT>
  *
  * Example:
- *     [vehicleVarName player, roleDescription player]
- *         call TN_curator_fnc_createModule;
+ * [vehicleVarName player, roleDescription player] call TN_curator_fnc_createModule;
  */
 
 params ["_playerVarName", "_roleDescription"];

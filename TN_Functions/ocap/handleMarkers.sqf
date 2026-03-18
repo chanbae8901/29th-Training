@@ -1,19 +1,17 @@
-/**
- * Function: TN_ocap_fnc_init
- * Author:   OCAP Addon very slightly modified by Bae [29th ID]
+/*
+ * Author: OCAP Addon very slightly modified by Bae [29th ID]
+ * Overwrite default event handler in OCAP Addon to support
+ * pausing and resuming recording. Makes sure marker times
+ * are saved properly.
  *
- * Purpose:
- *   Overwrite default event handler in OCAP Addon to support
- *   pausing and resuming recording. Makes sure marker times
- *   are saved properly.
+ * Arguments:
+ * None
  *
- * Hardcoded Paths:
- *
- * Parameter(s): None
- * Returns: Nothing
+ * Return Value:
+ * Nothing
  *
  * Example:
- *   call compile preprocessFileLineNumbers "TN_Functions\ocap\handleMarkers.sqf"
+ * call compile preprocessFileLineNumbers "TN_Functions\ocap\handleMarkers.sqf";
  */
 
 ocap_listener_markers = ["ocap_handleMarker", {

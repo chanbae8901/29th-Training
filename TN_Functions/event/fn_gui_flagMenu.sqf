@@ -1,7 +1,5 @@
-/**
- * Function: TN_event_fnc_gui_flagMenu
- * Author:   Claude prompted by Bae [29th ID]
- *
+/*
+ * Author: Claude prompted by Bae [29th ID]
  * Opens a centered GUI menu showing admin-only event actions
  * based on the current round state. Only accessible to
  * admins via the Event Menu addAction.
@@ -10,24 +8,16 @@
  * in-place whenever the state changes while the GUI is open.
  *
  * Uses createDialog (TN_RscDisplayFlagMenu, IDD 29140)
- * which overlays on display 46 — readyUI stays visible.
+ * which overlays on display 46 -- readyUI stays visible.
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
  *
- * Requires:
- *     TN_round_fnc_isRoundActive
- *     TN_round_fnc_manageReady
- *     TN_round_fnc_initSafeStart
- *     TN_round_fnc_start
- *     TN_event_fnc_gui_setSafeStartTime
- *     TN_event_fnc_game
- *     TN_event_timerLength (global)
- *     CBA_fnc_addEventHandler
- *     CBA_fnc_removeEventHandler
+ * Example:
+ * call TN_event_fnc_gui_flagMenu;
  */
 
 // Prevent double-open

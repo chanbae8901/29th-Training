@@ -1,22 +1,20 @@
 #include "defines.hpp"
 
-/**
- * Function: TN_round_fnc_init
- * Author:   Bae [29th ID], modified from Dott [29th ID]
- *
+/*
+ * Author: Bae [29th ID], modified from Dott [29th ID]
  * Sets up the initial state of the round management system. Configures
  * scoreboard blocking during active rounds, wires up final checks for
  * player invulnerability and the silent weapon bug, and ensures the
  * countdown UI layer exists.
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     Boolean - true
+ * Return Value:
+ * true <BOOL>
  *
  * Example:
- *     call TN_round_fnc_init;
+ * call TN_round_fnc_init;
  */
 
 /* ---- Server-side initialization ---- */

@@ -1,21 +1,18 @@
-/**
- * Function: TN_round_fnc_formatTime
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Formats a time value in seconds into a human-readable string like
  * "20 Minutes" or "1 Hour 30 Minutes 5 Seconds". Omits zero-valued
  * units. Uses singular forms when appropriate.
  *
- * Parameters:
- *     _seconds - Number - Time in seconds to format.
- *     _forceNoS - Boolean - Always use singular form for units.
- *         Default: false
+ * Arguments:
+ * 0: Time in seconds to format <NUMBER>
+ * 1: Always use singular form for units (default: false) <BOOL>
  *
- * Returns:
- *     String - Formatted time string.
+ * Return Value:
+ * Formatted time string <STRING>
  *
  * Example:
- *     [300] call TN_round_fnc_formatTime;
+ * [300] call TN_round_fnc_formatTime;
  */
 
 params ["_seconds", ["_forceNoS", false]];

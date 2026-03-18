@@ -1,19 +1,16 @@
-/**
- * Function: TN_tracker_fnc_eventToString
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Converts an event array into a human-readable HTML string
  * for display in the map diary.
  *
- * Parameters:
- * _event (Array): Event to convert.
- * _names (Array): Name reference table.
- * _sides (Array): Side history reference table.
- * _weapons (Array): Weapon name reference table.
+ * Arguments:
+ * 0: Event to convert <ARRAY>
+ * 1: Name reference table <ARRAY>
+ * 2: Side history reference table <ARRAY>
+ * 3: Weapon name reference table <ARRAY>
  *
- * Returns:
- * String -- formatted event text with HTML color tags.
+ * Return Value:
+ * Formatted event text with HTML color tags <STRING>
  */
 
 #include "eventNumbers.hpp"

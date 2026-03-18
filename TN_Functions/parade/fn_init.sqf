@@ -1,18 +1,18 @@
-/**
- * Function: TN_parade_fnc_init
- * Author:   Bae [29th ID]
+/*
+ * Author: Bae [29th ID]
+ * Initializes the parade loadout module. Applies the correct
+ * parade uniform on first spawn (including JIP), and registers
+ * server-side respawn inventories for each side.
+ * No-ops if 29th ID Uniforms addon is not loaded.
  *
- * Description:
- *   Initializes the parade loadout module. Applies the correct
- *   parade uniform on first spawn (including JIP), and registers
- *   server-side respawn inventories for each side.
- *   No-ops if 29th ID Uniforms addon is not loaded.
+ * Arguments:
+ * None
  *
- * Parameters:
- *   None
+ * Return Value:
+ * Nothing
  *
- * Returns:
- *   Nothing
+ * Example:
+ * call TN_parade_fnc_init;
  */
 
 if (!isClass (configFile >> "CfgPatches" >> "29thID_Uniforms"))

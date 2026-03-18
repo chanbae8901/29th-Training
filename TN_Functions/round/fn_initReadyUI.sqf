@@ -1,84 +1,35 @@
 #include "defines.hpp"
 
 /*
- * Name:    TN_round_fnc_initReadyUI
- * Date:    03/06/2026
- * Version: 1.0
- * Author:  PFC Wells [29th ID] being nagged at by Bae [29th ID]
- *
- * Description:
+ * Author: PFC Wells [29th ID] being nagged at by Bae [29th ID]
  * Creates a top-right HUD overlay showing team ready status during safe start.
  * Anchored to the vanilla MP HUD position (IGUI_GRID_MP layout editor slot) so
  * it sits beside the scoreboard / mission-status area and respects the player's
  * UI layout preferences. Resolution-adaptive via aspect-ratio grid (GRID_W/H).
  *
  * Panel visibility logic:
- *   Shown  — safe start is active OR at least one team is ready
- *   Hidden — round goes live, or neither condition is met
+ *   Shown  -- safe start is active OR at least one team is ready
+ *   Hidden -- round goes live, or neither condition is met
  *   Event-driven PFH lifecycle: the update loop only runs when the panel is
- *   needed. CBA event handlers start/stop the PFH externally — it never
+ *   needed. CBA event handlers start/stop the PFH externally -- it never
  *   removes itself. Start triggers: safeStartBegin, manageReadyChange (ready).
  *   Stop triggers: round_started (unconditional), manageReadyChange (unready,
  *   when no teams ready + no safe start), safeStartAborted (no teams ready).
  *   Zeus-aware: controls migrate between display 46 (game) and display 312
  *   (Curator) automatically so the overlay stays visible inside Zeus.
  *
- * Layout:
- *   "SAFE START" header (gold, centered) when TN_round_safeStartActive exists
- *   Per-team row: side name (team color, left) + status (right)
- *     - "READY"    (#8BC34A green)  — team has readied
- *     - "READY UP" (#C8A030 amber)  — team still needs to ready
- *   Teams with zero players are hidden unless TN_readyUI_showAllSides is set.
- *
- * Effects:
- *   Pulse — 2s breathing cycle during safe start. Cycles through unready teams;
- *           each team's pulse tint (SIDE_DEFS index 4) is blended over the dark
- *           gold background via a sine wave. When all teams ready, static gold.
- *   Shine — diagonal sword-shine sweep (upper-left → lower-right) when a team
- *           readies up, drawn in that team's flash color (SIDE_DEFS index 5).
- *           Built from 29 horizontal slices staggered by SHINE_STAGGER to form
- *           a diagonal band. Each slice is clipped to panel bounds. Driven by a
- *           CBA per-frame handler for smooth frame-accurate animation.
- *
- * Globals written:
- *   TN_readyUI_initialized      — recompile sentinel
- *   TN_readyUI_pfhHandle        — PFH handle (update loop)
- *   TN_readyUI_shinePFH         — PFH handle (shine animation, transient)
- *   TN_readyUI_dirty            — content rebuild flag (text caching)
- *   TN_readyUI_refreshCounter   — periodic refresh counter (~2s cycle)
- *   TN_readyUI_ehReady          — CBA EH handle (TN_round_manageReadyChange)
- *   TN_readyUI_ehSafeStart      — CBA EH handle (TN_round_safeStartBegin)
- *   TN_readyUI_ehAborted        — CBA EH handle (TN_round_safeStartAborted)
- *   TN_readyUI_ehStarted        — CBA EH handle (TN_round_started)
- *   uiNamespace: TN_readyUI_bg, TN_readyUI_content,
- *                TN_readyUI_shineSlices, TN_readyUI_display,
- *                TN_readyUI_flashActive
- *
- * Dependencies:
- *   CBA_fnc_addPerFrameHandler, CBA_fnc_removePerFrameHandler,
- *   CBA_fnc_addEventHandler, CBA_fnc_removeEventHandler
- *   TN_round_sideReady (array — set by fn_init / fn_manageReady)
- *   TN_round_fnc_isRoundActive
- *
- * Logging:
- *   All status messages go to RPT via diag_log (no systemChat).
- *
  * Client-side only. Recompile-friendly: calling again tears down the old
  * instance automatically (PFHs, EHs, controls), so you can tweak #define
  * values and recompile without running any cleanup commands first.
  *
- * Parameter(s):
+ * Arguments:
  * None
  *
- * Returns:
- * true
+ * Return Value:
+ * true <BOOL>
  *
  * Example:
  * call TN_round_fnc_initReadyUI;
- *
- * Hot-reload (debug console one-liner):
- * call compile preprocessFileLineNumbers "round\fn_initReadyUI.sqf";
- *
  */
 
 if (!hasInterface) exitWith {};

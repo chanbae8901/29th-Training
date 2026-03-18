@@ -1,17 +1,14 @@
-/**
- * Function: TN_tracker_fnc_colorNameWithSide
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Wraps a name string in an HTML font-color tag matching the
  * given side for diary display.
  *
- * Parameters:
- * _unitName (String): The name to colorize.
- * _side (Side): Side whose color to use.
+ * Arguments:
+ * 0: The name to colorize <STRING>
+ * 1: Side whose color to use <SIDE>
  *
- * Returns:
- * String -- HTML-wrapped name with side-appropriate color.
+ * Return Value:
+ * HTML-wrapped name with side-appropriate color <STRING>
  */
 
 params ["_unitName", "_side"];

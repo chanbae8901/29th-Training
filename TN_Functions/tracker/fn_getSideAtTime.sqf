@@ -1,8 +1,5 @@
-/**
- * Function: TN_tracker_fnc_getSideAtTime
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Finds a unit's side at a given time by searching their side
  * history (stored as [side, time] pairs in chronological order).
  *
@@ -11,13 +8,13 @@
  * finds that entry first, allowing an immediate exitWith instead
  * of scanning the entire array forward.
  *
- * Parameters:
- * _unitIndex (Number): Index into _sides for this unit.
- * _time (Number): The event timestamp to look up.
- * _sides (Array): Side history array for all units.
+ * Arguments:
+ * 0: Index into _sides for this unit <NUMBER>
+ * 1: The event timestamp to look up <NUMBER>
+ * 2: Side history array for all units <ARRAY>
  *
- * Returns:
- * Side -- the unit's side at _time.
+ * Return Value:
+ * The unit's side at _time <SIDE>
  */
 
 params ["_unitIndex", "_time", "_sides"];

@@ -1,14 +1,17 @@
-/**
- * Function: TN_settings_fnc_gui_sourceChanged
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Shows/hides the options-group controls so only the
  * panel matching the currently selected addon + source
  * is visible.  Called when the source tab changes.
  *
- * Params:
- *   _control - the source-tab control that fired
- * Return: none
+ * Arguments:
+ * 0: The source-tab control that fired <CONTROL>
+ *
+ * Return Value:
+ * None
+ *
+ * Example:
+ * [_control] call TN_settings_fnc_gui_sourceChanged
  */
 
 params ["_control"];

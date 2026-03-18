@@ -1,18 +1,21 @@
-/**
- * Function: TN_settings_fnc_gui_settingTime
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Initializes a time-picker setting row (HH:MM:SS).
  * Wires the slider and three text-edit fields to write
  * temporary overrides.  Runs in uiNamespace.
  *
- * Params:
- *   _controlsGroup - parent controls group for the row
- *   _setting       - CBA setting name string
- *   _source        - setting source (e.g. "server")
- *   _currentValue  - current time value in seconds
- *   _settingData   - [_min, _max] range in seconds
- * Return: none
+ * Arguments:
+ * 0: Parent controls group for the row <CONTROL>
+ * 1: CBA setting name string <STRING>
+ * 2: Setting source (e.g. "server") <STRING>
+ * 3: Current time value in seconds <NUMBER>
+ * 4: Setting data [min, max] range in seconds <ARRAY>
+ *
+ * Return Value:
+ * None
+ *
+ * Example:
+ * [_controlsGroup, _setting, _source, _currentValue, _settingData] call TN_settings_fnc_gui_settingTime
  */
 
 #define SERVER_TEMP \

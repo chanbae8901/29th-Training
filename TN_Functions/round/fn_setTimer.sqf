@@ -1,18 +1,16 @@
-/**
- * Function: TN_round_fnc_setTimer
- * Author:   Bae [29th ID], modified from Dott [29th ID]
- *
+/*
+ * Author: Bae [29th ID], modified from Dott [29th ID]
  * Sets the round timer length. Cannot be used while the round is
  * active (use addTime instead). Rejects non-positive values.
  *
- * Parameters:
- *     _time - Number - Round length in seconds.
+ * Arguments:
+ * 0: Round length in seconds <NUMBER>
  *
- * Returns:
- *     Boolean - true on success, false if rejected.
+ * Return Value:
+ * true on success, false if rejected <BOOL>
  *
  * Example:
- *     [1200] call TN_round_fnc_setTimer;
+ * [1200] call TN_round_fnc_setTimer;
  */
 
 params ["_time"];

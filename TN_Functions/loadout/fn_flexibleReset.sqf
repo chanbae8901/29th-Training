@@ -1,27 +1,23 @@
-/**
- * Function: TN_loadout_fnc_flexibleReset
- * Author:   Dott [29th ID]
+/*
+ * Author: Dott [29th ID]
+ * Optionally loads saved inventory, heals player, teleports
+ * them to a position, and notifies them.
+ * Must be spawned on client.
  *
- * Purpose: Optionally loads saved inventory, heals player, teleports
- *          them to a position, and notifies them.
- *          Must be spawned on client.
+ * Arguments:
+ * 0: CBA extended loadout array, or true to use the saved resetLoadout variable <ARRAY|BOOL> (default: [])
+ * 1: True to ACE full-heal the player <BOOL> (default: false)
+ * 2: Position ASL to teleport to <ARRAY> (default: [])
+ * 3: Skip teleport if player is already within this distance of position <NUMBER> (default: 50)
+ * 4: CfgNotifications class, empty to auto-pick <STRING> (default: "")
+ * 5: Notification title <STRING> (default: "")
+ * 6: Notification description <STRING> (default: "")
  *
- * Params (all optional):
- *   _inventory - Array|Bool: CBA extended loadout array, or true to
- *                use the saved resetLoadout variable. Default: []
- *   _heal      - Bool: true to ACE full-heal the player. Default: false
- *   _point     - Array: position ASL to teleport to. Default: []
- *   _pointRad  - Number: skip teleport if player is already within
- *                this distance of _point. Default: 50
- *   _msgClass  - String: CfgNotifications class. Empty = auto-pick.
- *   _msgTitle  - String: notification title
- *   _msgDesc   - String: notification description
- *
- * Returns: Nothing
+ * Return Value:
+ * Nothing
  *
  * Example:
- *   [resetLoadout, true, getPosASL _pos]
- *       spawn TN_loadout_fnc_flexibleReset;
+ * [resetLoadout, true, getPosASL _pos] spawn TN_loadout_fnc_flexibleReset;
  */
 
 params

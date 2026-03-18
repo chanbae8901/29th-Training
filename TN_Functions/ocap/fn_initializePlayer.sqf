@@ -1,17 +1,18 @@
-/**
- * Function: TN_ocap_fnc_initializePlayer
- * Author:   Bae [29th ID], modified from OCAP Addon
+/*
+ * Author: Bae [29th ID], modified from OCAP Addon
+ * Registers a player unit with the OCAP recording system by
+ * assigning an ID, sending unit data to the extension, and
+ * attaching event handlers. Skips if a recording is already
+ * running (the capture loop handles it instead).
  *
- * Purpose:
- *   Registers a player unit with the OCAP recording system by
- *   assigning an ID, sending unit data to the extension, and
- *   attaching event handlers. Skips if a recording is already
- *   running (the capture loop handles it instead).
+ * Arguments:
+ * 0: Player unit to initialize <OBJECT>
  *
- * Parameter(s):
- *   0: OBJECT - Player unit to initialize
+ * Return Value:
+ * Nothing
  *
- * Returns: Nothing
+ * Example:
+ * [player] remoteExecCall ["TN_ocap_fnc_initializePlayer", 2];
  */
 
 //Modified version from OCAP 2 Addon tweaked for this mission

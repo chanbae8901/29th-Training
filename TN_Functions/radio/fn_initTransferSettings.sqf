@@ -1,23 +1,23 @@
-/**
- * Function: TN_radio_fnc_initTransferSettings
- * Author:   Bae [29th ID]
+/*
+ * Author: Bae [29th ID]
+ * Sets up automatic TFAR radio settings persistence across
+ * loadout changes (arsenal, respawn). Saves SW/LR channel,
+ * stereo, volume, speaker, and frequency settings into global
+ * variables, then re-applies them when new radios are received.
  *
- * Description:
- *   Sets up automatic TFAR radio settings persistence across
- *   loadout changes (arsenal, respawn). Saves SW/LR channel,
- *   stereo, volume, speaker, and frequency settings into global
- *   variables, then re-applies them when new radios are received.
+ * Also corrects a TFAR bug where side encryption can be set
+ * incorrectly after a loadout swap.
  *
- *   Also corrects a TFAR bug where side encryption can be set
- *   incorrectly after a loadout swap.
+ * Adapted from gruppe-adler/Shoot_and_Scoot.Tanoa.
  *
- *   Adapted from gruppe-adler/Shoot_and_Scoot.Tanoa.
+ * Arguments:
+ * None
  *
- * Parameters:
- *   None
+ * Return Value:
+ * Nothing
  *
- * Returns:
- *   Nothing
+ * Example:
+ * call TN_radio_fnc_initTransferSettings;
  */
 
 // Ref: https://github.com/gruppe-adler/Shoot_and_Scoot.Tanoa/blob/4c7e5a7/scripts/tfar-persistence/functions/fn_transferRadiosAcrossRespawn.sqf

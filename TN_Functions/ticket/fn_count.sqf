@@ -1,21 +1,18 @@
-/**
- * Function: TN_ticket_fnc_count
- * Author:   Dott [29th ID]
+/*
+ * Author: Dott [29th ID]
+ * Counts tickets and displays them discretly to each team and
+ * the admin. Does not use BIS_fnc_respawnTickets. Called via
+ * remoteExec from the client respawn event handler.
  *
- * Description:
- *   Counts tickets and displays them discretly to each team and
- *   the admin. Does not use BIS_fnc_respawnTickets. Called via
- *   remoteExec from the client respawn event handler.
+ * Arguments:
+ * 0: The side of the player who respawned <SIDE>
  *
- * Parameters:
- *   _playerSide (Side) - The side of the player who respawned
- *
- * Returns:
- *   Nothing
+ * Return Value:
+ * Nothing
  *
  * Example:
- *   private _playerSide = playerSide;
- *   [_playerSide] remoteExec ["TN_ticket_fnc_count", 2];
+ * private _playerSide = playerSide;
+ * [_playerSide] remoteExec ["TN_ticket_fnc_count", 2];
  */
 
 params

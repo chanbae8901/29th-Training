@@ -1,18 +1,14 @@
-/**
- * Function: TN_tracker_fnc_receiveAll
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Client-side function that receives all previous round
  * histories at once and processes them sequentially.
  * Called via remoteExec from fn_sendAll.
  *
- * Parameters:
- * _allRounds (Array): TN_tracker_previous from server.
- *     Each element is [events, names, sides, weapons].
+ * Arguments:
+ * 0: TN_tracker_previous from server, each element is [events, names, sides, weapons] <ARRAY>
  *
- * Returns:
- * true
+ * Return Value:
+ * true <BOOL>
  */
 
 if (!hasInterface) exitWith {};

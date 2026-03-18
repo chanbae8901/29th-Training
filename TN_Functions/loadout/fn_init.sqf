@@ -1,16 +1,18 @@
-/**
- * Function: TN_loadout_fnc_init
- * Author:   Bae [29th ID]
+/*
+ * Author: Bae [29th ID]
+ * Initializes the loadout module on clients. Registers arsenal
+ * close handlers for both BI and ACE arsenals, and sets up
+ * insignia reapplication on respawn.
+ * Should be initialized after the radio module.
  *
- * Purpose: Initializes the loadout module on clients. Registers arsenal
- *          close handlers for both BI and ACE arsenals, and sets up
- *          insignia reapplication on respawn.
- *          Should be initialized after the radio module.
+ * Arguments:
+ * None
  *
- * Params:  None
- * Returns: Nothing
+ * Return Value:
+ * Nothing
  *
- * Example: call TN_loadout_fnc_init;
+ * Example:
+ * call TN_loadout_fnc_init;
  */
 
 /*

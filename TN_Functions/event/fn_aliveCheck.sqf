@@ -1,22 +1,20 @@
-/**
- * Function: TN_event_fnc_aliveCheck
- * Author:   Bae [29th ID], modified from Dott [29th ID]
- *
+/*
+ * Author: Bae [29th ID], modified from Dott [29th ID]
  * Monitors alive player counts per side and triggers game end
  * when only one side remains. Supports both permadeath (BIRD
  * respawn) and spectate-area-based death detection.
- *
- * Parameters:
- *     None
- *
- * Returns:
- *     Nothing
  *
  * Requires:
  *     TN_event_fnc_game
  *     TN_round_fnc_isRoundActive
  *     TN_event_spectateArea (global, if respawn-based)
  *     TN_event_spectateAreaRadius (global, if respawn-based)
+ *
+ * Arguments:
+ * None
+ *
+ * Return Value:
+ * Nothing
  */
 
 #define RESPAWN_BIRD 1

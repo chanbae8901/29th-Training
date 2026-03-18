@@ -1,17 +1,17 @@
-/**
- * Function: TN_radio_fnc_add
- * Author:   Hill [29th ID]
+/*
+ * Author: Hill [29th ID]
+ * Assigns the faction-correct TFAR SR radio to the player if
+ * they have no radio in the linked slot, or forces the correct
+ * one based on the TN_addRadio setting.
  *
- * Description:
- *   Assigns the faction-correct TFAR SR radio to the player if
- *   they have no radio in the linked slot, or forces the correct
- *   one based on the TN_addRadio setting.
+ * Arguments:
+ * None
  *
- * Parameters:
- *   None
+ * Return Value:
+ * true <BOOL>
  *
- * Returns:
- *   true
+ * Example:
+ * call TN_radio_fnc_add;
  */
 
 if (!hasInterface) exitWith {};

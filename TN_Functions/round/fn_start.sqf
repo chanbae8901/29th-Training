@@ -1,22 +1,19 @@
 #include "defines.hpp"
 
-/**
- * Function: TN_round_fnc_start
- * Author:   Bae [29th ID], modified from Dott [29th ID]
- *
+/*
+ * Author: Bae [29th ID], modified from Dott [29th ID]
  * Starts the round with a specified timer length. Displays a LIVE
  * notification, kicks off the countdown, schedules the end-of-round
  * check, fires the round_started event, and clears safe start state.
  *
- * Parameters:
- *     _roundLength - Number - Round duration in seconds.
- *         Default: TN_round_timerLength
+ * Arguments:
+ * 0: Round duration in seconds (default: TN_round_timerLength) <NUMBER>
  *
- * Returns:
- *     Boolean - false if round already active, true otherwise.
+ * Return Value:
+ * false if round already active, true otherwise <BOOL>
  *
  * Example:
- *     [] call TN_round_fnc_start;
+ * [] call TN_round_fnc_start;
  */
 
 params [["_roundLength", TN_round_timerLength, [0]]];

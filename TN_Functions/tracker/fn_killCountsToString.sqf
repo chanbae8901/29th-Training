@@ -1,18 +1,14 @@
-/**
- * Function: TN_tracker_fnc_killCountsToString
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Converts a sorted kill-counts array into an HTML string
  * for the scoreboard diary entry.
  *
- * Parameters:
- * _killCounts (Array): From fn_getKillCounts. Elements are
- *     [[unitIndex, unitSide], numKills].
- * _names (Array): Name reference table.
+ * Arguments:
+ * 0: From fn_getKillCounts, elements are [[unitIndex, unitSide], numKills] <ARRAY>
+ * 1: Name reference table <ARRAY>
  *
- * Returns:
- * String -- HTML-formatted scoreboard text.
+ * Return Value:
+ * HTML-formatted scoreboard text <STRING>
  */
 
 params ["_killCounts", "_names"];

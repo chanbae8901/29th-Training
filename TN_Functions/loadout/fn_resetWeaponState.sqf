@@ -1,18 +1,20 @@
-/**
- * Function: TN_loadout_fnc_resetWeaponState
- * Author:   Bae [29th ID]
+/*
+ * Author: Bae [29th ID]
+ * Fully removes and re-adds the primary and handgun weapons
+ * to reset internal weapon state, in an attempt to prevent the silent weapon
+ * bug. Also strips and restores all container items so that
+ * addWeapon cannot auto-insert stray magazines.
+ * Does nothing if the unit has no primary weapon.
+ * Must be spawned (uses sleep/waitUntil).
  *
- * Purpose: Fully removes and re-adds the primary and handgun weapons
- *          to reset internal weapon state, in an attempt to prevent the silent weapon
- *          bug. Also strips and restores all container items so that
- *          addWeapon cannot auto-insert stray magazines.
- *          Does nothing if the unit has no primary weapon.
- *          Must be spawned (uses sleep/waitUntil).
+ * Arguments:
+ * 0: Local unit whose weapons need resetting <OBJECT>
  *
- * Params:  _unit - Object, local unit whose weapons need resetting
- * Returns: Nothing
+ * Return Value:
+ * Nothing
  *
- * Example: [_unit] spawn TN_loadout_fnc_resetWeaponState;
+ * Example:
+ * [_unit] spawn TN_loadout_fnc_resetWeaponState;
  */
 
 #define WEAPON_SWITCH_DELAY 1

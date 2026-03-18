@@ -1,18 +1,18 @@
-/**
- * Function: TN_parade_fnc_load
- * Author:   Bae [29th ID]
+/*
+ * Author: Bae [29th ID]
+ * Applies the parade loadout to the local player. If the player
+ * has a custom ACE Arsenal loadout named "Forced Parade", that
+ * loadout is used instead of the default WEST parade config.
+ * Closes any open arsenal displays before applying.
  *
- * Description:
- *   Applies the parade loadout to the local player. If the player
- *   has a custom ACE Arsenal loadout named "Forced Parade", that
- *   loadout is used instead of the default WEST parade config.
- *   Closes any open arsenal displays before applying.
+ * Arguments:
+ * None
  *
- * Parameters:
- *   None
+ * Return Value:
+ * true <BOOL>
  *
- * Returns:
- *   true
+ * Example:
+ * call TN_parade_fnc_load;
  */
 
 // ACE Arsenal display IDs (from ace3/addons/arsenal/defines.hpp):

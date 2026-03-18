@@ -1,27 +1,24 @@
 /*
- * Function: TN_curator_fnc_excludeObjects
- * Author:   Bae [29th ID], modified from Dott/Hill [29th ID]
+ * Author: Bae [29th ID], modified from Dott/Hill [29th ID]
+ * Prevents important mission objects (those whose
+ * variable name starts with "base_") from being editable
+ * in Zeus. On first run, iterates all editor-placed
+ * objects and flags qualifying ones with
+ * "isCuratorExcluded". Then enters a 3-second polling
+ * loop that strips flagged objects from every curator's
+ * editable list. The 3-second interval is a balance
+ * between responsiveness (newly added objects get removed
+ * quickly) and performance (polling all curators and
+ * their editable objects is not free).
  *
- * Description:
- *     Prevents important mission objects (those whose
- *     variable name starts with "base_") from being editable
- *     in Zeus. On first run, iterates all editor-placed
- *     objects and flags qualifying ones with
- *     "isCuratorExcluded". Then enters a 3-second polling
- *     loop that strips flagged objects from every curator's
- *     editable list. The 3-second interval is a balance
- *     between responsiveness (newly added objects get removed
- *     quickly) and performance (polling all curators and
- *     their editable objects is not free).
+ * Arguments:
+ * None
  *
- * Parameters:
- *     None
- *
- * Returns:
- *     Nothing (runs indefinitely in a spawned loop)
+ * Return Value:
+ * Nothing (runs indefinitely in a spawned loop)
  *
  * Example:
- *     [] spawn TN_curator_fnc_excludeObjects;
+ * [] spawn TN_curator_fnc_excludeObjects;
  */
 
 if (!isServer) exitWith {};

@@ -1,19 +1,16 @@
-/**
- * Function: TN_tracker_fnc_nameToNum
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Server-side function that registers or looks up a unit's name
  * in TN_tracker_names and maintains their side history in
  * TN_tracker_sides. Returns the index for compact storage.
  *
- * Parameters:
- * _name (String): Unit name to register/look up.
- * _side (Side): Unit's current side.
- * _eventTime (Number): Timestamp for side history tracking.
+ * Arguments:
+ * 0: Unit name to register/look up <STRING>
+ * 1: Unit's current side <SIDE>
+ * 2: Timestamp for side history tracking <NUMBER>
  *
- * Returns:
- * Number -- index into TN_tracker_names / TN_tracker_sides.
+ * Return Value:
+ * Index into TN_tracker_names / TN_tracker_sides <NUMBER>
  */
 
 params ["_name", "_side", "_eventTime"];

@@ -1,7 +1,5 @@
-/**
- * Function: TN_event_fnc_init
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Initializes the event variation of the mission template.
  * Loads event settings, wires up timer / alive-check /
  * respawn / time-acceleration handlers, marks editor-placed
@@ -9,14 +7,14 @@
  *
  * Should be called after round initialization.
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
  *
  * Example:
- *     call TN_event_fnc_init;
+ * call TN_event_fnc_init;
  */
 
 /******** CONFIG ********/

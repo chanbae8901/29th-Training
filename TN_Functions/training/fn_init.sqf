@@ -1,20 +1,18 @@
-/**
- * Function: TN_training_fnc_init
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Initializes the training variation of the mission template.
  * Sets up curator whitelisting, arsenal zone centers, base
  * map markers, default loadouts, weather, and disconnect
  * body cleanup. Should be called after round initialization.
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
  *
  * Example:
- *     call TN_training_fnc_init;
+ * call TN_training_fnc_init;
  */
 
 /*

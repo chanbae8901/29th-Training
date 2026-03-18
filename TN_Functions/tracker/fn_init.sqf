@@ -1,8 +1,5 @@
-/**
- * Function: TN_tracker_fnc_init
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Initializes the tracker system on both server and client.
  * Projectiles created by players have weapon/player info saved
  * onto them, which transfers to any alive player/vehicle on hit.
@@ -10,11 +7,11 @@
  * event server-side, then released to clients via Map Diary at
  * end of round.
  *
- * Parameters:
+ * Arguments:
  * None
  *
- * Returns:
- * true
+ * Return Value:
+ * true <BOOL>
  */
 
 if (("enableRoundEventLog" call BIS_fnc_getParamValue) != 1) exitWith {};

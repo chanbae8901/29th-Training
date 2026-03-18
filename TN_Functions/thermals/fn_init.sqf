@@ -1,21 +1,19 @@
-/**
- * Function: TN_thermals_fnc_init
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Initializes the thermal restriction module.
  * - Client: monitors vision mode changes to black-screen on
  *   thermal use, and disables PIP thermal cameras on vehicle entry.
  * - Server: disables TI equipment on all current and future
  *   vehicles when the CBA setting is enabled.
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
  *
  * Example:
- *     call TN_thermals_fnc_init;
+ * call TN_thermals_fnc_init
  */
 
 // --- Client-side: vision mode monitoring and PIP disable ---

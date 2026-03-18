@@ -1,7 +1,5 @@
-/**
- * Function: TN_event_fnc_flagActions
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Adds a single "Event Menu" scroll-wheel action to timer
  * objects and the ending object. The action opens a GUI
  * dialog (TN_event_fnc_gui_flagMenu) that presents
@@ -11,16 +9,14 @@
  * Adds Side Ready and Unready actions to players in
  * BLUFOR, OPFOR, or GRNFOR if round has not started.
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
  *
- * Requires:
- *     TN_event_timerObjects (global array)
- *     TN_event_endingObject (global object)
- *     TN_event_fnc_gui_flagMenu
+ * Example:
+ * call TN_event_fnc_flagActions;
  */
 
 {

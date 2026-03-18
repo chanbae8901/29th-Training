@@ -1,7 +1,5 @@
-/**
- * Function: TN_event_fnc_gui_setSafeStartTime
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Opens a GUI dialog that lets an admin adjust the remaining
  * safe-start countdown timer via a slider or direct text
  * input. The new time is applied via BIS_fnc_countdown and
@@ -10,11 +8,11 @@
  * Uses createDialog (TN_RscDisplaySafeStartTime, IDD 29141)
  * which overlays on display 46 — readyUI stays visible.
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
  */
 
 #define IDD_SAFE_START_TIME 29141

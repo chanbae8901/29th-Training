@@ -1,16 +1,18 @@
-/**
- * Function: TN_loadout_fnc_onArsenalClosed
- * Author:   Hill [29th ID]
+/*
+ * Author: Hill [29th ID]
+ * Post-arsenal cleanup. Saves the player's current inventory
+ * as their respawn loadout, attempts to fix the silent weapon
+ * bug by cycling primary weapon magazines, reapplies insignia,
+ * and lowers the weapon.
  *
- * Purpose: Post-arsenal cleanup. Saves the player's current inventory
- *          as their respawn loadout, attempts to fix the silent weapon
- *          bug by cycling primary weapon magazines, reapplies insignia,
- *          and lowers the weapon.
+ * Arguments:
+ * None
  *
- * Params:  None
- * Returns: true
+ * Return Value:
+ * True <BOOL>
  *
- * Example: call TN_loadout_fnc_onArsenalClosed;
+ * Example:
+ * call TN_loadout_fnc_onArsenalClosed;
  */
 
 [player, [missionNamespace, "Current Inventory"]]

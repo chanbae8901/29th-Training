@@ -1,18 +1,21 @@
-/**
- * Function: TN_settings_fnc_gui_settingCheckbox
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Initializes a checkbox setting row and wires the
  * CheckedChanged event to write temporary overrides.
  * Runs in uiNamespace.
  *
- * Params:
- *   _controlsGroup - parent controls group for the row
- *   _setting       - CBA setting name string
- *   _source        - setting source (e.g. "server")
- *   _currentValue  - current boolean value
- *   _settingData   - (unused for checkbox type)
- * Return: none
+ * Arguments:
+ * 0: Parent controls group for the row <CONTROL>
+ * 1: CBA setting name string <STRING>
+ * 2: Setting source (e.g. "server") <STRING>
+ * 3: Current boolean value <BOOL>
+ * 4: Setting data (unused for checkbox type) <ANY>
+ *
+ * Return Value:
+ * None
+ *
+ * Example:
+ * [_controlsGroup, _setting, _source, _currentValue, _settingData] call TN_settings_fnc_gui_settingCheckbox
  */
 
 #define SERVER_TEMP \

@@ -1,14 +1,18 @@
-/**
- * Function: TN_settings_fnc_init
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Server-side initialization for the DOTT settings system.
  * Snapshots each CBA mission setting's server value as the
  * "default" baseline and builds the global settings list,
  * skipping any non-global settings.
  *
- * Params: none
- * Return: none
+ * Arguments:
+ * None
+ *
+ * Return Value:
+ * None
+ *
+ * Example:
+ * call TN_settings_fnc_init
  */
 
 #define MISSION_ADDON "tn"

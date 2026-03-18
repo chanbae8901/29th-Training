@@ -1,20 +1,17 @@
-/**
- * Function: TN_common_fnc_diag_log
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Wrapper for diag_log intended to be remoteExec'd.
  * Uses `text` to strip the extra quotation marks that diag_log
  * adds when logging a raw string directly.
  *
- * Parameters:
- *     _str - STRING - message to write to the RPT log
+ * Arguments:
+ * 0: Message to write to the RPT log <STRING>
  *
- * Returns:
- *     true
+ * Return Value:
+ * Success <BOOL>
  *
  * Example:
- *     "Something Happened"
- *         remoteExec ["TN_common_fnc_diag_log", 2];
+ * "Something Happened" remoteExec ["TN_common_fnc_diag_log", 2];
  */
 
 params ["_str"];

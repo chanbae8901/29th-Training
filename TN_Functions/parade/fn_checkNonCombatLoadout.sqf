@@ -1,20 +1,16 @@
-/**
- * Function: TN_parade_fnc_checkNonCombatLoadout
- * Author:   Bae [29th ID]
+/*
+ * Author: Bae [29th ID]
+ * Checks if a unit is in a non-combat loadout (suitable for
+ * lining up).
  *
- * Description:
- *   Checks if a unit is in a non-combat loadout (suitable for
- *   lining up).
+ * Arguments:
+ * 0: The unit to check for non-combat loadout <OBJECT>
  *
- * Parameters:
- *   _unit (Object) - The unit to check for non-combat loadout
- *
- * Returns:
- *   Boolean - true if the unit is in a non-combat loadout,
- *             false otherwise
+ * Return Value:
+ * true if the unit is in a non-combat loadout, false otherwise <BOOL>
  *
  * Example:
- *   [player] call TN_parade_fnc_checkNonCombatLoadout;
+ * [player] call TN_parade_fnc_checkNonCombatLoadout;
  */
 
 params ["_unit"];

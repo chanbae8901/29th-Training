@@ -1,22 +1,22 @@
-/**
- * Function: TN_ocap_fnc_init
- * Author:   Bae [29th ID]
- *
- * Purpose:
- *   Initializes OCAP event handlers that integrate with the round
- *   system. Compiles sector/recording functions, registers CBA
- *   event handlers for round lifecycle events, and sets up marker
- *   workarounds. Must run on the server.
+/*
+ * Author: Bae [29th ID]
+ * Initializes OCAP event handlers that integrate with the round
+ * system. Compiles sector/recording functions, registers CBA
+ * event handlers for round lifecycle events, and sets up marker
+ * workarounds. Must run on the server.
  *
  * Hardcoded Paths:
  *   TN_Functions\ocap\fn_initializePlayer.sqf
  *   TN_Functions\ocap\handleMarkers.sqf
  *
- * Parameter(s): None
- * Returns: Nothing
+ * Arguments:
+ * None
+ *
+ * Return Value:
+ * Nothing
  *
  * Example:
- *   call TN_ocap_fnc_init;
+ * call TN_ocap_fnc_init;
  */
 
 /*

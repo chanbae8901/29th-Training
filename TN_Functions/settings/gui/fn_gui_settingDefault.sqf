@@ -1,18 +1,21 @@
-/**
- * Function: TN_settings_fnc_gui_settingDefault
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Wires the "Reset to default" button for a single setting
  * row.  Clicking it restores the server's initial value and
  * invokes the row's updateUI callback.
  *
- * Params:
- *   _controlsGroup - parent controls group for the row
- *   _setting       - CBA setting name string
- *   _source        - setting source (e.g. "server")
- *   _currentValue  - the live value being displayed
- *   _defaultValue  - the server's initial value
- * Return: none
+ * Arguments:
+ * 0: Parent controls group for the row <CONTROL>
+ * 1: CBA setting name string <STRING>
+ * 2: Setting source (e.g. "server") <STRING>
+ * 3: The live value being displayed <ANY>
+ * 4: The server's initial value <ANY>
+ *
+ * Return Value:
+ * None
+ *
+ * Example:
+ * [_controlsGroup, _setting, _source, _currentValue, _defaultValue] call TN_settings_fnc_gui_settingDefault
  */
 
 #define DEFAULT_INDEX 0

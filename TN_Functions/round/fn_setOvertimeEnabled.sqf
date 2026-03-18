@@ -1,17 +1,15 @@
-/**
- * Function: TN_round_fnc_setOvertimeEnabled
- * Author:   Bae [29th ID], modified from Dott [29th ID]
- *
+/*
+ * Author: Bae [29th ID], modified from Dott [29th ID]
  * Enables or disables overtime for the current round.
  *
- * Parameters:
- *     _enabled - Boolean - true to enable, false to disable.
+ * Arguments:
+ * 0: true to enable, false to disable <BOOL>
  *
- * Returns:
- *     Boolean - true
+ * Return Value:
+ * true <BOOL>
  *
  * Example:
- *     [true] call TN_round_fnc_setOvertimeEnabled;
+ * [true] call TN_round_fnc_setOvertimeEnabled;
  */
 
 params ["_enabled"];

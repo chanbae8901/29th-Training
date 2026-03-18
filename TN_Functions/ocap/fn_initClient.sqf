@@ -1,16 +1,16 @@
-/**
- * Function: TN_ocap_fnc_initClient
- * Author:   Bae [29th ID]
+/*
+ * Author: Bae [29th ID]
+ * Client-side OCAP initialization.
+ * Handles JIP player registration.
  *
- * Purpose:
- *   Client-side OCAP initialization. 
- *   Handles JIP player registration.
+ * Arguments:
+ * 0: Whether OCAP autoStart is enabled <BOOL>
  *
+ * Return Value:
+ * Nothing
  *
- * Parameter(s):
- *   0: BOOL - Whether OCAP autoStart is enabled
- *
- * Returns: Nothing
+ * Example:
+ * [false] remoteExecCall ["TN_ocap_fnc_initClient", 0, true];
  */
 
 params ["_autoStart"];

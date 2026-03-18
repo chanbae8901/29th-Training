@@ -1,19 +1,16 @@
-/**
- * Function: TN_parade_fnc_handleInitialInventory
- * Author:   Hill [29th ID]
+/*
+ * Author: Hill [29th ID]
+ * Ensures joining player has correct loadout on joining the
+ * server, using custom parade if available on BLUFOR.
  *
- * Description:
- *   Ensures joining player has correct loadout on joining the
- *   server, using custom parade if available on BLUFOR.
+ * Arguments:
+ * None
  *
- * Parameters:
- *   None
- *
- * Returns:
- *   Nothing
+ * Return Value:
+ * Nothing
  *
  * Example:
- *   call TN_parade_fnc_handleInitialInventory;
+ * call TN_parade_fnc_handleInitialInventory;
  */
 
 if (!hasInterface) exitWith {};

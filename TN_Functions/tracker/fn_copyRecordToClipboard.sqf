@@ -1,17 +1,14 @@
-/**
- * Function: TN_tracker_fnc_copyRecordToClipboard
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Copies text from record to clipboard up to and excluding the
  * copy clipboard button. Requires ACE 3.
  *
- * Parameters:
- * _subject (String): Diary subject name (e.g. "RoundEventLog").
- * _title (String): Title of the specific diary record to copy.
+ * Arguments:
+ * 0: Diary subject name (e.g. "RoundEventLog") <STRING>
+ * 1: Title of the specific diary record to copy <STRING>
  *
- * Returns:
- * true
+ * Return Value:
+ * true <BOOL>
  */
 
 params ["_subject", "_title"];

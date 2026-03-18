@@ -1,20 +1,18 @@
-/**
- * Function: TN_round_fnc_roundEvents
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Manages timed round events (time warnings). Polls each second and
  * fires events when the countdown crosses their trigger thresholds.
  * Handles addTime resets so events re-trigger after time is added.
  * Client-side only for now.
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
  *
  * Example:
- *     call TN_round_fnc_roundEvents;
+ * call TN_round_fnc_roundEvents;
  */
 
 if (!hasInterface) exitWith {};

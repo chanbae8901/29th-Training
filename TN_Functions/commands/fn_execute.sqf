@@ -1,21 +1,21 @@
 /*
- * Function: TN_commands_fnc_execute
- * Author:   Bae [29th ID]
+ * Author: Bae [29th ID]
+ * Parses and executes a chat command from the intercepted
+ * chat text string. Strips the leading command marker,
+ * splits on the first space into command name and
+ * argument, then looks up and runs the matching handler.
+ * Enforces removed/admin/restricted command restrictions
+ * before execution. Logs usage to diary and server unless
+ * the command is in the no-log list.
  *
- * Description:
- *     Parses and executes a chat command from the intercepted
- *     chat text string. Strips the leading command marker,
- *     splits on the first space into command name and
- *     argument, then looks up and runs the matching handler.
- *     Enforces removed/admin/restricted command restrictions
- *     before execution. Logs usage to diary and server unless
- *     the command is in the no-log list.
+ * Arguments:
+ * 0: Chat text from the KeyDown handler <STRING>
  *
- * Parameters:
- *     _this - String - Chat text from the KeyDown handler
+ * Return Value:
+ * Nothing
  *
- * Returns:
- *     Nothing
+ * Example:
+ * N/A
  */
 
 private _text = [_this, 0, ""] call BIS_fnc_param;

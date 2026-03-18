@@ -1,22 +1,19 @@
-/**
- * Function: TN_tracker_fnc_createDiaryEntries
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Client-side function that creates diary entries after
  * receiving event data from the server. Generates both
  * "All Events" and "Personal Events" diary records plus
  * a scoreboard.
  *
- * Parameters:
- * _events (Array): TN_tracker_events from server.
- * _names (Array): TN_tracker_names from server.
- * _sides (Array): TN_tracker_sides from server.
- * _weapons (Array): TN_tracker_weapons from server.
- * _roundNum (Number): Round number label for diary.
+ * Arguments:
+ * 0: TN_tracker_events from server <ARRAY>
+ * 1: TN_tracker_names from server <ARRAY>
+ * 2: TN_tracker_sides from server <ARRAY>
+ * 3: TN_tracker_weapons from server <ARRAY>
+ * 4: Round number label for diary <NUMBER>
  *
- * Returns:
- * true
+ * Return Value:
+ * true <BOOL>
  */
 
 #include "eventNumbers.hpp"

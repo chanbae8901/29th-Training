@@ -1,22 +1,16 @@
 /*
- * Name:	TN_commands_fnc_addModule
- * Date:	12/30/2025
- * Version: 1.0
- * Author:   Bae [29th ID]
- *
- * Description:
+ * Author: Bae [29th ID]
  * Adds chat commands to the chat command system. Meant for modules to call on init.
  *
- * Parameter(s): 
- * _commands - Array of command definitions to add (see commands.sqf for format)
- * _helpInfo - Array of help info definitions to add (see commands.sqf for format)
+ * Arguments:
+ * 0: Command definitions to add (see commands.sqf for format) <ARRAY>
+ * 1: Help info definitions to add (see commands.sqf for format) <ARRAY>
  *
- * Returns:
- * true if commands added, false otherwise
+ * Return Value:
+ * Commands added <BOOL>
  *
  * Example:
  * call TN_commands_fnc_init;
- * 
  */
 
 if (isNil "TN_commands_allCommands") exitWith { false };

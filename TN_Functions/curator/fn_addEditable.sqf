@@ -1,22 +1,17 @@
 /*
- * Function: TN_curator_fnc_addEditable
- * Author:   Hill [29th ID]
+ * Author: Hill [29th ID]
+ * Adds the given objects as editable for every active
+ * curator module. Headless clients are filtered out.
+ * Intended to be called on the server via remoteExec.
  *
- * Description:
- *     Adds the given objects as editable for every active
- *     curator module. Headless clients are filtered out.
- *     Intended to be called on the server via remoteExec.
+ * Arguments:
+ * 0: Objects to make editable <ARRAY>
  *
- * Parameters:
- *     _objects - Array of Objects - Objects to make editable
- *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
  *
  * Example:
- *     [[player]] remoteExec [
- *         "TN_curator_fnc_addEditable", 2
- *     ];
+ * [[player]] remoteExec ["TN_curator_fnc_addEditable", 2];
  */
 
 params ["_objects"];

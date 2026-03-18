@@ -1,19 +1,18 @@
-/**
- * Function: TN_settings_fnc_gui_settingSlider
- * Author:   Bae [29th ID]
- *
- * Initializes a slider setting row.  Wires the slider drag,
+/*
+ * Author: Bae [29th ID]
+ * Initializes a slider setting row. Wires the slider drag,
  * the text-edit KeyUp, and the KillFocus events to write
- * temporary overrides.  Runs in uiNamespace.
+ * temporary overrides. Runs in uiNamespace.
  *
- * Params:
- *   _controlsGroup - parent controls group for the row
- *   _setting       - CBA setting name string
- *   _source        - setting source (e.g. "server")
- *   _currentValue  - the live numeric value
- *   _settingData   - [_min, _max, _trailingDecimals,
- *                     _isPercentage]
- * Return: none
+ * Arguments:
+ * 0: Parent controls group for the row <CONTROL>
+ * 1: CBA setting name string <STRING>
+ * 2: Setting source (e.g. "server") <STRING>
+ * 3: The live numeric value <NUMBER>
+ * 4: Setting data [min, max, trailingDecimals, isPercentage] <ARRAY>
+ *
+ * Return Value:
+ * None
  */
 
 #define SERVER_TEMP \

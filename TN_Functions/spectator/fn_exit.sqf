@@ -1,7 +1,5 @@
-/**
- * Function: TN_spectator_fnc_exit
- * Author:   Hill [29th ID]
- *
+/*
+ * Author: Hill [29th ID]
  * Removes the player from BIS EG Spectator mode and undoes all
  * changes made by TN_spectator_fnc_enter. Temporarily disables
  * damage to prevent collision kills when multiple players leave
@@ -12,14 +10,14 @@
  * player is mid-teleport and damage must stay disabled to avoid
  * conflicts. The 2-second re-enable is skipped in that case.
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     BOOL - false if not in spectator, true otherwise
+ * Return Value:
+ * False if not in spectator, true otherwise <BOOL>
  *
  * Example:
- *     call TN_spectator_fnc_exit;
+ * call TN_spectator_fnc_exit
  */
 
 // --- Bail if spectator was never initialized ---

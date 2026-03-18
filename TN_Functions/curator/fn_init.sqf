@@ -1,24 +1,15 @@
 /*
- * Function: TN_curator_fnc_init
- * Author:   Bae [29th ID]
- *
- * Description:
- *     Initializes the curator (Zeus) system for both clients
- *     and the server. On the client side, registers death
- *     marker drawing, Zeus enter/exit event logging, adds the
- *     player as editable, and requests a curator module. On
- *     the server side, ensures TN_curator_units exists,
- *     merges any editor-placed curator modules into the unit
- *     list, creates the admin curator module, and sets up
- *     admin login/logout handlers that reassign the shared
- *     zeus_admin module. Also spawns the object exclusion
- *     loop.
- *
- * Parameters:
- *     None
- *
- * Returns:
- *     Nothing
+ * Author: Bae [29th ID]
+ * Initializes the curator (Zeus) system for both clients
+ * and the server. On the client side, registers death
+ * marker drawing, Zeus enter/exit event logging, adds the
+ * player as editable, and requests a curator module. On
+ * the server side, ensures TN_curator_units exists,
+ * merges any editor-placed curator modules into the unit
+ * list, creates the admin curator module, and sets up
+ * admin login/logout handlers that reassign the shared
+ * zeus_admin module. Also spawns the object exclusion
+ * loop.
  *
  * Events Used:
  *     TN_enteredZeus - Fired by cfgEventHandlers when a
@@ -33,6 +24,15 @@
  *     and a personal curator module is recreated for the unit
  *     so they keep Zeus access if their role is in
  *     TN_curator_units.
+ *
+ * Arguments:
+ * None
+ *
+ * Return Value:
+ * Nothing
+ *
+ * Example:
+ * call TN_curator_fnc_init;
  */
 
 //Note: Events TN_enteredZeus and TN_exitedZeus are defined in cfgEventHandlers

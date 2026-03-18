@@ -1,23 +1,20 @@
 #include "defines.hpp"
 
-/**
- * Function: TN_round_fnc_manageReady
- * Author:   Bae [29th ID], modified from Dott [29th ID]
- *
+/*
+ * Author: Bae [29th ID], modified from Dott [29th ID]
  * Changes the ready state of a side and checks if all sides are ready
  * to start the round. If all sides become ready, initiates safe start
  * or shortens an existing forced safe start.
  *
- * Parameters:
- *     _side - Side - Which side to change ready state for.
- *     _isReady - Boolean - Desired ready state.
+ * Arguments:
+ * 0: Which side to change ready state for <SIDE>
+ * 1: Desired ready state <BOOL>
  *
- * Returns:
- *     Number - 2 if side already in requested state, 1 if round
- *         already started, 0 otherwise.
+ * Return Value:
+ * 2 if side already in requested state, 1 if round already started, 0 otherwise <NUMBER>
  *
  * Example:
- *     [west, true] call TN_round_fnc_manageReady;
+ * [west, true] call TN_round_fnc_manageReady;
  */
 
 params ["_side", "_isReady"];

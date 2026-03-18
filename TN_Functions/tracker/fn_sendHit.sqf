@@ -1,18 +1,15 @@
-/**
- * Function: TN_tracker_fnc_sendHit
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Server-side function that stores hit attribution data on
  * each targeted unit. Maintains both a per-instigator hit map
  * and a "last hit" pointer so kill/unconscious events can
  * determine who was responsible.
  *
- * Parameters:
- * _units (Array): Objects to set hit info on.
- * _instigatorInfo (Array): [name, side, pos, weapon, time].
+ * Arguments:
+ * 0: Objects to set hit info on <ARRAY>
+ * 1: Instigator info [name, side, pos, weapon, time] <ARRAY>
  *
- * Returns:
+ * Return Value:
  * Nothing
  */
 

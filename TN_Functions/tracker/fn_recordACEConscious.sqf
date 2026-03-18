@@ -1,19 +1,16 @@
-/**
- * Function: TN_tracker_fnc_recordACEConscious
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Server-side function that constructs an ace_unconscious event
  * array for the tracker. Records when a player goes unconscious
  * or regains consciousness, attributing the cause via stored
  * hit data when available.
  *
- * Parameters:
- * _unit (Object): The unit changing consciousness state.
- * _state (Bool): true = went unconscious, false = woke up.
+ * Arguments:
+ * 0: The unit changing consciousness state <OBJECT>
+ * 1: true = went unconscious, false = woke up <BOOL>
  *
- * Returns:
- * true if saved, false otherwise
+ * Return Value:
+ * true if saved, false otherwise <BOOL>
  */
 
 #include "eventNumbers.hpp"

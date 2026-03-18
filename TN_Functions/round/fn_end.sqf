@@ -1,18 +1,16 @@
-/**
- * Function: TN_round_fnc_end
- * Author:   Bae [29th ID], modified from Dott [29th ID]
- *
+/*
+ * Author: Bae [29th ID], modified from Dott [29th ID]
  * Transitions to overtime if applicable, otherwise ends the round
  * with notifications.
  *
- * Parameters:
- *     _force - Boolean - Manual overriding of round end. Default: false
+ * Arguments:
+ * 0: Manual overriding of round end (default: false) <BOOL>
  *
- * Returns:
- *     Boolean - true
+ * Return Value:
+ * true <BOOL>
  *
  * Example:
- *     [true] call TN_round_fnc_end;
+ * [true] call TN_round_fnc_end;
  */
 
 params [["_force", false, [false]]];

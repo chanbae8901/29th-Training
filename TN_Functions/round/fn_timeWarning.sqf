@@ -1,18 +1,16 @@
-/**
- * Function: TN_round_fnc_timeWarning
- * Author:   Bae [29th ID], modified from Dott [29th ID]
- *
+/*
+ * Author: Bae [29th ID], modified from Dott [29th ID]
  * Displays a time remaining notification via BIS notification system.
  * Currently restricted to admins only.
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
  *
  * Example:
- *     call TN_round_fnc_timeWarning;
+ * call TN_round_fnc_timeWarning;
  */
 
 // Admin-only for now.

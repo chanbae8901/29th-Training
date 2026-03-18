@@ -1,17 +1,14 @@
-/**
- * Function: TN_tracker_fnc_weaponToNum
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Server-side function that registers or looks up a weapon name
  * in TN_tracker_weapons. Returns the index for compact event
  * storage and network transmission.
  *
- * Parameters:
- * _weaponName (String): Display name of the weapon.
+ * Arguments:
+ * 0: Display name of the weapon <STRING>
  *
- * Returns:
- * Number -- index into TN_tracker_weapons.
+ * Return Value:
+ * Index into TN_tracker_weapons <NUMBER>
  */
 
 params ["_weaponName"];

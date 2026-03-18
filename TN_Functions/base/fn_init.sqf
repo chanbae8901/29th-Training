@@ -1,37 +1,34 @@
 #include "..\..\data\defines.hpp"
 
 /*
- * Function: TN_base_fnc_init
- * Author:   Bae [29th ID], modified from Hill [29th ID]
+ * Author: Bae [29th ID], modified from Hill [29th ID]
+ * Initializes all base interaction objects on the client.
+ * Scans every editor-placed object for a variable name
+ * matching the "base_action_<type>_<id>" convention and
+ * sorts them into global arrays (TN_base_terminals,
+ * TN_base_arsenals, TN_base_garbages). Then sets up:
+ *   - Spectator addActions on terminal objects
+ *   - Proximity triggers for terminal animations
+ *   - Radius-based ACE/vanilla arsenal with environment
+ *     sound toggling (muted inside arsenal zone)
+ *   - Respawn handler to reset arsenal action ID
+ *   - Force Parade addAction on the BLUFOR ammo box
+ *     (if parade module is loaded)
+ *   - Clean-up addActions on garbage can objects
  *
- * Description:
- *     Initializes all base interaction objects on the client.
- *     Scans every editor-placed object for a variable name
- *     matching the "base_action_<type>_<id>" convention and
- *     sorts them into global arrays (TN_base_terminals,
- *     TN_base_arsenals, TN_base_garbages). Then sets up:
- *       - Spectator addActions on terminal objects
- *       - Proximity triggers for terminal animations
- *       - Radius-based ACE/vanilla arsenal with environment
- *         sound toggling (muted inside arsenal zone)
- *       - Respawn handler to reset arsenal action ID
- *       - Force Parade addAction on the BLUFOR ammo box
- *         (if parade module is loaded)
- *       - Clean-up addActions on garbage can objects
+ * Hardcoded object references:
+ *   base_action_arsenal_blu - BLUFOR ammo box used for
+ *       the Force Parade addAction. Must exist in
+ *       mission.sqm with that exact variable name.
  *
- *     Hardcoded object references:
- *       base_action_arsenal_blu - BLUFOR ammo box used for
- *           the Force Parade addAction. Must exist in
- *           mission.sqm with that exact variable name.
+ * Arguments:
+ * None
  *
- * Parameters:
- *     None
- *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
  *
  * Example:
- *     call TN_base_fnc_init;
+ * call TN_base_fnc_init;
  */
 
 /*

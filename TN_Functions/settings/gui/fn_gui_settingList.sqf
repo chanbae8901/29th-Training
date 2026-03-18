@@ -1,18 +1,21 @@
-/**
- * Function: TN_settings_fnc_gui_settingList
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Initializes a list (dropdown) setting row and wires the
  * LBSelChanged event to write temporary overrides.
  * Runs in uiNamespace.
  *
- * Params:
- *   _controlsGroup - parent controls group for the row
- *   _setting       - CBA setting name string
- *   _source        - setting source (e.g. "server")
- *   _currentValue  - the live value for this setting
- *   _settingData   - [_values, _labels, _tooltips]
- * Return: none
+ * Arguments:
+ * 0: Parent controls group for the row <CONTROL>
+ * 1: CBA setting name string <STRING>
+ * 2: Setting source (e.g. "server") <STRING>
+ * 3: The live value for this setting <ANY>
+ * 4: Setting data [values, labels, tooltips] <ARRAY>
+ *
+ * Return Value:
+ * None
+ *
+ * Example:
+ * [_controlsGroup, _setting, _source, _currentValue, _settingData] call TN_settings_fnc_gui_settingList
  */
 
 #define SERVER_TEMP \

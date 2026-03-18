@@ -1,17 +1,15 @@
-/**
- * Function: TN_round_fnc_setOvertimePeriod
- * Author:   Bae [29th ID], modified from Dott [29th ID]
- *
+/*
+ * Author: Bae [29th ID], modified from Dott [29th ID]
  * Sets the overtime period duration. Rejects non-positive values.
  *
- * Parameters:
- *     _time - Number - Overtime duration in seconds.
+ * Arguments:
+ * 0: Overtime duration in seconds <NUMBER>
  *
- * Returns:
- *     Boolean - true on success, false if rejected.
+ * Return Value:
+ * true on success, false if rejected <BOOL>
  *
  * Example:
- *     [300] call TN_round_fnc_setOvertimePeriod;
+ * [300] call TN_round_fnc_setOvertimePeriod;
  */
 
 params ["_time"];

@@ -1,7 +1,5 @@
-/**
- * Function: TN_settings_fnc_initDisplayMissionOptions
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Entry point for the DOTT mission-settings dialog.
  * Builds the addon/category sidebar, wires the OK button
  * to save temporary overrides, and lazy-compiles client
@@ -12,9 +10,14 @@
  * Dec 2025.  Original license:
  * https://github.com/CBATeam/CBA_A3?tab=GPL-2.0-1-ov-file
  *
- * Params:
- *   _display - the RscDisplayMissionOptions display
- * Return: none
+ * Arguments:
+ * 0: The RscDisplayMissionOptions display <DISPLAY>
+ *
+ * Return Value:
+ * None
+ *
+ * Example:
+ * [_display] call TN_settings_fnc_initDisplayMissionOptions
  */
 
 /* The functions in the folder containing this file are

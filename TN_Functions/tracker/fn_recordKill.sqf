@@ -1,20 +1,17 @@
-/**
- * Function: TN_tracker_fnc_recordKill
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Client-side function that constructs a kill event array from
  * an EntityKilled event. Determines the killer by checking
  * stored hit data, prioritizing any engine-provided instigator,
  * and handles special cases like incendiary grenades on vehicles.
  *
- * Parameters:
- * _unit (Object): The killed unit.
- * _killer (Object): Engine-reported killer.
- * _instigator (Object): Engine-reported instigator (may be objNull).
+ * Arguments:
+ * 0: The killed unit <OBJECT>
+ * 1: Engine-reported killer <OBJECT>
+ * 2: Engine-reported instigator (may be objNull) <OBJECT>
  *
- * Returns:
- * true if saved, false otherwise
+ * Return Value:
+ * true if saved, false otherwise <BOOL>
  */
 
 #include "eventNumbers.hpp"

@@ -1,7 +1,5 @@
-/**
- * Function: TN_event_fnc_markEditorPlacedObjects
- * Author:   Mallen [FNF], modified by Bae [29th ID]
- *
+/*
+ * Author: Mallen [FNF], modified by Bae [29th ID]
  * Creates local map markers for editor-placed static objects
  * and cargo containers that are large enough to be tactically
  * relevant. Objects can opt in/out via object variables.
@@ -9,11 +7,11 @@
  * Originally by Mallen [FNF], modified by Bae [29th ID].
  * https://github.com/FridayNightFight/FNF (BSD-3-Clause)
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
  */
 
 #define MIN_MARK_SIZE 1.5

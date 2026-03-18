@@ -1,13 +1,17 @@
-/**
- * Function: TN_settings_fnc_gui_saveTempData
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Applies every pending setting override stored in the
  * temporary namespace back into CBA's live settings.
  * Called when the user clicks OK in the settings dialog.
  *
- * Params: none (reads globals directly)
- * Return: nil
+ * Arguments:
+ * None
+ *
+ * Return Value:
+ * None <NIL>
+ *
+ * Example:
+ * call TN_settings_fnc_gui_saveTempData
  */
 
 #define SERVER_TEMP \

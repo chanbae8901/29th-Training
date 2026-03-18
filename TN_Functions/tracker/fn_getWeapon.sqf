@@ -1,18 +1,15 @@
-/**
- * Function: TN_tracker_fnc_getWeapon
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Returns a string best describing the weapon used for infantry.
  *
- * Parameters:
+ * Arguments:
  * [_weapon, _muzzle, _magazine, _ammo, _vehicle] reference
- *     FiredMan event.
+ * FiredMan event.
  * NOTE: For optimization, these are assumed to be assigned by
  * the caller (assumed FiredMan event).
  *
- * Returns:
- * String
+ * Return Value:
+ * Weapon description <STRING>
  */
 
 private _weaponCfg =

@@ -1,16 +1,19 @@
-/**
- * Function: TN_settings_fnc_gui_addonChanged
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Fired when the user selects a different addon/category in
  * the sidebar listbox.  Lazily builds every setting row for
  * that category (checkbox / list / slider / time) the first
  * time it is viewed, then toggles panel visibility.
  *
- * Params:
- *   _control - the addon listbox control
- *   _index   - selected listbox index
- * Return: none
+ * Arguments:
+ * 0: The addon listbox control <CONTROL>
+ * 1: Selected listbox index <NUMBER>
+ *
+ * Return Value:
+ * None
+ *
+ * Example:
+ * [_control, _index] call TN_settings_fnc_gui_addonChanged
  */
 
 #define SERVER_TEMP \

@@ -1,19 +1,17 @@
-/**
- * Function: TN_round_fnc_addTime
- * Author:   Bae [29th ID], modified from Dott [29th ID]
- *
+/*
+ * Author: Bae [29th ID], modified from Dott [29th ID]
  * Adds (or subtracts) time from the currently running round. Cannot
  * be used when no round is active. Notifies all players of the time
  * change via hint.
  *
- * Parameters:
- *     _timeDelta - Number - Seconds to add. Negative values subtract time.
+ * Arguments:
+ * 0: Seconds to add. Negative values subtract time <NUMBER>
  *
- * Returns:
- *     Number - New time remaining, or -1 if round not active.
+ * Return Value:
+ * New time remaining, or -1 if round not active <NUMBER>
  *
  * Example:
- *     [120] call TN_round_fnc_addTime;
+ * [120] call TN_round_fnc_addTime;
  */
 
 params ["_timeDelta"];

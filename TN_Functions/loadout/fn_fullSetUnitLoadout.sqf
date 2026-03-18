@@ -1,21 +1,20 @@
-/**
- * Function: TN_loadout_fnc_fullSetUnitLoadout
- * Author:   Bae [29th ID]
+/*
+ * Author: Bae [29th ID]
+ * Wrapper around CBA_fnc_setLoadout that also resets weapon
+ * state (silent weapon bug fix) and reapplies insignia once
+ * the reset finishes. Prefer spawning this over calling
+ * setUnitLoadout directly.
  *
- * Purpose: Wrapper around CBA_fnc_setLoadout that also resets weapon
- *          state (silent weapon bug fix) and reapplies insignia once
- *          the reset finishes. Prefer spawning this over calling
- *          setUnitLoadout directly.
+ * Arguments:
+ * 0: Unit, must be local and alive <OBJECT>
+ * 1: CBA extended loadout <ARRAY>
+ * 2: True to use full magazines <BOOL>
  *
- * Params:
- *   _unit          - Object, must be local and alive
- *   _loadout       - Array, CBA extended loadout
- *   _fullMagazines - Bool, true to use full magazines
+ * Return Value:
+ * False if unit is not local or alive, true otherwise <BOOL>
  *
- * Returns: false if _unit is not local or alive, true otherwise
- *
- * Reference:
- *   https://cbateam.github.io/CBA_A3/docs/files/loadout/fnc_setLoadout-sqf.html
+ * Example:
+ * [player, _loadout, true] spawn TN_loadout_fnc_fullSetUnitLoadout;
  */
 
 params ["_unit", "_loadout", "_fullMagazines"];

@@ -1,7 +1,5 @@
-/**
- * Function: TN_spectator_fnc_enter
- * Author:   Bae [29th ID], modified from Hill [29th ID]
- *
+/*
+ * Author: Bae [29th ID], modified from Hill [29th ID]
  * Places the player into BIS EG Spectator mode and registers a
  * per-frame handler that exits spectator when the player presses
  * Reload, moves too far from the start position, or dies.
@@ -12,14 +10,14 @@
  * spectator box. The onEachFrame handler catches this via an
  * !alive check and forces an exit to prevent a stuck state.
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     BOOL - true if spectator entered, false if blocked
+ * Return Value:
+ * True if spectator entered, false if blocked <BOOL>
  *
  * Example:
- *     [] spawn TN_spectator_fnc_enter;
+ * [] spawn TN_spectator_fnc_enter
  */
 
 /*

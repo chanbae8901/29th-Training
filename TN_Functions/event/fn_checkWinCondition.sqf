@@ -1,26 +1,18 @@
-/**
- * Function: TN_event_fnc_checkWinCondition
- * Author:   Bae [29th ID]
- *
+/*
+ * Author: Bae [29th ID]
  * Evaluates win conditions each tick during an active round.
  * Supports point-based victory via sector ownership and kill
  * tracking. Conditions can trigger mid-round (loopChecks) or
  * at round end (endChecks).
  *
- * Parameters:
- *     None
+ * Arguments:
+ * None
  *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
  *
- * Requires:
- *     TN_event_score (global array)
- *     TN_event_opforWinConditions (global)
- *     TN_event_bluforWinConditions (global)
- *     TN_event_grnforWinConditions (global)
- *     TN_event_winCheckInterval (global, seconds)
- *     TN_event_fnc_game
- *     TN_round_fnc_isRoundActive
+ * Example:
+ * [] spawn TN_event_fnc_checkWinCondition;
  */
 
 private _loopChecks = [[{ false }], [{ false }], [{ false }]];

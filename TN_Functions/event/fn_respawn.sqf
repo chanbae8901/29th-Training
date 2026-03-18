@@ -1,25 +1,17 @@
-/**
- * Function: TN_event_fnc_respawn
- * Author:   Bae [29th ID], modified from Dott [29th ID]
- *
+/*
+ * Author: Bae [29th ID], modified from Dott [29th ID]
  * Tracks player deaths during a live round and teleports
  * the player to the spectate area when they exhaust their
  * limited lives. Optionally strips weapons on final respawn.
  *
- * Parameters:
- *     _storeDeaths (bool) - When true, records the player's
- *         current death count and exits. Used at round start
- *         to baseline.
+ * Arguments:
+ * 0: When true, records the player's current death count and exits, used at round start to baseline <BOOL> (default: false)
  *
- * Returns:
- *     Nothing
+ * Return Value:
+ * Nothing
  *
- * Requires:
- *     TN_event_numberOfLives (global)
- *     TN_event_spectateArea (global object)
- *     TN_event_liveDeaths (global, set at round start)
- *     TN_event_respawnDisarmPlayers (global bool)
- *     TN_round_fnc_isRoundActive
+ * Example:
+ * [true] call TN_event_fnc_respawn;
  */
 
 params

@@ -1,19 +1,16 @@
-/**
- * Function: TN_ticket_fnc_init
- * Author:   Bae [29th ID]
+/*
+ * Author: Bae [29th ID]
+ * Initializes ticket system.
+ * NOTE: Unsure if finished.
  *
- * Description:
- *   Initializes ticket system.
- *   NOTE: Unsure if finished.
+ * Arguments:
+ * None
  *
- * Parameters:
- *   None
- *
- * Returns:
- *   Nothing
+ * Return Value:
+ * Nothing
  *
  * Example:
- *   call TN_ticket_fnc_init;
+ * call TN_ticket_fnc_init;
  */
 
 // Ensure JIP client is aware of the status of the ticket system.

@@ -1,18 +1,15 @@
-/**
- * Function: TN_tracker_fnc_saveEvent
- * Author:   Bae [29th ID]
- *
- * Purpose:
+/*
+ * Author: Bae [29th ID]
  * Server-side function that converts an event array's human-
  * readable names/sides/weapons into compact numeric indices
  * (referencing TN_tracker_names, _sides, _weapons) and stores
  * the result in TN_tracker_events.
  *
- * Parameters:
- * _event (Array): Event array created by other tracker functions.
+ * Arguments:
+ * 0: Event array created by other tracker functions <ARRAY>
  *
- * Returns:
- * true if event was saved, false otherwise
+ * Return Value:
+ * true if event was saved, false otherwise <BOOL>
  */
 
 #include "eventNumbers.hpp"

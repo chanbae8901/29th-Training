@@ -1,26 +1,22 @@
 #include "defines.hpp"
 
-/**
- * Function: TN_round_fnc_initSafeStart
- * Author:   Bae [29th ID], modified from Dott [29th ID]
- *
+/*
+ * Author: Bae [29th ID], modified from Dott [29th ID]
  * Launches safe start before round start. Displays a countdown
  * notification and delegates to the helper function which polls until
  * the timer expires or teams unready. If _forced is true, the
  * countdown ignores team readiness state. Forced to run on server.
  * Calling syntax should always include at least an empty array.
  *
- * Parameters:
- *     _safeStartTime - Number - Seconds between all sides ready and
- *         automatic live call. Default: TN_safeStartTime
- *     _forced - Boolean - Force safe start regardless of team
- *         readiness. Default: false
+ * Arguments:
+ * 0: Seconds between all sides ready and automatic live call (default: TN_safeStartTime) <NUMBER>
+ * 1: Force safe start regardless of team readiness (default: false) <BOOL>
  *
- * Returns:
- *     Boolean - true if safe start launched, false otherwise.
+ * Return Value:
+ * true if safe start launched, false otherwise <BOOL>
  *
  * Example:
- *     [] call TN_round_fnc_initSafeStart;
+ * [] call TN_round_fnc_initSafeStart;
  */
 
 // Server should own the waitAndExecute chain.
