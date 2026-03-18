@@ -1,3 +1,5 @@
+#include "..\..\data\roundState.hpp"
+
 /*
  * Author: Bae [29th ID], modified from Dott [29th ID]
  * Tracks player deaths during a live round and teleports
@@ -25,7 +27,7 @@ if (!hasInterface) exitWith {};
 //permit unlimited respawns (just in case)
 if (TN_event_numberOfLives isEqualTo 0) exitWith {};
 
-if !(call TN_round_fnc_isRoundActive) exitWith {};
+if (NOT_ROUND_LIVE) exitWith {};
 
 if (_storeDeaths) exitWith
 {

@@ -1,3 +1,5 @@
+#include "..\..\data\roundState.hpp"
+
 /*
  * Author: Bae [29th ID]
  * Parses and executes a chat command from the intercepted
@@ -50,7 +52,7 @@ if !(isNil "_commandCode") then
         systemChat "You must be the logged in admin to do that!";
     };
 
-    if (_command in TN_commands_restrictedCommands && !_isAdmin && call TN_round_fnc_isRoundActive) exitWith
+    if (_command in TN_commands_restrictedCommands && !_isAdmin && ROUND_LIVE) exitWith
     {
         systemChat "Restricted command! Round has started and you are not admin.";
     };

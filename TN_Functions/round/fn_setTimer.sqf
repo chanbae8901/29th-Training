@@ -1,3 +1,5 @@
+#include "..\..\data\roundState.hpp"
+
 /*
  * Author: Bae [29th ID], modified from Dott [29th ID]
  * Sets the round timer length. Cannot be used while the round is
@@ -16,7 +18,7 @@
 params ["_time"];
 
 if (
-    _time <= 0 || call TN_round_fnc_isRoundActive
+    _time <= 0 || ROUND_LIVE
 ) exitWith {false};
 
 TN_round_timerLength = _time;

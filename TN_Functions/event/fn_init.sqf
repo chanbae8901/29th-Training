@@ -1,3 +1,5 @@
+#include "..\..\data\roundState.hpp"
+
 /*
  * Author: Bae [29th ID]
  * Initializes the event variation of the mission template.
@@ -126,7 +128,7 @@ if (isServer) then
 
         if (isNull _unit) exitWith {};
 
-        if !(call TN_round_fnc_isRoundActive) then
+        if (NOT_ROUND_LIVE) then
         {
             deleteVehicle _unit;
         };

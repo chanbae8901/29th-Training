@@ -1,3 +1,5 @@
+#include "..\..\data\roundState.hpp"
+
 /*
  * Author: Bae [29th ID]
  * Changes or cancels/unforces a currently active safe start. Will not
@@ -20,10 +22,10 @@ private _changed = false;
 
 if (_seconds > 0) then
 {
-    if (call TN_round_fnc_isRoundActive) exitWith {};
+    if (ROUND_LIVE) exitWith {};
 
     // Don't call a new safe start; redirect to initSafeStart for that.
-    if (!TN_round_safeStartActive) exitWith {};
+    if (NOT_ROUND_SAFE) exitWith {};
 
     [_seconds] call BIS_fnc_countdown;
 
@@ -45,7 +47,7 @@ if (_seconds > 0) then
 }
 else
 {
-    if (TN_round_safeStartActive) then
+    if (ROUND_SAFE) then
     {
         TN_round_ignoreReadiness = false;
         publicVariable "TN_round_ignoreReadiness";

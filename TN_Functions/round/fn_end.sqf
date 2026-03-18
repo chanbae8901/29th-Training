@@ -1,3 +1,5 @@
+#include "defines.hpp"
+
 /*
  * Author: Bae [29th ID], modified from Dott [29th ID]
  * Transitions to overtime if applicable, otherwise ends the round
@@ -43,12 +45,14 @@ if (TN_round_overtimeEnabled && !_force) then
 else
 {
     // Let waitUntilAndExecute in fn_start call end.
-    if (call TN_round_fnc_isRoundActive) exitWith
+    if (ROUND_LIVE) exitWith
     {
         // In case manual end was called.
         TN_round_overtimeEnabled = false;
         publicVariable "TN_round_overtimeEnabled";
         [-1] call BIS_fnc_countdown;
+        TN_round_state = 0;
+        publicVariable "TN_round_state";
         true
     };
 
@@ -63,6 +67,8 @@ else
     ] remoteExecCall ["TN_common_fnc_displayMsg"];
 
     [-1] call BIS_fnc_countdown;
+    TN_round_state = 0;
+    publicVariable "TN_round_state";
     ["TN_round_ended", []] call CBA_fnc_globalEvent;
 };
 

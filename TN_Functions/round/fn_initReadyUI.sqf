@@ -1,4 +1,5 @@
 #include "readyui\readyui_defines.hpp"
+#include "..\..\data\roundState.hpp"
 
 /*
  * Author: PFC Wells [29th ID] being nagged at by Bae [29th ID]
@@ -61,7 +62,7 @@ TN_round_fnc_startReadyUIPFH =
 
         // Only start PFH at init if UI is actually needed right now (JIP into safe start, etc.)
         if (
-            TN_round_safeStartActive
+            ROUND_SAFE
             || {
                 !(isNil "TN_round_sideReady")
                 && {true in TN_round_sideReady}
@@ -114,7 +115,7 @@ TN_round_fnc_startReadyUIPFH =
                         && {
                             !(true in TN_round_sideReady)
                         }
-                        && !TN_round_safeStartActive
+                        && NOT_ROUND_SAFE
                     ) then
                     {
                         call TN_round_fnc_stopReadyUIPFH;

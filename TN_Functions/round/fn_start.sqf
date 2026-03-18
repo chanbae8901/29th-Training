@@ -18,7 +18,7 @@
 
 params [["_roundLength", TN_round_timerLength, [0]]];
 
-if (call TN_round_fnc_isRoundActive) exitWith {false};
+if (ROUND_LIVE) exitWith {false};
 
 [_roundLength] call BIS_fnc_countdown;
 
@@ -47,8 +47,8 @@ private _msgText = format [
 /* --- Reset state --- */
 UNREADY_ALL_SIDES;
 
-TN_round_safeStartActive = false;
-publicVariable "TN_round_safeStartActive";
+TN_round_state = 2;
+publicVariable "TN_round_state";
 
 [] remoteExec ["TN_round_fnc_roundEvents"];
 

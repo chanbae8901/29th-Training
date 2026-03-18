@@ -1,3 +1,5 @@
+#include "..\..\data\roundState.hpp"
+
 /*
  * Author: Bae [29th ID], modified from Dott [29th ID]
  * Adds (or subtracts) time from the currently running round. Cannot
@@ -16,7 +18,7 @@
 
 params ["_timeDelta"];
 
-if !(call TN_round_fnc_isRoundActive) exitWith {-1};
+if (NOT_ROUND_LIVE) exitWith {-1};
 
 private _timeLeft = call TN_round_fnc_getTime;
 [_timeDelta + _timeLeft] call BIS_fnc_countdown;

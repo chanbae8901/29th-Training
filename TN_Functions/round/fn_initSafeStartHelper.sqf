@@ -19,7 +19,7 @@
  * call TN_round_fnc_initSafeStartHelper;
  */
 
-if (!TN_round_safeStartActive) exitWith {true};
+if (NOT_ROUND_SAFE) exitWith {true};
 
 private _allSidesReady =
     call TN_round_fnc_checkAllSidesReady;

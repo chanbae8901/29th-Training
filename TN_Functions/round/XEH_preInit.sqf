@@ -1,4 +1,5 @@
 #include "..\..\data\settingCategories.hpp"
+#include "..\..\data\roundState.hpp"
 
 [
     "TN_disableScoreboard",
@@ -22,7 +23,7 @@
                 showScoretable -1;
             };
 
-            if !(call TN_round_fnc_isRoundActive) exitWith {};
+            if (NOT_ROUND_LIVE) exitWith {};
 
             if !(isNull (
                 uiNamespace getVariable [
@@ -48,7 +49,7 @@
                 {
                     if (
                         visibleScoretable
-                        && call TN_round_fnc_isRoundActive
+                        && ROUND_LIVE
                         && TN_disableScoreboard
                     ) then
                     {

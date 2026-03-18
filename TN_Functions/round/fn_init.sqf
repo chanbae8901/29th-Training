@@ -20,8 +20,8 @@
 /* ---- Server-side initialization ---- */
 if (isServer) then
 {
-    TN_round_safeStartActive = false;
-    publicVariable "TN_round_safeStartActive";
+    TN_round_state = 0;
+    publicVariable "TN_round_state";
 
     TN_round_sideReady = [false, false, false];
     publicVariable "TN_round_sideReady";
@@ -69,7 +69,7 @@ if (hasInterface) then
         "PreloadFinished",
         {
             if (
-                call TN_round_fnc_isRoundActive
+                ROUND_LIVE
                 && TN_disableScoreboard
             ) then
             {
@@ -89,7 +89,7 @@ if (hasInterface) then
                 {
                     if (
                         visibleScoretable
-                        && call TN_round_fnc_isRoundActive
+                        && ROUND_LIVE
                         && TN_disableScoreboard
                     ) then
                     {
@@ -106,7 +106,7 @@ if (hasInterface) then
         "Respawn",
         {
             if (
-                call TN_round_fnc_isRoundActive
+                ROUND_LIVE
                 && TN_disableScoreboard
             ) then
             {
@@ -151,7 +151,7 @@ if (hasInterface) then
         "TN_exitedZeus",
         {
             if (
-                call TN_round_fnc_isRoundActive
+                ROUND_LIVE
                 && TN_disableScoreboard
             ) then
             {
@@ -178,7 +178,7 @@ if (hasInterface) then
         "exitedSpectator",
         {
             if (
-                call TN_round_fnc_isRoundActive
+                ROUND_LIVE
                 && TN_disableScoreboard
             ) then
             {

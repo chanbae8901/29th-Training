@@ -1,4 +1,5 @@
 #include "readyui_defines.hpp"
+#include "..\..\..\data\roundState.hpp"
 
 /*
  * Author: PFC Wells [29th ID]
@@ -94,17 +95,12 @@ if (isNil "TN_round_sideReady") exitWith
     _content ctrlShow false;
 };
 
-private _isSafeStart =
-    TN_round_safeStartActive;
-private _anyReady =
-    true in TN_round_sideReady;
-private _isRoundActive =
-    call TN_round_fnc_isRoundActive;
+private _isSafeStart = ROUND_SAFE;
 
 // Safety net: hide if PFH is somehow still running when panel shouldn't show.
 // Primary lifecycle control is via external event handlers.
 if (
-    !(_isSafeStart || _anyReady) || _isRoundActive
+    !(_isSafeStart || {true in TN_round_sideReady}) || ROUND_LIVE
 ) exitWith
 {
     _bg ctrlShow false;
@@ -141,7 +137,7 @@ if (TN_readyUI_dirty) then
 
     private _lines = [];
 
-    if (_isSafeStart) then
+    if (ROUND_SAFE) then
     {
         private _remaining = ceil ([0] call BIS_fnc_countdown) max 0;
         private _timerStr = [_remaining, "MM:SS"] call BIS_fnc_secondsToString;
@@ -241,7 +237,7 @@ private _flashActive = uiNamespace getVariable [
 // Flash overrides pulse — don't touch background color while shine is active
 if (!_flashActive) then
 {
-    if (_isSafeStart) then
+    if (ROUND_SAFE) then
     {
         // Collect pulse tint colors from unready teams with players
         private _unreadyTints = [];

@@ -25,16 +25,15 @@ if (!isServer) exitWith
     _this remoteExecCall ["TN_round_fnc_initSafeStart", 2];
 };
 
-if (TN_round_safeStartActive) exitWith {false};
-if (call TN_round_fnc_isRoundActive) exitWith {false};
+if (NOT_ROUND_IDLE) exitWith {false};
 
 params [
     ["_safeStartTime", TN_safeStartTime],
     ["_forced", false]
 ];
 
-TN_round_safeStartActive = true;
-publicVariable "TN_round_safeStartActive";
+TN_round_state = 1;
+publicVariable "TN_round_state";
 
 /* --- Notification --- */
 private _msgText = format [

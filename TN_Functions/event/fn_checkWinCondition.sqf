@@ -1,3 +1,5 @@
+#include "..\..\data\roundState.hpp"
+
 /*
  * Author: Bae [29th ID]
  * Evaluates win conditions each tick during an active round.
@@ -157,7 +159,7 @@ if (isNil "TN_event_winCheckInterval") then
     TN_event_winCheckInterval = 0.5;
 };
 
-while {call TN_round_fnc_isRoundActive} do
+while {ROUND_LIVE} do
 {
     sleep TN_event_winCheckInterval;
 

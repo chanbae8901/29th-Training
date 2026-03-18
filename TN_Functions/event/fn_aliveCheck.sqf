@@ -6,7 +6,7 @@
  *
  * Requires:
  *     TN_event_fnc_game
- *     TN_round_fnc_isRoundActive
+ *     TN_round_state
  *     TN_event_spectateArea (global, if respawn-based)
  *     TN_event_spectateAreaRadius (global, if respawn-based)
  *
@@ -16,6 +16,8 @@
  * Return Value:
  * Nothing
  */
+
+#include "..\..\data\roundState.hpp"
 
 #define RESPAWN_BIRD 1
 #define ALIVE_CHECK_INITIAL_DELAY 10
@@ -33,11 +35,11 @@ private _remainDead = (_respawnType == RESPAWN_BIRD);
 
 waitUntil {
     sleep ALIVE_CHECK_INITIAL_DELAY;
-    call TN_round_fnc_isRoundActive
+    ROUND_LIVE
 };
 
 
-while {call TN_round_fnc_isRoundActive} do
+while {ROUND_LIVE} do
 {
     sleep ALIVE_CHECK_INTERVAL;
 

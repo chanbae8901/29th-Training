@@ -1,3 +1,5 @@
+#include "..\..\data\roundState.hpp"
+
 /*
  * Author: Bae [29th ID]
  * Opens a GUI dialog that lets an admin adjust the remaining
@@ -106,7 +108,7 @@ _btnOK ctrlAddEventHandler [
         private _display = ctrlParent _ctrl;
         private _sliderCtrl = _display displayCtrl IDC_SLIDER;
 
-        if (!TN_round_safeStartActive) then
+        if (NOT_ROUND_SAFE) then
         {
             systemChat "Safe start has already ended! Input ignored.";
         }

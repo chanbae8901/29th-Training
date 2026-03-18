@@ -1,3 +1,5 @@
+#include "..\..\data\roundState.hpp"
+
 /*
  * Author: Bae [29th ID]
  * Adds a single "Event Menu" scroll-wheel action to timer
@@ -45,7 +47,7 @@ private _allObjects =
     if (!isNull _x) then
     {
         if (_validSide
-            && {!(call TN_round_fnc_isRoundActive)}) then
+            && NOT_ROUND_LIVE) then
         {
             private _readyId = _x addAction [
                 "<t color='#bf3eff'>"

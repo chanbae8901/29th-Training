@@ -1,3 +1,5 @@
+#include "..\..\data\roundState.hpp"
+
 /*
  * Author: Claude prompted by Bae [29th ID]
  * Opens a centered GUI menu showing admin-only event actions
@@ -64,25 +66,11 @@ private _fnc_rebuild =
     ];
     { ctrlDelete _x } forEach _oldControls;
 
-    /* Determine current state */
-    private _currentState = switch (true) do
-    {
-        case (call TN_round_fnc_isRoundActive):
-        {
-            2;
-        };
-        case (TN_round_safeStartActive):
-        {
-            1;
-        };
-        default { 0 };
-    };
-
     /* --- Build action list: [label, code, colorRGBA] --- */
 
     private _actions = [];
 
-    switch (_currentState) do
+    switch (TN_round_state) do
     {
         case 0:
         {

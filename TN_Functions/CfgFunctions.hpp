@@ -40,7 +40,6 @@ class TN_Round
         class changeForcedSafeStart {};
         class start {};
         class end {};
-        class isRoundActive {};
         class addTime {};
         class getTime {};
         class setTimer {};

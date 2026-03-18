@@ -1,3 +1,5 @@
+#include "..\..\data\roundState.hpp"
+
 [
     [
         /* --- !timer --- */
@@ -64,7 +66,7 @@
         [
             "game",
             {
-                if !(call TN_round_fnc_isRoundActive) then
+                if (NOT_ROUND_LIVE) then
                 {
                     [
                         "<t color='#ffffff' size='5'>GAME!</t>",
@@ -132,11 +134,11 @@
                 {
                     switch (true) do
                     {
-                        case (call TN_round_fnc_isRoundActive):
+                        case (ROUND_LIVE):
                         {
                             systemChat "Error: Round is currently active!";
                         };
-                        case (!TN_round_safeStartActive):
+                        case (NOT_ROUND_SAFE):
                         {
                             [_minutes * 60, true] call TN_round_fnc_initSafeStart;
                             systemChat "Forcing Safe Start!";

@@ -19,7 +19,7 @@
 
 params ["_side", "_isReady"];
 
-if (call TN_round_fnc_isRoundActive) exitWith {1};
+if (ROUND_LIVE) exitWith {1};
 
 private _sideIdx = _side call BIS_fnc_sideID;
 
@@ -40,7 +40,7 @@ publicVariable "TN_round_sideReady";
 /* --- Check if all sides ready and handle safe start --- */
 if (call TN_round_fnc_checkAllSidesReady) then
 {
-    if (!TN_round_safeStartActive) then
+    if (NOT_ROUND_SAFE) then
     {
         [] call TN_round_fnc_initSafeStart;
     }
@@ -75,7 +75,7 @@ else
     // A team unreadied. If we're in a forced safe start that was shortened,
     // restore the original forced timer adjusted for total elapsed time.
     if (
-        TN_round_safeStartActive
+        ROUND_SAFE
         && TN_round_ignoreReadiness
         && {!(isNil "TN_round_shortenedAt")}
     ) then
