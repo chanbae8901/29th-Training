@@ -52,6 +52,6 @@ else
 };
 
 player call TN_loadout_fnc_setInsignia;
-systemChat "Parade loadout applied.";
+systemChat (["Default parade loadout applied.", "Forced parade loadout applied."] select (_customParadeIdx isNotEqualTo -1));
 
 nil
