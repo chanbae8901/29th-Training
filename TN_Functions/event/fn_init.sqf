@@ -93,6 +93,11 @@ if (TN_event_numberOfLives > 0) then
     if (hasInterface) then
     {
         [
+            "TN_round_started",
+            { [true] call TN_event_fnc_respawn }
+        ] call CBA_fnc_addEventHandler;
+
+        [
             "TN_event_respawn",
             "Respawn",
             { call TN_event_fnc_respawn }
