@@ -6,7 +6,7 @@
  * 0: true to enable, false to disable <BOOL>
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  *
  * Example:
  * [true] call TN_round_fnc_setOvertimeEnabled;
@@ -17,4 +17,4 @@ params ["_enabled"];
 TN_round_overtimeEnabled = _enabled;
 publicVariable "TN_round_overtimeEnabled";
 
-true
+nil

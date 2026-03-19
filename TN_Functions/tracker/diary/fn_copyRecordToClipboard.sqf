@@ -8,7 +8,7 @@
  * 1: Title of the specific diary record to copy <STRING>
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  */
 
 params ["_subject", "_title"];
@@ -23,4 +23,4 @@ _recordText =
 _recordText call TN_tracker_fnc_copyToClipboard;
 systemChat "Copied to clipboard. (HTML format)";
 
-true
+nil

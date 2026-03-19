@@ -21,7 +21,7 @@
  * None
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  *
  * Example:
  * call TN_training_fnc_initDefaultLoadouts;
@@ -72,4 +72,4 @@ private _loadouts =
     [_loadoutName, _unitLoadoutArray, false] call ACE_arsenal_fnc_addDefaultLoadout;
 } forEach _loadouts;
 
-true
+nil

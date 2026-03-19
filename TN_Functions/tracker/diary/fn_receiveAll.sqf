@@ -8,7 +8,7 @@
  * 0: TN_tracker_previous from server, each element is [events, names, sides, weapons] <ARRAY>
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  */
 
 if (!hasInterface) exitWith {};
@@ -23,4 +23,4 @@ params ["_allRounds"];
     ] call TN_tracker_fnc_createDiaryEntries;
 } forEach _allRounds;
 
-true
+nil

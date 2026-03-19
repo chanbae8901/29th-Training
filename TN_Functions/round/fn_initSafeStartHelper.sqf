@@ -13,7 +13,7 @@
  * None
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  *
  * Example:
  * call TN_round_fnc_initSafeStartHelper;
@@ -57,4 +57,4 @@ else
     [] call TN_round_fnc_start;
 };
 
-true
+nil

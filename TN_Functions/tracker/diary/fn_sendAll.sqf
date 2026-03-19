@@ -8,7 +8,7 @@
  * 0: The client's player object to send data to <OBJECT>
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  */
 
 params ["_player"];
@@ -18,4 +18,4 @@ params ["_player"];
     _player
 ];
 
-true
+nil

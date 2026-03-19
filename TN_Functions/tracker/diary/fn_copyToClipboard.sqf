@@ -9,7 +9,7 @@
  * 0: Text to copy to clipboard <STRING>
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  */
 
 params ["_str"];
@@ -17,4 +17,4 @@ params ["_str"];
 "ace" callExtension ["clipboard:append", [_str]];
 "ace" callExtension ["clipboard:complete", []];
 
-true
+nil

@@ -17,7 +17,7 @@
  * 1: The entity that was hit <OBJECT>
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  */
 
 #define INSTIGATOR_TIME_INDEX 4
@@ -59,4 +59,4 @@ _targets pushBack _hitEntity;
 [_targets, _instigatorInfo] remoteExecCall
     ["TN_tracker_fnc_sendHit", 2];
 
-true
+nil

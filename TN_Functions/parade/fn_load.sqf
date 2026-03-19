@@ -9,7 +9,7 @@
  * None
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  *
  * Example:
  * call TN_parade_fnc_load;
@@ -54,4 +54,4 @@ else
 player call TN_loadout_fnc_setInsignia;
 systemChat "Parade loadout applied.";
 
-true
+nil

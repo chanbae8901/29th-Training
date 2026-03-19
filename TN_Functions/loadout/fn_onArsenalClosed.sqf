@@ -9,7 +9,7 @@
  * None
  *
  * Return Value:
- * True <BOOL>
+ * Nothing
  *
  * Example:
  * call TN_loadout_fnc_onArsenalClosed;
@@ -57,4 +57,4 @@ if !(weaponLowered player) then
 
 systemChat "Your gear has been saved.";
 
-true
+nil

@@ -115,3 +115,5 @@ if (_curInsignia != _targetInsignia
 
 [_target, ""] call BIS_fnc_setUnitInsignia;
 [_target, _targetInsignia] call BIS_fnc_setUnitInsignia;
+
+true

@@ -7,7 +7,7 @@
  * 1: Help info definitions to add (see commands.sqf for format) <ARRAY>
  *
  * Return Value:
- * Commands added <BOOL>
+ * Nothing
  *
  * Example:
  * call TN_commands_fnc_init;
@@ -20,4 +20,4 @@ params [["_commands", [], [[]]], ["_helpInfo", [], [[]]]];
 TN_commands_allCommands append _commands;
 TN_commands_helpInfo append _helpInfo;
 
-true
+nil

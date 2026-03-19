@@ -11,7 +11,7 @@
  * None
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  *
  * Example:
  * call TN_round_fnc_init;
@@ -273,4 +273,4 @@ if (hasInterface) then
     ] call CBA_fnc_addEventHandler;
 };
 
-true
+nil

@@ -13,7 +13,7 @@
  * 4: Round number label for diary <NUMBER>
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  */
 
 #include "..\eventNumbers.hpp"
@@ -156,4 +156,4 @@ _text = _text + _copyButton;
 player createDiaryRecord
     ["RoundScoreboard", [_title, _text]];
 
-true
+nil

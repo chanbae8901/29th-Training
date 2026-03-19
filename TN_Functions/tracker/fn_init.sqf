@@ -11,7 +11,7 @@
  * None
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  */
 
 if (("enableRoundEventLog" call BIS_fnc_getParamValue) != 1) exitWith {};
@@ -178,4 +178,4 @@ if (hasInterface) then
     ] call CBA_fnc_addEventHandler;
 };
 
-true
+nil

@@ -8,7 +8,7 @@
  * None
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  *
  * Example:
  * call TN_radio_fnc_add;
@@ -46,4 +46,4 @@ if (isClass (configFile >> "CfgPatches" >> "task_force_radio_items")) then
     };
 };
 
-true
+nil

@@ -9,7 +9,7 @@
  * None
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  */
 
 #define EXPLOSION_DISTANCE 20
@@ -447,4 +447,4 @@ player addEventHandler ["Respawn",
     _unit setVariable ["TN_burnWeapon", nil];
 }];
 
-true
+nil

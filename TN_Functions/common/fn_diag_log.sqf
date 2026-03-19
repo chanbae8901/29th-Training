@@ -8,7 +8,7 @@
  * 0: Message to write to the RPT log <STRING>
  *
  * Return Value:
- * Success <BOOL>
+ * Nothing
  *
  * Example:
  * "Something Happened" remoteExec ["TN_common_fnc_diag_log", 2];
@@ -18,4 +18,4 @@ params ["_str"];
 
 diag_log text _str;
 
-true
+nil

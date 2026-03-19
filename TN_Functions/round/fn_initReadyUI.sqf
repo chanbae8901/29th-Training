@@ -25,7 +25,7 @@
  * None
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  *
  * Example:
  * call TN_round_fnc_initReadyUI;
@@ -153,4 +153,4 @@ TN_round_fnc_startReadyUIPFH =
     }
 ] call CBA_fnc_waitUntilAndExecute;
 
-true
+nil

@@ -8,7 +8,7 @@
  * 1: Radius in meters around _obj <NUMBER>
  *
  * Return Value:
- * true <BOOL>
+ * Nothing
  *
  * Example:
  * [myObj, 100] call TN_parade_fnc_forceAll;
@@ -28,4 +28,4 @@ private _targets = _allPlayers select
     [] remoteExecCall ["TN_parade_fnc_load", _x];
 } forEach _targets;
 
-true
+nil
