@@ -19,7 +19,7 @@
  * [] call TN_round_fnc_initSafeStart;
  */
 
-// Server should own the waitAndExecute chain.
+// Server should own the perFrameHandler.
 if (!isServer) exitWith
 {
     _this remoteExecCall ["TN_round_fnc_initSafeStart", 2];

@@ -4,10 +4,10 @@
 
 /*
  * Author: Bae [29th ID]
- * Helper function for initSafeStart. Polls every 0.2 seconds until
- * the safe start countdown expires (then starts the round) or until
- * teams are no longer all ready and forced mode is off (then aborts
- * the countdown).
+ * Helper function for initSafeStart. Registers a perFrameHandler
+ * that polls every 0.2 seconds until the safe start countdown
+ * expires (then starts the round) or until teams are no longer all
+ * ready and forced mode is off (then aborts the countdown).
  *
  * Arguments:
  * None
@@ -19,42 +19,43 @@
  * call TN_round_fnc_initSafeStartHelper;
  */
 
-if (NOT_ROUND_SAFE) exitWith {true};
+[{
+    params ["", "_handle"];
 
-private _allSidesReady =
-    call TN_round_fnc_checkAllSidesReady;
+    if (NOT_ROUND_SAFE) exitWith
+    {
+        _handle call CBA_fnc_removePerFrameHandler;
+    };
 
-/* --- Abort if a team unreadied and we're not forced --- */
-if !(_allSidesReady || TN_round_ignoreReadiness) exitWith
-{
-    [
-        "<t color='#ffffff' size='4'>Timer Aborted!</t>",
-        "PLAIN",
-        0.5
-    ] remoteExecCall ["TN_common_fnc_displayMsg"];
+    private _allSidesReady =
+        call TN_round_fnc_checkAllSidesReady;
 
-    RESET_SAFESTART_VARS;
-    [-1] call BIS_fnc_countdown;
+    /* --- Abort if a team unreadied and we're not forced --- */
+    if !(_allSidesReady || TN_round_ignoreReadiness) exitWith
+    {
+        _handle call CBA_fnc_removePerFrameHandler;
 
-    ["TN_round_safeStartAborted", []]
-        call CBA_fnc_globalEvent;
+        [
+            "<t color='#ffffff' size='4'>Timer Aborted!</t>",
+            "PLAIN",
+            0.5
+        ] remoteExecCall ["TN_common_fnc_displayMsg"];
 
-    true
-};
+        RESET_SAFESTART_VARS;
+        [-1] call BIS_fnc_countdown;
 
-/* --- Continue polling or go live --- */
-if (([0] call BIS_fnc_countdown) > 0) then
-{
-    [
-        {call TN_round_fnc_initSafeStartHelper},
-        [],
-        SAFE_START_POLL_INTERVAL
-    ] call CBA_fnc_waitAndExecute;
-}
-else
-{
-    RESET_SAFESTART_VARS;
-    [] call TN_round_fnc_start;
-};
+        ["TN_round_safeStartAborted", []]
+            call CBA_fnc_globalEvent;
+    };
+
+    /* --- Go live when countdown expires --- */
+    if (([0] call BIS_fnc_countdown) <= 0) exitWith
+    {
+        _handle call CBA_fnc_removePerFrameHandler;
+
+        RESET_SAFESTART_VARS;
+        [] call TN_round_fnc_start;
+    };
+}, SAFE_START_POLL_INTERVAL] call CBA_fnc_addPerFrameHandler;
 
 nil
