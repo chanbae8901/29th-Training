@@ -27,6 +27,8 @@
 
 //NOTE: OCAP settings defined in cba_settings.sqf
 
+#define NEWER_OCAP ocap_version isNotEqualTo "2.0.0"
+
 if (isServer) then
 {
     if !(isClass (configFile >> "CfgPatches" >> "OCAP_recorder")) exitWith {};
@@ -36,7 +38,7 @@ if (isServer) then
     TN_ocap_recording = false;
 
     //Dont start/pause recordings if autoStart is forced by server config
-    if !(OCAP_settings_autoStart) then
+    if !(OCAP_settings_autoStart && NEWER_OCAP) then
     {
         TN_ocap_fnc_initializePlayer = compile
             preprocessFileLineNumbers
@@ -100,6 +102,9 @@ if (isServer) then
                 STOP_RECORDING;
             }
         ] call CBA_fnc_addEventHandler;        
+    } else
+    {
+        call ocap_recorder_fnc_startRecording;
     };
 
     [OCAP_settings_autoStart] remoteExecCall
@@ -150,7 +155,7 @@ if (isServer) then
 
     //Curators created mid mission do not trigger OCAP 2 trackSectors
     //So we must manually add sectors
-    if (ocap_settings_trackSectors) then
+    if (missionNamespace getVariable ["ocap_settings_trackSectors", false]) then
     {
         ["ModuleSector_F", "Init", {
             params ["_entity"];
