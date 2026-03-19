@@ -59,9 +59,4 @@ if (hasInterface) then
     ] call CBA_fnc_addBISPlayerEventHandler;
 };
 
-if (isServer) then
-{
-
-};
-
 nil

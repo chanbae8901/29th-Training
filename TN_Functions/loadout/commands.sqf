@@ -162,7 +162,7 @@ TN_loadout_fnc_cmdDispatch =
                 };
 
                 // Timestamp used by baseObjectsInit for Force Parade triggers.
-                lastDebriefTime = time;
+                TN_loadout_lastDebriefTime = time;
             }
         ],
         [

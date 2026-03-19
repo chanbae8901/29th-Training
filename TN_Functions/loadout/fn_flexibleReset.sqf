@@ -47,7 +47,7 @@ if (_inventory isNotEqualTo []) then
         systemChat "Player in spectator, skipping rearm.";
     };
 
-    if (arsenalActionId != -1) exitWith
+    if (TN_base_arsenalActionId != -1) exitWith
     {
         systemChat "Player in base, skipping rearm.";
     };

@@ -102,7 +102,7 @@ forEach allMissionObjects "All";
 //------- ACE Arsenal via radius from box -------//
 //------- Disable Environment Noises when in radius unless in specator or Zeus -------//
 
-arsenalActionId = -1;
+TN_base_arsenalActionId = -1;
 
 #define ENV_ON 1 fadeEnvironment 1
 #define ENV_OFF 1 fadeEnvironment 0
@@ -120,7 +120,7 @@ TN_base_keepEnvironmentSounds = false;
     "TN_exitedZeus",
     {
         TN_base_keepEnvironmentSounds = false;
-        if (arsenalActionId isNotEqualTo -1) then { ENV_OFF };
+        if (TN_base_arsenalActionId isNotEqualTo -1) then { ENV_OFF };
     }
 ] call CBA_fnc_addEventHandler;
 
@@ -136,7 +136,7 @@ TN_base_keepEnvironmentSounds = false;
     "exitedSpectator",
     {
         TN_base_keepEnvironmentSounds = false;
-        if (arsenalActionId isNotEqualTo -1) then { ENV_OFF };
+        if (TN_base_arsenalActionId isNotEqualTo -1) then { ENV_OFF };
     }
 ] call CBA_fnc_addEventHandler;
 
@@ -163,14 +163,14 @@ if (TN_arsenal_centers isNotEqualTo []) then
     "TN_base_respawnArsenalActionId",
     "Respawn",
     {
-        arsenalActionId = -1;
+        TN_base_arsenalActionId = -1;
     }
 ] call CBA_fnc_addBISPlayerEventHandler;
 
 //- Add Force Parade to BLUFOR Ammo Box, maybe belongs in parade module instead -//
 if ("parade" in TN_MODULES) then
 {
-    lastDebriefTime = -10;
+    TN_loadout_lastDebriefTime = -10;
     base_action_arsenal_blu addAction [
         "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#3f8eff'>  Force Parade</t>",
         {
@@ -182,7 +182,7 @@ if ("parade" in TN_MODULES) then
         true,
         true,
         "",
-        "serverCommandAvailable '#lock' && ((player distance base_action_arsenal_blu) < 5 || (time - lastDebriefTime) < 10)",
+        "serverCommandAvailable '#lock' && ((player distance base_action_arsenal_blu) < 5 || (time - TN_loadout_lastDebriefTime) < 10)",
         50
     ];
 };

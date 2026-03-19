@@ -32,7 +32,7 @@ private _inZone = false;
 
 if (_inZone) then
 {
-    if (arsenalActionId isEqualTo -1) then
+    if (TN_base_arsenalActionId isEqualTo -1) then
     {
         if !(TN_base_keepEnvironmentSounds) then
         {
@@ -41,7 +41,7 @@ if (_inZone) then
 
         if (isClass (configFile >> "CfgPatches" >> "ace_main")) then
         {
-            arsenalActionId = player addAction [
+            TN_base_arsenalActionId = player addAction [
                 "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#bf3eff'>  Ace Arsenal</t>",
                 {
                     [_this select 1, _this select 1, true] call ace_arsenal_fnc_openBox;
@@ -51,7 +51,7 @@ if (_inZone) then
         }
         else
         {
-            arsenalActionId = player addAction [
+            TN_base_arsenalActionId = player addAction [
                 "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#bf3eff'>  Virtual Arsenal</t>",
                 {
                     ["Open", true] call BIS_fnc_arsenal;
@@ -63,11 +63,11 @@ if (_inZone) then
 }
 else
 {
-    if (arsenalActionId isNotEqualTo -1) then
+    if (TN_base_arsenalActionId isNotEqualTo -1) then
     {
         ENV_ON;
-        player removeAction arsenalActionId;
-        arsenalActionId = -1;
+        player removeAction TN_base_arsenalActionId;
+        TN_base_arsenalActionId = -1;
     };
 };
 
