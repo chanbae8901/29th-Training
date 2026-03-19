@@ -119,7 +119,7 @@ private _allObjects =
 /* --- Remove actions after game is called --- */
 
 [
-    "TN_event_gameCalled",
+    "TN_event_onMissionEnded",
     {
         {
             if (!isNull _x) then

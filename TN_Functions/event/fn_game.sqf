@@ -3,7 +3,7 @@
  * Manages round endings by forcing a specific side victory,
  * neutral ending, or named ending class. Redirects to server
  * if called on a client. Prevents duplicate endings via the
- * gameCalled guard.
+ * TN_event_missionEnded guard.
  *
  * Arguments:
  * 0: True to skip evaluations and force an ending <BOOL> (default: false)
@@ -39,14 +39,14 @@ private _endResistance = "EndGuerVictory";
 /************************/
 
 // Prevents duplicate endings.
-if (isNil "gameCalled") then
+if (isNil "TN_event_missionEnded") then
 {
-    gameCalled = false;
+    TN_event_missionEnded = false;
 };
-if (gameCalled) exitWith {};
-gameCalled = true;
-publicVariable "gameCalled";
-["TN_event_gameCalled", []] call CBA_fnc_globalEvent;
+if (TN_event_missionEnded) exitWith {};
+TN_event_missionEnded = true;
+publicVariable "TN_event_missionEnded";
+["TN_event_onMissionEnded", []] call CBA_fnc_globalEvent;
 
 if (_forceEnding) exitWith
 {
