@@ -38,8 +38,7 @@
 //Note: Events TN_enteredZeus and TN_exitedZeus are defined in cfgEventHandlers
 
 #define CREATE_CURATOR_MODULE(_obj) \
-    [vehicleVarName _obj, roleDescription _obj] \
-    call TN_curator_fnc_createModule
+    [vehicleVarName _obj] call TN_curator_fnc_createModule
 
 if (hasInterface) then
 {
@@ -58,7 +57,7 @@ if (hasInterface) then
 
         [[player]] remoteExecCall ["TN_curator_fnc_addEditable", 2];
 
-        [vehicleVarName player, roleDescription player] remoteExecCall ["TN_curator_fnc_createModule", 2];
+        [vehicleVarName player] remoteExecCall ["TN_curator_fnc_createModule", 2];
     }] call CBA_fnc_waitUntilAndExecute;
 };
 
@@ -83,7 +82,7 @@ if (isServer) then
         [
             { time > 0 },
             {
-                zeus_admin = ["#adminLogged", "Admin"] call TN_curator_fnc_createModule;
+                zeus_admin = ["#adminLogged"] call TN_curator_fnc_createModule;
             }
         ] call CBA_fnc_waitUntilAndExecute;
     };

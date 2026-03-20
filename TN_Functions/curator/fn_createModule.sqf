@@ -11,16 +11,15 @@
  *
  * Arguments:
  * 0: Variable name of the player unit (from mission.sqm) <STRING>
- * 1: Role description shown in the Zeus interface <STRING>
  *
  * Return Value:
  * The created curator logic, or nothing if the player is not in TN_curator_units <OBJECT>
  *
  * Example:
- * [vehicleVarName player, roleDescription player] call TN_curator_fnc_createModule;
+ * [vehicleVarName player] call TN_curator_fnc_createModule;
  */
 
-params ["_playerVarName", "_roleDescription"];
+params ["_playerVarName"];
 
 // Need to wait until after start to create modules.
 if (time isEqualTo 0) exitWith
@@ -62,7 +61,6 @@ private _logic = _group createUnit [
 
 missionNamespace setVariable [_curatorModuleName, _logic];
 _logic setVariable ["owner", _playerVarName, true];
-_logic setVariable ["name", _roleDescription, true];
 _logic setVariable ["Addons", 3, true];
 _logic setVariable [
     "BIS_fnc_initModules_disableAutoActivation", false

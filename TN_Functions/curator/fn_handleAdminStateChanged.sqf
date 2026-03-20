@@ -36,7 +36,7 @@ if (getAssignedCuratorLogic _unit isEqualTo zeus_admin) then
 {
     unassignCurator zeus_admin;
     [{
-        [vehicleVarName _this, roleDescription _this]
+        [vehicleVarName _this]
             call TN_curator_fnc_createModule;
     }, _unit, 0.1] call CBA_fnc_waitAndExecute;
 };
