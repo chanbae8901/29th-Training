@@ -46,12 +46,13 @@ private _curatorModuleName = format [
     "TN_curator_zeus_%1", _playerVarName
 ];
 
-if !(isNil _curatorModuleName) then
+if !(isNil _curatorModuleName) exitWith
 {
-    deleteVehicle (
-        missionNamespace getVariable _curatorModuleName
-    );
-    missionNamespace setVariable [_curatorModuleName, nil];
+    private _player = missionnamespace getVariable [_playerVarName, objNull];
+    private _module = missionNamespace getVariable _curatorModuleName;
+    unassignCurator _module;
+    [{(_this select 0) assignCurator (_this select 1)},
+        [_player, _module], 0.1] call CBA_fnc_waitAndExecute;
 };
 
 private _group = createGroup [sideLogic, true];

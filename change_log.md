@@ -81,6 +81,7 @@ v4.5.0
 * Curator
   - fn_addPlayerEditable generalized to fn_addEditable
   - Remove roleDescription param from createModule
+  - No longer delete in createModule to reduce lag spikes, simply unassign and reassign
 
 * Event
   - Merged admin actions on flag into a single "Event Menu", which opens a GUI displaying actions that were formerly on the pole.
