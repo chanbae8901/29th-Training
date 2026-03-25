@@ -48,7 +48,10 @@ if (isServer) then
         [{missionNamespace getVariable ["ocap_extension_sessionReady", false]},
         {
             ocap_recorder_startTime = time;
-        }] call CBA_fnc_waitUntilAndExecute;
+        }, [],
+        30,
+        { diag_log text "OCAP: Timed out waiting for ocap_extension_sessionReady"; }
+        ] call CBA_fnc_waitUntilAndExecute;
 
         //hijack PFH to start and stop when we want while still saving other events
         #define SHOULD_SAVE_EVENTS \
@@ -60,16 +63,21 @@ if (isServer) then
             ocap_recorder_PFHObject setVariable
                 ["run_condition",
                 {SHOULD_SAVE_EVENTS && TN_ocap_recording}];
-        }] call CBA_fnc_waitUntilAndExecute;
+        }, [],
+        30,
+        { diag_log text "OCAP: Timed out waiting for ocap_recorder_PFHObject"; }
+        ] call CBA_fnc_waitUntilAndExecute;
 
         //Add marker workarounds
         [{!isNil "ocap_listener_markers"},
             {
-            ["ocap_handleMarker", ocap_listener_markers] 
+            ["ocap_handleMarker", ocap_listener_markers]
                 call CBA_fnc_removeEventHandler;
-            call compile preprocessFileLineNumbers 
-                "TN_Functions\ocap\handleMarkers.sqf"}] 
-            call CBA_fnc_waitUntilAndExecute;
+            call compile preprocessFileLineNumbers
+                "TN_Functions\ocap\handleMarkers.sqf"}, [],
+            30,
+            { diag_log text "OCAP: Timed out waiting for ocap_listener_markers"; }
+            ] call CBA_fnc_waitUntilAndExecute;
 
         #define UPDATE_TIME [] call ocap_recorder_fnc_updateTime
         #define START_RECORDING TN_ocap_recording = true; UPDATE_TIME
