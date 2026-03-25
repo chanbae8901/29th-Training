@@ -139,7 +139,7 @@ class TN_Vehicle
         class lockFixInit {};
         class saveUnconsciousSeat {};
         class unlockUnconsciousSeat {};
-    };    
+    };
 };
 
 class TN_OCAP

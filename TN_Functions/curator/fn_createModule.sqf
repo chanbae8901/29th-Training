@@ -48,7 +48,7 @@ private _curatorModuleName = format [
 
 if !(isNil _curatorModuleName) exitWith
 {
-    private _player = missionnamespace getVariable [_playerVarName, objNull];
+    private _player = missionNamespace getVariable [_playerVarName, objNull];
     private _module = missionNamespace getVariable _curatorModuleName;
     unassignCurator _module;
     [{(_this select 0) assignCurator (_this select 1)},

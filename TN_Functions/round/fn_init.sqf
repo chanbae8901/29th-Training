@@ -70,7 +70,7 @@ if (isServer) then
         };
 
         false
-    }];    
+    }];
 };
 
 /* ---- Client-side initialization ---- */
