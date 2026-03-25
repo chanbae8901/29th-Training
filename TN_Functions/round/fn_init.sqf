@@ -4,8 +4,9 @@
  * Author: Bae [29th ID], modified from Dott [29th ID]
  * Sets up the initial state of the round management system. Configures
  * scoreboard blocking during active rounds, wires up final checks for
- * player invulnerability and the silent weapon bug, and ensures the
- * countdown UI layer exists.
+ * player invulnerability and the silent weapon bug, ensures the
+ * countdown UI layer exists, and deletes disconnecting player
+ * bodies when the round is not live.
  *
  * Arguments:
  * None

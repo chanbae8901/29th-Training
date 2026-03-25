@@ -1,6 +1,7 @@
 /*
  * Author: Bae [29th ID]
- * Initializes vehicle settings on the server.
+ * Initializes vehicle settings.
+ * - Applies ACE unconscious seat-lock fix (if ACE loaded).
  * - Auto-equips FRIES on helicopters (if ACE loaded).
  * - Strips default vehicle inventories from all current and
  *   future vehicles when the CBA setting is enabled.

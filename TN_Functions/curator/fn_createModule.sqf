@@ -2,11 +2,12 @@
  * Author: Bae [29th ID]
  * Creates a curator (Zeus) module for the specified
  * player if their variable name is listed in
- * TN_curator_units. Deletes any existing module for
- * that player first to avoid duplicates. Must be called
- * in an unscheduled environment so the module is created
- * atomically. If called before mission time > 0, defers
- * via CBA_fnc_waitUntilAndExecute. If called on a client
+ * TN_curator_units. If a module already exists for
+ * that player, unassigns and reassigns.
+ * Must be called in an unscheduled environment so the
+ * init of the module is called in the same frame. If called before
+ * mission time > 0, defers via
+ * CBA_fnc_waitUntilAndExecute. If called on a client
  * it forwards to the server.
  *
  * Arguments:

@@ -1,3 +1,21 @@
+/*
+ * Author: Bae [29th ID]
+ * Workaround for ACE bug where vehicle seats stay locked
+ * after unconscious or dead players are moved out via ACE
+ * interaction. Hooks into get-in/get-out, unconscious, and
+ * killed events to save and restore the locked seat data,
+ * then retries the unlock after a short delay.
+ *
+ * Arguments:
+ * None
+ *
+ * Return Value:
+ * Nothing
+ *
+ * Example:
+ * call TN_vehicle_fnc_lockFixInit;
+ */
+
 #define DELAY_UNLOCK(_unit) [{ _this call TN_vehicle_fnc_unlockUnconsciousSeat }, _unit, 0.5] call CBA_fnc_waitAndExecute
 
 ["CAManBase", "GetInMan", {

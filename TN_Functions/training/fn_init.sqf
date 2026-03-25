@@ -4,8 +4,8 @@
  * Author: Bae [29th ID]
  * Initializes the training variation of the mission template.
  * Sets up curator whitelisting, arsenal zone centers, base
- * map markers, default loadouts, weather, and disconnect
- * body cleanup. Should be called after round initialization.
+ * map markers, default loadouts, and weather. Should be
+ * called after round initialization.
  *
  * Arguments:
  * None
