@@ -24,5 +24,6 @@ if (alive _unit && {lifeState _unit != "INCAPACITATED"}) exitWith {};
 [
     { !isNil { _this getVariable "ace_medical_engine_lockedSeat" } },
     { _this setVariable ["TN_vehicle_lockedSeat", _this getVariable "ace_medical_engine_lockedSeat", true] },
-    _unit
+    _unit,
+    10
 ] call CBA_fnc_waitUntilAndExecute;

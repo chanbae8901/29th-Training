@@ -23,3 +23,5 @@ if (_seat isEqualTo []) exitWith {};
 _unit setVariable ["ace_medical_engine_lockedSeat", _seat];
 
 _unit call ace_medical_engine_fnc_unlockUnconsciousSeat;
+
+_unit setVariable ["TN_vehicle_lockedSeat", nil, true];
