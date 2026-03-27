@@ -212,16 +212,16 @@ class TN_Tracker
         class getSideAtTime {};
         class getWeapon {};
         class addEventHandlersClient {};
+        class findIncendiaryGrenade {};
+        class findSide {};
+        class sendHit {};
     };
     class EventHandlerFunctions
     {
         file = "TN_Functions\tracker\eventhandlers";
         class handleFired {};
-        class hit {};
-        class sendHit {};
+        class handleHit {};
         class handleVehicleKilled {};
-        class findIncendiaryGrenade {};
-        class findSide {};
         class handleExplosivePlace {};
         class handleWoundReceived {};
         class handleBurnSimulation {};

@@ -31,8 +31,8 @@ private _data = [
     getPosASL _unit, _explosiveName
 ];
 _explosive setVariable ["TN_instigatorInfo", _data];
-_explosive addEventHandler ["HitPart", { call TN_tracker_fnc_hit }];
-_explosive addEventHandler ["HitExplosion", { call TN_tracker_fnc_hit }];
+_explosive addEventHandler ["HitPart", { call TN_tracker_fnc_handleHit }];
+_explosive addEventHandler ["HitExplosion", { call TN_tracker_fnc_handleHit }];
 
 _explosive addEventHandler ["SubmunitionCreated",
 {
@@ -41,8 +41,8 @@ _explosive addEventHandler ["SubmunitionCreated",
         "TN_instigatorInfo",
         _projectile getVariable "TN_instigatorInfo"
     ];
-    _submunitionProjectile addEventHandler ["HitPart", { call TN_tracker_fnc_hit }];
-    _submunitionProjectile addEventHandler ["HitExplosion", { call TN_tracker_fnc_hit }];
+    _submunitionProjectile addEventHandler ["HitPart", { call TN_tracker_fnc_handleHit }];
+    _submunitionProjectile addEventHandler ["HitExplosion", { call TN_tracker_fnc_handleHit }];
 }];
 
 nil

@@ -28,8 +28,8 @@ private _data = [
     getPosASL _unit, _realWeapon
 ];
 _projectile setVariable ["TN_instigatorInfo", _data];
-_projectile addEventHandler ["HitPart", { call TN_tracker_fnc_hit }];
-_projectile addEventHandler ["HitExplosion", { call TN_tracker_fnc_hit }];
+_projectile addEventHandler ["HitPart", { call TN_tracker_fnc_handleHit }];
+_projectile addEventHandler ["HitExplosion", { call TN_tracker_fnc_handleHit }];
 
 _projectile addEventHandler ["SubmunitionCreated",
 {
@@ -38,8 +38,8 @@ _projectile addEventHandler ["SubmunitionCreated",
         "TN_instigatorInfo",
         _projectile getVariable "TN_instigatorInfo"
     ];
-    _submunitionProjectile addEventHandler ["HitPart", { call TN_tracker_fnc_hit }];
-    _submunitionProjectile addEventHandler ["HitExplosion", { call TN_tracker_fnc_hit }];
+    _submunitionProjectile addEventHandler ["HitPart", { call TN_tracker_fnc_handleHit }];
+    _submunitionProjectile addEventHandler ["HitExplosion", { call TN_tracker_fnc_handleHit }];
 }];
 
 nil
