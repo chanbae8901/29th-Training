@@ -7,13 +7,6 @@
  * remoteExec, filtered by side.
  */
 
-// Maps lowercase side name -> [engineSide, displayName].
-GVAR(sideMap) = createHashMapFromArray [
-    ["blufor",  [west,       "Blufor"]],
-    ["opfor",   [east,       "Opfor"]],
-    ["grnfor",  [resistance, "Grnfor"]]
-];
-
 // Maps side name -> reset spawn object variable name.
 GVAR(resetBases) = createHashMapFromArray [
     ["blufor",  "base_res_blu"],
@@ -42,15 +35,15 @@ FUNC(cmdDispatch) =
 
     if (_sideName isNotEqualTo "") then
     {
-        private _entry = GVAR(sideMap) get _sideName;
-        if (isNil "_entry") then
+        private _side = [_sideName] call EFUNC(common,convertSide);
+        if (_side isEqualTo sideUnknown) then
         {
             _ok = false;
         }
         else
         {
-            _target = _entry select 0;
-            _displayName = _entry select 1;
+            _target = _side;
+            _displayName = [_side] call EFUNC(common,convertSide);
         };
     };
 
@@ -178,15 +171,15 @@ FUNC(cmdDispatch) =
                     ["grnfor", "base_action_arsenal_grn"]
                 ];
 
-                private _entry = GVAR(sideMap) get _argument;
+                private _side = [_argument] call EFUNC(common,convertSide);
                 private _baseName = _arsenalBases get _argument;
 
-                if (isNil "_entry" || isNil "_baseName") exitWith
+                if (_side isEqualTo sideUnknown || isNil "_baseName") exitWith
                 {
                     systemChat "Error: Invalid input! Must be 'blufor', 'opfor', or 'grnfor'";
                 };
 
-                _entry params ["_target", "_displayName"];
+                private _displayName = [_side] call EFUNC(common,convertSide);
 
                 private _baseObj = missionNamespace getVariable [_baseName, objNull];
                 [[], false, getPosASL _baseObj] spawn FUNC(flexibleReset);

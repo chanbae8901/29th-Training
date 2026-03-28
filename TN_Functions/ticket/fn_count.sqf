@@ -29,28 +29,14 @@ private _adminClient = GVAR(adminClient);
 
 // Map the side to its global variable name and admin-facing label.
 // Civilian and unknown sides are ignored.
-private _varName = "";
-private _adminLabel = "";
+private _adminLabel = [_playerSide] call EFUNC(common,convertSide);
 
-switch (_playerSide) do
+private _varName = switch (_playerSide) do
 {
-    case west:
-    {
-        _varName = QGVAR(WEST);
-        _adminLabel = "Blufor";
-    };
-    case east:
-    {
-        _varName = QGVAR(EAST);
-        _adminLabel = "Opfor";
-    };
-    case resistance:
-    {
-        _varName = QGVAR(GUER);
-        _adminLabel = "Grnfor";
-    };
-    case civilian: {};
-    default {};
+    case west:       { QGVAR(WEST) };
+    case east:       { QGVAR(EAST) };
+    case resistance: { QGVAR(GUER) };
+    default          { "" };
 };
 
 if (_varName isEqualTo "") exitWith {};

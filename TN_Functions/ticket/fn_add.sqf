@@ -5,16 +5,19 @@
  * BIS_fnc_respawnTickets.
  *
  * Arguments:
- * 0: The side to apply the tickets to <STRING>
+ * 0: The side to apply the tickets to <SIDE>
  * 1: The amount of tickets to be added (or subtracted) <NUMBER>
  *
  * Return Value:
  * Nothing
+ *
+ * Example:
+ * [west, 5] call TN_ticket_fnc_add;
  */
 
 params
 [
-    ["_ticketSide", "noside", [""]],
+    ["_side", sideUnknown],
     ["_ticketAmount", 0, [0]]
 ];
 
@@ -23,44 +26,23 @@ if (!GVAR(enabled)) exitWith
     systemChat "Error: Ticket system disabled!";
 };
 
-private _ticketWEST = GVAR(WEST);
-private _ticketEAST = GVAR(EAST);
-private _ticketGUER = GVAR(GUER);
-
-switch (_ticketSide) do
+private _varName = switch (_side) do
 {
-    case "WEST":
-    {
-        GVAR(WEST) = _ticketWEST + _ticketAmount;
-        publicVariable QGVAR(WEST);
-        format ["Blufor tickets set to %1", GVAR(WEST)] remoteExecCall ["hint"];
-    };
-    case "EAST":
-    {
-        GVAR(EAST) = _ticketEAST + _ticketAmount;
-        publicVariable QGVAR(EAST);
-        format ["Opfor tickets set to %1", GVAR(EAST)] remoteExecCall ["hint"];
-    };
-    case "GUER":
-    {
-        GVAR(GUER) = _ticketGUER + _ticketAmount;
-        publicVariable QGVAR(GUER);
-        format ["Grnfor tickets set to %1", GVAR(GUER)] remoteExecCall ["hint"];
-    };
-    case "reset":
-    {
-        GVAR(WEST) = 0;
-        publicVariable QGVAR(WEST);
-        GVAR(EAST) = 0;
-        publicVariable QGVAR(EAST);
-        GVAR(GUER) = 0;
-        publicVariable QGVAR(GUER);
-        "All tickets reset to zero!" remoteExecCall ["hint"];
-    };
-    default
-    {
-        systemChat "Error: No side defined!";
-    };
+    case west:       { QGVAR(WEST) };
+    case east:       { QGVAR(EAST) };
+    case resistance: { QGVAR(GUER) };
+    default          { "" };
 };
+
+if (_varName isEqualTo "") exitWith
+{
+    systemChat "Error: No side defined!";
+};
+
+private _newTotal = (missionNamespace getVariable [_varName, 0]) + _ticketAmount;
+missionNamespace setVariable [_varName, _newTotal, true];
+
+private _sideName = [_side] call EFUNC(common,convertSide);
+format ["%1 tickets set to %2", _sideName, _newTotal] remoteExecCall ["hint"];
 
 nil

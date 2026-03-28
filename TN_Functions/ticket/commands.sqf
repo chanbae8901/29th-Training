@@ -44,55 +44,40 @@
                 ] call BIS_fnc_filterString;
                 private _ticketAmount = parseNumber _filterAmount;
 
-                switch (_filterArg) do
+                if (_filterArg isEqualTo "reset") exitWith
                 {
-                    case "blufor":
-                    {
-                        systemChat format [
-                            "Changing Blufor tickets by %1",
-                            _ticketAmount
-                        ];
-                        ["WEST", _ticketAmount] call FUNC(add);
-                    };
-                    case "opfor":
-                    {
-                        systemChat format [
-                            "Changing Opfor tickets by %1",
-                            _ticketAmount
-                        ];
-                        ["EAST", _ticketAmount] call FUNC(add);
-                    };
-                    case "grnfor":
-                    {
-                        systemChat format [
-                            "Changing Grnfor tickets by %1",
-                            _ticketAmount
-                        ];
-                        ["GUER", _ticketAmount] call FUNC(add);
-                    };
-                    case "reset":
-                    {
-                        systemChat "Resetting tickets to zero!";
-                        ["reset"] call FUNC(add);
-                    };
-                    case "disable":
-                    {
-                        // Case for disable at the end.
-                        systemChat "Ticket system disabled!";
-                        GVAR(enabled) = false;
-                        publicVariable QGVAR(enabled);
-                        GVAR(WEST) = 0;
-                        publicVariable QGVAR(WEST);
-                        GVAR(EAST) = 0;
-                        publicVariable QGVAR(EAST);
-                        GVAR(GUER) = 0;
-                        publicVariable QGVAR(GUER);
-                    };
-                    default
-                    {
-                        systemChat "Error: Invalid input! Must be 'blufor', 'opfor', 'grnfor',  'reset', 'enable', 'disable'";
-                    };
+                    systemChat "Resetting tickets to zero!";
+                    GVAR(WEST) = 0;
+                    publicVariable QGVAR(WEST);
+                    GVAR(EAST) = 0;
+                    publicVariable QGVAR(EAST);
+                    GVAR(GUER) = 0;
+                    publicVariable QGVAR(GUER);
+                    "All tickets reset to zero!" remoteExecCall ["hint"];
                 };
+
+                if (_filterArg isEqualTo "disable") exitWith
+                {
+                    systemChat "Ticket system disabled!";
+                    GVAR(enabled) = false;
+                    publicVariable QGVAR(enabled);
+                    GVAR(WEST) = 0;
+                    publicVariable QGVAR(WEST);
+                    GVAR(EAST) = 0;
+                    publicVariable QGVAR(EAST);
+                    GVAR(GUER) = 0;
+                    publicVariable QGVAR(GUER);
+                };
+
+                private _side = [_filterArg] call EFUNC(common,convertSide);
+
+                if (_side isEqualTo sideUnknown) exitWith
+                {
+                    systemChat "Error: Invalid input! Must be 'blufor', 'opfor', 'grnfor', 'reset', 'enable', 'disable'";
+                };
+
+                systemChat format ["Changing %1 tickets by %2", toUpper _filterArg, _ticketAmount];
+                [_side, _ticketAmount] call FUNC(add);
             }
         ]
     ],

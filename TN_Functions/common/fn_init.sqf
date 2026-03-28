@@ -15,6 +15,17 @@
  * call TN_common_fnc_init;
  */
 
+GVAR(strToSideMap) = createHashMapFromArray [
+    ["blufor",  west],
+    ["opfor",   east],
+    ["grnfor",  resistance]
+];
+
+GVAR(sideToStrMap) = createHashMap;
+GVAR(sideToStrMap) set [west,       "BLUFOR"];
+GVAR(sideToStrMap) set [east,       "OPFOR"];
+GVAR(sideToStrMap) set [resistance, "GRNFOR"];
+
 if (isServer) then
 {
     call FUNC(initAdminStateChanged);

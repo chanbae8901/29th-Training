@@ -24,6 +24,7 @@ class TN_Common
         class addDiaryRecord {};
         class diag_log {};
         class displayMsg {};
+        class convertSide {};
     };
     class InitFunctions
     {

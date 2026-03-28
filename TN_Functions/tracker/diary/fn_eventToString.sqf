@@ -139,7 +139,7 @@ switch (_eventType) do
         private _sectorName = _eventInfo select 0;
         private _newOwner = _eventInfo select 1;
         private _newOwnerName =
-            _newOwner call BIS_fnc_sideName;
+            [_newOwner] call EFUNC(common,convertSide);
         _newOwnerName = [_newOwnerName, _newOwner]
             call FUNC(colorNameWithSide);
         _eventString = format [
