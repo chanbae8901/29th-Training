@@ -29,9 +29,9 @@
                 {
                     systemChat format [
                         "Current Tickets: Blu: %1, Opf: %2, Grn: %3",
-                        GVAR(WEST),
-                        GVAR(EAST),
-                        GVAR(GUER)
+                        GVAR(counts) select 1,
+                        GVAR(counts) select 0,
+                        GVAR(counts) select 2
                     ];
                 };
 
@@ -47,12 +47,8 @@
                 if (_filterArg isEqualTo "reset") exitWith
                 {
                     systemChat "Resetting tickets to zero!";
-                    GVAR(WEST) = 0;
-                    publicVariable QGVAR(WEST);
-                    GVAR(EAST) = 0;
-                    publicVariable QGVAR(EAST);
-                    GVAR(GUER) = 0;
-                    publicVariable QGVAR(GUER);
+                    GVAR(counts) = [0, 0, 0];
+                    publicVariable QGVAR(counts);
                     "All tickets reset to zero!" remoteExecCall ["hint"];
                 };
 
@@ -61,12 +57,8 @@
                     systemChat "Ticket system disabled!";
                     GVAR(enabled) = false;
                     publicVariable QGVAR(enabled);
-                    GVAR(WEST) = 0;
-                    publicVariable QGVAR(WEST);
-                    GVAR(EAST) = 0;
-                    publicVariable QGVAR(EAST);
-                    GVAR(GUER) = 0;
-                    publicVariable QGVAR(GUER);
+                    GVAR(counts) = [0, 0, 0];
+                    publicVariable QGVAR(counts);
                 };
 
                 private _side = [_filterArg] call EFUNC(common,convertSide);

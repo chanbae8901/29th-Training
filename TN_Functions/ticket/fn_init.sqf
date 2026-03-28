@@ -19,17 +19,9 @@ if (isNil QGVAR(enabled)) then
 {
     GVAR(enabled) = false;
 };
-if (isNil QGVAR(WEST)) then
+if (isNil QGVAR(counts)) then
 {
-    GVAR(WEST) = 0;
-};
-if (isNil QGVAR(EAST)) then
-{
-    GVAR(EAST) = 0;
-};
-if (isNil QGVAR(GUER)) then
-{
-    GVAR(GUER) = 0;
+    GVAR(counts) = [0, 0, 0];
 };
 
 if (isServer) then

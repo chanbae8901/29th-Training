@@ -26,21 +26,16 @@ if (!GVAR(enabled)) exitWith
     systemChat "Error: Ticket system disabled!";
 };
 
-private _varName = switch (_side) do
-{
-    case west:       { QGVAR(WEST) };
-    case east:       { QGVAR(EAST) };
-    case resistance: { QGVAR(GUER) };
-    default          { "" };
-};
+private _sideID = _side call BIS_fnc_sideID;
 
-if (_varName isEqualTo "") exitWith
+if (_sideID < 0 || _sideID > 2) exitWith
 {
     systemChat "Error: No side defined!";
 };
 
-private _newTotal = (missionNamespace getVariable [_varName, 0]) + _ticketAmount;
-missionNamespace setVariable [_varName, _newTotal, true];
+private _newTotal = (GVAR(counts) select _sideID) + _ticketAmount;
+GVAR(counts) set [_sideID, _newTotal];
+publicVariable QGVAR(counts);
 
 private _sideName = [_side] call EFUNC(common,convertSide);
 format ["%1 tickets set to %2", _sideName, _newTotal] remoteExecCall ["hint"];

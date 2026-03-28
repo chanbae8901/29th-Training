@@ -27,22 +27,15 @@ private _clientOwner = remoteExecutedOwner;
 
 private _adminClient = GVAR(adminClient);
 
-// Map the side to its global variable name and admin-facing label.
+// Map the side to its ID and admin-facing label.
 // Civilian and unknown sides are ignored.
 private _adminLabel = [_playerSide] call EFUNC(common,convertSide);
+private _sideID = _playerSide call BIS_fnc_sideID;
 
-private _varName = switch (_playerSide) do
-{
-    case west:       { QGVAR(WEST) };
-    case east:       { QGVAR(EAST) };
-    case resistance: { QGVAR(GUER) };
-    default          { "" };
-};
-
-if (_varName isEqualTo "") exitWith {};
+if (_sideID < 0 || _sideID > 2) exitWith {};
 
 // Decrement, notify player and team.
-private _tickets = missionNamespace getVariable [_varName, 0];
+private _tickets = GVAR(counts) select _sideID;
 
 if (_tickets isEqualTo 0) then
 {
@@ -58,7 +51,8 @@ if (_tickets isEqualTo 0) then
 else
 {
     _tickets = _tickets - 1;
-    missionNamespace setVariable [_varName, _tickets, true];
+    GVAR(counts) set [_sideID, _tickets];
+    publicVariable QGVAR(counts);
 
     if (_tickets isEqualTo 0) then
     {
