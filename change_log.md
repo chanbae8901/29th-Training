@@ -27,7 +27,7 @@ Overall Future Goals
 
 ---
 v4.5.0
-19 MAR 2026
+29 MAR 2026
 ---
 * All "DOTT" tags in functions and variables converted to "TN", Dott_Functions folder
   renamed to TN_Functions per 1Lt. Ericksen request. Months of muscle memory wasted.
@@ -52,6 +52,11 @@ v4.5.0
   - Replace `entityCreated` eventHandlers with `addClassEventHandlers`
   - Ensure all void functions explicitly return nil
 
+* Convert raw variable/function references to CBA macros (`GVAR`, `FUNC`, `QGVAR`, etc.) across the entire codebase.
+
+* Standardize CBA event names across all modules. Replace event names in cfgEventHandlers
+  with `GVARMAIN` macro since they are called outside of function folders.
+
 * Unscheduling Effort
   - Major pass to replace `spawn`/`waitUntil` patterns with unscheduled `call` and CBA alternatives (`perFrameHandler`, `waitAndExecute`).
     Scheduled environment is less predictable, so moving as much as possible to unscheduled.
@@ -73,14 +78,16 @@ v4.5.0
   - Chat interception reverted back to waiting for display instead of event handler.
     More overhead, but needed due to security concerns as this method does not send the hidden chat over network.
     Modernized code by getting rid of conversion to array.
-  - Rename pvpfw_chatIntercept prefix to DOTT_commands.
+  - Rename pvpfw_chatIntercept prefix to TN_commands.
   - Move base commands.sqf initialization out of XEH_preInit into fn_init so it's no longer run on server.
   - Rewrote arsenal command and moved logic into separate subfolder. 
     Arsenals created with this command are deleted automatically on round start.
+  - Defer HashMap finalization of command registry until global initFinished event fires.
 
 * Common (New Module)
   - Deduplicate admin change event handlers by creating TN_adminStateChanged CBA event.
   - Deduplicate preloadFinished event handlers by creating TN_preloadFinished CBA event.
+  - Add `convertSide` utility function, simplifying side string-to-side conversion in ticket and loadout commands.
 
 * Curator
   - fn_addPlayerEditable generalized to fn_addEditable
@@ -97,6 +104,7 @@ v4.5.0
   - Fix oversight where starting deaths were not tracked before round start.
   - Remove `_forceEnding` as a parameter from `fn_game`.
   - Add `private` declarations for local variables in `fn_markEditorPlacedObjects`.
+  - Remove no longer used `endingObject` variable.
 
 * Loadout
   - Add additional failsafe for flexibleReset teleport, if player is not within 75 meters of teleport point
@@ -105,6 +113,7 @@ v4.5.0
 * OCAP
   - Updated folder to remove marker related workarounds to be compatible with OCAP Addon 2.1.0.
   - Instead of replacing startRecording and startRecording, hijack the PFHObject to run when an additional variable we create is true.
+  - Add timeout and logging if OCAP variables fail to initialize.
 
 * Parade
   - Hopefully fix custom parade uniform not being applied on join by checking if respawn template parade loadout is applied first.
@@ -121,6 +130,7 @@ v4.5.0
   - Safe start helper now uses `perFrameHandler` instead of chained `waitAndExecute`.
   - Deleting disconnected bodies moved here from training, which means it also applies to event variation.
     Now simply deletes all disconnecting bodies unless round is live.
+  - Add instructions to systemChat safe start notification.
 
 * Settings
   - Add check to exclude non-global settings from GUI.
@@ -145,6 +155,7 @@ v4.5.0
 
 * Ticket
   - Cache current admin into `fn_init` to avoid repeated lookup in `fn_count`.
+  - Refactor to use a single array to store tickets instead of 3 separate team variables.
 
 * Vehicle
   - Added workaround for ACE bug that left vehicle seats locked when uncon -> dead players were moved out of the seat via ACE interaction.

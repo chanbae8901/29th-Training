@@ -1,5 +1,5 @@
 // Code base by conroy - Actions by Dott [29th ID]
-// Help section (line 24) gives a general guide of what each command does - Dott
+// Help section gives a general guide of what each command does - Dott
 // By default case sensitivity doesn't matter for commands in chat, but does for arguments that follow
 // E.G. !commands, !COMMANDS, and !CoMmAnDs will all work, but '!help !COMMANDS' will not (unless argument is 'toLower' before hand is the command code)
 // systemChat is the best way to give feedback to the local player executing commands
