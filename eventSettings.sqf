@@ -11,7 +11,6 @@ EGVAR(event,timerObjects) = [
     base_timerFlagEast,
     base_timerFlagGuer
 ]; //Objects players can interact with to ready up their team, default colored flags in editor
-EGVAR(event,endingObject) = base_endFlag; //Object admin can interact with to force safestart/end mission early
 
 EGVAR(event,numberOfLives) = 1; //0 for unlimited lives
 EGVAR(event,spectateArea) = base_endFlag; //Point where players will be teleported to spectate from when out of lives.

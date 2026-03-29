@@ -3,8 +3,8 @@
 
 /*
  * Author: Bae [29th ID]
- * Adds Side Ready and Unready actions to timer objects and
- * the ending object for BLUFOR, OPFOR, or GRNFOR players
+ * Adds Side Ready and Unready actions to
+ * timer objects for BLUFOR, OPFOR, or GRNFOR players
  * if round has not started.
  *
  * Arguments:
@@ -25,19 +25,10 @@
     };
 } forEach GVAR(timerObjects);
 
-if (isNil QGVAR(endingObject)) then
-{
-    GVAR(endingObject) = objNull;
-    systemChat "WARNING: Admin object (endingObject) not found!";
-};
-
 /* --- Add actions to all objects --- */
 
 private _validSide =
     playerSide in [west, east, resistance];
-
-private _allObjects =
-    GVAR(timerObjects);
 
 {
     if (!isNull _x) then
@@ -79,7 +70,7 @@ private _allObjects =
             ];
         };
     };
-} forEach _allObjects;
+} forEach GVAR(timerObjects);
 
 /* --- Remove ready actions on round start --- */
 
