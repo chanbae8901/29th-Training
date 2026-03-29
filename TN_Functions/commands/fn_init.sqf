@@ -10,8 +10,7 @@
  * per-frame handler to detect when the chat display opens
  * and adds a KeyDown handler that intercepts messages
  * beginning with the command marker ("!"), closes the chat
- * to prevent sending, and routes them to fn_execute. Should
- * be initialized after the round system.
+ * to prevent sending, and routes them to fn_execute.
  *
  * Arguments:
  * None
@@ -39,12 +38,11 @@ if (hasInterface) then
     }
     forEach (TN_MODULES - ["commands"]);
 
-    // Convert flat arrays to HashMaps for fast lookup.
-    GVAR(allCommands) = createHashMapFromArray GVAR(allCommands);
-    GVAR(helpInfo) = createHashMapFromArray GVAR(helpInfo);
-
-    GVAR(finishedInit) = true;
-    [QGVAR(initCompleted), []] call CBA_fnc_localEvent;
+    // Convert flat arrays to HashMaps for fast lookup after all module inits complete.
+    [QGVARMAIN(initFinished), {
+        GVAR(allCommands) = createHashMapFromArray GVAR(allCommands);
+        GVAR(helpInfo) = createHashMapFromArray GVAR(helpInfo);
+    }] call CBA_fnc_addEventHandler;
 
     GVAR(chatOpen) = false;
 

@@ -22,16 +22,16 @@ diag_log text format [
     diag_log text format ["(%1/%2) %3: init complete (%4ms)", _forEachIndex + 1, count TN_MODULES, _moduleInitName, _elapsed * 1000];
 } forEach TN_MODULES;
 
-[QEGVAR(common,initFinished), {}] call CBA_fnc_localEvent;
+[QGVARMAIN(initFinished), {}] call CBA_fnc_localEvent;
 
-// Clean up all TN_common_initFinished handlers — one-shot event, never fires again.
-private _eventHash = CBA_events_eventHashes getVariable QEGVAR(common,initFinished);
+// Clean up all TN_initFinished handlers — one-shot event, never fires again.
+private _eventHash = CBA_events_eventHashes getVariable QGVARMAIN(initFinished);
 if (!isNil "_eventHash") then
 {
     private _lastId = [_eventHash, "#lastId"] call CBA_fnc_hashGet;
     for "_i" from _lastId to 0 step -1 do
     {
-        [QEGVAR(common,initFinished), _i] call CBA_fnc_removeEventHandler;
+        [QGVARMAIN(initFinished), _i] call CBA_fnc_removeEventHandler;
     };
 };
 

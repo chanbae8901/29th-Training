@@ -20,7 +20,7 @@
  * call TN_common_fnc_initPreloadFinished;
  */
 
-[QGVAR(initFinished),
+[QGVARMAIN(initFinished),
 {
     if (isNil "bis_fnc_preload_init") then
     {
