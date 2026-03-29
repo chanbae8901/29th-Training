@@ -25,7 +25,7 @@ GVAR(resetBases) = createHashMapFromArray [
  *
  * Returns false if side is invalid, true otherwise.
  */
-FUNC(cmdDispatch) =
+FUNC(flexibleResetHelper) =
 {
     params ["_sideName", "_params", "_msg"];
 
@@ -62,7 +62,7 @@ FUNC(cmdDispatch) =
             {
                 private _side = toLower (_this select 0);
 
-                private _ok = [_side, [[], true], "Healing %1 players!"] call FUNC(cmdDispatch);
+                private _ok = [_side, [[], true], "Healing %1 players!"] call FUNC(flexibleResetHelper);
 
                 if (!_ok) then
                 {
@@ -75,7 +75,7 @@ FUNC(cmdDispatch) =
             {
                 private _side = toLower (_this select 0);
 
-                private _ok = [_side, [true], "Rearming %1 players!"] call FUNC(cmdDispatch);
+                private _ok = [_side, [true], "Rearming %1 players!"] call FUNC(flexibleResetHelper);
 
                 if (!_ok) then
                 {
@@ -94,7 +94,7 @@ FUNC(cmdDispatch) =
                     {
                         private _baseName = GVAR(resetBases) get _x;
                         private _baseObj = missionNamespace getVariable [_baseName, objNull];
-                        [_x, [true, true, getPosASL _baseObj], ""] call FUNC(cmdDispatch);
+                        [_x, [true, true, getPosASL _baseObj], ""] call FUNC(flexibleResetHelper);
                     } forEach ["blufor", "opfor", "grnfor"];
                     systemChat "Rearming, healing, and teleporting all players to spawn!";
                 };
@@ -107,7 +107,7 @@ FUNC(cmdDispatch) =
                 {
                     private _sideArg = if (count _argArr > 1) then { _argArr select (1 - _stayArg) } else { "" };
 
-                    private _ok = [_sideArg, [true, true], "Rearming and healing %1 players!"] call FUNC(cmdDispatch);
+                    private _ok = [_sideArg, [true, true], "Rearming and healing %1 players!"] call FUNC(flexibleResetHelper);
 
                     if (!_ok) then
                     {
@@ -125,7 +125,7 @@ FUNC(cmdDispatch) =
                 };
 
                 private _baseObj = missionNamespace getVariable [_baseName, objNull];
-                [_side, [true, true, getPosASL _baseObj], "Rearming, healing, and teleporting %1 players to spawn!"] call FUNC(cmdDispatch);
+                [_side, [true, true, getPosASL _baseObj], "Rearming, healing, and teleporting %1 players to spawn!"] call FUNC(flexibleResetHelper);
             }
         ],
         [
@@ -136,7 +136,7 @@ FUNC(cmdDispatch) =
                 if (_argument isEqualTo "") then
                 {
                     private _pos = getPosASL base_res_blu;
-                    ["", [true, true, _pos], "Healing, rearming, and teleporting all players to Blufor base!"] call FUNC(cmdDispatch);
+                    ["", [true, true, _pos], "Healing, rearming, and teleporting all players to Blufor base!"] call FUNC(flexibleResetHelper);
                 }
                 else
                 {
@@ -152,7 +152,7 @@ FUNC(cmdDispatch) =
                         _pos select 2
                     ];
 
-                    ["", [true, true, _telePos], "Healing, rearming, and teleporting all players to you!"] call FUNC(cmdDispatch);
+                    ["", [true, true, _telePos], "Healing, rearming, and teleporting all players to you!"] call FUNC(flexibleResetHelper);
                 };
 
                 // Timestamp used by baseObjectsInit for Force Parade triggers.
