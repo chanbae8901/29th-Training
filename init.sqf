@@ -26,11 +26,9 @@ diag_log text format [
 
 // Clean up all TN_initFinished handlers — one-shot event, never fires again.
 private _eventHash = CBA_events_eventHashes getVariable QGVARMAIN(initFinished);
-if (!isNil "_eventHash") then
-{
+if (!isNil "_eventHash") then {
     private _lastId = [_eventHash, "#lastId"] call CBA_fnc_hashGet;
-    for "_i" from _lastId to 0 step -1 do
-    {
+    for "_i" from _lastId to 0 step -1 do {
         [QGVARMAIN(initFinished), _i] call CBA_fnc_removeEventHandler;
     };
 };

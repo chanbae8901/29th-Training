@@ -24,8 +24,7 @@
 params ["_playerVarName"];
 
 // Need to wait until after start to create modules.
-if (time isEqualTo 0) exitWith
-{
+if (time isEqualTo 0) exitWith {
     [
         { time > 0 },
         { call FUNC(createModule) },
@@ -37,8 +36,7 @@ _playerVarName = toLowerANSI _playerVarName;
 
 if !(_playerVarName in GVAR(units)) exitWith {};
 
-if !(isServer) exitWith
-{
+if !(isServer) exitWith {
     _this remoteExecCall [
         QFUNC(createModule), 2
     ];
@@ -48,8 +46,7 @@ private _curatorModuleName = format [
     QGVAR(zeus_%1), _playerVarName
 ];
 
-if !(isNil _curatorModuleName) exitWith
-{
+if !(isNil _curatorModuleName) exitWith {
     private _player = missionNamespace getVariable [_playerVarName, objNull];
     private _module = missionNamespace getVariable _curatorModuleName;
     unassignCurator _module;

@@ -21,8 +21,7 @@ private _saveEvent = true;
 
 // Shared across all event type cases to avoid repeating the same
 // conversion logic five times.
-private _fn_convertEventInfo =
-{
+private _fn_convertEventInfo = {
     params ["_eventInfo", "_unitTime", "_instigatorTime", "_isKillType"];
 
     private _unit = _eventInfo select 0;
@@ -34,8 +33,7 @@ private _fn_convertEventInfo =
     private _instigatorIdx = [2, 1] select _isKillType;
     private _weaponIdx = _instigatorIdx + 2;
 
-    if (count _eventInfo > _instigatorIdx) then
-    {
+    if (count _eventInfo > _instigatorIdx) then {
         private _instigator = _eventInfo select _instigatorIdx;
         _instigator params ["_instigatorName", "_instigatorSide"];
         private _weaponName = _eventInfo select _weaponIdx;
@@ -50,18 +48,15 @@ private _fn_convertEventInfo =
 // Used to suppress unconscious events that arrive after a death
 // (network race), or to remove stale unconscious records when a
 // death comes in.
-private _fn_scanRecentEvents =
-{
+private _fn_scanRecentEvents = {
     params ["_filterTypes", "_afterTime", "_unitNum", "_action"];
     for "_i" from (count GVAR(events) - 1)
-        to 0 step -1 do
-    {
+        to 0 step -1 do {
         private _pastEvent = GVAR(events) select _i;
         private _pastType = _pastEvent select 0;
         private _pastTime = _pastEvent select 1;
         if (_pastType isEqualTo DELAY_KILL_NUM
-            || _pastType isEqualTo DELAY_ACE_CONSCIOUSNESS_NUM) then
-        {
+            || _pastType isEqualTo DELAY_ACE_CONSCIOUSNESS_NUM) then {
             _pastTime = _pastTime select 0;
         };
         // Events are chronological — once we're past the
@@ -69,17 +64,14 @@ private _fn_scanRecentEvents =
         if (_pastTime < _afterTime) exitWith {};
         if !(_pastType in _filterTypes) then { continue };
         private _pastUnitNum = (_pastEvent select 2) select 0;
-        if (_unitNum isEqualTo _pastUnitNum) exitWith
-        {
+        if (_unitNum isEqualTo _pastUnitNum) exitWith {
             _i call _action;
         };
     };
 };
 
-switch (_eventType) do
-{
-    case ACE_CONSCIOUSNESS_NUM:
-    {
+switch (_eventType) do {
+    case ACE_CONSCIOUSNESS_NUM: {
         [_eventInfo, _eventTime, _eventTime, false] call _fn_convertEventInfo;
 
         // Suppress if unit already died within 2 seconds.
@@ -91,8 +83,7 @@ switch (_eventType) do
         ] call _fn_scanRecentEvents;
     };
 
-    case DELAY_ACE_CONSCIOUSNESS_NUM:
-    {
+    case DELAY_ACE_CONSCIOUSNESS_NUM: {
         [_eventInfo, _eventTime select 0, _eventTime select 1, false] call _fn_convertEventInfo;
 
         [
@@ -103,8 +94,7 @@ switch (_eventType) do
         ] call _fn_scanRecentEvents;
     };
 
-    case INFANTRY_KILL_NUM:
-    {
+    case INFANTRY_KILL_NUM: {
         [_eventInfo, _eventTime, _eventTime, true] call _fn_convertEventInfo;
 
         // Remove unconscious events close to this death.
@@ -116,8 +106,7 @@ switch (_eventType) do
         ] call _fn_scanRecentEvents;
     };
 
-    case DELAY_KILL_NUM:
-    {
+    case DELAY_KILL_NUM: {
         [_eventInfo, _eventTime select 0, _eventTime select 1, true] call _fn_convertEventInfo;
 
         [
@@ -128,8 +117,7 @@ switch (_eventType) do
         ] call _fn_scanRecentEvents;
     };
 
-    case VEHICLE_KILL_NUM:
-    {
+    case VEHICLE_KILL_NUM: {
         [_eventInfo, _eventTime, _eventTime, true] call _fn_convertEventInfo;
     };
 

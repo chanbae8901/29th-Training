@@ -57,6 +57,8 @@ v4.5.0
 * Standardize CBA event names across all modules. Replace event names in cfgEventHandlers
   with `GVARMAIN` macro since they are called outside of function folders.
 
+* Swapped from Allman to K&R Indentation style to match ACE 3 coding guidelines.
+
 * Unscheduling Effort
   - Major pass to replace `spawn`/`waitUntil` patterns with unscheduled `call` and CBA alternatives (`perFrameHandler`, `waitAndExecute`).
     Scheduled environment is less predictable, so moving as much as possible to unscheduled.

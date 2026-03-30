@@ -39,8 +39,7 @@ uiNamespace setVariable [
 ];
 
 // Kill in-flight shine animation
-if !(isNil QGVAR(readyUI_shinePFH)) then
-{
+if !(isNil QGVAR(readyUI_shinePFH)) then {
     [GVAR(readyUI_shinePFH)]
         call CBA_fnc_removePerFrameHandler;
     GVAR(readyUI_shinePFH) = nil;

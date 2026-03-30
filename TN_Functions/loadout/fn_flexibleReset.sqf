@@ -30,20 +30,16 @@ if (!hasInterface) exitWith {}; // Client only.
 
 private _resetInventory = false;
 
-if (_inventory isEqualTo true) then
-{
+if (_inventory isEqualTo true) then {
     _inventory = missionNamespace getVariable ["resetLoadout", []];
 };
 
-if (_inventory isNotEqualTo []) then
-{
-    if (!isNil {missionNamespace getVariable "BIS_EGSpectator_initialized"}) exitWith
-    {
+if (_inventory isNotEqualTo []) then {
+    if (!isNil {missionNamespace getVariable "BIS_EGSpectator_initialized"}) exitWith {
         systemChat "Player in spectator, skipping rearm.";
     };
 
-    if (EGVAR(base,arsenalActionId) isNotEqualTo -1) exitWith
-    {
+    if (EGVAR(base,arsenalActionId) isNotEqualTo -1) exitWith {
         systemChat "Player in base, skipping rearm.";
     };
 
@@ -52,12 +48,10 @@ if (_inventory isNotEqualTo []) then
     _resetInventory = true;
 };
 
-if (_heal) then
-{
+if (_heal) then {
     [player] call ACE_medical_treatment_fnc_fullHealLocal;
 
-    if (["ace_hearing"] call ace_common_fnc_isModLoaded) then
-    {
+    if (["ace_hearing"] call ace_common_fnc_isModLoaded) then {
         ace_hearing_deafnessDV = 0;
     };
 };
@@ -65,20 +59,15 @@ if (_heal) then
 private _pointCount = count _point;
 private _teleport = false;
 
-if (_pointCount < 3) then
-{
-    if (_point isNotEqualTo []) then
-    {
+if (_pointCount < 3) then {
+    if (_point isNotEqualTo []) then {
         hint "TN_fnc_roundReset Error: Position Array wrong size!";
     };
-}
-else
-{
+} else {
     // Wait up to 30 seconds for player to respawn if they died
     // during the teleport call.
     private _timeStart = time;
-    waitUntil
-    {
+    waitUntil {
         sleep 1;
         time - _timeStart > 30
             || (!isNull player && alive player)
@@ -92,10 +81,8 @@ else
 
     player allowDamage false;
 
-    while {_tries < 3} do
-    {
-        waitUntil
-        {
+    while {_tries < 3} do {
+        waitUntil {
             uiSleep 0.1;
             !(player getVariable
                 ["emr_main_isClimbing", false])
@@ -126,22 +113,18 @@ else
 
         private _ground = isTouchingGround player;
 
-        if (!_ground) then
-        {
+        if (!_ground) then {
             private _curr = getPos player;
             private _height = _curr select 2;
 
             // Snap to ground if floating above 2m.
-            if (_height > 2) then
-            {
+            if (_height > 2) then {
                 player setPos [
                     _curr select 0,
                     _curr select 1,
                     0
                 ];
-            }
-            else
-            {
+            } else {
                 // Otherwise a little extra time to fall.
                 sleep 0.4;
             };
@@ -165,12 +148,10 @@ else
 
     _teleport = _tries > 0;
 
-    if (_teleport) then
-    {
+    if (_teleport) then {
         [{
             params ["_point"];
-            if (player distance2D _point > 75) then
-            {
+            if (player distance2D _point > 75) then {
                 private _msg = format
                 [
                     "Error: %1 was not teleported.",
@@ -182,39 +163,32 @@ else
     };
 };
 
-switch (true) do
-{
-    case (_resetInventory && !_heal && !_teleport):
-    {
+switch (true) do {
+    case (_resetInventory && !_heal && !_teleport): {
         ["Reset", ["Rearmed", "Player is Rearmed!"]]
             call BIS_fnc_showNotification;
     };
-    case (_resetInventory && _heal && !_teleport):
-    {
+    case (_resetInventory && _heal && !_teleport): {
         ["Reset", ["Reset", "Rearmed and Healed!"]]
             call BIS_fnc_showNotification;
     };
-    case (_resetInventory && _heal && _teleport):
-    {
+    case (_resetInventory && _heal && _teleport): {
         ["Reset",
             ["Full Reset",
                 "Rearmed, healed, and teleported!"]]
             call BIS_fnc_showNotification;
     };
-    case (!_resetInventory && _heal && _teleport):
-    {
+    case (!_resetInventory && _heal && _teleport): {
         ["Document",
             ["Debrief", "Teleported for debrief!"]]
             call BIS_fnc_showNotification;
     };
-    case (!_resetInventory && !_heal && _teleport):
-    {
+    case (!_resetInventory && !_heal && _teleport): {
         ["Document",
             ["Teleported", "Player teleported!"]]
             call BIS_fnc_showNotification;
     };
-    case (!_resetInventory && _heal && !_teleport):
-    {
+    case (!_resetInventory && _heal && !_teleport): {
         ["Health", ["Healed", "Player is healed!"]]
             call BIS_fnc_showNotification;
     };

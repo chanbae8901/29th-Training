@@ -34,8 +34,7 @@ if (
 if !(ctrlShown _bg) exitWith {};
 
 // Cancel any in-progress shine animation
-if !(isNil QGVAR(readyUI_shinePFH)) then
-{
+if !(isNil QGVAR(readyUI_shinePFH)) then {
     [GVAR(readyUI_shinePFH)]
         call CBA_fnc_removePerFrameHandler;
     GVAR(readyUI_shinePFH) = nil;
@@ -67,8 +66,7 @@ _flashColor params ["_fr", "_fg", "_fb", "_fa"];
 } forEach _shineSlices;
 
 // Per-frame animation: sweep the diagonal band across the panel
-GVAR(readyUI_shinePFH) = [
-    {
+GVAR(readyUI_shinePFH) = [ {
         params ["_args", "_pfhHandle"];
         _args params [
             "_shineSlices",
@@ -104,8 +102,7 @@ GVAR(readyUI_shinePFH) = [
             private _visW =
                 _rightEdge - _leftEdge;
 
-            if (_visW > 0) then
-            {
+            if (_visW > 0) then {
                 _x ctrlSetPosition [
                     _leftEdge, _sliceY,
                     _visW, _sliceH
@@ -114,17 +111,14 @@ GVAR(readyUI_shinePFH) = [
                     _fr, _fg, _fb, _fa
                 ];
                 _x ctrlShow true;
-            }
-            else
-            {
+            } else {
                 _x ctrlShow false;
             };
             _x ctrlCommit 0;
         } forEach _shineSlices;
 
         // Animation complete — hide all slices and clean up
-        if (_progress >= 1) then
-        {
+        if (_progress >= 1) then {
             {
                 _x ctrlShow false;
                 _x ctrlCommit 0;

@@ -25,8 +25,7 @@ _unit addEventHandler ["HandleRating", {0}];
 // ====== Misfire prevention. ==========
 [{currentWeapon (_this select 0) isNotEqualTo ""}, {
     params ["_unit"];
-    if !(weaponLowered _unit) then
-    {
+    if !(weaponLowered _unit) then {
         _unit action ["WeaponOnBack", _unit];
     };
 }, [_unit]] call CBA_fnc_waitUntilAndExecute;

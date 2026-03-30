@@ -40,18 +40,14 @@ private _remainDead = (_respawnType isEqualTo RESPAWN_BIRD);
 
     {
         private _side = side group _x;
-        switch (_side) do
-        {
-            case west:
-            {
+        switch (_side) do {
+            case west: {
                 _bluforPlayers pushBack _x;
             };
-            case east:
-            {
+            case east: {
                 _opforPlayers pushBack _x;
             };
-            case resistance:
-            {
+            case resistance: {
                 _resistancePlayers pushBack _x;
             };
             default {};
@@ -62,14 +58,11 @@ private _remainDead = (_respawnType isEqualTo RESPAWN_BIRD);
     private _numOpforDead = 0;
     private _numResistanceDead = 0;
 
-    if (_remainDead) then
-    {
+    if (_remainDead) then {
         _numBluforDead = { !alive _x } count _bluforPlayers;
         _numOpforDead = { !alive _x } count _opforPlayers;
         _numResistanceDead = { !alive _x } count _resistancePlayers;
-    }
-    else
-    {
+    } else {
         _numBluforDead = {
             (_x distance2D GVAR(spectateArea)) < GVAR(spectateAreaRadius)
         } count _bluforPlayers;
@@ -89,10 +82,8 @@ private _remainDead = (_respawnType isEqualTo RESPAWN_BIRD);
 
     if (!_isBluforAlive
         && !_isOpforAlive
-        && !_isResistanceAlive) exitWith
-    {
-        if (!_notified) then
-        {
+        && !_isResistanceAlive) exitWith {
+        if (!_notified) then {
             "All sides eliminated — admin should declare the winner." remoteExecCall ["systemChat", 0];
             _args set [1, true];
         };
@@ -102,25 +93,21 @@ private _remainDead = (_respawnType isEqualTo RESPAWN_BIRD);
 
     if (_isBluforAlive
         && !_isOpforAlive
-        && !_isResistanceAlive) then
-    {
+        && !_isResistanceAlive) then {
         _winnerSide = west;
     };
     if (!_isBluforAlive
         && _isOpforAlive
-        && !_isResistanceAlive) then
-    {
+        && !_isResistanceAlive) then {
         _winnerSide = east;
     };
     if (!_isBluforAlive
         && !_isOpforAlive
-        && _isResistanceAlive) then
-    {
+        && _isResistanceAlive) then {
         _winnerSide = resistance;
     };
 
-    if (_winnerSide isNotEqualTo civilian) then
-    {
+    if (_winnerSide isNotEqualTo civilian) then {
         [_winnerSide] call FUNC(game);
     };
 }, ALIVE_CHECK_INTERVAL, [_remainDead, false], {}, {}, {true}, {NOT_ROUND_LIVE}] call CBA_fnc_createPerFrameHandlerObject;

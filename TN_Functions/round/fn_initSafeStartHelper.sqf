@@ -22,8 +22,7 @@
 [{
     params ["", "_handle"];
 
-    if (NOT_ROUND_SAFE) exitWith
-    {
+    if (NOT_ROUND_SAFE) exitWith {
         _handle call CBA_fnc_removePerFrameHandler;
     };
 
@@ -31,8 +30,7 @@
         call FUNC(checkAllSidesReady);
 
     /* --- Abort if a team unreadied and we're not forced --- */
-    if !(_allSidesReady || GVAR(ignoreReadiness)) exitWith
-    {
+    if !(_allSidesReady || GVAR(ignoreReadiness)) exitWith {
         _handle call CBA_fnc_removePerFrameHandler;
 
         [
@@ -49,8 +47,7 @@
     };
 
     /* --- Go live when countdown expires --- */
-    if (([0] call BIS_fnc_countdown) <= 0) exitWith
-    {
+    if (([0] call BIS_fnc_countdown) <= 0) exitWith {
         _handle call CBA_fnc_removePerFrameHandler;
 
         RESET_SAFESTART_VARS;

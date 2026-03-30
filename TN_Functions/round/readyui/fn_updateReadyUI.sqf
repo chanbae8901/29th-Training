@@ -28,8 +28,7 @@ private _createdOn = uiNamespace getVariable [
 if (
     !isNull _createdOn
     && {_activeDisplay isNotEqualTo _createdOn}
-) then
-{
+) then {
     private _oldBg = uiNamespace getVariable [
         QGVAR(readyUI_bg), controlNull
     ];
@@ -37,8 +36,7 @@ if (
         QGVAR(readyUI_content), controlNull
     ];
     if !(isNull _oldBg) then { ctrlDelete _oldBg };
-    if !(isNull _oldContent) then
-    {
+    if !(isNull _oldContent) then {
         ctrlDelete _oldContent;
     };
     {
@@ -59,8 +57,7 @@ if (
         QGVAR(readyUI_display), displayNull
     ];
     // Kill in-flight shine — those slices no longer exist
-    if !(isNil QGVAR(readyUI_shinePFH)) then
-    {
+    if !(isNil QGVAR(readyUI_shinePFH)) then {
         [GVAR(readyUI_shinePFH)]
             call CBA_fnc_removePerFrameHandler;
         GVAR(readyUI_shinePFH) = nil;
@@ -79,8 +76,7 @@ private _content = uiNamespace getVariable [
 ];
 
 // Recreate controls if destroyed (display transitions, respawn, etc.)
-if (isNull _bg || isNull _content) then
-{
+if (isNull _bg || isNull _content) then {
     if !(call FUNC(createReadyUIControls))
         exitWith {};
     _bg = uiNamespace getVariable QGVAR(readyUI_bg);
@@ -90,8 +86,7 @@ if (isNull _bg || isNull _content) then
 };
 
 // Guard: sideReady array must exist (JIP race condition / init order)
-if (isNil QGVAR(sideReady)) exitWith
-{
+if (isNil QGVAR(sideReady)) exitWith {
     _bg ctrlShow false;
     _content ctrlShow false;
 };
@@ -102,8 +97,7 @@ private _isSafeStart = ROUND_SAFE;
 // Primary lifecycle control is via external event handlers.
 if (
     !(_isSafeStart || {true in GVAR(sideReady)}) || ROUND_LIVE
-) exitWith
-{
+) exitWith {
     _bg ctrlShow false;
     _content ctrlShow false;
     {
@@ -114,8 +108,7 @@ if (
     uiNamespace setVariable [
         QGVAR(readyUI_flashActive), false
     ];
-    if !(isNil QGVAR(readyUI_shinePFH)) then
-    {
+    if !(isNil QGVAR(readyUI_shinePFH)) then {
         [GVAR(readyUI_shinePFH)]
             call CBA_fnc_removePerFrameHandler;
         GVAR(readyUI_shinePFH) = nil;
@@ -126,20 +119,17 @@ if (
 // Every ~60 frames (~2s at 30fps) mark dirty to recheck team populations
 GVAR(readyUI_refreshCounter) =
     (GVAR(readyUI_refreshCounter) + 1) mod 60;
-if (GVAR(readyUI_refreshCounter) isEqualTo 0) then
-{
+if (GVAR(readyUI_refreshCounter) isEqualTo 0) then {
     GVAR(readyUI_dirty) = true;
 };
 
 // === Phase B: Content rebuild (only when dirty) ===
-if (GVAR(readyUI_dirty)) then
-{
+if (GVAR(readyUI_dirty)) then {
     GVAR(readyUI_dirty) = false;
 
     private _lines = [];
 
-    if (ROUND_SAFE) then
-    {
+    if (ROUND_SAFE) then {
         private _remaining = ceil ([0] call BIS_fnc_countdown) max 0;
         private _timerStr = [_remaining, "MM:SS"] call BIS_fnc_secondsToString;
         _lines pushBack format [
@@ -158,19 +148,15 @@ if (GVAR(readyUI_dirty)) then
         ) then { continue };
 
         // Bounds check sideReady array before accessing
-        if (_idx >= count GVAR(sideReady)) then
-        {
+        if (_idx >= count GVAR(sideReady)) then {
             continue;
         };
 
         private _ready =
             GVAR(sideReady) select _idx;
-        private _status = if (_ready) then
-        {
+        private _status = if (_ready) then {
             "<t color='#8BC34A' size='0.85' align='right'>READY</t>"
-        }
-        else
-        {
+        } else {
             "<t color='#C8A030' size='0.85' align='right'>READY UP</t>"
         };
 
@@ -181,13 +167,10 @@ if (GVAR(readyUI_dirty)) then
     } forEach SIDE_DEFS;
 
     // Nothing to show (no players on any side)
-    if (_lines isEqualTo []) then
-    {
+    if (_lines isEqualTo []) then {
         _bg ctrlShow false;
         _content ctrlShow false;
-    }
-    else
-    {
+    } else {
         _content ctrlSetStructuredText
             parseText (_lines joinString "<br/>");
 
@@ -199,13 +182,10 @@ if (GVAR(readyUI_dirty)) then
         // Center horizontally when in Zeus, otherwise anchor to MP HUD
         private _posX = if (
             !isNull findDisplay 312
-        ) then
-        {
+        ) then {
             safeZoneX + (safeZoneW / 2)
                 - (UI_WIDTH / 2)
-        }
-        else
-        {
+        } else {
             UI_X
         };
 
@@ -236,10 +216,8 @@ private _flashActive = uiNamespace getVariable [
 ];
 
 // Flash overrides pulse — don't touch background color while shine is active
-if (!_flashActive) then
-{
-    if (ROUND_SAFE) then
-    {
+if (!_flashActive) then {
+    if (ROUND_SAFE) then {
         // Collect pulse tint colors from unready teams with players
         private _unreadyTints = [];
         {
@@ -249,16 +227,13 @@ if (!_flashActive) then
             if (
                 _side countSide allPlayers > 0
                 || {!(isNil QGVAR(readyUI_showAllSides))}
-            ) then
-            {
+            ) then {
                 if (
                     _idx < count GVAR(sideReady)
-                ) then
-                {
+                ) then {
                     if !(
                         GVAR(sideReady) select _idx
-                    ) then
-                    {
+                    ) then {
                         _unreadyTints pushBack
                             _pulseTint;
                     };
@@ -266,8 +241,7 @@ if (!_flashActive) then
             };
         } forEach SIDE_DEFS;
 
-        if (_unreadyTints isNotEqualTo []) then
-        {
+        if (_unreadyTints isNotEqualTo []) then {
             // Cycle through unready teams — each gets one full breath
             private _cycleIdx =
                 floor(diag_tickTime / PULSE_CYCLE)
@@ -292,16 +266,12 @@ if (!_flashActive) then
                 _r, _g, _b, _a
             ];
             _bg ctrlCommit 0;
-        }
-        else
-        {
+        } else {
             // All teams ready — static gold bg
             _bg ctrlSetBackgroundColor BG_COLOR;
             _bg ctrlCommit 0;
         };
-    }
-    else
-    {
+    } else {
         _bg ctrlSetBackgroundColor BG_COLOR;
         _bg ctrlCommit 0;
     };

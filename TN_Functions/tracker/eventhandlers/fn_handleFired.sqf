@@ -32,8 +32,7 @@ _projectile setVariable [QGVAR(instigatorInfo), _data];
 _projectile addEventHandler ["HitPart", { call FUNC(handleHit) }];
 _projectile addEventHandler ["HitExplosion", { call FUNC(handleHit) }];
 
-_projectile addEventHandler ["SubmunitionCreated",
-{
+_projectile addEventHandler ["SubmunitionCreated", {
     params ["_projectile", "_submunitionProjectile"];
     _submunitionProjectile setVariable [
         QGVAR(instigatorInfo),

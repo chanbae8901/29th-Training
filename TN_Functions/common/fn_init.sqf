@@ -26,13 +26,11 @@ GVAR(sideToStrMap) set [west,       "BLUFOR"];
 GVAR(sideToStrMap) set [east,       "OPFOR"];
 GVAR(sideToStrMap) set [resistance, "GRNFOR"];
 
-if (isServer) then
-{
+if (isServer) then {
     call FUNC(initAdminStateChanged);
 };
 
-if (hasInterface) then
-{
+if (hasInterface) then {
     //No point of having this on server since it can't JIP
     call FUNC(initPreloadFinished);
 };

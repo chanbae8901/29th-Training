@@ -16,8 +16,7 @@ params ["_weaponName"];
 
 private _num = GVAR(weapons) find _weaponName;
 
-if (_num isEqualTo -1) then
-{
+if (_num isEqualTo -1) then {
     GVAR(weapons) pushBack _weaponName;
     _num = count GVAR(weapons) - 1;
 };

@@ -17,15 +17,13 @@
  * call TN_vehicle_fnc_init;
  */
 
-if (isClass (configFile >> "CfgPatches" >> "ace_main")) then
-{
+if (isClass (configFile >> "CfgPatches" >> "ace_main")) then {
     call FUNC(lockFixInit);
 };
 
 if (!isServer) exitWith {};
 
-if (isClass (configFile >> "CfgPatches" >> "ace_main")) then
-{
+if (isClass (configFile >> "CfgPatches" >> "ace_main")) then {
     //Note that we do not retroactively apply to editor placed helicopters.
     ["Helicopter", "Init", {
         if (!GVARMAIN(autoAddFRIES)) exitWith {};

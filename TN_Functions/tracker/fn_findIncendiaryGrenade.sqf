@@ -16,12 +16,10 @@ params ["_position", "_radius"];
 
 private _result = [];
 {
-    if ((typeOf _x) isEqualTo "ACE_G_M14") exitWith
-    {
+    if ((typeOf _x) isEqualTo "ACE_G_M14") exitWith {
         _result = [(getShotParents _x) select 0, "ACE AN-M14"];
     };
-    if ((typeOf _x) isEqualTo "rhs_ammo_an_m14_th3") exitWith
-    {
+    if ((typeOf _x) isEqualTo "rhs_ammo_an_m14_th3") exitWith {
         _result = [(getShotParents _x) select 0, "RHS AN-M14"];
     };
 }

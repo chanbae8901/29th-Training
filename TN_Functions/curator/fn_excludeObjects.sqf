@@ -55,14 +55,12 @@ forEach allMissionObjects "All";
                 && { _x getVariable [
                     "isCuratorExcluded", false
                 ] }
-            ) then
-            {
+            ) then {
                 _objsToRemove pushBack _x;
             };
         } forEach _editableObjs;
 
-        if (_objsToRemove isNotEqualTo []) then
-        {
+        if (_objsToRemove isNotEqualTo []) then {
             _curator removeCuratorEditableObjects [
                 _objsToRemove, true
             ];

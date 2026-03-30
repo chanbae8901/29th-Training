@@ -40,8 +40,7 @@ uiNamespace setVariable [
 private _ctrlAddonsGroup =
     _display displayCtrl 4301;
 
-with uiNamespace do
-{
+with uiNamespace do {
     GVAR(serverTemp) =
         _display ctrlCreate ["RscText", -1];
 };
@@ -64,11 +63,9 @@ private _categories = [];
     ];
     private _categoryLower = toLower _category;
 
-    if !(_categoryLower in _categories) then
-    {
+    if !(_categoryLower in _categories) then {
         private _categoryLocalized = _category;
-        if (isLocalized _category) then
-        {
+        if (isLocalized _category) then {
             _categoryLocalized = localize _category;
         };
 

@@ -27,11 +27,9 @@ resetLoadout = [player] call CBA_fnc_getLoadout;
 // respawn having selected loadout in previous life, enters
 // ACE arsenal and picks same loadout.
 // Weak meaning fixing some but not all cases.
-[] spawn
-{
+[] spawn {
     // Wait until unit is not reloading.
-    waitUntil
-    {
+    waitUntil {
         sleep 1;
         (weaponState player) select 6 isEqualTo 0
     };
@@ -51,8 +49,7 @@ resetLoadout = [player] call CBA_fnc_getLoadout;
 
 player call FUNC(setInsignia);
 
-if !(weaponLowered player) then
-{
+if !(weaponLowered player) then {
     player action ["WeaponOnBack", player];
 };
 

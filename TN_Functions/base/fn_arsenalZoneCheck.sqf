@@ -25,47 +25,35 @@ _args params ["_radiusSquared"];
 
 private _inZone = false;
 {
-    if ((getPosASL player) distanceSqr _x <= _radiusSquared) exitWith
-    {
+    if ((getPosASL player) distanceSqr _x <= _radiusSquared) exitWith {
         _inZone = true;
     };
 } forEach GVAR(arsenalCenters);
 
-if (_inZone) then
-{
-    if (GVAR(arsenalActionId) isEqualTo -1) then
-    {
-        if !(GVAR(keepEnvironmentSounds)) then
-        {
+if (_inZone) then {
+    if (GVAR(arsenalActionId) isEqualTo -1) then {
+        if !(GVAR(keepEnvironmentSounds)) then {
             ENV_OFF;
         };
 
-        if (isClass (configFile >> "CfgPatches" >> "ace_main")) then
-        {
+        if (isClass (configFile >> "CfgPatches" >> "ace_main")) then {
             GVAR(arsenalActionId) = player addAction [
-                "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#bf3eff'>  Ace Arsenal</t>",
-                {
+                "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#bf3eff'>  Ace Arsenal</t>", {
                     [_this select 1, _this select 1, true] call ace_arsenal_fnc_openBox;
                 },
                 nil, 1.5, true, true, "", "true"
             ];
-        }
-        else
-        {
+        } else {
             GVAR(arsenalActionId) = player addAction [
-                "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#bf3eff'>  Virtual Arsenal</t>",
-                {
+                "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#bf3eff'>  Virtual Arsenal</t>", {
                     ["Open", true] call BIS_fnc_arsenal;
                 },
                 nil, 1.5, true, true, "", "true"
             ];
         };
     };
-}
-else
-{
-    if (GVAR(arsenalActionId) isNotEqualTo -1) then
-    {
+} else {
+    if (GVAR(arsenalActionId) isNotEqualTo -1) then {
         ENV_ON;
         player removeAction GVAR(arsenalActionId);
         GVAR(arsenalActionId) = -1;

@@ -21,8 +21,7 @@ params [["_seconds", 0, [0]]];
 
 private _changed = false;
 
-if (_seconds > 0) then
-{
+if (_seconds > 0) then {
     if (ROUND_LIVE) exitWith {};
 
     // Don't call a new safe start; redirect to initSafeStart for that.
@@ -45,11 +44,8 @@ if (_seconds > 0) then
     ] remoteExecCall [QEFUNC(common,displayMsg)];
 
     _changed = true;
-}
-else
-{
-    if (ROUND_SAFE) then
-    {
+} else {
+    if (ROUND_SAFE) then {
         GVAR(ignoreReadiness) = false;
         publicVariable QGVAR(ignoreReadiness);
         _changed = true;

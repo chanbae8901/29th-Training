@@ -29,13 +29,11 @@ private _eventInfo = [
 ];
 private _eventType = ACE_CONSCIOUSNESS_NUM;
 
-if (_state) then
-{
+if (_state) then {
     private _lastHit =
         _unit getVariable QGVAR(lastHit);
 
-    if !(isNil "_lastHit") then
-    {
+    if !(isNil "_lastHit") then {
         _lastHit append
             ((_unit getVariable QGVAR(hitMap))
                 get _lastHit);
@@ -51,8 +49,7 @@ if (_state) then
             _lastHit select 3
         ];
 
-        if (_timeStamp - _hitTime > DELAY_TIME) then
-        {
+        if (_timeStamp - _hitTime > DELAY_TIME) then {
             _eventType = DELAY_ACE_CONSCIOUSNESS_NUM;
             _timeStamp = [_timeStamp, _hitTime];
         };

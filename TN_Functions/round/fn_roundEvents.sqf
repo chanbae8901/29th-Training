@@ -33,28 +33,24 @@ private _events = [
 
     private _timeLeft = call FUNC(getTime);
 
-    if (_timeLeft <= 0 && !GVAR(overtimeEnabled)) exitWith
-    {
+    if (_timeLeft <= 0 && !GVAR(overtimeEnabled)) exitWith {
         _handle call CBA_fnc_removePerFrameHandler;
     };
 
     // Reset event index when addTime extends the clock.
-    if (GVAR(timeAdded)) then
-    {
+    if (GVAR(timeAdded)) then {
         _eventIndex = 0;
         GVAR(timeAdded) = false;
     };
 
     /* --- Fire events whose trigger time has been reached --- */
-    while
-    {
+    while {
         (_eventIndex < count _events)
         && {
             ((_events select _eventIndex) select 0)
                 >= _timeLeft
         }
-    } do
-    {
+    } do {
         (_events select _eventIndex)
             params ["_eventTime", "_fn", "_params"];
 
@@ -65,8 +61,7 @@ private _events = [
                 _eventIndex isEqualTo count _events - 1
                 && _timeLeft > 0
             )
-        ) then
-        {
+        ) then {
             _params call _fn;
         };
 

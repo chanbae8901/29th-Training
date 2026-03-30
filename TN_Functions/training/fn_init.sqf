@@ -65,13 +65,11 @@ EGVAR(base,arsenalCenters) = [];
     EGVAR(base,arsenalCenters) pushBack _centerPos;
 } forEach _findCenterObjs;
 
-if (hasInterface) then
-{
+if (hasInterface) then {
     /* Draw base locations on map for curator */
     GVAR(curatorBaseLogic) = objNull;
 
-    [QGVARMAIN(enteredZeus),
-    {
+    [QGVARMAIN(enteredZeus), {
         //check if curator module changes (admin swap), if so we need to do this to new module
         if (GVAR(curatorBaseLogic) isEqualTo getAssignedCuratorLogic player) exitWith {};
 
@@ -109,8 +107,7 @@ if (hasInterface) then
     call FUNC(initDefaultLoadouts);
 };
 
-if (isServer) then
-{
+if (isServer) then {
     INDEPENDENT setFriend [WEST, 0];
 
     private _forcedDate = [2018, 3, 30, 12, 0];

@@ -41,8 +41,7 @@ private _disabledSomething = false;
         // Skip gunner turret [0]; kill all other thermal PIPs.
         if (_visionMode isEqualTo 2
             && {_turret isEqualTo []
-                || {_turret select 0 isNotEqualTo 0}}) exitWith
-        {
+                || {_turret select 0 isNotEqualTo 0}}) exitWith {
             _veh cameraEffect [
                 "terminate", "back", _rtName
             ];
@@ -57,8 +56,7 @@ private _disabledSomething = false;
     "isClass _x", true
 ]);
 
-if (_disabledSomething) then
-{
+if (_disabledSomething) then {
     systemChat "Disabled PIP Thermals";
 };
 

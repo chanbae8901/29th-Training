@@ -29,8 +29,7 @@ private _countObjects = count _nearObjects;
 private _countDead = count _dead;
 private _countAllNear = _countObjects + _countDead;
 
-if (_countAllNear < 1) exitWith
-{
+if (_countAllNear < 1) exitWith {
     hintSilent "Nothing to delete.";
     false
 };

@@ -22,8 +22,7 @@
         ["None", "1PP Team Only", "Spectator Disabled"],
         0
     ],
-    1,
-    {
+    1, {
         if (!hasInterface) exitWith {};
 
         if (isNil {

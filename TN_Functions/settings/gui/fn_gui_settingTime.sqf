@@ -42,8 +42,7 @@ _ctrlSlider sliderSetSpeed [
 ];
 
 _ctrlSlider ctrlAddEventHandler [
-    "SliderPosChanged",
-    {
+    "SliderPosChanged", {
         params ["_ctrlSlider", "_value"];
         (_ctrlSlider getVariable
             "cba_settings_params") params [
@@ -103,8 +102,7 @@ _ctrlSlider ctrlAddEventHandler [
     );
 
     _ctrlEdit ctrlAddEventHandler [
-        "KillFocus",
-        {
+        "KillFocus", {
             params ["_ctrlEdit"];
             (_ctrlEdit getVariable
                 "cba_settings_params") params [
@@ -177,8 +175,7 @@ _ctrlSlider ctrlAddEventHandler [
 ];
 
 _controlsGroup setVariable [
-    "cba_settings_fnc_updateUI",
-    {
+    "cba_settings_fnc_updateUI", {
         params ["_controlsGroup", "_value"];
 
         (_controlsGroup controlsGroupCtrl 5140)

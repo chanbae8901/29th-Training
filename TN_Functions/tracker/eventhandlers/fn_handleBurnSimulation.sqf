@@ -18,14 +18,11 @@
 params ["_unit", "_instigator"];
 if (!alive _unit) exitWith {};
 
-if (!isNull _instigator) then
-{
+if (!isNull _instigator) then {
     _unit setVariable [QGVAR(burnInstigator), _instigator, true];
     _unit setVariable [QGVAR(burnInstigatorTime), time];
     _unit setVariable [QGVAR(burnWeapon), "Fire", true];
-}
-else
-{
+} else {
     // Skip expensive spatial searches if we recently
     // cached who set this unit on fire.
     if (
@@ -43,8 +40,7 @@ else
         nearObjects [
             "ACE_G_M14", INFANTRY_GRENADE_DISTANCE
         ];
-    if (_grenades isNotEqualTo []) then
-    {
+    if (_grenades isNotEqualTo []) then {
         private _grenade = _grenades select 0;
         _unit setVariable [
             QGVAR(burnInstigator),
@@ -53,17 +49,14 @@ else
         ];
         _unit setVariable [QGVAR(burnInstigatorTime), time];
         _unit setVariable [QGVAR(burnWeapon), "ACE AN-M14", true];
-    }
-    else
-    {
+    } else {
         // Look through cookoffs.
         {
             if (
                 (_x select 0)
                     distance (getPosASL _unit)
                 < COOKOFF_DISTANCE
-            ) exitWith
-            {
+            ) exitWith {
                 _unit setVariable [
                     QGVAR(burnInstigator),
                     _x select 1, true
@@ -80,13 +73,11 @@ else
         forEach GVAR(cookOffs);
 
         // Look for nearby burning people.
-        if (isNull _instigator) then
-        {
+        if (isNull _instigator) then {
             private _men = (position _unit) nearObjects ["Man", 5];
             {
                 private _burnInstigator = _x getVariable [QGVAR(burnInstigator), objNull];
-                if (!isNull _burnInstigator) exitWith
-                {
+                if (!isNull _burnInstigator) exitWith {
                     private _burnWeapon = _x getVariable [QGVAR(burnWeapon), "Fire"];
                     _unit setVariable [QGVAR(burnInstigator), _burnInstigator, true];
                     _unit setVariable [QGVAR(burnInstigatorTime), time];

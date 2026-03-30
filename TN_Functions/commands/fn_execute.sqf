@@ -39,36 +39,29 @@ if (_spaceIdx isEqualTo -1) then {
 
 private _commandCode = GVAR(allCommands) get _command;
 
-if !(isNil "_commandCode") then
-{
-    if (_command in GVAR(removedCommands)) exitWith
-    {
+if !(isNil "_commandCode") then {
+    if (_command in GVAR(removedCommands)) exitWith {
         systemChat "Command has been disabled by server!";
     };
 
     private _isAdmin = serverCommandAvailable "#lock";
 
-    if (_command in GVAR(adminCommands) && !_isAdmin) exitWith
-    {
+    if (_command in GVAR(adminCommands) && !_isAdmin) exitWith {
         systemChat "You must be the logged in admin to do that!";
     };
 
-    if (_command in GVAR(restrictedCommands) && !_isAdmin && ROUND_LIVE) exitWith
-    {
+    if (_command in GVAR(restrictedCommands) && !_isAdmin && ROUND_LIVE) exitWith {
         systemChat "Restricted command! Round has started and you are not admin.";
     };
 
     [_argument] call _commandCode;
 
-    if !(_command in GVAR(noLogCommands)) then
-    {
+    if !(_command in GVAR(noLogCommands)) then {
         private _msg = format ["%1 executed command !%2 %3", name player, _command, _argument];
         _msg remoteExecCall [QEFUNC(common,diag_log), 2];
         ["Log", ["Commands", _msg]] remoteExecCall [QEFUNC(common,addDiaryRecord)];
     };
-}
-else
-{
+} else {
     systemChat format ["Unknown command: !%1", _command];
 };
 

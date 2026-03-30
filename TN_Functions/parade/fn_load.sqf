@@ -28,8 +28,7 @@ private _savedLoadouts = profileNamespace getVariable [
 private _customParadeIdx =
     _savedLoadouts findIf { _x select 0 == "Forced Parade" };
 
-if (_customParadeIdx isEqualTo -1) then
-{
+if (_customParadeIdx isEqualTo -1) then {
     // No custom parade loadout -- use default config.
     [
         player,
@@ -37,17 +36,14 @@ if (_customParadeIdx isEqualTo -1) then
             >> "CfgRespawnInventory"
             >> "29TH_PARADE_WEST"
     ] call BIS_fnc_loadInventory;
-}
-else
-{
+} else {
     // Apply the player's custom "Forced Parade" loadout.
     private _customParade =
         (_savedLoadouts select _customParadeIdx) select 1;
     [player, _customParade, true] call CBA_fnc_setLoadout;
 
     // Holster weapon if no primary exists.
-    if (primaryWeapon player isEqualTo "") then
-    {
+    if (primaryWeapon player isEqualTo "") then {
         player action ["SwitchWeapon", player, player, -1];
     };
 };

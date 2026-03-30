@@ -19,20 +19,17 @@ if !(_unit isKindOf "AllVehicles") exitWith {};
 if (_unit isKindOf "Man") exitWith {};
 // Delayed vehicle explosions seem to not have
 // instigator.
-if (isNull _instigator) then
-{
+if (isNull _instigator) then {
     _instigator = effectiveCommander _killer;
 };
-if (isNull _instigator) then
-{
+if (isNull _instigator) then {
     // Look for ACE/RHS incendiary grenade.
     private _grenades = (position _unit) nearObjects ["GrenadeHand", VEHICLE_GRENADE_DISTANCE];
     {
         if (
             (typeOf _x) isEqualTo "ACE_G_M14"
             || (typeOf _x) isEqualTo "rhs_ammo_an_m14_th3"
-        ) exitWith
-        {
+        ) exitWith {
             _instigator = (getShotParents _x) select 0;
         };
     }

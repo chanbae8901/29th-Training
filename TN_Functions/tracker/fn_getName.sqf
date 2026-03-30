@@ -19,19 +19,13 @@ params ["_unit"];
 private _name = "?";
 if (isNull _unit) exitWith { _name };
 
-if (_unit isKindOf "Man") then
-{
-    if (alive _unit) then
-    {
+if (_unit isKindOf "Man") then {
+    if (alive _unit) then {
         _name = name _unit;
-    }
-    else
-    {
+    } else {
         _name = _unit getVariable [QGVAR(name), "?"];
     };
-}
-else
-{
+} else {
     _name = getText (
         configOf _unit >> "displayName"
     );

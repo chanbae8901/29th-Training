@@ -37,22 +37,17 @@ private _lbData = [];
     private _label = _labels select _forEachIndex;
     private _tooltip = _tooltips select _forEachIndex;
 
-    if (isLocalized _label) then
-    {
+    if (isLocalized _label) then {
         _label = localize _label;
     };
 
-    if (isLocalized _tooltip) then
-    {
+    if (isLocalized _tooltip) then {
         _tooltip = localize _tooltip;
     };
 
-    if (_tooltip isEqualTo "") then
-    {
+    if (_tooltip isEqualTo "") then {
         _tooltip = str _x;
-    }
-    else
-    {
+    } else {
         _tooltip = _tooltip + endl + str _x;
     };
 
@@ -70,8 +65,7 @@ _ctrlList setVariable [
 ];
 
 _ctrlList ctrlAddEventHandler [
-    "LBSelChanged",
-    {
+    "LBSelChanged", {
         if (!isNil "cba_settings_lock") exitWith {};
 
         params ["_ctrlList", "_index"];
@@ -111,8 +105,7 @@ _ctrlList ctrlAddEventHandler [
 ];
 
 _controlsGroup setVariable [
-    "cba_settings_fnc_updateUI",
-    {
+    "cba_settings_fnc_updateUI", {
         params ["_controlsGroup", "_value"];
         (_controlsGroup getVariable
             "cba_settings_params") params [

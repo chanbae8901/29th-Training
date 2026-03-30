@@ -14,8 +14,7 @@
 params ["_instigator"];
 private _side = side (group _instigator);
 if (_side isEqualTo sideUnknown
-    || _side isEqualTo civilian) then // Dead man.
-{
+    || _side isEqualTo civilian) then { // Dead man.
     // Might work improperly if zeus changed
     // player side.
     _side = getNumber (

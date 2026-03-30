@@ -19,8 +19,7 @@
  */
 
 /* ---- Server-side initialization ---- */
-if (isServer) then
-{
+if (isServer) then {
     GVAR(state) = 0;
     publicVariable QGVAR(state);
 
@@ -41,8 +40,7 @@ if (isServer) then
 
     /* --- Prevent scores showing up on right side UI --- */
     [
-        QGVAR(started),
-        {
+        QGVAR(started), {
             {
                 _x addScoreSide -SCORE_REDUCE_VALUE;
             } forEach [west, east, independent];
@@ -50,8 +48,7 @@ if (isServer) then
     ] call CBA_fnc_addEventHandler;
 
     [
-        QGVAR(ended),
-        {
+        QGVAR(ended), {
             {
                 _x addScoreSide SCORE_REDUCE_VALUE;
             } forEach [west, east, independent];
@@ -59,14 +56,12 @@ if (isServer) then
     ] call CBA_fnc_addEventHandler;
 
     //Delete disconnecting bodies when not LIVE
-    addMissionEventHandler ["HandleDisconnect",
-    {
+    addMissionEventHandler ["HandleDisconnect", {
         params ["_unit"];
 
         if (isNull _unit) exitWith {};
 
-        if (NOT_ROUND_LIVE) then
-        {
+        if (NOT_ROUND_LIVE) then {
             deleteVehicle _unit;
         };
 
@@ -75,19 +70,16 @@ if (isServer) then
 };
 
 /* ---- Client-side initialization ---- */
-if (hasInterface) then
-{
+if (hasInterface) then {
     call FUNC(initReadyUI);
 
     /* --- JIP scoreboard suppression ---
      * showScoreTable silently fails if called too early. */
     [
-        QEGVAR(common,preloadFinished),
-        {
+        QEGVAR(common,preloadFinished), {
             if (
                 ROUND_LIVE && GVARMAIN(disableScoreboard)
-            ) then
-            {
+            ) then {
                 showScoretable 0;
             };
         }
@@ -96,17 +88,14 @@ if (hasInterface) then
     /* --- Prevent scoreboard in respawn menu --- */
     [
         QGVAR(scoreboardRespawnMenuStart),
-        "Killed",
-        {
+        "Killed", {
             disableRespawnScoreboard = addMissionEventHandler [
-                "Draw2D",
-                {
+                "Draw2D", {
                     if (
                         visibleScoretable
                         && ROUND_LIVE
                         && GVARMAIN(disableScoreboard)
-                    ) then
-                    {
+                    ) then {
                         showScoretable 0;
                     };
                 }
@@ -117,13 +106,11 @@ if (hasInterface) then
     // Re-added every life
     [
         QGVAR(scoreboardRespawnMenuEnd),
-        "Respawn",
-        {
+        "Respawn", {
             if (
                 ROUND_LIVE
                 && GVARMAIN(disableScoreboard)
-            ) then
-            {
+            ) then {
                 [{shownScoreTable isEqualTo -1}, {
                     showScoretable 0;
                 }] call CBA_fnc_waitUntilAndExecute;
@@ -140,8 +127,7 @@ if (hasInterface) then
 
     /* --- Fix countdown not showing after leaving curator --- */
     [
-        QGVARMAIN(exitedZeus),
-        {
+        QGVARMAIN(exitedZeus), {
             [{
                 ("RscMPProgress" call BIS_fnc_rscLayer)
                     cutRsc ["RscMPProgress", "plain"];
@@ -156,13 +142,11 @@ if (hasInterface) then
     ] call CBA_fnc_addEventHandler;
 
     [
-        QGVARMAIN(exitedZeus),
-        {
+        QGVARMAIN(exitedZeus), {
             if (
                 ROUND_LIVE
                 && GVARMAIN(disableScoreboard)
-            ) then
-            {
+            ) then {
                 showScoretable 0;
             };
         }
@@ -170,8 +154,7 @@ if (hasInterface) then
 
     /* --- Hide scoreboard when round starts --- */
     [
-        QGVAR(started),
-        {
+        QGVAR(started), {
             if !(GVARMAIN(disableScoreboard)) exitWith {};
             if !(isNull (uiNamespace getVariable ["RscDisplayCurator", displayNull])) exitWith {};
             if (
@@ -183,43 +166,36 @@ if (hasInterface) then
     ] call CBA_fnc_addEventHandler;
 
     [
-        QEGVAR(spectator,exited),
-        {
+        QEGVAR(spectator,exited), {
             if (
                 ROUND_LIVE
                 && GVARMAIN(disableScoreboard)
-            ) then
-            {
+            ) then {
                 showScoretable 0;
             };
         }
     ] call CBA_fnc_addEventHandler;
 
     [
-        QEGVAR(spectator,entered),
-        {
-            if (GVARMAIN(limitSpectator) isEqualTo 0) then
-            {
+        QEGVAR(spectator,entered), {
+            if (GVARMAIN(limitSpectator) isEqualTo 0) then {
                 showScoretable -1;
             };
         }
     ] call CBA_fnc_addEventHandler;
 
     [
-        QGVAR(ended),
-        {
+        QGVAR(ended), {
             showScoretable -1;
         }
     ] call CBA_fnc_addEventHandler;
 };
 
 /* ---- Final Checks ---- */
-if (isServer) then
-{
+if (isServer) then {
     /* --- Collect client-side silent weapons and notify --- */
     [
-        QGVAR(started),
-        {
+        QGVAR(started), {
             GVAR(clientSilentWeapons) = nil;
 
             [{
@@ -238,12 +214,10 @@ if (isServer) then
     ] call CBA_fnc_addEventHandler;
 };
 
-if (hasInterface) then
-{
+if (hasInterface) then {
     /* --- Fix invulnerable players at round start --- */
     [
-        QGVAR(started),
-        {
+        QGVAR(started), {
             if (
                 isDamageAllowed player
                 || isObjectHidden player
@@ -251,8 +225,7 @@ if (hasInterface) then
 
             player allowDamage true;
 
-            if (GVARMAIN(notifyFinalCheck)) then
-            {
+            if (GVARMAIN(notifyFinalCheck)) then {
                 private _msg = format [
                     "FIXED: %1 was invulnerable, can now take damage.",
                     name player
@@ -264,8 +237,7 @@ if (hasInterface) then
 
     /* --- Detect silent weapon bug --- */
     [
-        QGVAR(started),
-        {
+        QGVAR(started), {
             if !(GVARMAIN(notifyFinalCheck)) exitWith {};
 
             [{
@@ -276,8 +248,7 @@ if (hasInterface) then
                     if !(
                         currentWeapon _x isEqualTo "Throw"
                         || currentWeapon _x isEqualTo "Put"
-                    ) then
-                    {
+                    ) then {
                         continue;
                     };
                     [name _x] remoteExecCall [QFUNC(collectSilentWeapons), 2];

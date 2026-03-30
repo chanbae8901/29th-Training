@@ -33,8 +33,7 @@ if (isNull _display) exitWith {};
 /* --- Close function (define once) --- */
 
 if (isNil QFUNC(closeFlagMenu)) then {
-    FUNC(closeFlagMenu) =
-    {
+    FUNC(closeFlagMenu) = {
         // Remove CBA event handlers
         {
             _x call CBA_fnc_removeEventHandler;
@@ -57,8 +56,7 @@ if (isNil QFUNC(closeFlagMenu)) then {
 
 /* --- Rebuild function --- */
 
-private _fnc_rebuild =
-{
+private _fnc_rebuild = {
     params ["_display"];
 
     /* Delete old menu controls */
@@ -71,13 +69,10 @@ private _fnc_rebuild =
 
     private _actions = [];
 
-    switch (EGVAR(round,state)) do
-    {
-        case 0:
-        {
+    switch (EGVAR(round,state)) do {
+        case 0: {
             _actions pushBack [
-                "Begin Safe Start",
-                {
+                "Begin Safe Start", {
                     params ["_ctrl"];
                     [GVAR(forcedSafeStart), true]
                         call EFUNC(round,initSafeStart);
@@ -87,16 +82,13 @@ private _fnc_rebuild =
             ];
         };
 
-        case 1:
-        {
+        case 1: {
 
             _actions pushBack [
-                "Cancel Safestart",
-                {
+                "Cancel Safestart", {
                     params ["_ctrl"];
                     [0] call EFUNC(round,changeForcedSafeStart);
-                    if (call EFUNC(round,checkAllSidesReady)) then
-                    {
+                    if (call EFUNC(round,checkAllSidesReady)) then {
                         {
                             [_x, false] call EFUNC(round,manageReady);
                         }
@@ -110,8 +102,7 @@ private _fnc_rebuild =
 
 
             _actions pushBack [
-                "Change Safestart Time",
-                {
+                "Change Safestart Time", {
                     params ["_ctrl"];
                     call FUNC(closeFlagMenu);
                     call FUNC(gui_setSafeStartTime);
@@ -121,8 +112,7 @@ private _fnc_rebuild =
 
 
             _actions pushBack [
-                "Force Live",
-                {
+                "Force Live", {
                     params ["_ctrl"];
                     [GVAR(timerLength)]
                         call EFUNC(round,start);
@@ -132,11 +122,9 @@ private _fnc_rebuild =
             ];
         };
 
-        case 2:
-        {
+        case 2: {
             _actions pushBack [
-                "Neutral Ending",
-                {
+                "Neutral Ending", {
                     params ["_ctrl"];
                     [] call FUNC(game);
                     call FUNC(closeFlagMenu);
@@ -161,11 +149,9 @@ private _fnc_rebuild =
                 ];
 
                 if (_allPlayers findIf
-                    {side group _x isEqualTo _side} isNotEqualTo -1) then
-                {
+                    {side group _x isEqualTo _side} isNotEqualTo -1) then {
                     _actions pushBack [
-                        _sideName + " Victory",
-                        {
+                        _sideName + " Victory", {
                             params ["_ctrl"];
                             private _side = _ctrl getVariable QGVAR(side);
                             [_side] call FUNC(game);
@@ -179,8 +165,7 @@ private _fnc_rebuild =
         };
     };
 
-    if (_actions isEqualTo []) exitWith
-    {
+    if (_actions isEqualTo []) exitWith {
         call FUNC(closeFlagMenu);
     };
 
@@ -247,8 +232,7 @@ private _fnc_rebuild =
             _btnW, _btnH
         ];
         _btn ctrlSetBackgroundColor _color;
-        if (_sideVar isNotEqualTo sideUnknown) then
-        {
+        if (_sideVar isNotEqualTo sideUnknown) then {
             _btn setVariable [QGVAR(side), _sideVar];
         };
         _btn ctrlCommit 0;
@@ -287,11 +271,9 @@ private _stateEvents = [
 private _ehIds = [];
 
 {
-    private _id = [_x,
-    {
+    private _id = [_x, {
         private _dlg = findDisplay 29140;
-        if !(isNull _dlg) then
-        {
+        if !(isNull _dlg) then {
             [_dlg] call (uiNamespace getVariable
                 QGVAR(flagMenu_rebuild));
         };
@@ -307,16 +289,12 @@ uiNamespace setVariable [
 /* --- Close on ESC --- */
 
 _display displayAddEventHandler [
-    "KeyDown",
-    {
+    "KeyDown", {
         params ["_display", "_key"];
-        if (_key isEqualTo 1) then
-        {
+        if (_key isEqualTo 1) then {
             call FUNC(closeFlagMenu);
             true
-        }
-        else
-        {
+        } else {
             false
         };
     }
@@ -325,8 +303,7 @@ _display displayAddEventHandler [
 /* --- Clean up CBA EHs when dialog closes by any means --- */
 
 _display displayAddEventHandler [
-    "Unload",
-    {
+    "Unload", {
         {
             _x call CBA_fnc_removeEventHandler;
         } forEach (uiNamespace getVariable [

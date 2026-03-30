@@ -26,12 +26,9 @@ private _endChecks = [[{ false }], [{ false }], [{ false }]];
 
     if (_pointValue isEqualTo 0) then { continue };
 
-    switch (typeOf _x) do
-    {
-        case "ModuleSector_F":
-        {
-            [_x, "ownerChanged",
-                {
+    switch (typeOf _x) do {
+        case "ModuleSector_F": {
+            [_x, "ownerChanged", {
                     params [
                         "_sector",
                         "_newOwner",
@@ -41,8 +38,7 @@ private _endChecks = [[{ false }], [{ false }], [{ false }]];
                     private _newOwnerId = _newOwner call BIS_fnc_sideId;
                     private _oldOwnerId = _oldOwner call BIS_fnc_sideId;
 
-                    if (_newOwnerId <= 2) then
-                    {
+                    if (_newOwnerId <= 2) then {
                         GVAR(score) set [
                             _newOwnerId,
                             (GVAR(score)
@@ -50,8 +46,7 @@ private _endChecks = [[{ false }], [{ false }], [{ false }]];
                                 + _pointValue
                         ];
                     };
-                    if (_oldOwnerId <= 2) then
-                    {
+                    if (_oldOwnerId <= 2) then {
                         GVAR(score) set [
                             _oldOwnerId,
                             (GVAR(score)
@@ -64,8 +59,7 @@ private _endChecks = [[{ false }], [{ false }], [{ false }]];
 
             private _owner = _x getVariable ["owner", sideUnknown];
             private _idx = _owner call BIS_fnc_sideID;
-            if (_idx <= 2) then
-            {
+            if (_idx <= 2) then {
                 GVAR(score) set [
                     _idx,
                     (GVAR(score) select _idx)
@@ -73,18 +67,15 @@ private _endChecks = [[{ false }], [{ false }], [{ false }]];
                 ];
             };
         };
-        default
-        {
-            _x addEventHandler ["Killed",
-            {
+        default {
+            _x addEventHandler ["Killed", {
                 params [
                     "_unit", "_killer", "_instigator"
                 ];
                 private _pointValue = _unit getVariable [QGVARMAIN(pointValue), 0];
                 private _awardTeam = _unit getVariable [QGVARMAIN(awardTeam), sideUnknown];
                 private _idx = _awardTeam call BIS_fnc_sideID;
-                if (_idx <= 2) then
-                {
+                if (_idx <= 2) then {
                     GVAR(score) set [
                         _idx,
                         (GVAR(score) select _idx)
@@ -109,39 +100,31 @@ private _sideSettings =
     _x params ["_winCon", "_winArgs", "_atEnd"];
     _winCon = toLowerANSI _winCon;
 
-    private _checkFn = switch (_winCon) do
-    {
-        case "points":
-        {
+    private _checkFn = switch (_winCon) do {
+        case "points": {
             [{
                 params ["_sideId", "_pointsRequired"];
                 GVAR(score) select _sideId >= _pointsRequired
             }, [_forEachIndex, _winArgs]];
         };
-        default
-        {
+        default {
             [{ false }];
         };
     };
 
-    if (_atEnd) then
-    {
+    if (_atEnd) then {
         _endChecks set [_forEachIndex, _checkFn];
-    }
-    else
-    {
+    } else {
         _loopChecks set [_forEachIndex, _checkFn];
     };
 } forEach _sideSettings;
 
 [
-    QEGVAR(round,ended),
-    {
+    QEGVAR(round,ended), {
         private _endChecks = _thisArgs;
         {
             _x params ["_fnCheck", ["_args", []]];
-            if (_args call _fnCheck) exitWith
-            {
+            if (_args call _fnCheck) exitWith {
                 private _winningSide = _forEachIndex call BIS_fnc_sideType;
                 [_winningSide] call FUNC(game);
             };
@@ -151,8 +134,7 @@ private _sideSettings =
     }, _endChecks
 ] call CBA_fnc_addEventHandlerArgs;
 
-if (isNil QGVAR(winCheckInterval)) then
-{
+if (isNil QGVAR(winCheckInterval)) then {
     GVAR(winCheckInterval) = 0.5;
 };
 
@@ -161,8 +143,7 @@ if (isNil QGVAR(winCheckInterval)) then
 
     {
         _x params ["_fnCheck", ["_args", []]];
-        if (_args call _fnCheck) exitWith
-        {
+        if (_args call _fnCheck) exitWith {
             private _winningSide = _forEachIndex call BIS_fnc_sideType;
             [_winningSide] call FUNC(game);
         };

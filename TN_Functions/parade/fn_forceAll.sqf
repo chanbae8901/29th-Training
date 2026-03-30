@@ -20,8 +20,7 @@ params ["_obj", "_radius"];
 private _allPlayers = call BIS_fnc_listPlayers;
 
 // Filter to players within the specified radius.
-private _targets = _allPlayers select
-{
+private _targets = _allPlayers select {
     _obj distance _x <= _radius;
 };
 

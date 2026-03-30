@@ -18,8 +18,7 @@
  */
 
 {
-    if (isNil {_x}) then
-    {
+    if (isNil {_x}) then {
         GVAR(timerObjects) set
             [_forEachIndex, objNull];
     };
@@ -31,15 +30,12 @@ private _validSide =
     playerSide in [west, east, resistance];
 
 {
-    if (!isNull _x) then
-    {
+    if (!isNull _x) then {
         if (_validSide
-            && NOT_ROUND_LIVE) then
-        {
+            && NOT_ROUND_LIVE) then {
             private _readyId = _x addAction [
                 "<t color='#bf3eff'>"
-                    + "Side Ready</t>",
-                {
+                    + "Side Ready</t>", {
                     [playerSide, true]
                         call EFUNC(round,manageReady);
                 },
@@ -52,8 +48,7 @@ private _validSide =
 
             private _unreadyId = _x addAction [
                 "<t color='#bf3eff'>"
-                    + "Side Unready</t>",
-                {
+                    + "Side Unready</t>", {
                     [playerSide, false]
                         call EFUNC(round,manageReady);
                 },
@@ -75,13 +70,11 @@ private _validSide =
 /* --- Remove ready actions on round start --- */
 
 [
-    QEGVAR(round,started),
-    {
+    QEGVAR(round,started), {
         private _objects =
             GVAR(timerObjects);
         {
-            if (!isNull _x) then
-            {
+            if (!isNull _x) then {
                 private _obj = _x;
                 private _ids = _obj getVariable
                     [QGVAR(readyActionIds), []];
@@ -95,19 +88,16 @@ private _validSide =
 /* --- Remove actions after game is called --- */
 
 [
-    QGVAR(missionEnded),
-    {
+    QGVAR(missionEnded), {
         {
-            if (!isNull _x) then
-            {
+            if (!isNull _x) then {
                 removeAllActions _x;
             };
         } forEach (
             GVAR(timerObjects)
         );
 
-        if (!isNil QGVAR(adminMenuActionId)) then
-        {
+        if (!isNil QGVAR(adminMenuActionId)) then {
             player removeAction GVAR(adminMenuActionId);
             GVAR(adminMenuActionId) = nil;
         };

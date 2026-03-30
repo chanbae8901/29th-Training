@@ -25,23 +25,18 @@ GVAR(resetBases) = createHashMapFromArray [
  *
  * Returns false if side is invalid, true otherwise.
  */
-FUNC(flexibleResetHelper) =
-{
+FUNC(flexibleResetHelper) = {
     params ["_sideName", "_params", "_msg"];
 
     private _target = 0;
     private _displayName = "all";
     private _ok = true;
 
-    if (_sideName isNotEqualTo "") then
-    {
+    if (_sideName isNotEqualTo "") then {
         private _side = [_sideName] call EFUNC(common,convertSide);
-        if (_side isEqualTo sideUnknown) then
-        {
+        if (_side isEqualTo sideUnknown) then {
             _ok = false;
-        }
-        else
-        {
+        } else {
             _target = _side;
             _displayName = [_side] call EFUNC(common,convertSide);
         };
@@ -58,39 +53,33 @@ FUNC(flexibleResetHelper) =
 [
     [
         [
-            "heal",
-            {
+            "heal", {
                 private _side = toLower (_this select 0);
 
                 private _ok = [_side, [[], true], "Healing %1 players!"] call FUNC(flexibleResetHelper);
 
-                if (!_ok) then
-                {
+                if (!_ok) then {
                     systemChat "Error: Invalid input! Must be 'blufor', 'opfor', or 'grnfor'";
                 };
             }
         ],
         [
-            "rearm",
-            {
+            "rearm", {
                 private _side = toLower (_this select 0);
 
                 private _ok = [_side, [true], "Rearming %1 players!"] call FUNC(flexibleResetHelper);
 
-                if (!_ok) then
-                {
+                if (!_ok) then {
                     systemChat "Error: Invalid input! Must be 'blufor', 'opfor', or 'grnfor'";
                 };
             }
         ],
         [
-            "reset",
-            {
+            "reset", {
                 private _argument = _this select 0;
 
                 // No argument = full reset + teleport everyone.
-                if (_argument isEqualTo "") exitWith
-                {
+                if (_argument isEqualTo "") exitWith {
                     {
                         private _baseName = GVAR(resetBases) get _x;
                         private _baseObj = missionNamespace getVariable [_baseName, objNull];
@@ -103,14 +92,12 @@ FUNC(flexibleResetHelper) =
 
                 private _stayArg = _argArr find "stay";
 
-                if (_stayArg isNotEqualTo -1) exitWith
-                {
+                if (_stayArg isNotEqualTo -1) exitWith {
                     private _sideArg = if (count _argArr > 1) then { _argArr select (1 - _stayArg) } else { "" };
 
                     private _ok = [_sideArg, [true, true], "Rearming and healing %1 players!"] call FUNC(flexibleResetHelper);
 
-                    if (!_ok) then
-                    {
+                    if (!_ok) then {
                         systemChat "Error: Invalid input(s)! Must be 'stay', 'blufor', 'opfor', 'grnfor'";
                     };
                 };
@@ -119,8 +106,7 @@ FUNC(flexibleResetHelper) =
                 private _side = toLower _argument;
                 private _baseName = GVAR(resetBases) get _side;
 
-                if (isNil "_baseName") exitWith
-                {
+                if (isNil "_baseName") exitWith {
                     systemChat "Error: Invalid input(s)! Must be 'stay', 'blufor', 'opfor', 'grnfor'";
                 };
 
@@ -129,17 +115,13 @@ FUNC(flexibleResetHelper) =
             }
         ],
         [
-            "debrief",
-            {
+            "debrief", {
                 private _argument = _this select 0;
 
-                if (_argument isEqualTo "") then
-                {
+                if (_argument isEqualTo "") then {
                     private _pos = getPosASL base_res_blu;
                     ["", [true, true, _pos], "Healing, rearming, and teleporting all players to Blufor base!"] call FUNC(flexibleResetHelper);
-                }
-                else
-                {
+                } else {
                     // "here": teleport everyone 15m in front of the admin.
                     private _dir = getDir player;
                     private _pos = getPosASL player;
@@ -160,8 +142,7 @@ FUNC(flexibleResetHelper) =
             }
         ],
         [
-            "goto",
-            {
+            "goto", {
                 private _argument = toLower (_this select 0);
 
                 // Maps side name -> arsenal base variable name.
@@ -174,8 +155,7 @@ FUNC(flexibleResetHelper) =
                 private _side = [_argument] call EFUNC(common,convertSide);
                 private _baseName = _arsenalBases get _argument;
 
-                if (_side isEqualTo sideUnknown || isNil "_baseName") exitWith
-                {
+                if (_side isEqualTo sideUnknown || isNil "_baseName") exitWith {
                     systemChat "Error: Invalid input! Must be 'blufor', 'opfor', or 'grnfor'";
                 };
 

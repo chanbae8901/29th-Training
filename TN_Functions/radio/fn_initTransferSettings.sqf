@@ -26,8 +26,7 @@
 // ------------------------------------------------------------------
 // Save SW settings whenever any SW radio property changes.
 // ------------------------------------------------------------------
-private _fn_saveSwSettings =
-{
+private _fn_saveSwSettings = {
     params ["_unit"];
     // Don't fire while Zeus remote-controlling a unit.
     if (_unit isNotEqualTo player) exitWith {};
@@ -42,8 +41,7 @@ private _fn_saveSwSettings =
 // ------------------------------------------------------------------
 // Save LR settings whenever any LR radio property changes.
 // ------------------------------------------------------------------
-private _fn_saveLrSettings =
-{
+private _fn_saveLrSettings = {
     params ["_unit"];
     if (_unit isNotEqualTo player) exitWith {};
 
@@ -93,15 +91,13 @@ private _fn_saveLrSettings =
 
 [
     "loadSwSettings",
-    "OnRadiosReceived",
-    {
+    "OnRadiosReceived", {
         params ["_unit", "_radios"];
         if (_unit isNotEqualTo player) exitWith {};
 
         {
             private _settings = GVAR(savedActiveSrSettings);
-            if (isNil "_settings") then
-            {
+            if (isNil "_settings") then {
                 _settings = _x call TFAR_fnc_getSwSettings;
             };
 
@@ -111,8 +107,7 @@ private _fn_saveLrSettings =
             ] call TFAR_fnc_getWeaponConfigProperty;
 
             // Legacy alias -- may no longer be needed.
-            if (_correctCode == "tf_guer_radio_code") then
-            {
+            if (_correctCode == "tf_guer_radio_code") then {
                 _correctCode = "tf_independent_radio_code";
             };
             _correctCode = missionNamespace getVariable [
@@ -122,8 +117,7 @@ private _fn_saveLrSettings =
             private _currentCode =
                 _x call TFAR_fnc_getSwRadioCode;
 
-            if (_currentCode isNotEqualTo _correctCode) then
-            {
+            if (_currentCode isNotEqualTo _correctCode) then {
                 _settings set [TFAR_CODE_OFFSET, _correctCode];
             };
 
@@ -143,8 +137,7 @@ private _fn_saveLrSettings =
 // ------------------------------------------------------------------
 // Fix vehicle LR encryption on entering or switching seats.
 // ------------------------------------------------------------------
-private _fn_fixVehicleRadio =
-{
+private _fn_fixVehicleRadio = {
     #include "fn_fixVehicleRadio.inc.sqf"
 };
 

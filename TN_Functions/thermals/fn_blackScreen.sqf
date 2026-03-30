@@ -24,8 +24,7 @@
 
 if (!hasInterface) exitWith { false };
 
-if (currentVisionMode player isEqualTo VISIONMODE_THERMAL && GVARMAIN(disableTI)) then
-{
+if (currentVisionMode player isEqualTo VISIONMODE_THERMAL && GVARMAIN(disableTI)) then {
     BLOCK_LAYER cutText [MESSAGE, "BLACK", FADE_IN_TIME];
     playSound "FD_CP_Not_Clear_F";
     [{currentVisionMode player isNotEqualTo VISIONMODE_THERMAL}, {

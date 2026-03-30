@@ -19,8 +19,7 @@
 
 #define MISSION_ADDON "tn"
 
-if (isServer) then
-{
+if (isServer) then {
     missionNamespace setVariable [
         QGVAR(default),
         true call CBA_fnc_createNamespace,
@@ -39,22 +38,19 @@ if (isServer) then
 
     {
         if (_x select [0, _missionAddonStrLen]
-            != MISSION_ADDON) then
-        {
+            != MISSION_ADDON) then {
             continue;
         };
 
         if ((_x select [_missionAddonStrLen + 1])
-            in _excludeList) then
-        {
+            in _excludeList) then {
             continue;
         };
 
         private _setting = cba_settings_default getVariable _x;
 
         // skip non-global settings
-        if (_setting select 7 != 1) then
-        {
+        if (_setting select 7 != 1) then {
             continue;
         };
 

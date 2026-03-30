@@ -18,15 +18,12 @@
  */
 
 // --- Client-side: vision mode monitoring and PIP disable ---
-if (hasInterface) then
-{
-    ["visionMode",
-    {
+if (hasInterface) then {
+    ["visionMode", {
         call FUNC(blackScreen);
     }] call CBA_fnc_addPlayerEventHandler;
 
-    [QGVAR(disablePIPThermalsEvent), "GetInMan",
-    {
+    [QGVAR(disablePIPThermalsEvent), "GetInMan", {
         if !(GVARMAIN(disableTI)) exitWith {};
 
         // Brief delay required or PIP cameras won't shut off.
@@ -37,8 +34,7 @@ if (hasInterface) then
 };
 
 // --- Server-side: disable TI on vehicles ---
-if (isServer) then
-{
+if (isServer) then {
     ["AllVehicles", "Init", {
         params ["_objectCreated"];
         _objectCreated disableTIEquipment GVARMAIN(disableTI);

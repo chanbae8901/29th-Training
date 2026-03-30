@@ -15,8 +15,7 @@
  * call compile preprocessFileLineNumbers "TN_Functions\ocap\handleMarkers.sqf";
  */
 
-GVAR(fnc_onHandleMarkers) =
-{
+GVAR(fnc_onHandleMarkers) = {
 
   if !(ocap_recorder_recording && {ocap_recorder_startTime > -1}) exitWith {};
 

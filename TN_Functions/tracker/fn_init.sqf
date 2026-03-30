@@ -17,8 +17,7 @@
 
 if (("enableRoundEventLog" call BIS_fnc_getParamValue) isNotEqualTo 1) exitWith {};
 
-if (isServer) then
-{
+if (isServer) then {
     GVAR(previous) = [];
     GVAR(events) = [];
     GVAR(names) = [];
@@ -30,8 +29,7 @@ if (isServer) then
     publicVariable QGVAR(startTime);
 
     [
-        QEGVAR(round,started),
-        {
+        QEGVAR(round,started), {
             GVAR(startTime) = serverTime;
             publicVariable QGVAR(startTime);
 
@@ -52,8 +50,7 @@ if (isServer) then
     ] call CBA_fnc_addEventHandler;
 
     // --- Kill --- //
-    addMissionEventHandler ["EntityKilled",
-    {
+    addMissionEventHandler ["EntityKilled", {
         params ["_unit", "_killer", "_instigator"];
         if !(isPlayer _unit
             || (!(_unit isKindOf "Man")
@@ -62,16 +59,14 @@ if (isServer) then
 
         // remoteExecCall for sending info occurs 1
         // frame later so wait.
-        [
-            {
+        [ {
                 call FUNC(recordKill);
             },
             _this, 0.75 // Delay to wait for info from clients.
         ] call CBA_fnc_waitAndExecute;
     }];
 
-    addMissionEventHandler ["EntityRespawned",
-    {
+    addMissionEventHandler ["EntityRespawned", {
         params ["_unit"];
         _unit setVariable [QGVAR(lastHit), nil];
         _unit setVariable [QGVAR(hitMap), nil];
@@ -79,12 +74,10 @@ if (isServer) then
 
     // --- Consciousness --- //
     [
-        "ace_unconscious",
-        {
+        "ace_unconscious", {
             // remoteExecCall for sending info occurs 1
             // frame later so wait.
-            [
-                {
+            [ {
                     call FUNC(recordACEConscious);
                 },
                 _this, 0.5
@@ -94,13 +87,11 @@ if (isServer) then
 
     // --- Tracker Diary --- //
     [
-        QEGVAR(round,ended),
-        {
+        QEGVAR(round,ended), {
             GVAR(startTime) = -1;
             // Wait for any last second events from
             // the network.
-            [
-                {
+            [ {
                     publicVariable QGVAR(startTime);
                     [
                         GVAR(events),
@@ -134,19 +125,16 @@ if (isServer) then
     }, true, [], true] call CBA_fnc_addClassEventHandler;
 
     // Store name as it gets deleted automatically later.
-    addMissionEventHandler ["EntityKilled",
-    {
+    addMissionEventHandler ["EntityKilled", {
         params ["_unit"];
-        if (_unit isKindOf "Man") then
-        {
+        if (_unit isKindOf "Man") then {
 
             _unit setVariable [QGVAR(name), name _unit, true];
         };
     }];
 };
 
-if (hasInterface) then
-{
+if (hasInterface) then {
     // --- Attacker Info --- //
     GVAR(cookOffs) = [];
 
@@ -159,8 +147,7 @@ if (hasInterface) then
     // --- Remove Statistics from Map, Send All
     //     Round Histories --- //
     [
-        QEGVAR(common,preloadFinished),
-        {
+        QEGVAR(common,preloadFinished), {
             [player] remoteExecCall [QFUNC(sendAll), 2];
             player removeDiarySubject "Statistics";
         }
@@ -168,8 +155,7 @@ if (hasInterface) then
 
     // --- Fire/Burn Related Information --- //
     [
-        QEGVAR(round,started),
-        {
+        QEGVAR(round,started), {
             GVAR(cookOffs) = [];
             player setVariable [QGVAR(burnInstigator), nil];
             player setVariable [QGVAR(burnInstigatorTime), nil];

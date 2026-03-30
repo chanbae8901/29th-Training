@@ -23,8 +23,7 @@ private _explosiveName = getText (
                 >> "defaultMagazine"
         ) >> "displayName"
 );
-if (_explosiveName isEqualTo "") then
-{
+if (_explosiveName isEqualTo "") then {
     _explosiveName = "Placed Explosive";
 };
 private _data = [
@@ -35,8 +34,7 @@ _explosive setVariable [QGVAR(instigatorInfo), _data];
 _explosive addEventHandler ["HitPart", { call FUNC(handleHit) }];
 _explosive addEventHandler ["HitExplosion", { call FUNC(handleHit) }];
 
-_explosive addEventHandler ["SubmunitionCreated",
-{
+_explosive addEventHandler ["SubmunitionCreated", {
     params ["_projectile", "_submunitionProjectile"];
     _submunitionProjectile setVariable [
         QGVAR(instigatorInfo),

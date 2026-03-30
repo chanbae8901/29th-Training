@@ -20,8 +20,7 @@
  */
 
 // Server should own the perFrameHandler.
-if (!isServer) exitWith
-{
+if (!isServer) exitWith {
     _this remoteExecCall [QFUNC(initSafeStart), 2];
 };
 
@@ -41,8 +40,7 @@ private _msgText = format [
     [_safeStartTime] call FUNC(formatTime)
 ];
 
-if (_forced) then
-{
+if (_forced) then {
     _msgText = _msgText
         + "<br/>Teams can still ready up to end safe start early.";
 };
@@ -54,8 +52,7 @@ if (_forced) then
     false
 ] remoteExecCall [QEFUNC(common,displayMsg)];
 
-if (_forced) then
-{
+if (_forced) then {
     GVAR(ignoreReadiness) = true;
     publicVariable QGVAR(ignoreReadiness);
 };

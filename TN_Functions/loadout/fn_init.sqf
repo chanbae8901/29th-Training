@@ -26,12 +26,10 @@
  *     base_action_arsenal_grn
  */
 
-if (hasInterface) then
-{
+if (hasInterface) then {
     [
         missionNamespace,
-        "arsenalClosed",
-        {
+        "arsenalClosed", {
             // Don't do if Zeus Open (ZEN Loadout Editing).
             if !(isNull (findDisplay 312)) exitWith {};
             call FUNC(onArsenalClosed);
@@ -39,11 +37,9 @@ if (hasInterface) then
     ] call BIS_fnc_addScriptedEventHandler;
 
     if (isClass (configFile >> "CfgPatches" >> "ace_main"))
-        then
-    {
+        then {
         [
-            "ace_arsenal_displayClosed",
-            {
+            "ace_arsenal_displayClosed", {
                 // Don't do if Zeus Open (ZEN Loadout Editing).
                 if !(isNull (findDisplay 312)) exitWith {};
                 call FUNC(onArsenalClosed);
@@ -53,8 +49,7 @@ if (hasInterface) then
 
     [
         QGVAR(setInsigniaRespawn),
-        "Respawn",
-        {
+        "Respawn", {
             (_this select 0) call FUNC(setInsignia);
         }
     ] call CBA_fnc_addBISPlayerEventHandler;

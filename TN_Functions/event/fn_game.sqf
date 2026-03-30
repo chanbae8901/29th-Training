@@ -24,8 +24,7 @@ params
     ["_endingClass", "", [""]]
 ];
 
-if (!isServer) exitWith
-{
+if (!isServer) exitWith {
     _this remoteExecCall [QFUNC(game), 2];
 };
 
@@ -38,8 +37,7 @@ private _endResistance = "EndGuerVictory";
 /************************/
 
 // Prevents duplicate endings.
-if (isNil QGVAR(gameCalled)) then
-{
+if (isNil QGVAR(gameCalled)) then {
     GVAR(gameCalled) = false;
 };
 if (GVAR(gameCalled)) exitWith {};
@@ -47,28 +45,20 @@ GVAR(gameCalled) = true;
 publicVariable QGVAR(gameCalled);
 [QGVAR(missionEnded), []] call CBA_fnc_globalEvent;
 
-if (_endingClass isNotEqualTo "") then
-{
+if (_endingClass isNotEqualTo "") then {
     [_endingClass] remoteExecCall ["BIS_fnc_endMission"];
-}
-else
-{
-    switch (_sideVictory) do
-    {
-        case west:
-        {
+} else {
+    switch (_sideVictory) do {
+        case west: {
             [_endWest] remoteExecCall ["BIS_fnc_endMission"];
         };
-        case east:
-        {
+        case east: {
             [_endEast] remoteExecCall ["BIS_fnc_endMission"];
         };
-        case resistance:
-        {
+        case resistance: {
             [_endResistance] remoteExecCall ["BIS_fnc_endMission"];
         };
-        default
-        {
+        default {
             [_endNeutral] remoteExecCall ["BIS_fnc_endMission"];
         };
     };

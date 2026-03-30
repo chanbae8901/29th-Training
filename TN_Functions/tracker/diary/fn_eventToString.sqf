@@ -18,8 +18,7 @@
 params ["_event", "_names", "_sides", "_weapons"];
 _event params ["_eventType", "_eventTime", "_eventInfo"];
 
-private _fn_formatTime =
-{
+private _fn_formatTime = {
     params ["_time"];
     private _minutes = floor (_time / 60);
     private _seconds = _time % 60;
@@ -42,8 +41,7 @@ private _eventString = "";
 
 // Shared kill/destroy formatter. Only the verb differs
 // ("killed" vs "destroyed").
-private _fn_formatKill =
-{
+private _fn_formatKill = {
     params ["_verb"];
 
     private _unitIndex = _eventInfo select 0;
@@ -54,8 +52,7 @@ private _fn_formatKill =
     _unitName = [_unitName, _unitSide]
         call FUNC(colorNameWithSide);
 
-    if (count _eventInfo > 1) then
-    {
+    if (count _eventInfo > 1) then {
         private _instigatorIndex =
             _eventInfo select 1;
         private _instigatorName =
@@ -74,9 +71,7 @@ private _fn_formatKill =
             _minutes, _secondStr, _unitName, _verb,
             _instigatorName, _weapon, _distance
         ];
-    }
-    else
-    {
+    } else {
         _eventString = format [
             "%1:%2 - %3 %4.",
             _minutes, _secondStr, _unitName, _verb
@@ -84,20 +79,16 @@ private _fn_formatKill =
     };
 };
 
-switch (_eventType) do
-{
-    case INFANTRY_KILL_NUM:
-    {
+switch (_eventType) do {
+    case INFANTRY_KILL_NUM: {
         "killed" call _fn_formatKill;
     };
 
-    case VEHICLE_KILL_NUM:
-    {
+    case VEHICLE_KILL_NUM: {
         "destroyed" call _fn_formatKill;
     };
 
-    case DELAY_KILL_NUM:
-    {
+    case DELAY_KILL_NUM: {
         private _unitIndex = _eventInfo select 0;
         private _unitName = _names select _unitIndex;
         private _unitSide = [
@@ -134,8 +125,7 @@ switch (_eventType) do
         ];
     };
 
-    case SECTOR_CAPTURE_NUM:
-    {
+    case SECTOR_CAPTURE_NUM: {
         private _sectorName = _eventInfo select 0;
         private _newOwner = _eventInfo select 1;
         private _newOwnerName =
@@ -149,8 +139,7 @@ switch (_eventType) do
         ];
     };
 
-    case ACE_CONSCIOUSNESS_NUM:
-    {
+    case ACE_CONSCIOUSNESS_NUM: {
         private _unitIndex = _eventInfo select 0;
         private _unitName = _names select _unitIndex;
         private _unitSide = [
@@ -159,10 +148,8 @@ switch (_eventType) do
         _unitName = [_unitName, _unitSide]
             call FUNC(colorNameWithSide);
         private _state = _eventInfo select 1;
-        if (_state) then
-        {
-            if (count _eventInfo > 2) then
-            {
+        if (_state) then {
+            if (count _eventInfo > 2) then {
                 private _instigatorIndex =
                     _eventInfo select 2;
                 private _instigatorName =
@@ -183,17 +170,13 @@ switch (_eventType) do
                     _minutes, _secondStr, _unitName,
                     _instigatorName, _weapon, _distance
                 ];
-            }
-            else
-            {
+            } else {
                 _eventString = format [
                     "%1:%2 - %3 unconscious.",
                     _minutes, _secondStr, _unitName
                 ];
             };
-        }
-        else
-        {
+        } else {
             _eventString = format [
                 "%1:%2 - %3 conscious.",
                 _minutes, _secondStr, _unitName
@@ -201,8 +184,7 @@ switch (_eventType) do
         };
     };
 
-    case DELAY_ACE_CONSCIOUSNESS_NUM:
-    {
+    case DELAY_ACE_CONSCIOUSNESS_NUM: {
         private _unitIndex = _eventInfo select 0;
         private _unitName = _names select _unitIndex;
         private _unitSide = [

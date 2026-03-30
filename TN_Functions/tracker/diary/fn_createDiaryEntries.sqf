@@ -24,8 +24,7 @@ params [
     "_weapons", "_roundNum"
 ];
 
-if !(player diarySubjectExists "RoundEventLog") then
-{
+if !(player diarySubjectExists "RoundEventLog") then {
     player createDiarySubject
         ["RoundEventLog", "Round Event Log"];
     private _infoLines = [
@@ -51,8 +50,7 @@ if !(player diarySubjectExists "RoundEventLog") then
 private _playerIndex = _names find (name player);
 private _numEvents = count _events;
 private _eventStrings = [];
-for "_i" from (_numEvents - 1) to 0 step -1 do
-{
+for "_i" from (_numEvents - 1) to 0 step -1 do {
     private _event = _events select _i;
     private _eventString = [
         _event, _names, _sides, _weapons
@@ -67,8 +65,7 @@ private _playerEventIndexes =
 
 // "Reverse" numbers so they conform with _eventStrings indexes.
 for "_i" from 0
-    to ((count _playerEventIndexes) - 1) do
-{
+    to ((count _playerEventIndexes) - 1) do {
     _playerEventIndexes set [
         _i,
         _numEvents - 1
@@ -78,8 +75,7 @@ for "_i" from 0
 
 private _playerEventStrings = [];
 for "_i" from (count _playerEventIndexes - 1)
-    to 0 step -1 do
-{
+    to 0 step -1 do {
     private _playerEventIndex =
         _playerEventIndexes select _i;
     _playerEventStrings pushBack
@@ -115,8 +111,7 @@ _text = _eventStrings joinString "<br />";
 player createDiaryRecord
     ["RoundEventLog", [_title, _text]];
 
-if !(player diarySubjectExists "RoundScoreboard") then
-{
+if !(player diarySubjectExists "RoundScoreboard") then {
     player createDiarySubject
         ["RoundScoreboard", "Round Scoreboard"];
     private _infoLines = [

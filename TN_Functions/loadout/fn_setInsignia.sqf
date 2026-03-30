@@ -34,28 +34,24 @@ private _insigniaMap = createHashMapFromArray [
 
 params [["_target", objNull, [objNull]]];
 
-if (!alive _target) exitWith
-{
+if (!alive _target) exitWith {
     [{alive (_this select 0)}, {
         (_this select 0) call FUNC(setInsignia);
     }, [_target]] call CBA_fnc_waitUntilAndExecute;
 };
 
-if (isNull _target) exitWith
-{
+if (isNull _target) exitWith {
     ["Invalid parameters."] call BIS_fnc_error;
     false;
 };
 
-if (!local _target) exitWith
-{
+if (!local _target) exitWith {
     ["%1 must be local.", _target] call BIS_fnc_error;
     false;
 };
 
 if (!isClass (configFile >> "CfgPatches" >> "29th_Insignias"))
-    exitWith
-{
+    exitWith {
     false;
 };
 
@@ -66,8 +62,7 @@ private [
 
 _sqdParams = squadParams _target;
 
-if (_sqdParams isEqualTo []) exitWith
-{
+if (_sqdParams isEqualTo []) exitWith {
     false;
 };
 
@@ -75,8 +70,7 @@ if (_sqdParams isEqualTo []) exitWith
 _targetSquad = ((_sqdParams select 1) select 4);
 _foundInsignias = _insigniaMap getOrDefault [_targetSquad, []];
 
-if (_foundInsignias isEqualTo []) exitWith
-{
+if (_foundInsignias isEqualTo []) exitWith {
     false;
 };
 
@@ -84,14 +78,12 @@ if (_foundInsignias isEqualTo []) exitWith
 _targetInsignia = _foundInsignias select 0;
 
 // Non-combat variant exists.
-if (count _foundInsignias isEqualTo 2) then
-{
+if (count _foundInsignias isEqualTo 2) then {
     // BLUFOR parade gear, dress blues, or no weapon.
     private _isNotCombatLoadout = _target call EFUNC(parade,checkNonCombatLoadout);
 
     // Use non-combat version.
-    if (_isNotCombatLoadout) then
-    {
+    if (_isNotCombatLoadout) then {
         _targetInsignia = _foundInsignias select 1;
     };
 };
@@ -103,14 +95,12 @@ _curInsignia = _target call BIS_fnc_getUnitInsignia;
 _targetRole = ((_sqdParams select 1) select 5);
 
 if ("Clerk" in _targetRole
-    || "Sniper" in _targetRole) then
-{
+    || "Sniper" in _targetRole) then {
     if (_curInsignia isNotEqualTo "") exitWith {};
 };
 
 if (_curInsignia isNotEqualTo _targetInsignia
-    && _curInsignia isNotEqualTo "") then
-{
+    && _curInsignia isNotEqualTo "") then {
     systemChat ("Insignia swapped to " + _targetInsignia + ".");
 };
 

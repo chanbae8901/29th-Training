@@ -36,8 +36,7 @@ if (!hasInterface) exitWith {};
 
 // Returns whichever display is on top — Zeus (312) if open, otherwise game (46).
 // Controls must live on the topmost display or they render behind it.
-FUNC(getActiveDisplay) =
-{
+FUNC(getActiveDisplay) = {
     private _zeus = findDisplay 312;
     if (!isNull _zeus) exitWith {_zeus};
     findDisplay 46
@@ -45,8 +44,7 @@ FUNC(getActiveDisplay) =
 
 // Starts the update PFH if it isn't already running.
 // Called from event handlers when conditions might require the panel.
-FUNC(startReadyUIPFH) =
-{
+FUNC(startReadyUIPFH) = {
     if !(isNil QGVAR(readyUI_pfhHandle)) exitWith {};
     GVAR(readyUI_dirty) = true;
     GVAR(readyUI_refreshCounter) = 0;
@@ -57,8 +55,7 @@ FUNC(startReadyUIPFH) =
 
 // Wait for game display, then wire event-driven PFH lifecycle
 [
-    {!isNull findDisplay 46},
-    {
+    {!isNull findDisplay 46}, {
         call FUNC(createReadyUIControls);
 
         // Only start PFH at init if UI is actually needed right now (JIP into safe start, etc.)
@@ -68,8 +65,7 @@ FUNC(startReadyUIPFH) =
                 !(isNil QGVAR(sideReady))
                 && {true in GVAR(sideReady)}
             }
-        ) then
-        {
+        ) then {
             call FUNC(startReadyUIPFH);
         };
 
@@ -77,8 +73,7 @@ FUNC(startReadyUIPFH) =
 
         // Safe start begins -> wake PFH so panel appears
         GVAR(readyUI_ehSafeStart) = [
-            QGVAR(safeStartBegin),
-            {
+            QGVAR(safeStartBegin), {
                 GVAR(readyUI_dirty) = true;
                 call FUNC(startReadyUIPFH);
             }
@@ -92,18 +87,14 @@ FUNC(startReadyUIPFH) =
 
         // Safe start aborted -> stop PFH if no teams are still ready
         GVAR(readyUI_ehAborted) = [
-            QGVAR(safeStartAborted),
-            {
+            QGVAR(safeStartAborted), {
                 GVAR(readyUI_dirty) = true;
                 if (
                     !(isNil QGVAR(sideReady))
                     && {true in GVAR(sideReady)}
-                ) then
-                {
+                ) then {
                     // Teams still ready — keep PFH alive to show their status
-                }
-                else
-                {
+                } else {
                     call FUNC(stopReadyUIPFH);
                 };
             }
@@ -111,8 +102,7 @@ FUNC(startReadyUIPFH) =
 
         // Round started -> unconditionally stop PFH (fn_start.sqf already unreadies all sides)
         GVAR(readyUI_ehStarted) = [
-            QGVAR(started),
-            {
+            QGVAR(started), {
                 call FUNC(stopReadyUIPFH);
             }
         ] call CBA_fnc_addEventHandler;

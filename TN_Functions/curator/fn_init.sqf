@@ -37,15 +37,13 @@
 
 #define CREATE_CURATOR_MODULE(_obj) [vehicleVarName _obj] call FUNC(createModule)
 
-if (hasInterface) then
-{
+if (hasInterface) then {
     [{!isNull player}, {
         //Draw little skulls each time a player dies. Seen only by Zeus.
         player call BIS_fnc_drawCuratorDeaths;
 
         [
-            QGVARMAIN(enteredZeus),
-            {
+            QGVARMAIN(enteredZeus), {
                 private _curatorName = name player;
                 private _msg = format ["CURATOR INTERFACE OPENED: %1", _curatorName];
                 _msg remoteExecCall [QEFUNC(common,diag_log), 2];
@@ -58,10 +56,8 @@ if (hasInterface) then
     }] call CBA_fnc_waitUntilAndExecute;
 };
 
-if (isServer) then
-{
-    if (isNil QGVAR(units)) then //in case curator units aren't defined for some reason
-    {
+if (isServer) then {
+    if (isNil QGVAR(units)) then { //in case curator units aren't defined for some reason
         GVAR(units) = ["#adminLogged"];
     };
 
@@ -74,19 +70,16 @@ if (isServer) then
 
     //in case zeus_admin is in mission.sqm for some reason, I guess hope mission maker set it to this variable name
     //TODO: Check if #adminLogged owner curator module exists and assign zeus_admin to that instead of assuming above
-    if (isNil "zeus_admin") then
-    {
+    if (isNil "zeus_admin") then {
         [
-            { time > 0 },
-            {
+            { time > 0 }, {
                 zeus_admin = ["#adminLogged"] call FUNC(createModule);
             }
         ] call CBA_fnc_waitUntilAndExecute;
     };
 
     [
-        QEGVAR(common,adminStateChanged),
-        {
+        QEGVAR(common,adminStateChanged), {
             params ["_unit", "_loggedIn"];
             if (isNull _unit || isNil "zeus_admin") exitWith {};
             [_unit, _loggedIn] call FUNC(handleAdminStateChanged);

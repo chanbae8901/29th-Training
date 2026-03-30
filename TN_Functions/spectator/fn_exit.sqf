@@ -45,8 +45,7 @@ player switchCamera "internal";
 
 [GVAR(exitPFH)] call CBA_fnc_removePerFrameHandler;
 
-if !(weaponLowered player) then
-{
+if !(weaponLowered player) then {
     player action ["WeaponOnBack", player];
 };
 

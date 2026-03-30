@@ -24,8 +24,7 @@
 
 #define COMMAND_MARKER "!"
 
-if (hasInterface) then
-{
+if (hasInterface) then {
 
     #include "commands.sqf"
 

@@ -3,8 +3,7 @@
 [
 	[
 		[
-			"cleanup",
-			{
+			"cleanup", {
 				call FUNC(cleaner);
 				systemChat "Cleaning up!"
 			}

@@ -22,8 +22,7 @@
  */
 
 addMissionEventHandler [
-    "OnUserAdminStateChanged",
-{
+    "OnUserAdminStateChanged", {
     params ["_networkId", "_loggedIn"];
 
     private _userInfo = getUserInfo _networkId;

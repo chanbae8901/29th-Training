@@ -38,8 +38,7 @@ private _unitSide = side (group _unit);
 private _killInfo = [[_unitName, _unitSide]];
 
 private _lastHit = _unit getVariable QGVAR(lastHit);
-if !(isNil "_lastHit") then
-{
+if !(isNil "_lastHit") then {
     _lastHit append (
         (_unit getVariable QGVAR(hitMap)) get _lastHit
     );
@@ -54,13 +53,11 @@ if (
 
 // Resolve instigator side, handling dead units whose group
 // side has already flipped to civilian.
-private _fn_resolveInstigatorSide =
-{
+private _fn_resolveInstigatorSide = {
     params ["_instigator"];
     private _side = side (group _instigator);
     if (_side isEqualTo sideUnknown
-        || _side isEqualTo civilian) then // Dead man.
-    {
+        || _side isEqualTo civilian) then { // Dead man.
         // Might work improperly if zeus changed
         // player side.
         _side = getNumber (
@@ -70,15 +67,11 @@ private _fn_resolveInstigatorSide =
     _side
 };
 
-if (isNull _instigator) then // Backup for unknown cases.
-{
+if (isNull _instigator) then { // Backup for unknown cases.
     private _crew = crew _killer;
-    if (_crew isNotEqualTo []) then
-    {
+    if (_crew isNotEqualTo []) then {
         _instigator = _crew select 0;
-    }
-    else
-    {
+    } else {
         _instigator = _killer;
     };
 };
@@ -86,22 +79,19 @@ if (isNull _instigator) then // Backup for unknown cases.
 // Special case for incendiary grenades killing vehicles.
 private _override = false;
 if (_eventType isEqualTo VEHICLE_KILL_NUM
-    && isNull _instigator) then
-{
+    && isNull _instigator) then {
     // Look for ACE/RHS incendiary grenade.
     private _grenadeResult = [position _unit, VEHICLE_GRENADE_DISTANCE]
         call FUNC(findIncendiaryGrenade);
     private _weapon = "";
 
-    if (_grenadeResult isNotEqualTo []) then
-    {
+    if (_grenadeResult isNotEqualTo []) then {
         _instigator = _grenadeResult select 0;
         _weapon = _grenadeResult select 1;
         _override = true;
     };
 
-    if !(isNull _instigator) then
-    {
+    if !(isNull _instigator) then {
         private _distance = round (
             (getPosASL _unit)
                 distance (getPosASL _instigator)
@@ -131,10 +121,8 @@ if (_eventType isEqualTo VEHICLE_KILL_NUM
     };
 };
 
-if (!isNil "_lastHit" && !_override) then
-{
-    if !(isNull _instigator) then
-    {
+if (!isNil "_lastHit" && !_override) then {
+    if !(isNull _instigator) then {
         private _side =
             [_instigator] call _fn_resolveInstigatorSide;
         _lastHit = [
@@ -144,8 +132,7 @@ if (!isNil "_lastHit" && !_override) then
         private _hitInfo =
             (_unit getVariable QGVAR(hitMap))
                 get _lastHit;
-        if (isNil "_hitInfo") then
-        {
+        if (isNil "_hitInfo") then {
             _hitInfo = [
                 getPosASL _instigator, "?", _timeStamp
             ];
@@ -168,14 +155,11 @@ if (!isNil "_lastHit" && !_override) then
         if (
             (_timeStamp - _hitTime > DELAY_TIME)
             && _eventType isEqualTo INFANTRY_KILL_NUM
-        ) then
-        {
+        ) then {
             _eventType = DELAY_KILL_NUM;
             _timeStamp = [_timeStamp, _hitTime];
         };
-    }
-    else
-    {
+    } else {
         // Died to fall damage, burn, ace fragmentation.
         // Give kill credit to last projectile hit if
         // exists.
@@ -195,8 +179,7 @@ if (!isNil "_lastHit" && !_override) then
         if (
             (_timeStamp - _hitTime > DELAY_TIME)
             && _eventType isEqualTo INFANTRY_KILL_NUM
-        ) then
-        {
+        ) then {
             _eventType = DELAY_KILL_NUM;
             _timeStamp = [_timeStamp, _hitTime];
         };

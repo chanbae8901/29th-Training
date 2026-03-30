@@ -35,15 +35,13 @@ private _instigatorInfo =
 
 // If projectile hits multiple things it can have time of
 // hit already.
-if (count _instigatorInfo > INSTIGATOR_TIME_INDEX) then
-{
+if (count _instigatorInfo > INSTIGATOR_TIME_INDEX) then {
     _instigatorInfo deleteAt INSTIGATOR_TIME_INDEX;
 };
 _instigatorInfo pushBack
     round(serverTime - GVAR(startTime));
 
-if (_hitEntity isKindOf "Man") exitWith
-{
+if (_hitEntity isKindOf "Man") exitWith {
     [[_hitEntity], _instigatorInfo] remoteExecCall
         [QFUNC(sendHit), 2];
 };

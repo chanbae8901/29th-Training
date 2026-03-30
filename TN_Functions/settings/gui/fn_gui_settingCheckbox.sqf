@@ -36,8 +36,7 @@ _ctrlCheckbox setVariable [
 ];
 
 _ctrlCheckbox ctrlAddEventHandler [
-    "CheckedChanged",
-    {
+    "CheckedChanged", {
         params ["_ctrlCheckbox", "_state"];
         (_ctrlCheckbox getVariable
             "cba_settings_params") params [
@@ -75,8 +74,7 @@ _ctrlCheckbox ctrlAddEventHandler [
 ];
 
 _controlsGroup setVariable [
-    "cba_settings_fnc_updateUI",
-    {
+    "cba_settings_fnc_updateUI", {
         params ["_controlsGroup", "_value"];
 
         private _ctrlCheckbox =

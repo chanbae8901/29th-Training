@@ -21,8 +21,7 @@
     ],
     [GENERAL_SETTINGS_CATEGORY, VEHICLE_SUBCATEGORY],
     true,
-    1,
-    {
+    1, {
         RHS_ENGINE_STARTUP_OFF = [nil, true] select _this;
     }
 ] call CBA_fnc_addSetting;
@@ -47,10 +46,8 @@
     "Enable Artillery Computer",
     [GENERAL_SETTINGS_CATEGORY, VEHICLE_SUBCATEGORY],
     false,
-    1,
-    {
-        if (isServer) then
-        {
+    1, {
+        if (isServer) then {
             [
                 "ace_artillerytables_disableArtilleryComputer",
                 !(_this), nil, "server", false
@@ -62,8 +59,7 @@
             ] call cba_settings_fnc_set;
         };
 
-        if (hasInterface) then
-        {
+        if (hasInterface) then {
             enableEngineArtillery _this;
         };
     }

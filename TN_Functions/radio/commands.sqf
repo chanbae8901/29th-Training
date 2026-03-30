@@ -2,14 +2,12 @@
 [
     [
         [
-            "radio",
-            {
+            "radio", {
                 private _strs = [];
 
                 // SW (short-range) radio info.
                 private _activeSw = call TFAR_fnc_activeSwRadio;
-                if !(isNil "_activeSw") then
-                {
+                if !(isNil "_activeSw") then {
                     private _radioName = [
                         _activeSw, "tf_parent", "SR"
                     ] call TFAR_fnc_getWeaponConfigProperty;
@@ -23,8 +21,7 @@
                 // LR (long-range) backpack radio info.
                 private _activeLr =
                     player call TFAR_fnc_backpackLR;
-                if !(isNil "_activeLr") then
-                {
+                if !(isNil "_activeLr") then {
                     private _radioName = [
                         typeOf (_activeLr select 0),
                         "displayName", "LR"
@@ -39,8 +36,7 @@
                 // Vehicle LR radio info.
                 private _vehicleLr =
                     player call TFAR_fnc_vehicleLr;
-                if !(isNil "_vehicleLr") then
-                {
+                if !(isNil "_vehicleLr") then {
                     private _radioName = [
                         typeOf (_vehicleLr select 0),
                         "displayName", "Vic"

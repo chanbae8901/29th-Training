@@ -25,8 +25,7 @@ if (GVAR(recording)) exitWith {};
 
 params ["_player"];
 
-if !(_player getVariable ["ocap_isInitialized", false]) then
-{
+if !(_player getVariable ["ocap_isInitialized", false]) then {
     _player setVariable ["ocap_id", ocap_recorder_nextId];
 
     private _newUnit = [

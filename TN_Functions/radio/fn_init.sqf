@@ -19,13 +19,11 @@
 
 if !(isClass (configFile >> "CfgPatches" >> "tfar_core")) exitWith {};
 
-if (hasInterface) then
-{
+if (hasInterface) then {
     // Re-add side-correct radio after closing vanilla arsenal.
     [
         missionNamespace,
-        "arsenalClosed",
-        {
+        "arsenalClosed", {
             // Skip if Zeus is open (ZEN loadout editing).
             if !(isNull (findDisplay 312)) exitWith {};
             call FUNC(add);
@@ -33,11 +31,9 @@ if (hasInterface) then
     ] call BIS_fnc_addScriptedEventHandler;
 
     // Re-add side-correct radio after closing ACE arsenal.
-    if (isClass (configFile >> "CfgPatches" >> "ace_main")) then
-    {
+    if (isClass (configFile >> "CfgPatches" >> "ace_main")) then {
         [
-            "ace_arsenal_displayClosed",
-            {
+            "ace_arsenal_displayClosed", {
                 // Skip if Zeus is open (ZEN loadout editing).
                 if !(isNull (findDisplay 312)) exitWith {};
                 call FUNC(add);
@@ -48,10 +44,8 @@ if (hasInterface) then
     // Strip radios on death when the setting is enabled.
     [
         QGVAR(removeOnDeath),
-        "Killed",
-        {
-            if (GVARMAIN(removeRadiosOnDeath)) then
-            {
+        "Killed", {
+            if (GVARMAIN(removeRadiosOnDeath)) then {
                 (_this select 0) call FUNC(remove);
             };
         }
@@ -61,18 +55,15 @@ if (hasInterface) then
     call FUNC(initTransferSettings);
 };
 
-if (isServer) then
-{
+if (isServer) then {
     // Strip radios from disconnecting players' bodies.
     addMissionEventHandler [
-        "HandleDisconnect",
-        {
+        "HandleDisconnect", {
             params ["_unit"];
 
             if (isNull _unit) exitWith {};
 
-            if (GVARMAIN(removeRadiosOnDeath)) then
-            {
+            if (GVARMAIN(removeRadiosOnDeath)) then {
                 _unit call FUNC(remove);
             };
         }

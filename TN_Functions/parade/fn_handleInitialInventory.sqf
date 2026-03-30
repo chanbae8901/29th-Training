@@ -16,23 +16,18 @@
 
 if (!hasInterface) exitWith {};
 
-private _fn_loadParade =
-{
+private _fn_loadParade = {
     private _side = side (group player);
 
-    switch (_side) do
-    {
-        case WEST:
-        {
+    switch (_side) do {
+        case WEST: {
             call FUNC(load);
         };
-        case EAST:
-        {
+        case EAST: {
             [player, missionConfigFile >> "CfgRespawnInventory" >> "29TH_PARADE_EAST"]
                 call BIS_fnc_loadInventory;
         };
-        case INDEPENDENT:
-        {
+        case INDEPENDENT: {
             [player, missionConfigFile >> "CfgRespawnInventory" >> "29TH_PARADE_INDEPENDENT"]
                 call BIS_fnc_loadInventory;
         };

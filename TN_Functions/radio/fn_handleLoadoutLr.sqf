@@ -22,8 +22,7 @@ private _lr = player call TFAR_fnc_backpackLr;
 if (isNil "_lr") exitWith {};
 
 private _settings = GVAR(savedActiveLrSettings);
-if (isNil "_settings") then
-{
+if (isNil "_settings") then {
     _settings = _lr call TFAR_fnc_getLrSettings;
 };
 
@@ -34,8 +33,7 @@ private _correctCode = [
 ] call TFAR_fnc_getVehicleConfigProperty;
 
 // Legacy alias -- may no longer be needed.
-if (_correctCode isEqualTo "tf_guer_radio_code") then
-{
+if (_correctCode isEqualTo "tf_guer_radio_code") then {
     _correctCode = "tf_independent_radio_code";
 };
 _correctCode = missionNamespace getVariable [
@@ -44,8 +42,7 @@ _correctCode = missionNamespace getVariable [
 
 private _currentCode = _lr call TFAR_fnc_getLrRadioCode;
 
-if (_currentCode isNotEqualTo _correctCode) then
-{
+if (_currentCode isNotEqualTo _correctCode) then {
     _settings set [TFAR_CODE_OFFSET, _correctCode];
 };
 

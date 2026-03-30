@@ -24,26 +24,21 @@
 call compile preprocessFileLineNumbers "eventSettings.sqf";
 
 /******* Timer ********/
-if (GVAR(hasTimer)) then
-{
-    if (hasInterface) then
-    {
+if (GVAR(hasTimer)) then {
+    if (hasInterface) then {
         [{!isNull player}, {
             call FUNC(flagActions);
 
-            if (serverCommandAvailable "#lock") then
-            {
+            if (serverCommandAvailable "#lock") then {
                 [true]
                     call FUNC(handleAdminEventMenu);
             };
         }] call CBA_fnc_waitUntilAndExecute;
     };
 
-    if (isServer) then
-    {
+    if (isServer) then {
         [
-            QEGVAR(common,adminStateChanged),
-            {
+            QEGVAR(common,adminStateChanged), {
                 params ["_unit", "_loggedIn"];
                 if (isNull _unit) exitWith {};
                 [_loggedIn] remoteExecCall [
@@ -54,8 +49,7 @@ if (GVAR(hasTimer)) then
         ] call CBA_fnc_addEventHandler;
 
         [
-            QEGVAR(round,started),
-            {
+            QEGVAR(round,started), {
                 call FUNC(checkWinCondition);
             }
         ] call CBA_fnc_addEventHandler;
@@ -63,31 +57,24 @@ if (GVAR(hasTimer)) then
 };
 
 /******* AliveCheck ********/
-if (GVAR(hasAliveCheck) || GVAR(numberOfLives) > 0) then
-{
-    if (isNil QGVAR(spectateArea)) then
-    {
+if (GVAR(hasAliveCheck) || GVAR(numberOfLives) > 0) then {
+    if (isNil QGVAR(spectateArea)) then {
         systemChat "WARNING: Spectate area object (spectateArea) not found!";
     };
 };
 
-if (GVAR(hasAliveCheck)) then
-{
-    if (isServer) then
-    {
+if (GVAR(hasAliveCheck)) then {
+    if (isServer) then {
         [
-            QEGVAR(round,started),
-            {
+            QEGVAR(round,started), {
                 call FUNC(aliveCheck);
             }
         ] call CBA_fnc_addEventHandler;
     };
 };
 
-if (GVAR(numberOfLives) > 0) then
-{
-    if (hasInterface) then
-    {
+if (GVAR(numberOfLives) > 0) then {
+    if (hasInterface) then {
         [
             QEGVAR(round,started),
             { [true] call FUNC(respawn) }
@@ -102,28 +89,23 @@ if (GVAR(numberOfLives) > 0) then
 };
 
 /******* Time Acceleration ********/
-if (isServer) then
-{
+if (isServer) then {
     [
-        QEGVAR(round,started),
-        {
+        QEGVAR(round,started), {
             setTimeMultiplier GVAR(timeAcc);
         }
     ] call CBA_fnc_addEventHandler;
 };
 
 /******* Auto Mark Editor Objects ********/
-if (hasInterface) then
-{
-    if (GVAR(autoMarkObjects)) then
-    {
+if (hasInterface) then {
+    if (GVAR(autoMarkObjects)) then {
         call FUNC(markEditorPlacedObjects);
     };
 };
 
 /******* Everything else ********/
-if (hasInterface) then
-{
+if (hasInterface) then {
     //Prevent error due to no saved respawn inventory
     [{!isNull player}, {
         [player, [missionNamespace, "Current Inventory"]] call BIS_fnc_saveInventory;

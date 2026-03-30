@@ -18,20 +18,16 @@ params ["_name", "_side", "_eventTime"];
 
 private _num = GVAR(names) find _name;
 
-if (_num isEqualTo -1) then
-{
+if (_num isEqualTo -1) then {
     GVAR(names) pushBack _name;
     GVAR(sides) pushBack
         [[_side, _eventTime]];
     _num = count GVAR(names) - 1;
-}
-else
-{
+} else {
     private _sides = GVAR(sides) select _num;
     private _lastSide =
         (_sides select -1) select 0;
-    if (_side isNotEqualTo _lastSide) then
-    {
+    if (_side isNotEqualTo _lastSide) then {
         _sides pushBack [_side, _eventTime];
     };
 };

@@ -20,11 +20,9 @@ _weaponCfg = [_weaponCfg, _weaponCfg >> _muzzle]
 private _weaponName =
     getText (_weaponCfg >> "displayName");
 
-if (isNull _vehicle) then
-{
+if (isNull _vehicle) then {
     // Hand grenade case.
-    if (_weapon isEqualTo "Throw") exitWith
-    {
+    if (_weapon isEqualTo "Throw") exitWith {
         // Sometimes short is longer than non-short.
         private _fullName = getText (
             configFile >> "CfgMagazines"
@@ -35,8 +33,7 @@ if (isNull _vehicle) then
                 >> _magazine >> "displayNameShort"
         );
 
-        if (_shortName isEqualTo "") exitWith
-        {
+        if (_shortName isEqualTo "") exitWith {
             _fullName;
         };
         [_fullName, _shortName]
@@ -48,16 +45,13 @@ if (isNull _vehicle) then
         exitWith { _weaponName };
 
     // Strip unneeded/misleading text if infantry weapon.
-    if (_weapon isEqualTo _muzzle) then
-    {
+    if (_weapon isEqualTo _muzzle) then {
         private _pos = _weaponName find " (";
-        if (_pos isNotEqualTo -1) then
-        {
+        if (_pos isNotEqualTo -1) then {
             _weaponName = _weaponName select [0, _pos];
         };
         _pos = _weaponName find " GL";
-        if (_pos isNotEqualTo -1) then
-        {
+        if (_pos isNotEqualTo -1) then {
             _weaponName = _weaponName select [0, _pos];
         };
     };
@@ -66,8 +60,7 @@ if (isNull _vehicle) then
     if (getNumber (
         configFile >> "CfgAmmo"
             >> _ammo >> "explosive"
-    ) > 0) then
-    {
+    ) > 0) then {
         private _shortName = getText (
             configFile >> "CfgMagazines"
                 >> _magazine >> "displayNameShort"
@@ -82,19 +75,15 @@ if (isNull _vehicle) then
     };
 
     _strs joinString " - ";
-}
-else
-{
+} else {
     private _strs = [];
 
-    if !(_vehicle isKindOf "StaticWeapon") then
-    {
+    if !(_vehicle isKindOf "StaticWeapon") then {
         private _vehicleName = getText (
             configOf _vehicle >> "displayName"
         );
         private _pos = _vehicleName find " (";
-        if (_pos isNotEqualTo -1) then
-        {
+        if (_pos isNotEqualTo -1) then {
             _vehicleName = _vehicleName select [0, _pos];
         };
         _strs pushBack _vehicleName;
@@ -110,8 +99,7 @@ else
         || count getArray (
             _weaponCfg >> "magazineWell"
         ) > 0
-    ) then
-    {
+    ) then {
         private _shortName = getText (
             configFile >> "CfgMagazines"
                 >> _magazine >> "displayNameShort"

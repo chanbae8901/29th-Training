@@ -41,8 +41,7 @@ GVAR(helpInfo) = [
 
 GVAR(allCommands) = [
     [
-        "commands",
-        {
+        "commands", {
             private _commands = "";
             {
                 _commands = _commands + (COMMAND_MARKER + _x) + ", ";
@@ -53,88 +52,67 @@ GVAR(allCommands) = [
         }
     ],
     [
-        "help",
-        {
+        "help", {
             private _argument = _this select 0;
             _argument = toLower _argument;
 
             private _helpInfo = GVAR(helpInfo) get _argument;
 
-            if !(isNil "_helpInfo") then
-            {
+            if !(isNil "_helpInfo") then {
                 private _restrictionStr =
-                    switch (true) do
-                {
-                    case (_argument in GVAR(adminCommands)):
-                    {
+                    switch (true) do {
+                    case (_argument in GVAR(adminCommands)): {
                         "(ADMIN ONLY)";
                     };
-                    case (_argument in GVAR(restrictedCommands)):
-                    {
+                    case (_argument in GVAR(restrictedCommands)): {
                         "(RESTRICTED)";
                     };
-                    default
-                    {
+                    default {
                         "";
                     };
                 };
 
                 systemChat format ["!%1: %2 %3", _argument, _restrictionStr, _helpInfo];
-            }
-            else
-            {
+            } else {
                 systemChat "Can't find the specified command! Make sure to enter the command without the '!'";
             };
         }
     ],
     [
-        "arsenal",
-        {
+        "arsenal", {
             [getPosATL player, getDir player, 3] call FUNC(arsenalCreate);
         }
     ],
     [
-        "measure",
-        {
+        "measure", {
             private _argument = _this select 0;
 
-            if (_argument isEqualTo "") then //blank argument for actual measurement
-            {
-                if (isNil "plyrRefPos") then
-                {
+            if (_argument isEqualTo "") then { //blank argument for actual measurement
+                if (isNil "plyrRefPos") then {
                     systemChat "Error: Please define a base point with !measure set";
-                }
-                else //measure current shift+click marker based off reference
-                {
+                } else { //measure current shift+click marker based off reference
                     private _msrDistance = round (customWaypointPosition distance plyrRefPos);
                     systemChat format ["Distance is %1 meters", _msrDistance];
                 };
-            }
-            else //anything else sets reference shift+click marker
-            {
+            } else { //anything else sets reference shift+click marker
                 private _waypointPosCount = count customWaypointPosition;
 
-                if (_waypointPosCount isEqualTo 3) then
-                {
+                if (_waypointPosCount isEqualTo 3) then {
                     plyrRefPos = customWaypointPosition;
                     systemChat "Measurement reference point set";
-                }
-                else
-                {
+                } else {
                     systemChat "Error: No marker! Place a marker on the map with shift + click";
                 };
             };
         }
     ],
     [
-        "showchat",
-        {
+        "showchat", {
             showChat true;
         }
     ],
     [
-        "weaponstate",
-        {
+        "weaponstate", {
             private _buggedPlayers = [];
 
             private _players = allPlayers - entities "HeadlessClient_F";
@@ -153,8 +131,7 @@ GVAR(allCommands) = [
         }
     ],
     [
-        "fb",
-        {
+        "fb", {
             private _blend = [[1, 1, 1, 0], [0.3, 0.3, 0.3, 1]] select ace_common_epilepsyFriendlyMode;
 
             private _strength = 1;
@@ -163,8 +140,7 @@ GVAR(allCommands) = [
             ace_grenades_flashbangPPEffectCC ppEffectAdjust [1, 1, (0.8 + _strength) min 1, _blend, [0, 0, 0, 1], [0, 0, 0, 0]];
             ace_grenades_flashbangPPEffectCC ppEffectCommit 0.01;
 
-            [
-                {
+            [ {
                     params ["_strength", "_blend"];
 
                     ace_grenades_flashbangPPEffectCC ppEffectAdjust [1, 1, 0, _blend, [0, 0, 0, 1], [0, 0, 0, 0]];
@@ -175,8 +151,7 @@ GVAR(allCommands) = [
             ] call CBA_fnc_waitAndExecute;
 
             // FULLRECOVERY - end effect
-            [
-                {
+            [ {
                     ace_grenades_flashbangPPEffectCC ppEffectEnable false;
                 },
                 [],

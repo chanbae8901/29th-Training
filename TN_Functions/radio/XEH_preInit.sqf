@@ -38,11 +38,9 @@
     ],
     [GENERAL_SETTINGS_CATEGORY, RADIO_SUBCATEGORY],
     true,
-    1,
-    {
+    1, {
         // Re-run vehicle radio fix when setting changes mid-mission.
-        if (hasInterface) then
-        {
+        if (hasInterface) then {
             if (!alive player || isNull (objectParent player))
                 exitWith {};
             #include "..\radio\fn_fixVehicleRadio.inc.sqf"

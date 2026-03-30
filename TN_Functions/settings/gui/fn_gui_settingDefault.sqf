@@ -35,8 +35,7 @@ _ctrlDefault setVariable [
 ];
 
 _ctrlDefault ctrlAddEventHandler [
-    "ButtonClick",
-    {
+    "ButtonClick", {
         params ["_ctrlDefault"];
         (_ctrlDefault getVariable "cba_settings_params") params ["_setting", "_source"];
 
@@ -66,8 +65,7 @@ _ctrlDefault ctrlAddEventHandler [
     }
 ];
 
-if (_currentValue isEqualTo _defaultValue) then
-{
+if (_currentValue isEqualTo _defaultValue) then {
     _ctrlDefault ctrlEnable false;
 };
 

@@ -18,8 +18,7 @@
 
 params ["_weaponHolder"];
 
-if (isNil QGVAR(clientSilentWeapons)) then
-{
+if (isNil QGVAR(clientSilentWeapons)) then {
     GVAR(clientSilentWeapons) = createHashMap;
 };
 

@@ -25,13 +25,11 @@ private _baseClasses = ["Static", "Cargo_base_F"];
 //checks bounding sphere value to see if object is
 //large enough, not in the blacklist, and not in an
 //excluded start zone
-private _canMark =
-{
+private _canMark = {
     params ["_obj"];
 
     if (_obj getVariable
-        [QGVARMAIN(autoMarkForceInclude), false]) exitWith
-    {
+        [QGVARMAIN(autoMarkForceInclude), false]) exitWith {
         true;
     };
 
@@ -43,8 +41,7 @@ private _canMark =
     ];
 
     if (_obj getVariable
-        [QGVARMAIN(autoMarkExclude), false]) exitWith
-    {
+        [QGVARMAIN(autoMarkExclude), false]) exitWith {
         false;
     };
 
@@ -67,8 +64,7 @@ private _objectsToMark = [];
 } forEach _baseClasses;
 _objectsToMark = _objectsToMark select { _x call _canMark };
 
-private _createMarker =
-{
+private _createMarker = {
     params ["_obj", "_markerNum"];
 
     // Create marker locally to save network bandwidth

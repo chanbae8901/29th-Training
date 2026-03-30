@@ -24,10 +24,8 @@ private _killCounts = createHashMap;
 {
     _x params ["_eventType", "_eventTime", "_eventInfo"];
 
-    switch (_eventType) do
-    {
-        case INFANTRY_KILL_NUM:
-        {
+    switch (_eventType) do {
+        case INFANTRY_KILL_NUM: {
             if (count _eventInfo <= 1) exitWith {};
 
             private _unitIndex = _eventInfo select 0;
@@ -45,8 +43,7 @@ private _killCounts = createHashMap;
                     (_x select 0) isEqualTo
                         [_unitIndex, _unitSide]
                 };
-            if (_findUnconIdx isNotEqualTo -1) then
-            {
+            if (_findUnconIdx isNotEqualTo -1) then {
                 _unconsciousAtEnd deleteAt _findUnconIdx;
             };
             if (_unitIndex isEqualTo _instigatorIndex)
@@ -63,8 +60,7 @@ private _killCounts = createHashMap;
                 [_key, _curKills + _addPoints];
         };
 
-        case DELAY_KILL_NUM:
-        {
+        case DELAY_KILL_NUM: {
             if (count _eventInfo <= 1) exitWith {};
 
             private _unitIndex = _eventInfo select 0;
@@ -83,8 +79,7 @@ private _killCounts = createHashMap;
                     (_x select 0) isEqualTo
                         [_unitIndex, _unitSide]
                 };
-            if (_findUnconIdx isNotEqualTo -1) then
-            {
+            if (_findUnconIdx isNotEqualTo -1) then {
                 _unconsciousAtEnd deleteAt _findUnconIdx;
             };
             if (_unitIndex isEqualTo _instigatorIndex)
@@ -101,15 +96,13 @@ private _killCounts = createHashMap;
                 [_key, _curKills + _addPoints];
         };
 
-        case ACE_CONSCIOUSNESS_NUM:
-        {
+        case ACE_CONSCIOUSNESS_NUM: {
             private _unitIndex = _eventInfo select 0;
             private _unitSide = [
                 _unitIndex, _eventTime, _sides
             ] call FUNC(getSideAtTime);
             private _state = _eventInfo select 1;
-            if (_state && (count _eventInfo) > 2) then
-            {
+            if (_state && (count _eventInfo) > 2) then {
                 private _instigatorIndex =
                     _eventInfo select 2;
                 private _instigatorSide = [
@@ -119,24 +112,20 @@ private _killCounts = createHashMap;
                     [_unitIndex, _unitSide],
                     [_instigatorIndex, _instigatorSide]
                 ];
-            }
-            else
-            {
+            } else {
                 private _findUnconIdx =
                     _unconsciousAtEnd findIf {
                         (_x select 0) isEqualTo
                             [_unitIndex, _unitSide]
                     };
-                if (_findUnconIdx isNotEqualTo -1) then
-                {
+                if (_findUnconIdx isNotEqualTo -1) then {
                     _unconsciousAtEnd
                         deleteAt _findUnconIdx;
                 };
             };
         };
 
-        case DELAY_ACE_CONSCIOUSNESS_NUM:
-        {
+        case DELAY_ACE_CONSCIOUSNESS_NUM: {
             private _unitIndex = _eventInfo select 0;
             private _unitSide = [
                 _unitIndex, _eventTime select 0, _sides

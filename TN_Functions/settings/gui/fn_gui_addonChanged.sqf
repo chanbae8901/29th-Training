@@ -28,8 +28,7 @@ private _selectedAddon =
 
 if (isNil "_selectedAddon") exitWith {};
 
-if (_selectedAddon isEqualType "") then
-{
+if (_selectedAddon isEqualType "") then {
     uiNamespace setVariable [
         QGVAR(addon), _selectedAddon
     ];
@@ -41,18 +40,15 @@ uiNamespace setVariable [
 
 private _selectedSource = "server";
 
-if !(_display getVariable [_selectedAddon, false]) then
-{
-    private _fnc_controlSetTablePosY =
-    {
+if !(_display getVariable [_selectedAddon, false]) then {
+    private _fnc_controlSetTablePosY = {
         params [
             "_control", "_tablePosY", "_height"
         ];
 
         private _config =
             configFile >> ctrlClassName _control;
-        if (isNull _config) then
-        {
+        if (isNull _config) then {
             _config =
                 missionConfigFile
                 >> ctrlClassName _control;
@@ -65,8 +61,7 @@ if !(_display getVariable [_selectedAddon, false]) then
         private _width =
             getNumber (_config >> "w");
 
-        if (isNil "_height") then
-        {
+        if (isNil "_height") then {
             _height = getNumber (_config >> "h");
         };
 
@@ -90,10 +85,8 @@ if !(_display getVariable [_selectedAddon, false]) then
             "_subCategory"
         ];
 
-        if (toLower _category == _selectedAddon) then
-        {
-            if (isLocalized _subCategory) then
-            {
+        if (toLower _category == _selectedAddon) then {
+            if (isLocalized _subCategory) then {
                 _subCategory = localize _subCategory;
             };
 
@@ -115,8 +108,7 @@ if !(_display getVariable [_selectedAddon, false]) then
         ];
 
         private _createHeader = false;
-        if (_subCategory != _lastSubCategory) then
-        {
+        if (_subCategory != _lastSubCategory) then {
             _lastSubCategory = _subCategory;
             if (_subCategory == "") exitWith {};
             _createHeader = true;
@@ -130,24 +122,18 @@ if !(_display getVariable [_selectedAddon, false]) then
                 "_tooltip", "_isGlobal"
             ];
 
-        if (isLocalized _displayName) then
-        {
+        if (isLocalized _displayName) then {
             _displayName = localize _displayName;
         };
 
-        if (isLocalized _tooltip) then
-        {
+        if (isLocalized _tooltip) then {
             _tooltip = localize _tooltip;
         };
 
-        if (_tooltip != _setting) then
-        {
-            if (_tooltip isEqualTo "") then
-            {
+        if (_tooltip != _setting) then {
+            if (_tooltip isEqualTo "") then {
                 _tooltip = _setting;
-            }
-            else
-            {
+            } else {
                 _tooltip = format [
                     "%1\n%2", _tooltip, _setting
                 ];
@@ -165,13 +151,10 @@ if !(_display getVariable [_selectedAddon, false]) then
                 ] select 0;
             private _wasEdited = false;
 
-            if (isNil "_currentValue") then
-            {
+            if (isNil "_currentValue") then {
                 _currentValue = [_setting, _source]
                     call cba_settings_fnc_get;
-            }
-            else
-            {
+            } else {
                 _wasEdited = true;
             };
 
@@ -183,8 +166,7 @@ if !(_display getVariable [_selectedAddon, false]) then
 
             private _ctrlOptionsGroup = controlNull;
 
-            if !(_list in _lists) then
-            {
+            if !(_list in _lists) then {
                 _ctrlOptionsGroup = _display ctrlCreate [
                     "cba_settings_OptionsGroup",
                     -1,
@@ -197,15 +179,12 @@ if !(_display getVariable [_selectedAddon, false]) then
                 _display setVariable [
                     _list, _ctrlOptionsGroup
                 ];
-            }
-            else
-            {
+            } else {
                 _ctrlOptionsGroup =
                     _display getVariable _list;
             };
 
-            if (_createHeader) then
-            {
+            if (_createHeader) then {
                 private _ctrlHeaderGroup =
                     _display ctrlCreate [
                         "cba_settings_subCat",
@@ -237,34 +216,29 @@ if !(_display getVariable [_selectedAddon, false]) then
             };
 
             private _ctrlSettingGroup =
-                switch (toUpper _settingType) do
-                {
-                    case "CHECKBOX":
-                    {
+                switch (toUpper _settingType) do {
+                    case "CHECKBOX": {
                         _display ctrlCreate [
                             "TN_settings_Row_Checkbox",
                             5000,
                             _ctrlOptionsGroup
                         ]
                     };
-                    case "LIST":
-                    {
+                    case "LIST": {
                         _display ctrlCreate [
                             "TN_settings_Row_List",
                             5000,
                             _ctrlOptionsGroup
                         ]
                     };
-                    case "SLIDER":
-                    {
+                    case "SLIDER": {
                         _display ctrlCreate [
                             "TN_settings_Row_Slider",
                             5000,
                             _ctrlOptionsGroup
                         ]
                     };
-                    case "TIME":
-                    {
+                    case "TIME": {
                         _display ctrlCreate [
                             "TN_settings_Row_Time",
                             5000,
@@ -275,10 +249,8 @@ if !(_display getVariable [_selectedAddon, false]) then
                 };
 
             private _defaultValueTooltip =
-                switch (toUpper _settingType) do
-                {
-                    case "LIST":
-                    {
+                switch (toUpper _settingType) do {
+                    case "LIST": {
                         _settingData params [
                             "_values", "_labels"
                         ];
@@ -286,18 +258,15 @@ if !(_display getVariable [_selectedAddon, false]) then
                             _values find _defaultValue,
                             ""
                         ];
-                        if (isLocalized _label) then
-                        {
+                        if (isLocalized _label) then {
                             _label = localize _label;
                         };
                         _label
                     };
-                    case "SLIDER":
-                    {
+                    case "SLIDER": {
                         if (_settingData param [
                             3, false
-                        ]) then
-                        {
+                        ]) then {
                             format [
                                 localize
                                 "STR_3DEN_percentageUnit",
@@ -305,14 +274,11 @@ if !(_display getVariable [_selectedAddon, false]) then
                                     (_defaultValue * 100),
                                 "%"
                             ]
-                        }
-                        else
-                        {
+                        } else {
                             _defaultValue
                         };
                     };
-                    case "TIME":
-                    {
+                    case "TIME": {
                         _defaultValue
                             call CBA_fnc_formatElapsedTime
                     };
@@ -360,8 +326,7 @@ if !(_display getVariable [_selectedAddon, false]) then
                 "cba_settings_tablePosY", _tablePosY
             ];
 
-            if (_settingType == "LIST") then
-            {
+            if (_settingType == "LIST") then {
                 private _ctrlEmpty =
                     _display ctrlCreate [
                         "cba_settings_Row_Empty",
@@ -387,8 +352,7 @@ if !(_display getVariable [_selectedAddon, false]) then
             ];
             _ctrlSettingName ctrlSetTooltip _tooltip;
 
-            if (_wasEdited) then
-            {
+            if (_wasEdited) then {
                 _ctrlSettingName ctrlSetTextColor [
                     0.95, 0.95, 0.1, 1
                 ];
@@ -399,8 +363,7 @@ if !(_display getVariable [_selectedAddon, false]) then
                 >> ctrlClassName _ctrlSettingGroup
                 >> "cba_settings_script"
             );
-            if (_script == "") then
-            {
+            if (_script == "") then {
                 _script = getText (
                     missionConfigFile
                     >> ctrlClassName _ctrlSettingGroup

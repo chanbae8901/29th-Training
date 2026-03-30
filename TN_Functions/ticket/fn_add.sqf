@@ -21,15 +21,13 @@ params
     ["_ticketAmount", 0, [0]]
 ];
 
-if (!GVAR(enabled)) exitWith
-{
+if (!GVAR(enabled)) exitWith {
     systemChat "Error: Ticket system disabled!";
 };
 
 private _sideID = _side call BIS_fnc_sideID;
 
-if (_sideID < 0 || _sideID > 2) exitWith
-{
+if (_sideID < 0 || _sideID > 2) exitWith {
     systemChat "Error: No side defined!";
 };
 

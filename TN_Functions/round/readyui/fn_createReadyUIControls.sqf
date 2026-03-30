@@ -32,8 +32,7 @@ _content ctrlCommit 0;
 
 // Diagonal shine slices — stacked horizontal strips that sweep with offset
 private _shineSlices = [];
-for "_i" from 0 to (SHINE_SLICES - 1) do
-{
+for "_i" from 0 to (SHINE_SLICES - 1) do {
     private _slice =
         _display ctrlCreate ["RscText", -1];
     _slice ctrlShow false;

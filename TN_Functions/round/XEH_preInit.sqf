@@ -11,12 +11,9 @@
     ],
     [GENERAL_SETTINGS_CATEGORY, ROUND_SUBCATEGORY],
     true,
-    1,
-    {
-        if (hasInterface) then
-        {
-            if (!_this) exitWith
-            {
+    1, {
+        if (hasInterface) then {
+            if (!_this) exitWith {
                 removeMissionEventHandler [
                     "Draw2D",
                     disableRespawnScoreboard
@@ -46,14 +43,12 @@
             if (alive player) exitWith {};
 
             disableRespawnScoreboard = addMissionEventHandler [
-                "Draw2D",
-                {
+                "Draw2D", {
                     if (
                         visibleScoretable
                         && ROUND_LIVE
                         && GVARMAIN(disableScoreboard)
-                    ) then
-                    {
+                    ) then {
                         showScoretable 0;
                     };
                 }

@@ -30,24 +30,20 @@ if (GVAR(numberOfLives) isEqualTo 0) exitWith {};
 
 if (NOT_ROUND_LIVE) exitWith {};
 
-if (_storeDeaths) exitWith
-{
+if (_storeDeaths) exitWith {
     GVAR(liveDeaths) = getPlayerScores Player select 4;
 };
 
 private _playerDeaths = getPlayerScores player select 4;
 
-if (isNil QGVAR(liveDeaths)) then
-{
+if (isNil QGVAR(liveDeaths)) then {
     GVAR(liveDeaths) = 0;
 };
 
 _playerDeaths = (_playerDeaths - GVAR(liveDeaths));
 
-if (_playerDeaths >= GVAR(numberOfLives)) then
-{
-    _playerDeaths spawn
-    {
+if (_playerDeaths >= GVAR(numberOfLives)) then {
+    _playerDeaths spawn {
         private _point = getPosASL GVAR(spectateArea);
 
         titleText [
@@ -75,13 +71,11 @@ if (_playerDeaths >= GVAR(numberOfLives)) then
 
         private _ground = isTouchingGround player;
 
-        if (!_ground) then
-        {
+        if (!_ground) then {
             private _curr = getPos player;
             private _height = _curr select 2;
 
-            if (_height > 2) then
-            {
+            if (_height > 2) then {
                 player setPos [
                     _curr select 0,
                     _curr select 1,
@@ -89,8 +83,7 @@ if (_playerDeaths >= GVAR(numberOfLives)) then
                 ];
             }
             //otherwise a little extra time to fall
-            else
-            {
+            else {
                 sleep 0.4;
             };
         };
@@ -104,8 +97,7 @@ if (_playerDeaths >= GVAR(numberOfLives)) then
             "BLACK IN", 0.5, true, true
         ];
 
-        if (GVAR(respawnDisarmPlayers)) then
-        {
+        if (GVAR(respawnDisarmPlayers)) then {
             removeAllWeapons player;
         };
     };

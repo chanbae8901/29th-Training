@@ -17,8 +17,7 @@
 
 params ["_loggedIn"];
 
-if (_loggedIn) exitWith
-{
+if (_loggedIn) exitWith {
     if (!isNil QGVAR(adminMenuActionId)) exitWith {};
 
     GVAR(adminMenuActionId) = player addAction [
@@ -33,8 +32,7 @@ if (_loggedIn) exitWith
 };
 
 // logging out
-if (!isNil QGVAR(adminMenuActionId)) then
-{
+if (!isNil QGVAR(adminMenuActionId)) then {
     player removeAction GVAR(adminMenuActionId);
     GVAR(adminMenuActionId) = nil;
 };

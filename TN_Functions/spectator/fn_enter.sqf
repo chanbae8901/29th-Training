@@ -40,16 +40,14 @@
 
 params [["_unit", player]];
 
-if (isDedicated || !hasInterface) exitWith
-{
+if (isDedicated || !hasInterface) exitWith {
     ["Player must not be dedicated server or HC."]
         call BIS_fnc_error;
     false
 };
 
 // --- Spectator disabled by CBA setting ---
-if (GVARMAIN(limitSpectator) isEqualTo 2) exitWith
-{
+if (GVARMAIN(limitSpectator) isEqualTo 2) exitWith {
     hint "Spectator Disabled";
     false
 };
@@ -69,11 +67,9 @@ hintSilent "SPECTATOR\n----------\nPress RELOAD to exit";
 [_unit, true] remoteExecCall ["hideObjectGlobal", 2];
 
 // --- Build params based on spectator restriction level ---
-private _params = switch (GVARMAIN(limitSpectator)) do
-{
+private _params = switch (GVARMAIN(limitSpectator)) do {
     case 0: { [_unit, [], false] };
-    case 1:
-    {
+    case 1: {
         [_unit, [side _unit], false, false, false, false]
     };
     default { [_unit, [], false] };
@@ -89,20 +85,17 @@ GVAR(exitPFH) = [{
     _args params ["_startPos", "_unit"];
 
     // Reload key pressed.
-    if (inputAction "ReloadMagazine" > 0) exitWith
-    {
+    if (inputAction "ReloadMagazine" > 0) exitWith {
         call FUNC(exit);
     };
 
     // Player drifted away from start position.
-    if (getPosATL _unit distanceSqr _startPos > 25) exitWith
-    {
+    if (getPosATL _unit distanceSqr _startPos > 25) exitWith {
         call FUNC(exit);
     };
 
     // Player respawned while in spectator (known issue).
-    if (!alive _unit) exitWith
-    {
+    if (!alive _unit) exitWith {
         call FUNC(exit);
     };
 }, 0, [_startPos, _unit]] call CBA_fnc_addPerFrameHandler;

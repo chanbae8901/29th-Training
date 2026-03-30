@@ -20,15 +20,13 @@ params ["_unit", "_radio"];
 if (_unit isNotEqualTo player) exitWith {};
 
 private _sw = call TFAR_fnc_activeSwRadio;
-if (_sw isEqualTo _radio) exitWith
-{
+if (_sw isEqualTo _radio) exitWith {
     GVAR(savedActiveSrSettings) =
         _sw call TFAR_fnc_getSwSettings;
 };
 
 private _lr = call TFAR_fnc_activeLrRadio;
-if (_lr isEqualTo _radio) exitWith
-{
+if (_lr isEqualTo _radio) exitWith {
     GVAR(savedActiveLrSettings) =
         _lr call TFAR_fnc_getLrSettings;
 };

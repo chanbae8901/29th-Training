@@ -18,10 +18,8 @@
 
 params ["_unit", "_loggedIn"];
 
-if (_loggedIn) exitWith
-{
-    if (isNull getAssignedCuratorLogic _unit) then
-    {
+if (_loggedIn) exitWith {
+    if (isNull getAssignedCuratorLogic _unit) then {
         unassignCurator zeus_admin;
         [{
             _this assignCurator zeus_admin;
@@ -30,8 +28,7 @@ if (_loggedIn) exitWith
 };
 
 //logging out
-if (getAssignedCuratorLogic _unit isEqualTo zeus_admin) then
-{
+if (getAssignedCuratorLogic _unit isEqualTo zeus_admin) then {
     unassignCurator zeus_admin;
     [{
         [vehicleVarName _this]

@@ -57,24 +57,19 @@ GVAR(garbages) = []; //global variable for cleaner function
     if (_tagCount < 3) then { continue };
 
     private _actionObject = _tags select 1;
-    if (_actionObject isNotEqualTo "action") then
-    {
+    if (_actionObject isNotEqualTo "action") then {
         continue;
     };
 
     private _actionType = _tags select 2;
-    switch (_actionType) do
-    {
-        case "arsenal":
-        {
+    switch (_actionType) do {
+        case "arsenal": {
             GVAR(arsenals) pushBack _x;
         };
-        case "terminal":
-        {
+        case "terminal": {
             GVAR(terminals) pushBack _x;
         };
-        case "garbage":
-        {
+        case "garbage": {
             GVAR(garbages) pushBack _x;
         };
         default {};
@@ -110,40 +105,35 @@ GVAR(arsenalActionId) = -1;
 GVAR(keepEnvironmentSounds) = false;
 
 [
-    QGVARMAIN(enteredZeus),
-    {
+    QGVARMAIN(enteredZeus), {
         GVAR(keepEnvironmentSounds) = true;
         ENV_ON;
     }
 ] call CBA_fnc_addEventHandler;
 
 [
-    QGVARMAIN(exitedZeus),
-    {
+    QGVARMAIN(exitedZeus), {
         GVAR(keepEnvironmentSounds) = false;
         if (GVAR(arsenalActionId) isNotEqualTo -1) then { ENV_OFF };
     }
 ] call CBA_fnc_addEventHandler;
 
 [
-    QEGVAR(spectator,entered),
-    {
+    QEGVAR(spectator,entered), {
         GVAR(keepEnvironmentSounds) = true;
         ENV_ON;
     }
 ] call CBA_fnc_addEventHandler;
 
 [
-    QEGVAR(spectator,exited),
-    {
+    QEGVAR(spectator,exited), {
         GVAR(keepEnvironmentSounds) = false;
         if (GVAR(arsenalActionId) isNotEqualTo -1) then { ENV_OFF };
     }
 ] call CBA_fnc_addEventHandler;
 
 
-if (isNil QGVAR(arsenalCenters)) then
-{
+if (isNil QGVAR(arsenalCenters)) then {
     GVAR(arsenalCenters) = [];
 
     {
@@ -151,10 +141,8 @@ if (isNil QGVAR(arsenalCenters)) then
     } forEach GVAR(arsenals);
 };
 
-if (GVAR(arsenalCenters) isNotEqualTo []) then
-{
-    [{!isNull player},
-    {
+if (GVAR(arsenalCenters) isNotEqualTo []) then {
+    [{!isNull player}, {
         private _radius = if (isNil QEGVAR(event,arsenalRadius)) then { 75 } else { EGVAR(event,arsenalRadius) };
         [{ call FUNC(arsenalZoneCheck) }, 1, [_radius * _radius]] call CBA_fnc_addPerFrameHandler;
     }] call CBA_fnc_waitUntilAndExecute;
@@ -162,19 +150,16 @@ if (GVAR(arsenalCenters) isNotEqualTo []) then
 
 [
     QGVAR(respawnArsenalActionId),
-    "Respawn",
-    {
+    "Respawn", {
         GVAR(arsenalActionId) = -1;
     }
 ] call CBA_fnc_addBISPlayerEventHandler;
 
 //- Add Force Parade to BLUFOR Ammo Box, maybe belongs in parade module instead -//
-if ("parade" in TN_MODULES) then
-{
+if ("parade" in TN_MODULES) then {
     EGVAR(loadout,lastDebriefTime) = -10;
     base_action_arsenal_blu addAction [
-        "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#3f8eff'>  Force Parade</t>",
-        {
+        "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#3f8eff'>  Force Parade</t>", {
             params ["_target"];
             [_target, 125] call EFUNC(parade,forceAll);
         },

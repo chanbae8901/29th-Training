@@ -26,8 +26,7 @@ private _secs = _seconds mod 60;
 private _timeParts = [];
 
 /* --- Hours --- */
-if (_hours > 0) then
-{
+if (_hours > 0) then {
     private _hourWord = ["Hours", "Hour"]
         select (_hours isEqualTo 1 || _forceNoS);
     _timeParts pushBack format [
@@ -36,8 +35,7 @@ if (_hours > 0) then
 };
 
 /* --- Minutes --- */
-if (_mins > 0) then
-{
+if (_mins > 0) then {
     private _minWord = ["Minutes", "Minute"]
         select (_mins isEqualTo 1 || _forceNoS);
     _timeParts pushBack format [
@@ -46,8 +44,7 @@ if (_mins > 0) then
 };
 
 /* --- Seconds (always shown if nothing else) --- */
-if (_secs > 0 || _timeParts isEqualTo []) then
-{
+if (_secs > 0 || _timeParts isEqualTo []) then {
     private _secWord = ["Seconds", "Second"]
         select (_secs isEqualTo 1 || _forceNoS);
     _timeParts pushBack format [

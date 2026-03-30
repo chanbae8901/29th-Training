@@ -20,19 +20,14 @@
  * call TN_common_fnc_initPreloadFinished;
  */
 
-[QGVARMAIN(initFinished),
-{
-    if (isNil "bis_fnc_preload_init") then
-    {
+[QGVARMAIN(initFinished), {
+    if (isNil "bis_fnc_preload_init") then {
         // JIP — preload hasn't finished for this client yet.
-        addMissionEventHandler ["PreloadFinished",
-        {
+        addMissionEventHandler ["PreloadFinished", {
             [QGVAR(preloadFinished)] call CBA_fnc_localEvent;
             removeMissionEventHandler ["PreloadFinished", _thisEventHandler];
         }];
-    }
-    else
-    {
+    } else {
         // Non-JIP — preload already complete.
         [QGVAR(preloadFinished)] call CBA_fnc_localEvent;
     };

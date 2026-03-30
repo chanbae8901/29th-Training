@@ -31,8 +31,7 @@ private _value = [
 {
     private _hitMap =
         _x getVariable QGVAR(hitMap);
-    if (isNil "_hitMap") then
-    {
+    if (isNil "_hitMap") then {
         _hitMap = createHashMap;
     };
     _hitMap set [_key, _value];

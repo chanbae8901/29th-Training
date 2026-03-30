@@ -19,8 +19,7 @@ params [["_force", false, [false]]];
 
 if (NOT_ROUND_LIVE) exitWith {false};
 
-if (GVAR(overtimeEnabled) && !_force) then
-{
+if (GVAR(overtimeEnabled) && !_force) then {
     [
         "<t color='#ffffff' size='3'><br/>%1 Minute OVERTIME</t>",
         "PLAIN",
@@ -43,12 +42,9 @@ if (GVAR(overtimeEnabled) && !_force) then
         {call FUNC(end)},
         []
     ] call CBA_fnc_waitUntilAndExecute;
-}
-else
-{
+} else {
     // Let waitUntilAndExecute in fn_start call end.
-    if ((call FUNC(getTime)) > 0) exitWith
-    {
+    if ((call FUNC(getTime)) > 0) exitWith {
         // In case manual end was called.
         GVAR(overtimeEnabled) = false;
         publicVariable QGVAR(overtimeEnabled);

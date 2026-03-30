@@ -5,8 +5,7 @@
     [
         /* --- !timer --- */
         [
-            "timer",
-            {
+            "timer", {
                 private _argument = _this select 0;
                 private _minutes = abs (parseNumber _argument);
                 [_minutes * 60] call FUNC(setTimer);
@@ -16,14 +15,10 @@
 
         /* --- !live --- */
         [
-            "live",
-            {
-                if ([] call FUNC(start)) then
-                {
+            "live", {
+                if ([] call FUNC(start)) then {
                     systemChat "Starting Round!";
-                }
-                else
-                {
+                } else {
                     systemChat "Error: Timer already running!";
                 };
             }
@@ -31,16 +26,12 @@
 
         /* --- !quicktimer --- */
         [
-            "quicktimer",
-            {
+            "quicktimer", {
                 private _argument = _this select 0;
                 private _timerQuick = abs (parseNumber _argument);
-                if ([_timerQuick * 60] call FUNC(start)) then
-                {
+                if ([_timerQuick * 60] call FUNC(start)) then {
                     systemChat format ["Starting %1 Minute round!", _timerQuick];
-                }
-                else
-                {
+                } else {
                     systemChat "Error: Timer already running! Use '!addtime' if you want to add time";
                 };
             }
@@ -48,16 +39,12 @@
 
         /* --- !addtime --- */
         [
-            "addtime",
-            {
+            "addtime", {
                 private _argument = _this select 0;
                 private _timeAdd = parseNumber _argument;
-                if ([_timeAdd * 60] call FUNC(addTime) isNotEqualTo -1) then
-                {
+                if ([_timeAdd * 60] call FUNC(addTime) isNotEqualTo -1) then {
                     systemChat format ["Adding %1 Minutes to the time limit!", _timeAdd];
-                }
-                else
-                {
+                } else {
                     systemChat "Error: No active timer! Use '!quicktimer' if you want to start a timer quickly";
                 };
             }
@@ -65,19 +52,15 @@
 
         /* --- !game --- */
         [
-            "game",
-            {
-                if (NOT_ROUND_LIVE) then
-                {
+            "game", {
+                if (NOT_ROUND_LIVE) then {
                     [
                         "<t color='#ffffff' size='5'>GAME!</t>",
                         "PLAIN",
                         0.4
                     ] remoteExecCall [QEFUNC(common,displayMsg)];
                     systemChat "No timer running! Only displaying end game message!";
-                }
-                else
-                {
+                } else {
                     [true] call FUNC(end);
                     systemChat "Calling Game!";
                 };
@@ -86,19 +69,15 @@
 
         /* --- !overtime --- */
         [
-            "overtime",
-            {
+            "overtime", {
                 private _argument = _this select 0;
                 // Overtime can't be negative!
                 private _minutes = abs (parseNumber _argument);
-                if (_minutes > 0) then
-                {
+                if (_minutes > 0) then {
                     [true] call FUNC(setOvertimeEnabled);
                     [_minutes * 60] call FUNC(setOverTimePeriod);
                     systemChat format ["Overtime set for %1 Minutes", _minutes];
-                }
-                else
-                {
+                } else {
                     [false] call FUNC(setOvertimeEnabled);
                     systemChat "Overtime Disabled";
                 };
@@ -107,8 +86,7 @@
 
         /* --- !ready --- */
         [
-            "ready",
-            {
+            "ready", {
                 // Works based off of local player's side.
                 private _result = [playerSide, true] call FUNC(manageReady);
                 systemChat (["Setting side ready!", "Error: Round already started!", "Error: Side is already ready!"] select _result);
@@ -117,8 +95,7 @@
 
         /* --- !unready --- */
         [
-            "unready",
-            {
+            "unready", {
                 private _result = [playerSide, false] call FUNC(manageReady);
                 systemChat (["Setting side unready!", "Error: Round already started!", "Error: Side is already unready!"] select _result);
             }
@@ -126,43 +103,31 @@
 
         /* --- !safe --- */
         [
-            "safe",
-            {
+            "safe", {
                 private _argument = _this select 0;
                 // Overtime can't be negative!
                 private _minutes = abs (parseNumber _argument);
-                if (_minutes > 0) then
-                {
-                    switch (true) do
-                    {
-                        case (ROUND_LIVE):
-                        {
+                if (_minutes > 0) then {
+                    switch (true) do {
+                        case (ROUND_LIVE): {
                             systemChat "Error: Round is currently active!";
                         };
-                        case (NOT_ROUND_SAFE):
-                        {
+                        case (NOT_ROUND_SAFE): {
                             [_minutes * 60, true] call FUNC(initSafeStart);
                             systemChat "Forcing Safe Start!";
                         };
-                        default
-                        {
-                            if (call FUNC(checkAllSidesReady)) exitWith
-                            {
+                        default {
+                            if (call FUNC(checkAllSidesReady)) exitWith {
                                 systemChat "Error: All teams are already ready!";
                             };
                             [_minutes * 60] call FUNC(changeForcedSafeStart);
                             systemChat "Changing forced safestart!";
                         };
                     };
-                }
-                else
-                {
-                    if ([0] call FUNC(changeForcedSafeStart)) then
-                    {
+                } else {
+                    if ([0] call FUNC(changeForcedSafeStart)) then {
                         systemChat "Safe start is no longer forced and will end if all teams are not ready!";
-                    }
-                    else
-                    {
+                    } else {
                         systemChat "Error: No safe start active!";
                     };
                 };

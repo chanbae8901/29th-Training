@@ -18,14 +18,11 @@
 if (!hasInterface) exitWith {};
 
 // --- Auto-spectate on respawn ---
-[QGVAR(autoSpectate), "Respawn",
-{
+[QGVAR(autoSpectate), "Respawn", {
     params ["_newUnit", "_oldUnit"];
 
-    if (!isNull _oldUnit) then
-    {
-        if (GVARMAIN(autoSpectate)) then
-        {
+    if (!isNull _oldUnit) then {
+        if (GVARMAIN(autoSpectate)) then {
             systemChat "AutoSpectate is ON.";
             [_newUnit] call FUNC(enter);
         };

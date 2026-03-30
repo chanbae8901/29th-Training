@@ -83,8 +83,7 @@ _btnCancel ctrlSetPosition [
 ];
 _btnCancel ctrlCommit 0;
 _btnCancel ctrlAddEventHandler [
-    "ButtonClick",
-    {
+    "ButtonClick", {
         params ["_ctrl"];
         (ctrlParent _ctrl) closeDisplay 2;
     }
@@ -103,18 +102,14 @@ _btnOK ctrlSetPosition [
 ];
 _btnOK ctrlCommit 0;
 _btnOK ctrlAddEventHandler [
-    "ButtonClick",
-    {
+    "ButtonClick", {
         params ["_ctrl"];
         private _display = ctrlParent _ctrl;
         private _sliderCtrl = _display displayCtrl IDC_SLIDER;
 
-        if (NOT_ROUND_SAFE) then
-        {
+        if (NOT_ROUND_SAFE) then {
             systemChat "Safe start has already ended! Input ignored.";
-        }
-        else
-        {
+        } else {
             private _newtime = sliderPosition _sliderCtrl;
             [_newTime] call BIS_fnc_countdown;
 
@@ -164,8 +159,7 @@ _ctrlSlider sliderSetSpeed [SLIDER_SPEED, SLIDER_SPEED];
 /* --- Slider change handler --- */
 
 _ctrlSlider ctrlAddEventHandler [
-    "SliderPosChanged",
-    {
+    "SliderPosChanged", {
         params ["_ctrlSlider", "_value"];
         _value = round _value;
 
@@ -199,8 +193,7 @@ _ctrlSlider ctrlAddEventHandler [
     );
 
     _ctrlEdit ctrlAddEventHandler [
-        "KillFocus",
-        {
+        "KillFocus", {
             params ["_ctrlEdit"];
 
             private _timeCtrl = ctrlParentControlsGroup _ctrlEdit;
@@ -243,8 +236,7 @@ _ctrlSlider ctrlAddEventHandler [
 /* --- CBA settings UI update callback --- */
 
 _timeCtrl setVariable [
-    "cba_settings_fnc_updateUI",
-    {
+    "cba_settings_fnc_updateUI", {
         params ["_timeCtrl", "_value"];
 
         (_timeCtrl controlsGroupCtrl IDC_SLIDER)
@@ -270,8 +262,7 @@ _timeCtrl setVariable [
 //Prevent enter key from closing display and
 //setting new time
 _display displayAddEventHandler [
-    "KeyDown",
-    {
+    "KeyDown", {
         params [
             "_display", "_key",
             "_shift", "_ctrl", "_alt"

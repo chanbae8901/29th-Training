@@ -2,8 +2,7 @@
 [
     [
         [
-            "s",
-            {
+            "s", {
                 createDialog [
                     "RscDisplayMissionOptions",
                     true

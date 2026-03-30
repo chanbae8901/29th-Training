@@ -29,15 +29,12 @@ params
     ["_msgVar1", 0]
 ];
 
-if (_msgFormat) then
-{
+if (_msgFormat) then {
     titleText [
         format [_msgText, _msgVar1],
         _msgEffect, _msgDur, true, true
     ];
-}
-else
-{
+} else {
     titleText [_msgText, _msgEffect, _msgDur, true, true];
 };
 

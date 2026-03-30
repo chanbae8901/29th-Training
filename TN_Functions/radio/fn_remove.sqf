@@ -24,15 +24,13 @@ private _lr = false;
 // Remove the first SW radio found in the linked slot.
 private _swRadios = [_unit] call TFAR_fnc_getRadioItems;
 
-if (_swRadios isNotEqualTo []) then
-{
+if (_swRadios isNotEqualTo []) then {
     _unit unlinkItem (_swRadios select 0);
     _sw = true;
 };
 
 // Remove LR backpack radio if present.
-if ((backpack _unit) call TFAR_fnc_isLRRadio) then
-{
+if ((backpack _unit) call TFAR_fnc_isLRRadio) then {
     removeBackpack _unit;
     _lr = true;
 };

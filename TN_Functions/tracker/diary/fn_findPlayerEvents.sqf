@@ -24,17 +24,13 @@ private _playerEventIndexes = [];
 private _knockedUnconscious = [];
 
 private _numEvents = count _events;
-for "_i" from 0 to (_numEvents - 1) do
-{
+for "_i" from 0 to (_numEvents - 1) do {
     (_events select _i) params ["_eventType", "", "_eventInfo"];
-    switch (_eventType) do
-    {
-        case ACE_CONSCIOUSNESS_NUM:
-        {
+    switch (_eventType) do {
+        case ACE_CONSCIOUSNESS_NUM: {
             private _unitIndex = _eventInfo select 0;
             private _state = _eventInfo select 1;
-            if (_unitIndex isEqualTo _playerIndex) exitWith
-            {
+            if (_unitIndex isEqualTo _playerIndex) exitWith {
                 _playerEventIndexes pushBack _i;
             };
 
@@ -42,8 +38,7 @@ for "_i" from 0 to (_numEvents - 1) do
             // before.
             private _knockedIndex =
                 _knockedUnconscious find _unitIndex;
-            if (_knockedIndex isNotEqualTo -1) exitWith
-            {
+            if (_knockedIndex isNotEqualTo -1) exitWith {
                 _playerEventIndexes pushBack _i;
                 _knockedUnconscious
                     deleteAt _knockedIndex;
@@ -51,8 +46,7 @@ for "_i" from 0 to (_numEvents - 1) do
 
             // Check if player is knocking out unit, add
             // to _knockedUnconscious.
-            if (_state && (count _eventInfo) > 2) then
-            {
+            if (_state && (count _eventInfo) > 2) then {
                 private _instigatorIndex =
                     _eventInfo select 2;
                 if (_instigatorIndex isNotEqualTo _playerIndex)
@@ -62,11 +56,9 @@ for "_i" from 0 to (_numEvents - 1) do
             };
         };
 
-        case DELAY_ACE_CONSCIOUSNESS_NUM:
-        {
+        case DELAY_ACE_CONSCIOUSNESS_NUM: {
             private _unitIndex = _eventInfo select 0;
-            if (_unitIndex isEqualTo _playerIndex) exitWith
-            {
+            if (_unitIndex isEqualTo _playerIndex) exitWith {
                 _playerEventIndexes pushBack _i;
             };
 
@@ -81,44 +73,36 @@ for "_i" from 0 to (_numEvents - 1) do
         // Infantry and delayed kills share the same
         // relevance logic.
         case INFANTRY_KILL_NUM;
-        case DELAY_KILL_NUM:
-        {
+        case DELAY_KILL_NUM: {
             private _unitIndex = _eventInfo select 0;
-            if (_unitIndex isEqualTo _playerIndex) exitWith
-            {
+            if (_unitIndex isEqualTo _playerIndex) exitWith {
                 _playerEventIndexes pushBack _i;
             };
             private _knockedIndex =
                 _knockedUnconscious find _unitIndex;
             // Check if unit was knocked out by player
             // before.
-            if (_knockedIndex isNotEqualTo -1) exitWith
-            {
+            if (_knockedIndex isNotEqualTo -1) exitWith {
                 _playerEventIndexes pushBack _i;
                 _knockedUnconscious
                     deleteAt _knockedIndex;
             };
-            if (count _eventInfo > 1) then
-            {
+            if (count _eventInfo > 1) then {
                 private _instigatorIndex =
                     _eventInfo select 1;
                 if (_instigatorIndex isEqualTo _playerIndex)
-                    exitWith
-                {
+                    exitWith {
                     _playerEventIndexes pushBack _i;
                 };
             };
         };
 
-        case VEHICLE_KILL_NUM:
-        {
-            if (count _eventInfo > 1) then
-            {
+        case VEHICLE_KILL_NUM: {
+            if (count _eventInfo > 1) then {
                 private _instigatorIndex =
                     _eventInfo select 1;
                 if (_instigatorIndex isEqualTo _playerIndex)
-                    exitWith
-                {
+                    exitWith {
                     _playerEventIndexes pushBack _i;
                 };
             };

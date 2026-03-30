@@ -17,8 +17,7 @@
 
 params ["_unit", "", "_instigator", "_ammo"];
 
-if (_ammo isEqualTo "collision") then
-{
+if (_ammo isEqualTo "collision") then {
     private _driver = driver _instigator;
     private _sideInstigator =
         _driver call FUNC(findSide);
@@ -43,8 +42,7 @@ if (_ammo isEqualTo "collision") then
     [[_unit], _instigatorInfo] remoteExecCall [QFUNC(sendHit), 2];
 };
 
-if (_ammo isEqualTo "burn") then
-{
+if (_ammo isEqualTo "burn") then {
     // NOTE: Instigator in this case if null means
     // the damage came from fire on person. Otherwise
     // the instigator is the unit itself, which means
@@ -59,21 +57,17 @@ if (_ammo isEqualTo "burn") then
 
     private _weapon = "?";
     // Usually means damage from fire on person.
-    if (isNull _instigator) then
-    {
+    if (isNull _instigator) then {
         _instigator = _unit getVariable
             [QGVAR(burnInstigator), objNull];
         _weapon = _unit getVariable
             [QGVAR(burnWeapon), "Fire"];
-    }
-    else
-    {
+    } else {
         // Look for ACE/RHS incendiary grenade.
         private _grenadeResult = [position _unit,
             INFANTRY_GRENADE_DISTANCE]
             call FUNC(findIncendiaryGrenade);
-        if (_grenadeResult isNotEqualTo []) then
-        {
+        if (_grenadeResult isNotEqualTo []) then {
             _instigator = _grenadeResult select 0;
             _weapon = _grenadeResult select 1;
         };
@@ -86,8 +80,7 @@ if (_ammo isEqualTo "burn") then
                 (_x select 0)
                     distance (getPosASL _unit)
                 < COOKOFF_DISTANCE
-            ) exitWith
-            {
+            ) exitWith {
                 _instigator = _x select 1;
                 _weapon = "Cookoff Fire";
             };
@@ -115,8 +108,7 @@ if (_ammo isEqualTo "burn") then
 // with so we just want as a minimum backup for the
 // above case.
 // Instigator is always null.
-if (_ammo isEqualTo "fire") then
-{
+if (_ammo isEqualTo "fire") then {
     if (!alive _unit) exitWith {};
     // Throttle to avoid spam.
     if (time - GVAR(lastFireCheck) < 2) exitWith {};
@@ -126,22 +118,19 @@ if (_ammo isEqualTo "fire") then
     private _grenadeResult = [position _unit,
         INFANTRY_GRENADE_DISTANCE]
         call FUNC(findIncendiaryGrenade);
-    if (_grenadeResult isNotEqualTo []) then
-    {
+    if (_grenadeResult isNotEqualTo []) then {
         _instigator = _grenadeResult select 0;
         _weapon = _grenadeResult select 1;
     };
 
-    if (_weapon isEqualTo "?") then
-    {
+    if (_weapon isEqualTo "?") then {
         // Look through cookoffs.
         {
             if (
                 (_x select 0)
                     distance (getPosASL _unit)
                 < COOKOFF_DISTANCE
-            ) exitWith
-            {
+            ) exitWith {
                 _instigator = _x select 1;
                 _weapon = "Cookoff Fire";
             };
@@ -168,17 +157,14 @@ if (_ammo isEqualTo "fire") then
 
 // Vehicle explosion.
 if (_ammo isEqualTo "FuelExplosion"
-    || _ammo isEqualTo "FuelExplosionBig") then
-{
-    if (isNull _instigator) then
-    {
+    || _ammo isEqualTo "FuelExplosionBig") then {
+    if (isNull _instigator) then {
         {
             if (
                 (_x select 0)
                     distance (getPosASL _unit)
                 < EXPLOSION_DISTANCE
-            ) exitWith
-            {
+            ) exitWith {
                 _instigator = _x select 1;
             };
         }

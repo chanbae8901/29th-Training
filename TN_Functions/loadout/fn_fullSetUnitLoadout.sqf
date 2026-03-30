@@ -20,8 +20,7 @@
 
 params ["_unit", "_loadout", "_fullMagazines"];
 
-if (!local _unit) exitWith
-{
+if (!local _unit) exitWith {
     ["Unit %1 must be local.", _unit] call BIS_fnc_error;
     false;
 };
@@ -31,8 +30,7 @@ if (!alive _unit) exitWith { false };
 [_unit, _loadout, _fullMagazines] call CBA_fnc_setLoadout;
 
 // Don't pull out weapon if no primary.
-if (primaryWeapon _unit isEqualTo "") then
-{
+if (primaryWeapon _unit isEqualTo "") then {
     _unit action ["SwitchWeapon", _unit, _unit, -1];
 };
 

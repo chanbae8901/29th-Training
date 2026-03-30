@@ -23,8 +23,7 @@ if (ROUND_LIVE) exitWith {1};
 
 private _sideIdx = _side call BIS_fnc_sideID;
 
-if (_sideIdx > 2) exitWith
-{
+if (_sideIdx > 2) exitWith {
     systemChat "Error: Invalid side to change ready state.";
 };
 
@@ -38,14 +37,10 @@ publicVariable QGVAR(sideReady);
 [QGVAR(manageReadyChange), _this] call CBA_fnc_globalEvent;
 
 /* --- Check if all sides ready and handle safe start --- */
-if (call FUNC(checkAllSidesReady)) then
-{
-    if (NOT_ROUND_SAFE) then
-    {
+if (call FUNC(checkAllSidesReady)) then {
+    if (NOT_ROUND_SAFE) then {
         [] call FUNC(initSafeStart);
-    }
-    else
-    {
+    } else {
         // Already in forced safe start; shorten timer if it exceeds safe start time.
         if (
             [0] call BIS_fnc_countdown <= GVARMAIN(safeStartTime)
@@ -69,17 +64,14 @@ if (call FUNC(checkAllSidesReady)) then
 
         [GVARMAIN(safeStartTime)] call BIS_fnc_countdown;
     };
-}
-else
-{
+} else {
     // A team unreadied. If we're in a forced safe start that was shortened,
     // restore the original forced timer adjusted for total elapsed time.
     if (
         ROUND_SAFE
         && GVAR(ignoreReadiness)
         && {!(isNil QGVAR(shortenedAt))}
-    ) then
-    {
+    ) then {
         private _elapsed = serverTime - GVAR(shortenedAt);
         private _restoredTime = (GVAR(forcedTimeRemaining) - _elapsed) max 1;
         private _currentTime = [0] call BIS_fnc_countdown;

@@ -37,8 +37,7 @@ if (_sideID < 0 || _sideID > 2) exitWith {};
 // Decrement, notify player and team.
 private _tickets = GVAR(counts) select _sideID;
 
-if (_tickets isEqualTo 0) then
-{
+if (_tickets isEqualTo 0) then {
     [
         "<t color='#ffffff' size='2'>Your team is out of tickets! Do not leave spawn!</t>",
         "PLAIN",
@@ -47,15 +46,12 @@ if (_tickets isEqualTo 0) then
         QEFUNC(common,displayMsg),
         _clientOwner
     ];
-}
-else
-{
+} else {
     _tickets = _tickets - 1;
     GVAR(counts) set [_sideID, _tickets];
     publicVariable QGVAR(counts);
 
-    if (_tickets isEqualTo 0) then
-    {
+    if (_tickets isEqualTo 0) then {
         // Last ticket -- warn team and admin.
         "Your team is out of tickets!" remoteExecCall ["hint", _playerSide];
         format [
@@ -66,9 +62,7 @@ else
             "PLAIN",
             0.8
         ] remoteExecCall [QEFUNC(common,displayMsg), _clientOwner];
-    }
-    else
-    {
+    } else {
         // Tickets remain -- silent hint to team, message to player.
         format [
             "Your team has %1 tickets remaining!",

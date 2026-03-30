@@ -20,11 +20,8 @@
 
 params ["_input"];
 
-if (_input isEqualType "") then
-{
+if (_input isEqualType "") then {
     GVAR(strToSideMap) getOrDefault [toLower _input, sideUnknown]
-}
-else
-{
+} else {
     GVAR(sideToStrMap) getOrDefault [_input, "Unknown"]
 }

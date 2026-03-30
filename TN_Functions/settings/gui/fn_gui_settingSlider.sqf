@@ -43,19 +43,13 @@ _ctrlSlider sliderSetSpeed [
 ];
 
 // Shared formatter stored in uiNamespace so event handlers can access it.
-if (isNil {uiNamespace getVariable QGVARMAIN(fnc_formatEditText)}) then
-{
-    uiNamespace setVariable [QGVARMAIN(fnc_formatEditText),
-    {
+if (isNil {uiNamespace getVariable QGVARMAIN(fnc_formatEditText)}) then {
+    uiNamespace setVariable [QGVARMAIN(fnc_formatEditText), {
         params ["_val", "_decimals", "_pct"];
-        if (_pct) then
-        {
+        if (_pct) then {
             format [localize "STR_3DEN_percentageUnit", round (_val * 100), "%"]
-        }
-        else
-        {
-            if (_decimals < 0) then
-            {
+        } else {
+            if (_decimals < 0) then {
                 _val = round _val;
             };
             [_val, 1, _decimals max 0] call CBA_fnc_formatNumber
@@ -72,8 +66,7 @@ _ctrlSlider setVariable [
 ];
 
 _ctrlSlider ctrlAddEventHandler [
-    "SliderPosChanged",
-    {
+    "SliderPosChanged", {
         params ["_ctrlSlider", "_value"];
         (_ctrlSlider getVariable "cba_settings_params") params [
             "_setting", "_source",
@@ -123,8 +116,7 @@ _ctrlSliderEdit setVariable [
 ];
 
 _ctrlSliderEdit ctrlAddEventHandler [
-    "KeyUp",
-    {
+    "KeyUp", {
         params ["_ctrlSliderEdit"];
         (_ctrlSliderEdit getVariable "cba_settings_params") params [
             "_setting", "_source",
@@ -133,14 +125,10 @@ _ctrlSliderEdit ctrlAddEventHandler [
 
         private _value = parseNumber ctrlText _ctrlSliderEdit;
 
-        if (_isPercentage) then
-        {
+        if (_isPercentage) then {
             _value = _value / 100;
-        }
-        else
-        {
-            if (_trailingDecimals < 0) then
-            {
+        } else {
+            if (_trailingDecimals < 0) then {
                 _value = round _value;
             };
         };
@@ -171,8 +159,7 @@ _ctrlSliderEdit ctrlAddEventHandler [
 ];
 
 _ctrlSliderEdit ctrlAddEventHandler [
-    "KillFocus",
-    {
+    "KillFocus", {
         params ["_ctrlSliderEdit"];
         (_ctrlSliderEdit getVariable "cba_settings_params") params [
             "_setting", "_source",
@@ -200,8 +187,7 @@ _ctrlSliderEdit ctrlAddEventHandler [
 ];
 
 _controlsGroup setVariable [
-    "cba_settings_fnc_updateUI",
-    {
+    "cba_settings_fnc_updateUI", {
         params ["_controlsGroup", "_value"];
         (_controlsGroup getVariable "cba_settings_params") params [
             "_min", "_max",

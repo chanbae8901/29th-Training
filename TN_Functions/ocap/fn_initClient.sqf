@@ -19,8 +19,7 @@ params ["_autoStart"];
 if !(hasInterface) exitWith {};
 
 //do OCAP initalization on players outside of capture loop so we can save proper marker info
-if !(_autoStart) then
-{
+if !(_autoStart) then {
     [{!isNull player}, {
         [player] remoteExecCall
             [QFUNC(initializePlayer), 2];

@@ -14,8 +14,7 @@
 
 params ["_unitName", "_side"];
 
-private _colorString = switch (_side) do
-{
+private _colorString = switch (_side) do {
     case west:       { "#155DFC" };
     case east:       { "#B40404" };
     case resistance: { "#088A08" };

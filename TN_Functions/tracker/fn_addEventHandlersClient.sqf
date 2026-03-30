@@ -16,8 +16,7 @@
 player addEventHandler ["FiredMan",
     { call FUNC(handleFired) }];
 
-["ace_advanced_throwing_throwFiredXEH",
-{
+["ace_advanced_throwing_throwFiredXEH", {
     if (!local (_this select 0)) exitWith {};
     call FUNC(handleFired);
 }] call CBA_fnc_addEventHandler;
@@ -41,8 +40,7 @@ GVAR(lastFireCheck) = 0;
 addMissionEventHandler ["EntityKilled",
     { call FUNC(handleVehicleKilled) }];
 
-player addEventHandler ["Respawn",
-{
+player addEventHandler ["Respawn", {
     params ["_unit"];
     _unit setVariable [QGVAR(burnInstigator), nil];
     _unit setVariable [QGVAR(burnInstigatorTime), nil];
