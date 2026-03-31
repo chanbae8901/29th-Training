@@ -35,6 +35,7 @@ if (isServer) then {
     {
         if (admin (owner _x) isEqualTo 2) exitWith {
             GVAR(adminClient) = owner _x;
+            publicVariable QGVAR(adminClient);
         };
     } forEach (allPlayers - entities "HeadlessClient_F");
 
@@ -43,6 +44,7 @@ if (isServer) then {
             params ["_unit", "_loggedIn"];
             if (isNull _unit) exitWith {};
             GVAR(adminClient) = [2, owner _unit] select _loggedIn;
+            publicVariable QGVAR(adminClient);
         }
     ] call CBA_fnc_addEventHandler;    
 };

@@ -60,6 +60,9 @@ if !(isNil "_commandCode") then {
         private _msg = format ["%1 executed command !%2 %3", name player, _command, _argument];
         _msg remoteExecCall [QEFUNC(common,diag_log), 2];
         ["Log", ["Commands", _msg]] remoteExecCall [QEFUNC(common,addDiaryRecord)];
+        if (clientOwner isNotEqualTo EGVAR(common,adminClient)) then {
+             _msg call EFUNC(common,notifyAdmin) 
+        };
     };
 } else {
     systemChat format ["Unknown command: !%1", _command];
