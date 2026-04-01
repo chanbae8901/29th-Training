@@ -24,19 +24,15 @@ uiNamespace setVariable [
     "cba_settings_source", _selectedSource
 ];
 
-private _selectedAddon =
-    uiNamespace getVariable QGVAR(addon);
+private _selectedAddon = uiNamespace getVariable QGVAR(addon);
 
 {
     (_x splitString "$") params [
         "", "_addon", "_source"
     ];
 
-    private _ctrlOptionsGroup =
-        _display getVariable _x;
-    private _isSelected =
-        _source == _selectedSource
-        && {_addon == _selectedAddon};
+    private _ctrlOptionsGroup = _display getVariable _x;
+    private _isSelected = _source == _selectedSource && {_addon == _selectedAddon};
 
     _ctrlOptionsGroup ctrlEnable _isSelected;
     _ctrlOptionsGroup ctrlShow _isSelected;

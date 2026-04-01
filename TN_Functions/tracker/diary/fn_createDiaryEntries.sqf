@@ -25,8 +25,7 @@ params [
 ];
 
 if !(player diarySubjectExists "RoundEventLog") then {
-    player createDiarySubject
-        ["RoundEventLog", "Round Event Log"];
+    player createDiarySubject ["RoundEventLog", "Round Event Log"];
     private _infoLines = [
         "All Events show every recorded event for"
         + " each round. (Kills, Unconscious,"
@@ -40,10 +39,8 @@ if !(player diarySubjectExists "RoundEventLog") then {
     _infoLines pushBack
         "Information is updated at the end of"
         + " the round.";
-    private _infoText =
-        _infoLines joinString "<br />";
-    player createDiaryRecord
-        ["RoundEventLog", ["Information", _infoText]];
+    private _infoText = _infoLines joinString "<br />";
+    player createDiaryRecord ["RoundEventLog", ["Information", _infoText]];
 };
 
 // Generate all event strings and store from last to first.
@@ -59,9 +56,7 @@ for "_i" from (_numEvents - 1) to 0 step -1 do {
 };
 
 // Find all player relevant events.
-private _playerEventIndexes =
-    [_playerIndex, _events]
-        call FUNC(findPlayerEvents);
+private _playerEventIndexes = [_playerIndex, _events] call FUNC(findPlayerEvents);
 
 // "Reverse" numbers so they conform with _eventStrings indexes.
 for "_i" from 0
@@ -76,10 +71,8 @@ for "_i" from 0
 private _playerEventStrings = [];
 for "_i" from (count _playerEventIndexes - 1)
     to 0 step -1 do {
-    private _playerEventIndex =
-        _playerEventIndexes select _i;
-    _playerEventStrings pushBack
-        (_eventStrings select _playerEventIndex);
+    private _playerEventIndex = _playerEventIndexes select _i;
+    _playerEventStrings pushBack (_eventStrings select _playerEventIndex);
 };
 
 private _title = format [
@@ -92,10 +85,8 @@ private _copyButton = format [
     "RoundEventLog", _title
 ];
 _playerEventStrings pushBack _copyButton;
-private _text =
-    _playerEventStrings joinString "<br />";
-player createDiaryRecord
-    ["RoundEventLog", [_title, _text]];
+private _text = _playerEventStrings joinString "<br />";
+player createDiaryRecord ["RoundEventLog", [_title, _text]];
 
 _title = format [
     "Round %1 - All Events", _roundNum
@@ -108,12 +99,10 @@ _copyButton = format [
 ];
 _eventStrings pushBack _copyButton;
 _text = _eventStrings joinString "<br />";
-player createDiaryRecord
-    ["RoundEventLog", [_title, _text]];
+player createDiaryRecord ["RoundEventLog", [_title, _text]];
 
 if !(player diarySubjectExists "RoundScoreboard") then {
-    player createDiarySubject
-        ["RoundScoreboard", "Round Scoreboard"];
+    player createDiarySubject ["RoundScoreboard", "Round Scoreboard"];
     private _infoLines = [
         "Lists how many infantry kills (no vehicles)"
         + " each player got during the round, from"
@@ -128,19 +117,13 @@ if !(player diarySubjectExists "RoundScoreboard") then {
     _infoLines pushBack
         "Information is updated at the end of"
         + " the round.";
-    private _infoText =
-        _infoLines joinString "<br />";
-    player createDiaryRecord
-        ["RoundScoreboard",
-         ["Information", _infoText]];
+    private _infoText = _infoLines joinString "<br />";
+    player createDiaryRecord ["RoundScoreboard", ["Information", _infoText]];
 };
 
-private _killCounts =
-    [_events, _sides]
-        call FUNC(getKillCounts);
+private _killCounts = [_events, _sides] call FUNC(getKillCounts);
 _title = format ["Round %1", _roundNum];
-_text = [_killCounts, _names]
-    call FUNC(killCountsToString);
+_text = [_killCounts, _names] call FUNC(killCountsToString);
 _copyButton = format [
     "<br /><execute expression='[""%1"",""%2""]"
     + " call TN_tracker_fnc_copyRecordToClipboard;'>"
@@ -148,7 +131,6 @@ _copyButton = format [
     "RoundScoreboard", _title
 ];
 _text = _text + _copyButton;
-player createDiaryRecord
-    ["RoundScoreboard", [_title, _text]];
+player createDiaryRecord ["RoundScoreboard", [_title, _text]];
 
 nil

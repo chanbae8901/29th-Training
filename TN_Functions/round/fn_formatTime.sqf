@@ -27,29 +27,20 @@ private _timeParts = [];
 
 /* --- Hours --- */
 if (_hours > 0) then {
-    private _hourWord = ["Hours", "Hour"]
-        select (_hours isEqualTo 1 || _forceNoS);
-    _timeParts pushBack format [
-        "%1 %2", _hours, _hourWord
-    ];
+    private _hourWord = ["Hours", "Hour"] select (_hours isEqualTo 1 || _forceNoS);
+    _timeParts pushBack format ["%1 %2", _hours, _hourWord];
 };
 
 /* --- Minutes --- */
 if (_mins > 0) then {
-    private _minWord = ["Minutes", "Minute"]
-        select (_mins isEqualTo 1 || _forceNoS);
-    _timeParts pushBack format [
-        "%1 %2", _mins, _minWord
-    ];
+    private _minWord = ["Minutes", "Minute"] select (_mins isEqualTo 1 || _forceNoS);
+    _timeParts pushBack format ["%1 %2", _mins, _minWord];
 };
 
 /* --- Seconds (always shown if nothing else) --- */
 if (_secs > 0 || _timeParts isEqualTo []) then {
-    private _secWord = ["Seconds", "Second"]
-        select (_secs isEqualTo 1 || _forceNoS);
-    _timeParts pushBack format [
-        "%1 %2", _secs, _secWord
-    ];
+    private _secWord = ["Seconds", "Second"] select (_secs isEqualTo 1 || _forceNoS);
+    _timeParts pushBack format ["%1 %2", _secs, _secWord];
 };
 
 private _timeText = _timeParts joinString " ";

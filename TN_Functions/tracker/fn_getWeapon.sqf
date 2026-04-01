@@ -13,12 +13,9 @@
  * Weapon description <STRING>
  */
 
-private _weaponCfg =
-    configFile >> "CfgWeapons" >> _weapon;
-_weaponCfg = [_weaponCfg, _weaponCfg >> _muzzle]
-    select (_weapon isNotEqualTo _muzzle);
-private _weaponName =
-    getText (_weaponCfg >> "displayName");
+private _weaponCfg = configFile >> "CfgWeapons" >> _weapon;
+_weaponCfg = [_weaponCfg, _weaponCfg >> _muzzle] select (_weapon isNotEqualTo _muzzle);
+private _weaponName = getText (_weaponCfg >> "displayName");
 
 if (isNull _vehicle) then {
     // Hand grenade case.
@@ -36,8 +33,7 @@ if (isNull _vehicle) then {
         if (_shortName isEqualTo "") exitWith {
             _fullName;
         };
-        [_fullName, _shortName]
-            select (count _shortName < count _fullName);
+        [_fullName, _shortName] select (count _shortName < count _fullName);
     };
 
     // RHS disposable launcher case.
@@ -69,8 +65,7 @@ if (isNull _vehicle) then {
             configFile >> "CfgMagazines"
                 >> _magazine >> "displayName"
         );
-        private _ammoName = [_shortName, _longName]
-            select (_shortName isEqualTo "");
+        private _ammoName = [_shortName, _longName] select (_shortName isEqualTo "");
         _strs pushBack _ammoName;
     };
 
@@ -108,8 +103,7 @@ if (isNull _vehicle) then {
             configFile >> "CfgMagazines"
                 >> _magazine >> "displayName"
         );
-        private _ammoName = [_shortName, _longName]
-            select (_shortName isEqualTo "");
+        private _ammoName = [_shortName, _longName] select (_shortName isEqualTo "");
         _strs pushBack _ammoName;
     };
 

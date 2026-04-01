@@ -20,12 +20,8 @@
 
 params [["_flashColor", [0.91, 0.78, 0.25, 0.8]]];
 
-private _bg = uiNamespace getVariable [
-    QGVAR(readyUI_bg), controlNull
-];
-private _shineSlices = uiNamespace getVariable [
-    QGVAR(readyUI_shineSlices), []
-];
+private _bg = uiNamespace getVariable [QGVAR(readyUI_bg), controlNull];
+private _shineSlices = uiNamespace getVariable [QGVAR(readyUI_shineSlices), []];
 if (
     isNull _bg || _shineSlices isEqualTo []
 ) exitWith {};
@@ -35,14 +31,11 @@ if !(ctrlShown _bg) exitWith {};
 
 // Cancel any in-progress shine animation
 if !(isNil QGVAR(readyUI_shinePFH)) then {
-    [GVAR(readyUI_shinePFH)]
-        call CBA_fnc_removePerFrameHandler;
+    [GVAR(readyUI_shinePFH)] call CBA_fnc_removePerFrameHandler;
     GVAR(readyUI_shinePFH) = nil;
 };
 
-uiNamespace setVariable [
-    QGVAR(readyUI_flashActive), true
-];
+uiNamespace setVariable [QGVAR(readyUI_flashActive), true];
 
 // Get current panel bounds
 private _bgPos = ctrlPosition _bg;
@@ -52,10 +45,8 @@ _bgPos params [
 
 private _sliceH = _panelH / SHINE_SLICES;
 // Total distance each slice must travel (enough for the most-offset slice to clear the panel)
-private _maxOffset =
-    (SHINE_SLICES - 1) * SHINE_STAGGER;
-private _totalTravel =
-    SHINE_WIDTH + _panelW + _maxOffset;
+private _maxOffset = (SHINE_SLICES - 1) * SHINE_STAGGER;
+private _totalTravel = SHINE_WIDTH + _panelW + _maxOffset;
 private _startTime = diag_tickTime;
 _flashColor params ["_fr", "_fg", "_fb", "_fa"];
 
@@ -77,15 +68,12 @@ GVAR(readyUI_shinePFH) = [ {
             "_fr", "_fg", "_fb", "_fa"
         ];
 
-        private _elapsed =
-            diag_tickTime - _startTime;
-        private _progress =
-            (_elapsed / SHINE_DURATION) min 1;
+        private _elapsed = diag_tickTime - _startTime;
+        private _progress = (_elapsed / SHINE_DURATION) min 1;
 
         {
             private _i = _forEachIndex;
-            private _sliceY =
-                _panelY + (_i * _sliceH);
+            private _sliceY = _panelY + (_i * _sliceH);
 
             // Each lower slice starts further left — creates the diagonal angle
             private _idealX =
@@ -94,13 +82,9 @@ GVAR(readyUI_shinePFH) = [ {
                 + (_totalTravel * _progress);
 
             // Clip to panel bounds so nothing leaks outside the box
-            private _leftEdge =
-                _idealX max _panelX;
-            private _rightEdge =
-                (_idealX + SHINE_WIDTH)
-                min (_panelX + _panelW);
-            private _visW =
-                _rightEdge - _leftEdge;
+            private _leftEdge = _idealX max _panelX;
+            private _rightEdge = (_idealX + SHINE_WIDTH) min (_panelX + _panelW);
+            private _visW = _rightEdge - _leftEdge;
 
             if (_visW > 0) then {
                 _x ctrlSetPosition [
@@ -123,12 +107,9 @@ GVAR(readyUI_shinePFH) = [ {
                 _x ctrlShow false;
                 _x ctrlCommit 0;
             } forEach _shineSlices;
-            uiNamespace setVariable [
-                QGVAR(readyUI_flashActive), false
-            ];
+            uiNamespace setVariable [QGVAR(readyUI_flashActive), false];
             GVAR(readyUI_shinePFH) = nil;
-            [_pfhHandle]
-                call CBA_fnc_removePerFrameHandler;
+            [_pfhHandle] call CBA_fnc_removePerFrameHandler;
         };
     },
     0,

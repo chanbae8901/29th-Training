@@ -26,8 +26,7 @@
         _handle call CBA_fnc_removePerFrameHandler;
     };
 
-    private _allSidesReady =
-        call FUNC(checkAllSidesReady);
+    private _allSidesReady = call FUNC(checkAllSidesReady);
 
     /* --- Abort if a team unreadied and we're not forced --- */
     if !(_allSidesReady || GVAR(ignoreReadiness)) exitWith {
@@ -42,8 +41,7 @@
         RESET_SAFESTART_VARS;
         [-1] call BIS_fnc_countdown;
 
-        [QGVAR(safeStartAborted), []]
-            call CBA_fnc_globalEvent;
+        [QGVAR(safeStartAborted), []] call CBA_fnc_globalEvent;
     };
 
     /* --- Go live when countdown expires --- */

@@ -37,12 +37,10 @@ uiNamespace setVariable [
 ];
 #include "fn_initClient.inc.sqf"
 
-private _ctrlAddonsGroup =
-    _display displayCtrl 4301;
+private _ctrlAddonsGroup = _display displayCtrl 4301;
 
 with uiNamespace do {
-    GVAR(serverTemp) =
-        _display ctrlCreate ["RscText", -1];
+    GVAR(serverTemp) = _display ctrlCreate ["RscText", -1];
 };
 
 private _ctrlAddonList = _display ctrlCreate [
@@ -69,8 +67,7 @@ private _categories = [];
             _categoryLocalized = localize _category;
         };
 
-        private _index =
-            _ctrlAddonList lbAdd _categoryLocalized;
+        private _index = _ctrlAddonList lbAdd _categoryLocalized;
         _ctrlAddonList lbSetData [_index, str _index];
         _display setVariable [
             str _index, _categoryLower
@@ -87,8 +84,7 @@ _ctrlAddonList lbSetCurSel (
     ]
 );
 
-_ctrlAddonsGroup
-    call FUNC(gui_sourceChanged);
+_ctrlAddonsGroup call FUNC(gui_sourceChanged);
 
 private _ctrlScriptedOK = _display displayCtrl 999;
 _ctrlScriptedOK ctrlEnable false;
@@ -97,8 +93,7 @@ _ctrlScriptedOK ctrlShow false;
 private _ctrlConfirm = _display ctrlCreate [
     "RscButtonMenuOK", 2
 ];
-_ctrlConfirm ctrlSetPosition
-    ctrlPosition _ctrlScriptedOK;
+_ctrlConfirm ctrlSetPosition ctrlPosition _ctrlScriptedOK;
 _ctrlConfirm ctrlCommit 0;
 _ctrlConfirm ctrlAddEventHandler [
     "ButtonClick",

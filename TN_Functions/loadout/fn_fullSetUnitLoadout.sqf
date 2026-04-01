@@ -34,8 +34,7 @@ if (primaryWeapon _unit isEqualTo "") then {
     _unit action ["SwitchWeapon", _unit, _unit, -1];
 };
 
-private _scriptHandle =
-    [_unit] spawn FUNC(resetWeaponState);
+private _scriptHandle = [_unit] spawn FUNC(resetWeaponState);
 
 // Wait so that setInsignia does not correctly assume
 // non-combat loadout.

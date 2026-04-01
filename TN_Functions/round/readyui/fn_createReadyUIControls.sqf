@@ -25,34 +25,22 @@ _bg ctrlSetBackgroundColor BG_COLOR;
 _bg ctrlShow false;
 _bg ctrlCommit 0;
 
-private _content =
-    _display ctrlCreate ["RscStructuredText", -1];
+private _content = _display ctrlCreate ["RscStructuredText", -1];
 _content ctrlShow false;
 _content ctrlCommit 0;
 
 // Diagonal shine slices — stacked horizontal strips that sweep with offset
 private _shineSlices = [];
 for "_i" from 0 to (SHINE_SLICES - 1) do {
-    private _slice =
-        _display ctrlCreate ["RscText", -1];
+    private _slice = _display ctrlCreate ["RscText", -1];
     _slice ctrlShow false;
     _slice ctrlCommit 0;
     _shineSlices pushBack _slice;
 };
 
-uiNamespace setVariable [
-    QGVAR(readyUI_bg), _bg
-];
-uiNamespace setVariable [
-    QGVAR(readyUI_content), _content
-];
-uiNamespace setVariable [
-    QGVAR(readyUI_shineSlices), _shineSlices
-];
-uiNamespace setVariable [
-    QGVAR(readyUI_display), _display
-];
-uiNamespace setVariable [
-    QGVAR(readyUI_flashActive), false
-];
+uiNamespace setVariable [QGVAR(readyUI_bg), _bg];
+uiNamespace setVariable [QGVAR(readyUI_content), _content];
+uiNamespace setVariable [QGVAR(readyUI_shineSlices), _shineSlices];
+uiNamespace setVariable [QGVAR(readyUI_display), _display];
+uiNamespace setVariable [QGVAR(readyUI_flashActive), false];
 true

@@ -20,68 +20,43 @@
 
 // === Phase A: Display transition (Zeus enter/exit) ===
 // If the active display changed, destroy old controls so they rebuild below.
-private _activeDisplay =
-    call FUNC(getActiveDisplay);
-private _createdOn = uiNamespace getVariable [
-    QGVAR(readyUI_display), displayNull
-];
+private _activeDisplay = call FUNC(getActiveDisplay);
+private _createdOn = uiNamespace getVariable [QGVAR(readyUI_display), displayNull];
 if (
     !isNull _createdOn
     && {_activeDisplay isNotEqualTo _createdOn}
 ) then {
-    private _oldBg = uiNamespace getVariable [
-        QGVAR(readyUI_bg), controlNull
-    ];
-    private _oldContent = uiNamespace getVariable [
-        QGVAR(readyUI_content), controlNull
-    ];
+    private _oldBg = uiNamespace getVariable [QGVAR(readyUI_bg), controlNull];
+    private _oldContent = uiNamespace getVariable [QGVAR(readyUI_content), controlNull];
     if !(isNull _oldBg) then { ctrlDelete _oldBg };
     if !(isNull _oldContent) then {
         ctrlDelete _oldContent;
     };
     {
         if !(isNull _x) then { ctrlDelete _x };
-    } forEach (uiNamespace getVariable [
-        QGVAR(readyUI_shineSlices), []
-    ]);
-    uiNamespace setVariable [
-        QGVAR(readyUI_bg), controlNull
-    ];
-    uiNamespace setVariable [
-        QGVAR(readyUI_content), controlNull
-    ];
-    uiNamespace setVariable [
-        QGVAR(readyUI_shineSlices), []
-    ];
-    uiNamespace setVariable [
-        QGVAR(readyUI_display), displayNull
-    ];
+    } forEach (uiNamespace getVariable [QGVAR(readyUI_shineSlices), []]);
+    uiNamespace setVariable [QGVAR(readyUI_bg), controlNull];
+    uiNamespace setVariable [QGVAR(readyUI_content), controlNull];
+    uiNamespace setVariable [QGVAR(readyUI_shineSlices), []];
+    uiNamespace setVariable [QGVAR(readyUI_display), displayNull];
     // Kill in-flight shine — those slices no longer exist
     if !(isNil QGVAR(readyUI_shinePFH)) then {
-        [GVAR(readyUI_shinePFH)]
-            call CBA_fnc_removePerFrameHandler;
+        [GVAR(readyUI_shinePFH)] call CBA_fnc_removePerFrameHandler;
         GVAR(readyUI_shinePFH) = nil;
     };
-    uiNamespace setVariable [
-        QGVAR(readyUI_flashActive), false
-    ];
+    uiNamespace setVariable [QGVAR(readyUI_flashActive), false];
     GVAR(readyUI_dirty) = true;
 };
 
-private _bg = uiNamespace getVariable [
-    QGVAR(readyUI_bg), controlNull
-];
-private _content = uiNamespace getVariable [
-    QGVAR(readyUI_content), controlNull
-];
+private _bg = uiNamespace getVariable [QGVAR(readyUI_bg), controlNull];
+private _content = uiNamespace getVariable [QGVAR(readyUI_content), controlNull];
 
 // Recreate controls if destroyed (display transitions, respawn, etc.)
 if (isNull _bg || isNull _content) then {
     if !(call FUNC(createReadyUIControls))
         exitWith {};
     _bg = uiNamespace getVariable QGVAR(readyUI_bg);
-    _content = uiNamespace getVariable
-        QGVAR(readyUI_content);
+    _content = uiNamespace getVariable QGVAR(readyUI_content);
     GVAR(readyUI_dirty) = true;
 };
 
@@ -102,23 +77,17 @@ if (
     _content ctrlShow false;
     {
         _x ctrlShow false;
-    } forEach (uiNamespace getVariable [
-        QGVAR(readyUI_shineSlices), []
-    ]);
-    uiNamespace setVariable [
-        QGVAR(readyUI_flashActive), false
-    ];
+    } forEach (uiNamespace getVariable [QGVAR(readyUI_shineSlices), []]);
+    uiNamespace setVariable [QGVAR(readyUI_flashActive), false];
     if !(isNil QGVAR(readyUI_shinePFH)) then {
-        [GVAR(readyUI_shinePFH)]
-            call CBA_fnc_removePerFrameHandler;
+        [GVAR(readyUI_shinePFH)] call CBA_fnc_removePerFrameHandler;
         GVAR(readyUI_shinePFH) = nil;
     };
 };
 
 // Periodic refresh — catches player count changes (join/leave/side switch)
 // Every ~60 frames (~2s at 30fps) mark dirty to recheck team populations
-GVAR(readyUI_refreshCounter) =
-    (GVAR(readyUI_refreshCounter) + 1) mod 60;
+GVAR(readyUI_refreshCounter) = (GVAR(readyUI_refreshCounter) + 1) mod 60;
 if (GVAR(readyUI_refreshCounter) isEqualTo 0) then {
     GVAR(readyUI_dirty) = true;
 };
@@ -152,8 +121,7 @@ if (GVAR(readyUI_dirty)) then {
             continue;
         };
 
-        private _ready =
-            GVAR(sideReady) select _idx;
+        private _ready = GVAR(sideReady) select _idx;
         private _status = if (_ready) then {
             "<t color='#8BC34A' size='0.85' align='right'>READY</t>"
         } else {
@@ -171,13 +139,10 @@ if (GVAR(readyUI_dirty)) then {
         _bg ctrlShow false;
         _content ctrlShow false;
     } else {
-        _content ctrlSetStructuredText
-            parseText (_lines joinString "<br/>");
+        _content ctrlSetStructuredText parseText (_lines joinString "<br/>");
 
         // Dynamic height based on line count
-        private _totalHeight =
-            (count _lines * LINE_HEIGHT)
-            + (PADDING * 2);
+        private _totalHeight = (count _lines * LINE_HEIGHT) + (PADDING * 2);
 
         // Center horizontally when in Zeus, otherwise anchor to MP HUD
         private _posX = if (
@@ -211,9 +176,7 @@ if (GVAR(readyUI_dirty)) then {
 // Skip if panel isn't visible (no-lines edge case, or Phase B hid controls)
 if !(ctrlShown _bg) exitWith {};
 
-private _flashActive = uiNamespace getVariable [
-    QGVAR(readyUI_flashActive), false
-];
+private _flashActive = uiNamespace getVariable [QGVAR(readyUI_flashActive), false];
 
 // Flash overrides pulse — don't touch background color while shine is active
 if (!_flashActive) then {
@@ -234,8 +197,7 @@ if (!_flashActive) then {
                     if !(
                         GVAR(sideReady) select _idx
                     ) then {
-                        _unreadyTints pushBack
-                            _pulseTint;
+                        _unreadyTints pushBack _pulseTint;
                     };
                 };
             };
@@ -243,11 +205,8 @@ if (!_flashActive) then {
 
         if (_unreadyTints isNotEqualTo []) then {
             // Cycle through unready teams — each gets one full breath
-            private _cycleIdx =
-                floor(diag_tickTime / PULSE_CYCLE)
-                mod count _unreadyTints;
-            private _tint =
-                _unreadyTints select _cycleIdx;
+            private _cycleIdx = floor(diag_tickTime / PULSE_CYCLE) mod count _unreadyTints;
+            private _tint = _unreadyTints select _cycleIdx;
 
             // Breathing intensity (sine wave)
             private _t = 0.5 + 0.5 * sin (

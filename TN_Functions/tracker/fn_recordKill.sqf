@@ -20,16 +20,14 @@
 params ["_unit", "_killer", "_instigator"];
 if (GVAR(startTime) isEqualTo -1) exitWith { false };
 
-private _timeStamp =
-    round (serverTime - GVAR(startTime));
+private _timeStamp = round (serverTime - GVAR(startTime));
 
 private _eventType =
     if (_unit isKindOf "Man")
         then { INFANTRY_KILL_NUM }
         else { VEHICLE_KILL_NUM };
 
-private _unitName =
-    [_unit] call FUNC(getName);
+private _unitName = [_unit] call FUNC(getName);
 
 // Need group since ACE3? sets uncon men to CIV but not
 // the group.
@@ -96,14 +94,9 @@ if (_eventType isEqualTo VEHICLE_KILL_NUM
             (getPosASL _unit)
                 distance (getPosASL _instigator)
         );
-        private _side =
-            [_instigator] call _fn_resolveInstigatorSide;
+        private _side = [_instigator] call _fn_resolveInstigatorSide;
         _killInfo append [
-            [
-                _instigator
-                    call FUNC(getName),
-                _side
-            ],
+            [_instigator call FUNC(getName), _side],
             _distance,
             _weapon
         ];
@@ -116,22 +109,18 @@ if (_eventType isEqualTo VEHICLE_KILL_NUM
             _timeStamp
         ];
 
-        [crew _unit, _instigatorInfo]
-            call FUNC(sendHit);
+        [crew _unit, _instigatorInfo] call FUNC(sendHit);
     };
 };
 
 if (!isNil "_lastHit" && !_override) then {
     if !(isNull _instigator) then {
-        private _side =
-            [_instigator] call _fn_resolveInstigatorSide;
+        private _side = [_instigator] call _fn_resolveInstigatorSide;
         _lastHit = [
             _instigator call FUNC(getName),
             _side
         ];
-        private _hitInfo =
-            (_unit getVariable QGVAR(hitMap))
-                get _lastHit;
+        private _hitInfo = (_unit getVariable QGVAR(hitMap)) get _lastHit;
         if (isNil "_hitInfo") then {
             _hitInfo = [
                 getPosASL _instigator, "?", _timeStamp

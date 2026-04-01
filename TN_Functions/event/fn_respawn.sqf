@@ -47,8 +47,7 @@ if (_playerDeaths >= GVAR(numberOfLives)) then {
         private _point = getPosASL GVAR(spectateArea);
 
         titleText [
-            "<t color='#ffffff' size='4'>"
-                + "Out of Lives!</t>",
+            "<t color='#ffffff' size='4'>Out of Lives!</t>",
             "BLACK OUT", 0.5, true, true
         ];
         player allowDamage false;
@@ -92,8 +91,7 @@ if (_playerDeaths >= GVAR(numberOfLives)) then {
 
         player allowDamage true;
         titleText [
-            "<t color='#ffffff' size='4'>"
-                + "Out of Lives!</t>",
+            "<t color='#ffffff' size='4'>Out of Lives!</t>",
             "BLACK IN", 0.5, true, true
         ];
 

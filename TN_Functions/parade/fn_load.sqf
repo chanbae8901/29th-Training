@@ -25,8 +25,7 @@
 private _savedLoadouts = profileNamespace getVariable [
     "ace_arsenal_saved_loadouts", []
 ];
-private _customParadeIdx =
-    _savedLoadouts findIf { _x select 0 == "Forced Parade" };
+private _customParadeIdx = _savedLoadouts findIf { _x select 0 == "Forced Parade" };
 
 if (_customParadeIdx isEqualTo -1) then {
     // No custom parade loadout -- use default config.
@@ -38,8 +37,7 @@ if (_customParadeIdx isEqualTo -1) then {
     ] call BIS_fnc_loadInventory;
 } else {
     // Apply the player's custom "Forced Parade" loadout.
-    private _customParade =
-        (_savedLoadouts select _customParadeIdx) select 1;
+    private _customParade = (_savedLoadouts select _customParadeIdx) select 1;
     [player, _customParade, true] call CBA_fnc_setLoadout;
 
     // Holster weapon if no primary exists.

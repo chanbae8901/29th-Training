@@ -15,12 +15,9 @@
 params ["_subject", "_title"];
 
 private _allRoundRecords = player allDiaryRecords _subject;
-private _idx =
-    _allRoundRecords findIf { _x select 1 isEqualTo _title };
-private _recordText =
-    (_allRoundRecords select _idx) select 2;
-_recordText =
-    _recordText select [0, _recordText find "<execute"];
+private _idx = _allRoundRecords findIf { _x select 1 isEqualTo _title };
+private _recordText = (_allRoundRecords select _idx) select 2;
+_recordText = _recordText select [0, _recordText find "<execute"];
 _recordText call FUNC(copyToClipboard);
 systemChat "Copied to clipboard. (HTML format)";
 

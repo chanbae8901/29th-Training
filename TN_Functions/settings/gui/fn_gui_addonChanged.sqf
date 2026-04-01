@@ -23,8 +23,7 @@
 params ["_control", "_index"];
 
 private _display = ctrlParent _control;
-private _selectedAddon =
-    _display getVariable (_control lbData _index);
+private _selectedAddon = _display getVariable (_control lbData _index);
 
 if (isNil "_selectedAddon") exitWith {};
 
@@ -46,20 +45,14 @@ if !(_display getVariable [_selectedAddon, false]) then {
             "_control", "_tablePosY", "_height"
         ];
 
-        private _config =
-            configFile >> ctrlClassName _control;
+        private _config = configFile >> ctrlClassName _control;
         if (isNull _config) then {
-            _config =
-                missionConfigFile
-                >> ctrlClassName _control;
+            _config = missionConfigFile >> ctrlClassName _control;
         };
 
-        private _posX =
-            getNumber (_config >> "x");
-        private _posY =
-            getNumber (_config >> "y") + _tablePosY;
-        private _width =
-            getNumber (_config >> "w");
+        private _posX = getNumber (_config >> "x");
+        private _posY = getNumber (_config >> "y") + _tablePosY;
+        private _width = getNumber (_config >> "w");
 
         if (isNil "_height") then {
             _height = getNumber (_config >> "h");
@@ -73,8 +66,7 @@ if !(_display getVariable [_selectedAddon, false]) then {
         _posY + _height
     };
 
-    private _lists =
-        _display getVariable "cba_settings_lists";
+    private _lists = _display getVariable "cba_settings_lists";
 
     private _categorySettings = [];
 
@@ -145,10 +137,7 @@ if !(_display getVariable [_selectedAddon, false]) then {
         {
             private _source = toLower _x;
 
-            private _currentValue =
-                SERVER_TEMP getVariable [
-                    _setting, [nil, nil]
-                ] select 0;
+            private _currentValue = SERVER_TEMP getVariable [_setting, [nil, nil]] select 0;
             private _wasEdited = false;
 
             if (isNil "_currentValue") then {
@@ -180,8 +169,7 @@ if !(_display getVariable [_selectedAddon, false]) then {
                     _list, _ctrlOptionsGroup
                 ];
             } else {
-                _ctrlOptionsGroup =
-                    _display getVariable _list;
+                _ctrlOptionsGroup = _display getVariable _list;
             };
 
             if (_createHeader) then {
@@ -191,9 +179,7 @@ if !(_display getVariable [_selectedAddon, false]) then {
                         -1,
                         _ctrlOptionsGroup
                     ];
-                private _ctrlHeaderName =
-                    _ctrlHeaderGroup
-                    controlsGroupCtrl 5010;
+                private _ctrlHeaderName = _ctrlHeaderGroup controlsGroupCtrl 5010;
                 _ctrlHeaderName ctrlSetText format [
                     "%1:", _subCategory
                 ];
@@ -285,9 +271,7 @@ if !(_display getVariable [_selectedAddon, false]) then {
                     default {_defaultValue};
                 };
 
-            private _ctrlDefault =
-                _ctrlSettingGroup
-                controlsGroupCtrl 5020;
+            private _ctrlDefault = _ctrlSettingGroup controlsGroupCtrl 5020;
             _ctrlDefault ctrlSetTooltip (format [
                 "%1\n%2",
                 localize
@@ -308,8 +292,7 @@ if !(_display getVariable [_selectedAddon, false]) then {
                 "cba_settings_groups",
                 _settingControlsGroups
             ];
-            _settingControlsGroups
-                pushBack _ctrlSettingGroup;
+            _settingControlsGroups pushBack _ctrlSettingGroup;
 
             private _tablePosY =
                 _ctrlOptionsGroup getVariable [
@@ -344,9 +327,7 @@ if !(_display getVariable [_selectedAddon, false]) then {
                     call _fnc_controlSetTablePosY;
             };
 
-            private _ctrlSettingName =
-                _ctrlSettingGroup
-                controlsGroupCtrl 5010;
+            private _ctrlSettingName = _ctrlSettingGroup controlsGroupCtrl 5010;
             _ctrlSettingName ctrlSetText format [
                 "%1:", _displayName
             ];
@@ -391,16 +372,11 @@ if !(_display getVariable [_selectedAddon, false]) then {
         "", "_addon", "_source"
     ];
 
-    private _ctrlOptionsGroup =
-        _display getVariable _x;
-    private _isSelected =
-        _source == _selectedSource
-        && {_addon == _selectedAddon};
+    private _ctrlOptionsGroup = _display getVariable _x;
+    private _isSelected = _source == _selectedSource && {_addon == _selectedAddon};
 
     _ctrlOptionsGroup ctrlEnable _isSelected;
     _ctrlOptionsGroup ctrlShow _isSelected;
-} forEach (
-    _display getVariable "cba_settings_lists"
-);
+} forEach (_display getVariable "cba_settings_lists");
 
 nil

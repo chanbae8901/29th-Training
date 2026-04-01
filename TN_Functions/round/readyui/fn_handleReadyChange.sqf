@@ -34,8 +34,7 @@ if (_isReady) then {
             _flashColor = _x select 5;
         };
     } forEach SIDE_DEFS;
-    [_flashColor]
-        call FUNC(flashReadyUI);
+    [_flashColor] call FUNC(flashReadyUI);
 } else {
     // Team unreadied — if no teams ready and no safe start, stop PFH
     if (

@@ -36,19 +36,16 @@ for "_i" from 0 to (_numEvents - 1) do {
 
             // Check if unit was knocked out by player
             // before.
-            private _knockedIndex =
-                _knockedUnconscious find _unitIndex;
+            private _knockedIndex = _knockedUnconscious find _unitIndex;
             if (_knockedIndex isNotEqualTo -1) exitWith {
                 _playerEventIndexes pushBack _i;
-                _knockedUnconscious
-                    deleteAt _knockedIndex;
+                _knockedUnconscious deleteAt _knockedIndex;
             };
 
             // Check if player is knocking out unit, add
             // to _knockedUnconscious.
             if (_state && (count _eventInfo) > 2) then {
-                private _instigatorIndex =
-                    _eventInfo select 2;
+                private _instigatorIndex = _eventInfo select 2;
                 if (_instigatorIndex isNotEqualTo _playerIndex)
                     exitWith {};
                 _playerEventIndexes pushBack _i;
@@ -78,18 +75,15 @@ for "_i" from 0 to (_numEvents - 1) do {
             if (_unitIndex isEqualTo _playerIndex) exitWith {
                 _playerEventIndexes pushBack _i;
             };
-            private _knockedIndex =
-                _knockedUnconscious find _unitIndex;
+            private _knockedIndex = _knockedUnconscious find _unitIndex;
             // Check if unit was knocked out by player
             // before.
             if (_knockedIndex isNotEqualTo -1) exitWith {
                 _playerEventIndexes pushBack _i;
-                _knockedUnconscious
-                    deleteAt _knockedIndex;
+                _knockedUnconscious deleteAt _knockedIndex;
             };
             if (count _eventInfo > 1) then {
-                private _instigatorIndex =
-                    _eventInfo select 1;
+                private _instigatorIndex = _eventInfo select 1;
                 if (_instigatorIndex isEqualTo _playerIndex)
                     exitWith {
                     _playerEventIndexes pushBack _i;
@@ -99,8 +93,7 @@ for "_i" from 0 to (_numEvents - 1) do {
 
         case VEHICLE_KILL_NUM: {
             if (count _eventInfo > 1) then {
-                private _instigatorIndex =
-                    _eventInfo select 1;
+                private _instigatorIndex = _eventInfo select 1;
                 if (_instigatorIndex isEqualTo _playerIndex)
                     exitWith {
                     _playerEventIndexes pushBack _i;
