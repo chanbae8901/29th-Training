@@ -32,3 +32,5 @@
         [QGVAR(preloadFinished)] call CBA_fnc_localEvent;
     };
 }] call CBA_fnc_addEventHandler;
+
+nil

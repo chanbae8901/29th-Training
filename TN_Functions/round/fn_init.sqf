@@ -69,6 +69,8 @@ if (isServer) then {
     }];
 };
 
+#define SHOW_UI ("RscMPProgress" call BIS_fnc_rscLayer) cutRsc ["RscMPProgress", "plain"]
+
 /* ---- Client-side initialization ---- */
 if (hasInterface) then {
     call FUNC(initReadyUI);
@@ -120,18 +122,12 @@ if (hasInterface) then {
     ] call CBA_fnc_addBISPlayerEventHandler;
 
     /* --- Fix countdown not showing if no sectors placed --- */
-    [{!isNull (findDisplay 46)}, {
-        ("RscMPProgress" call BIS_fnc_rscLayer)
-            cutRsc ["RscMPProgress", "plain"];
-    }] call CBA_fnc_waitUntilAndExecute;
+    [{!isNull (findDisplay 46)}, { SHOW_UI }] call CBA_fnc_waitUntilAndExecute;
 
     /* --- Fix countdown not showing after leaving curator --- */
     [
         QGVARMAIN(exitedZeus), {
-            [{
-                ("RscMPProgress" call BIS_fnc_rscLayer)
-                    cutRsc ["RscMPProgress", "plain"];
-            }, [], 0.1] call CBA_fnc_waitAndExecute;
+            [{ SHOW_UI }, [], 0.1] call CBA_fnc_waitAndExecute;
         }
     ] call CBA_fnc_addEventHandler;
 

@@ -53,6 +53,8 @@ v4.5.0
   - Ensure all void functions explicitly return nil
 
 * Convert raw variable/function references to CBA macros (`GVAR`, `FUNC`, `QGVAR`, etc.) across the entire codebase.
+* Add `SERVER_LOG` macro for logging messages to server RPT via `remoteExecCall`.
+* Use `IS_ADMIN` / `IS_ADMIN_LOGGED` CBA macros to replace `serverCommandAvailable "#lock"` checks across the codebase.
 
 * Standardize CBA event names across all modules. Replace event names in cfgEventHandlers
   with `GVARMAIN` macro since they are called outside of function folders.
@@ -90,6 +92,8 @@ v4.5.0
   - Deduplicate admin change event handlers by creating TN_adminStateChanged CBA event.
   - Deduplicate preloadFinished event handlers by creating TN_preloadFinished CBA event.
   - Add `convertSide` utility function, simplifying side string-to-side conversion in ticket and loadout commands.
+  - Add `notifyAdmin` function for sending systemChat messages to the current admin, with `notifySelf` parameter.
+  - Admins notified via systemChat when another player uses a command.
 
 * Curator
   - fn_addPlayerEditable generalized to fn_addEditable
@@ -122,6 +126,7 @@ v4.5.0
   - Uniform message now states if loadout is not the default.
 
 * Round
+  - All players notified in systemChat when a side readies or unreadies.
   - Add safe start time to the Round Ready UI.
   - Safe start timer now restores to the remaining forced duration when a team unreadies after all teams had readied up early,
     adjusted for time passed.

@@ -30,3 +30,5 @@ if (_lr isEqualTo _radio) exitWith {
     GVAR(savedActiveLrSettings) =
         _lr call TFAR_fnc_getLrSettings;
 };
+
+nil

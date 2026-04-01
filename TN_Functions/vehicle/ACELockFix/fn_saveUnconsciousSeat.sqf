@@ -28,3 +28,5 @@ if (alive _unit && {lifeState _unit != "INCAPACITATED"}) exitWith {};
     _unit,
     10
 ] call CBA_fnc_waitUntilAndExecute;
+
+nil

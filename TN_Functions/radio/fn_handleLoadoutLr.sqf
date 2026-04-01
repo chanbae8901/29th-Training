@@ -47,3 +47,5 @@ if (_currentCode isNotEqualTo _correctCode) then {
 };
 
 [_lr, _settings] call TFAR_fnc_setLrSettings;
+
+nil

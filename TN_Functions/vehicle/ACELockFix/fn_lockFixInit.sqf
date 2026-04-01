@@ -52,3 +52,5 @@
         DELAY_UNLOCK(_unit);
     };
 }] call CBA_fnc_addEventHandler;
+
+nil

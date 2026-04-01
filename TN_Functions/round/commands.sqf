@@ -90,7 +90,7 @@
                 // Works based off of local player's side.
                 private _result = [playerSide, true] call FUNC(manageReady);
                 systemChat (["Setting side ready!", "Error: Round already started!", "Error: Side is already ready!"] select _result);
-                if (_result iSEqualTo 0) then {
+                if (_result isEqualTo 0) then {
                     private _msg = format ["%1 readied %2.", name player, [playerSide] call EFUNC(common,convertSide)];
                     _msg remoteExecCall ["systemChat", -clientOwner];
                 };
@@ -102,10 +102,10 @@
             "unready", {
                 private _result = [playerSide, false] call FUNC(manageReady);
                 systemChat (["Setting side unready!", "Error: Round already started!", "Error: Side is already unready!"] select _result);
-                if (_result iSEqualTo 0) then {
+                if (_result isEqualTo 0) then {
                     private _msg = format ["%1 unreadied %2.", name player, [playerSide] call EFUNC(common,convertSide)];
                     _msg remoteExecCall ["systemChat", -clientOwner];
-                };                
+                };
             }
         ],
 
