@@ -94,44 +94,37 @@ forEach allMissionObjects "All";
     _trg setTriggerStatements [_condition, _activate, _deActivate];
 } forEach GVAR(terminals);
 
-//Very messy area below but I'm lazy
 //------- ACE Arsenal via radius from box -------//
-//------- Disable Environment Noises when in radius unless in specator or Zeus -------//
 
 GVAR(arsenalActionId) = -1;
-
-#define ENV_ON 1 fadeEnvironment 1
-#define ENV_OFF 1 fadeEnvironment 0
-GVAR(keepEnvironmentSounds) = false;
+GVAR(inArsenalZone) = false;
 
 [
-    QGVARMAIN(enteredZeus), {
-        GVAR(keepEnvironmentSounds) = true;
-        ENV_ON;
+    QGVAR(enteredArsenalZone), {
+        if (isClass (configFile >> "CfgPatches" >> "ace_main")) then {
+            GVAR(arsenalActionId) = player addAction [
+                "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#bf3eff'>  Ace Arsenal</t>", {
+                    [_this select 1, _this select 1, true] call ace_arsenal_fnc_openBox;
+                },
+                nil, 1.5, true, true, "", "true"
+            ];
+        } else {
+            GVAR(arsenalActionId) = player addAction [
+                "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#bf3eff'>  Virtual Arsenal</t>", {
+                    ["Open", true] call BIS_fnc_arsenal;
+                },
+                nil, 1.5, true, true, "", "true"
+            ];
+        };
     }
 ] call CBA_fnc_addEventHandler;
 
 [
-    QGVARMAIN(exitedZeus), {
-        GVAR(keepEnvironmentSounds) = false;
-        if (GVAR(arsenalActionId) isNotEqualTo -1) then { ENV_OFF };
+    QGVAR(exitedArsenalZone), {
+        player removeAction GVAR(arsenalActionId);
+        GVAR(arsenalActionId) = -1;
     }
 ] call CBA_fnc_addEventHandler;
-
-[
-    QEGVAR(spectator,entered), {
-        GVAR(keepEnvironmentSounds) = true;
-        ENV_ON;
-    }
-] call CBA_fnc_addEventHandler;
-
-[
-    QEGVAR(spectator,exited), {
-        GVAR(keepEnvironmentSounds) = false;
-        if (GVAR(arsenalActionId) isNotEqualTo -1) then { ENV_OFF };
-    }
-] call CBA_fnc_addEventHandler;
-
 
 if (isNil QGVAR(arsenalCenters)) then {
     GVAR(arsenalCenters) = [];
@@ -151,7 +144,10 @@ if (GVAR(arsenalCenters) isNotEqualTo []) then {
 [
     QGVAR(respawnArsenalActionId),
     "Respawn", {
-        GVAR(arsenalActionId) = -1;
+        if (GVAR(inArsenalZone)) then {
+            GVAR(inArsenalZone) = false;
+            [QGVAR(exitedArsenalZone)] call CBA_fnc_localEvent;
+        };
     }
 ] call CBA_fnc_addBISPlayerEventHandler;
 

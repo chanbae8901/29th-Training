@@ -1,11 +1,10 @@
 #include "script_component.hpp"
-#include "..\..\data\templates.hpp"
 
 /*
  * Author: Bae [29th ID]
  * PFH body that checks if the player is within arsenal
- * zone radius and adds/removes the arsenal action
- * accordingly. Also toggles environment sounds.
+ * zone radius and fires enter/exit CBA events on
+ * state transitions.
  *
  * Arguments:
  * PFH args: [radiusSquared]
@@ -16,9 +15,6 @@
  * Example:
  * [{ call TN_base_fnc_arsenalZoneCheck }, 1, [_radiusSquared]] call CBA_fnc_addPerFrameHandler;
  */
-
-#define ENV_ON 1 fadeEnvironment 1
-#define ENV_OFF 1 fadeEnvironment 0
 
 params ["_args", "_handle"];
 _args params ["_radiusSquared"];
@@ -31,32 +27,14 @@ private _inZone = false;
 } forEach GVAR(arsenalCenters);
 
 if (_inZone) then {
-    if (GVAR(arsenalActionId) isEqualTo -1) then {
-        if !(GVAR(keepEnvironmentSounds)) then {
-            ENV_OFF;
-        };
-
-        if (isClass (configFile >> "CfgPatches" >> "ace_main")) then {
-            GVAR(arsenalActionId) = player addAction [
-                "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#bf3eff'>  Ace Arsenal</t>", {
-                    [_this select 1, _this select 1, true] call ace_arsenal_fnc_openBox;
-                },
-                nil, 1.5, true, true, "", "true"
-            ];
-        } else {
-            GVAR(arsenalActionId) = player addAction [
-                "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\gear_ca.paa'/><t color='#bf3eff'>  Virtual Arsenal</t>", {
-                    ["Open", true] call BIS_fnc_arsenal;
-                },
-                nil, 1.5, true, true, "", "true"
-            ];
-        };
+    if !(GVAR(inArsenalZone)) then {
+        GVAR(inArsenalZone) = true;
+        [QGVAR(enteredArsenalZone)] call CBA_fnc_localEvent;
     };
 } else {
-    if (GVAR(arsenalActionId) isNotEqualTo -1) then {
-        ENV_ON;
-        player removeAction GVAR(arsenalActionId);
-        GVAR(arsenalActionId) = -1;
+    if (GVAR(inArsenalZone)) then {
+        GVAR(inArsenalZone) = false;
+        [QGVAR(exitedArsenalZone)] call CBA_fnc_localEvent;
     };
 };
 

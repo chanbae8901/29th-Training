@@ -1,6 +1,9 @@
 #include "script_component.hpp"
 #include "..\..\data\roundState.hpp"
 
+#define ENV_ON 1 fadeEnvironment 1
+#define ENV_OFF 1 fadeEnvironment 0
+
 /*
  * Author: Bae [29th ID]
  * Initializes the training variation of the mission template.
@@ -66,6 +69,51 @@ EGVAR(base,arsenalCenters) = [];
 } forEach _findCenterObjs;
 
 if (hasInterface) then {
+    //------- Disable Environment Noises when in arsenal zone unless in spectator or Zeus -------//
+    GVAR(keepEnvironmentSounds) = false;
+
+    [
+        QGVARMAIN(enteredZeus), {
+            GVAR(keepEnvironmentSounds) = true;
+            ENV_ON;
+        }
+    ] call CBA_fnc_addEventHandler;
+
+    [
+        QGVARMAIN(exitedZeus), {
+            GVAR(keepEnvironmentSounds) = false;
+            if (EGVAR(base,inArsenalZone)) then { ENV_OFF };
+        }
+    ] call CBA_fnc_addEventHandler;
+
+    [
+        QEGVAR(spectator,entered), {
+            GVAR(keepEnvironmentSounds) = true;
+            ENV_ON;
+        }
+    ] call CBA_fnc_addEventHandler;
+
+    [
+        QEGVAR(spectator,exited), {
+            GVAR(keepEnvironmentSounds) = false;
+            if (EGVAR(base,inArsenalZone)) then { ENV_OFF };
+        }
+    ] call CBA_fnc_addEventHandler;
+
+    [
+        QEGVAR(base,enteredArsenalZone), {
+            if !(GVAR(keepEnvironmentSounds)) then {
+                ENV_OFF;
+            };
+        }
+    ] call CBA_fnc_addEventHandler;
+
+    [
+        QEGVAR(base,exitedArsenalZone), {
+            ENV_ON;
+        }
+    ] call CBA_fnc_addEventHandler;
+
     /* Draw base locations on map for curator */
     GVAR(curatorBaseLogic) = objNull;
 
