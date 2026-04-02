@@ -39,7 +39,7 @@ if (_inventory isNotEqualTo []) then {
         systemChat "Player in spectator, skipping rearm.";
     };
 
-    if (EGVAR(base,arsenalActionId) isNotEqualTo -1) exitWith {
+    if (missionNamespace getVariable [QEGVAR(base,inArsenalZone), false]) exitWith {
         systemChat "Player in base, skipping rearm.";
     };
 
@@ -73,7 +73,9 @@ if (_pointCount < 3) then {
             || (!isNull player && alive player)
     };
 
-    call EFUNC(spectator,exit);
+    if (USING_MODULE(spectator)) then {
+        call EFUNC(spectator,exit);
+    };
 
     GVAR(teleporting) = true;
 

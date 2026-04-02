@@ -1,5 +1,4 @@
 #include "script_component.hpp"
-#include "..\..\data\templates.hpp"
 
 /*
  * Author: Bae [29th ID], modified from Hill [29th ID]
@@ -78,11 +77,13 @@ GVAR(garbages) = []; //global variable for cleaner function
 forEach allMissionObjects "All";
 
 {
-    _x addAction [
-        "<img image='\A3\Ui_f\data\GUI\Rsc\RscDisplayEGSpectator\Follow.paa'/><t color='#00ff00'>  Spectator</t>",
-        {[] call EFUNC(spectator,enter)},
-        nil, 6, false, true, "", "true", 4
-    ];
+    if (USING_MODULE(spectator)) then {
+        _x addAction [
+            "<img image='\A3\Ui_f\data\GUI\Rsc\RscDisplayEGSpectator\Follow.paa'/><t color='#00ff00'>  Spectator</t>",
+            {[] call EFUNC(spectator,enter)},
+            nil, 6, false, true, "", "true", 4
+        ];
+    };
 
     private _trg = createTrigger ["EmptyDetector", getPos _x, false];
     _trg setTriggerArea [0, 0, 0, false];
@@ -152,7 +153,7 @@ if (GVAR(arsenalCenters) isNotEqualTo []) then {
 ] call CBA_fnc_addBISPlayerEventHandler;
 
 //- Add Force Parade to BLUFOR Ammo Box -//
-if ("parade" in TN_MODULES) then {
+if (USING_MODULE(parade)) then {
     GVAR(forceParadeActionId) = -1;
 
     FUNC(addForceParadeAction) = {

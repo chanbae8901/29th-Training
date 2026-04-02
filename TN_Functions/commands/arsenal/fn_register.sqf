@@ -32,6 +32,8 @@ if (isNil QGVAR(arsenalObjects)) then {
 
 GVAR(arsenalObjects) pushBack _arsenal;
 
-[[_arsenal]] call EFUNC(curator,addEditable);
+if (USING_MODULE(curator)) then {
+    [[_arsenal]] call EFUNC(curator,addEditable);
+};
 
 nil

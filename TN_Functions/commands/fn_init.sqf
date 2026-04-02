@@ -1,5 +1,4 @@
 #include "script_component.hpp"
-#include "..\..\data\templates.hpp"
 
 /*
  * Author: Bae [29th ID]
