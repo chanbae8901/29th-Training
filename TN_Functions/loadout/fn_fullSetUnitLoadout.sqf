@@ -1,7 +1,7 @@
 #include "script_component.hpp"
 /*
  * Author: Bae [29th ID]
- * Wrapper around CBA_fnc_setLoadout that also resets weapon
+ * Wrapper around CBA_fnc_setLoadout that attempts to reset weapon
  * state (silent weapon bug fix) and reapplies insignia once
  * the reset finishes. Prefer calling this over calling
  * setUnitLoadout directly.
@@ -15,10 +15,10 @@
  * False if unit is not local or alive, true otherwise <BOOL>
  *
  * Example:
- * [player, _loadout, true] call TN_loadout_fnc_fullSetUnitLoadout;
+ * [_unit, _loadout, true] call TN_loadout_fnc_fullSetUnitLoadout;
  */
 
-params ["_unit", "_loadout", "_fullMagazines"];
+params ["_unit"];
 
 if (!local _unit) exitWith {
     ["Unit %1 must be local.", _unit] call BIS_fnc_error;
@@ -27,20 +27,31 @@ if (!local _unit) exitWith {
 
 if (!alive _unit) exitWith { false };
 
-[_unit, _loadout, _fullMagazines] call CBA_fnc_setLoadout;
+_this spawn 
+{
+    params ["_unit", "_loadout", "_fullMagazines"];
 
-// Don't pull out weapon if no primary.
-if (primaryWeapon _unit isEqualTo "") then {
-    _unit action ["SwitchWeapon", _unit, _unit, -1];
-};
+    removeAllWeapons _unit;
+    removeAllItems _unit;
+    removeBackpack _unit;
+    removeVest _unit;
+    removeUniform _unit;
+    removeHeadgear _unit;
+    removeGoggles _unit;
 
-private _scriptHandle = [_unit] spawn FUNC(resetWeaponState);
+    sleep 2;
+    waitUntil {!isSwitchingWeapon _unit};
 
-// Wait so that setInsignia does not correctly assume
-// non-combat loadout.
-[{scriptDone (_this select 1)}, {
-    params ["_unit"];
+    [_unit, _loadout, _fullMagazines] call CBA_fnc_setLoadout;
+
+    // Don't pull out weapon if no primary.
+    if (primaryWeapon _unit isEqualTo "") then {
+        _unit action ["SwitchWeapon", _unit, _unit, -1];
+    };
+
+    sleep 1;
+    
     _unit call FUNC(setInsignia);
-}, [_unit, _scriptHandle]] call CBA_fnc_waitUntilAndExecute;
+};
 
 true

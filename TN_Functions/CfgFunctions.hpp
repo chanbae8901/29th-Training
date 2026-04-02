@@ -5,7 +5,6 @@ class TN_Loadout {
         file = "TN_Functions\loadout";
         class init {};
         class fullSetUnitLoadout {};
-        class resetWeaponState {};
         class onArsenalClosed {};
         class setInsignia {};
         class flexibleReset {};
