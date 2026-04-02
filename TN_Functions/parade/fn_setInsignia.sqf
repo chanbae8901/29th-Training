@@ -12,7 +12,7 @@
  * True if insignia was applied, false otherwise <BOOL>
  *
  * Example:
- * player call TN_loadout_fnc_setInsignia;
+ * player call TN_parade_fnc_setInsignia;
  */
 
 if !(GVARMAIN(setInsignia)) exitWith { false };

@@ -51,7 +51,7 @@ _this spawn
 
     sleep 1;
     
-    _unit call FUNC(setInsignia);
+    [QGVAR(afterSetLoadout), _unit] call CBA_fnc_localEvent;
 };
 
 true

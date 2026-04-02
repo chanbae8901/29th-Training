@@ -26,6 +26,21 @@ if (hasInterface) then {
         { primaryWeapon player isEqualTo "rhs_weap_m1garand_sa43" },
         { call FUNC(handleInitialInventory) }
     ] call CBA_fnc_waitUntilAndExecute;
+
+    [QEGVAR(loadout,afterArsenalClosed), {
+        player call FUNC(setInsignia);
+    }] call CBA_fnc_addEventHandler;
+
+    [QEGVAR(loadout,afterSetLoadout), {
+        _this call FUNC(setInsignia);
+    }] call CBA_fnc_addEventHandler;
+
+    [
+        QGVAR(setInsigniaRespawn),
+        "Respawn", {
+            (_this select 0) call FUNC(setInsignia);
+        }
+    ] call CBA_fnc_addBISPlayerEventHandler;
 };
 
 if (isServer) then {

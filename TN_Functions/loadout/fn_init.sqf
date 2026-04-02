@@ -46,13 +46,6 @@ if (hasInterface) then {
             }
         ] call CBA_fnc_addEventHandler;
     };
-
-    [
-        QGVAR(setInsigniaRespawn),
-        "Respawn", {
-            (_this select 0) call FUNC(setInsignia);
-        }
-    ] call CBA_fnc_addBISPlayerEventHandler;
 };
 
 nil

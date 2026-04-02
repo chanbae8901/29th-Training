@@ -6,7 +6,6 @@ class TN_Loadout {
         class init {};
         class fullSetUnitLoadout {};
         class onArsenalClosed {};
-        class setInsignia {};
         class flexibleReset {};
     };
 };
@@ -228,6 +227,7 @@ class TN_Parade {
         class forceAll {};
         class load {};
         class checkNonCombatLoadout {};
+        class setInsignia {};
     };
 };
 

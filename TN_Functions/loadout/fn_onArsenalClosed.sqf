@@ -47,7 +47,7 @@ resetLoadout = [player] call CBA_fnc_getLoadout;
     } forEach _primaryMags;
 };
 
-player call FUNC(setInsignia);
+[QGVAR(afterArsenalClosed)] call CBA_fnc_localEvent;
 
 if !(weaponLowered player) then {
     player action ["WeaponOnBack", player];
