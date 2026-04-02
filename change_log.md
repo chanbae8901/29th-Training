@@ -55,6 +55,9 @@ v4.5.0
 * Convert raw variable/function references to CBA macros (`GVAR`, `FUNC`, `QGVAR`, etc.) across the entire codebase.
 * Add `SERVER_LOG` macro for logging messages to server RPT via `remoteExecCall`.
 * Use `IS_ADMIN` / `IS_ADMIN_LOGGED` CBA macros to replace `serverCommandAvailable "#lock"` checks across the codebase.
+* Add `USING_MODULE` macro to `script_macros.hpp`. Modules now check if dependent modules exist in
+  the template before initializing their features.
+* Move `templates.hpp` include from individual files to `script_macros.hpp` so it's available globally.
 
 * Standardize CBA event names across all modules. Replace event names in cfgEventHandlers
   with `GVARMAIN` macro since they are called outside of function folders.
@@ -78,13 +81,18 @@ v4.5.0
 
 * Convert any remoteExec that runs code that does not need a scheduled environment into remoteExecCall.
 
+* Base
+  - Arsenal zone check refactored to fire CBA events (`enteredArsenalZone`/`exitedArsenalZone`) instead of containing inline logic.
+  - Force parade action reworked: dynamically added/removed based on admin state via `adminStateChanged` event.
+  - Environment sound muting logic moved from base to training module.
+
 * Commands
   - Chat interception reverted back to waiting for display instead of event handler.
     More overhead, but needed due to security concerns as this method does not send the hidden chat over network.
     Modernized code by getting rid of conversion to array.
   - Rename pvpfw_chatIntercept prefix to TN_commands.
   - Move base commands.sqf initialization out of XEH_preInit into fn_init so it's no longer run on server.
-  - Rewrote arsenal command and moved logic into separate subfolder. 
+  - Rewrote arsenal command and moved logic into separate subfolder.
     Arsenals created with this command are deleted automatically on round start.
   - Defer HashMap finalization of command registry until global initFinished event fires.
 
@@ -115,6 +123,10 @@ v4.5.0
 * Loadout
   - Add additional failsafe for flexibleReset teleport, if player is not within 75 meters of teleport point
     5 seconds after teleport attempts, all players will be notified in chat.
+  - Remove `resetWeaponState` function. `fullSetUnitLoadout` now strips all gear, waits for weapon switch
+    to finish, then reapplies loadout as an alternate silent weapon bug fix approach.
+  - `setInsignia` moved from loadout module to parade module, since it requires the 29th mod.
+  - `fullSetUnitLoadout` fires `afterSetLoadout` CBA event when done (used by parade for insignia).
 
 * OCAP
   - Updated folder to remove marker related workarounds to be compatible with OCAP Addon 2.1.0.
@@ -124,6 +136,7 @@ v4.5.0
 * Parade
   - Hopefully fix custom parade uniform not being applied on join by checking if respawn template parade loadout is applied first.
   - Uniform message now states if loadout is not the default.
+  - `checkNonCombatLoadout` now also recognizes Class A uniforms as non-combat.
 
 * Round
   - All players notified in systemChat when a side readies or unreadies.
