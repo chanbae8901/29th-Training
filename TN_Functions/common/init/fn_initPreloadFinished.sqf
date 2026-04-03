@@ -5,6 +5,8 @@
  * a MEH to fire "TN_common_preloadFinished" later (JIP, where preload
  * hasn't finished for this client yet) or fires it immediately
  * (non-JIP, where preload is already complete).
+ * NOTE: Any listeners after this has happened 
+ * will never have their handler called!
  *
  * Consumers subscribe via:
  *     ["TN_common_preloadFinished", { ... }]

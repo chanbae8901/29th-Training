@@ -31,9 +31,9 @@ if (hasInterface) then {
         player call FUNC(setInsignia);
     }] call CBA_fnc_addEventHandler;
 
-    [QEGVAR(loadout,afterSetLoadout), {
-        _this call FUNC(setInsignia);
-    }] call CBA_fnc_addEventHandler;
+    [QEGVAR(loadout,afterSetLoadout),
+        FUNC(setInsignia)
+    ] call CBA_fnc_addEventHandler;
 
     [
         QGVAR(setInsigniaRespawn),

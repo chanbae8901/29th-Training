@@ -571,7 +571,7 @@ class RscDisplayMissionOptions {
         };
     };
     enableDisplay = 1;
-    onLoad = "_this call TN_settings_fnc_initDisplayMissionOptions;";
+    onLoad = "call TN_settings_fnc_initDisplayMissionOptions;";
     onUnload = "";
     class controlsBackground {
         class BackgroundDisable {

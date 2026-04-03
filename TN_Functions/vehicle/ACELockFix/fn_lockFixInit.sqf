@@ -17,7 +17,7 @@
  * call TN_vehicle_fnc_lockFixInit;
  */
 
-#define DELAY_UNLOCK(_unit) [{ _this call FUNC(unlockUnconsciousSeat) }, _unit, 0.5] call CBA_fnc_waitAndExecute
+#define DELAY_UNLOCK(_unit) [{ call FUNC(unlockUnconsciousSeat) }, _unit, 0.5] call CBA_fnc_waitAndExecute
 
 ["CAManBase", "GetInMan", {
     params ["_unit", "", "_vehicle"];
