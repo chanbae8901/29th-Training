@@ -16,25 +16,24 @@
 
 if (!hasInterface) exitWith {};
 
-private _fn_loadParade = {
-    private _side = side (group player);
+private _side = side (group player);
 
-    switch (_side) do {
-        case WEST: {
-            call FUNC(load);
-        };
-        case EAST: {
-            [player, missionConfigFile >> "CfgRespawnInventory" >> "29TH_PARADE_EAST"]
-                call BIS_fnc_loadInventory;
-        };
-        case INDEPENDENT: {
-            [player, missionConfigFile >> "CfgRespawnInventory" >> "29TH_PARADE_INDEPENDENT"]
-                call BIS_fnc_loadInventory;
-        };
-        default {};
+switch (_side) do {
+    case WEST: {
+        call FUNC(load);
+
+        [player, [missionNamespace, "Parade"]] call BIS_fnc_saveInventory;
+        [player, ["missionNamespace:Parade"]] call BIS_fnc_setRespawnInventory;
     };
+    case EAST: {
+        [player, missionConfigFile >> "CfgRespawnInventory" >> "29TH_PARADE_EAST"]
+            call BIS_fnc_loadInventory;
+    };
+    case INDEPENDENT: {
+        [player, missionConfigFile >> "CfgRespawnInventory" >> "29TH_PARADE_INDEPENDENT"]
+            call BIS_fnc_loadInventory;
+    };
+    default {};
 };
-
-[QEGVAR(common,preloadFinished), _fn_loadParade] call CBA_fnc_addEventHandler;
 
 nil

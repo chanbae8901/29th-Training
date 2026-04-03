@@ -123,7 +123,8 @@ v4.5.0
   - Add timeout and logging if OCAP variables fail to initialize.
 
 * Parade
-  - Hopefully fix custom parade uniform not being applied on join by checking if respawn template parade loadout is applied first.
+  - Fix custom parade uniform not being applied on join by making the respawn loadout the same as the forced parade loadout.
+    This change has a side effect where this parade loadout is overwritten when leaving arsenal, but this should not be a problem.
   - Uniform message now states if loadout is not the default.
   - `checkNonCombatLoadout` now also recognizes Class A uniforms as non-combat.
 

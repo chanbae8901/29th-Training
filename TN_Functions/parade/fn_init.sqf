@@ -20,12 +20,9 @@ if (!isClass (configFile >> "CfgPatches" >> "29thID_Uniforms"))
     exitWith {};
 
 if (hasInterface) then {
-    // Wait for default parade loadout, then apply initial
-    // parade inventory.
-    [
-        { primaryWeapon player isEqualTo "rhs_weap_m1garand_sa43" },
-        FUNC(handleInitialInventory)
-    ] call CBA_fnc_waitUntilAndExecute;
+    [{!isNull player}, {
+        call FUNC(handleInitialInventory);
+    }] call CBA_fnc_waitUntilAndExecute;
 
     [QEGVAR(loadout,afterArsenalClosed), {
         player call FUNC(setInsignia);
@@ -44,7 +41,8 @@ if (hasInterface) then {
 
 if (isServer) then {
     // Register parade respawn inventories for each faction.
-    [WEST, "29TH_PARADE_WEST"] call BIS_fnc_addRespawnInventory;
+    // West is special case due to custom parade loadouts,
+    // done in handleInitialInventory
     [EAST, "29TH_PARADE_EAST"] call BIS_fnc_addRespawnInventory;
     [INDEPENDENT, "29TH_PARADE_INDEPENDENT"] call BIS_fnc_addRespawnInventory;
 };
