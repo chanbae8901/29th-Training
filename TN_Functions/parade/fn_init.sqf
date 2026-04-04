@@ -20,9 +20,9 @@ if (!isClass (configFile >> "CfgPatches" >> "29thID_Uniforms"))
     exitWith {};
 
 if (hasInterface) then {
-    [{!isNull player}, {
-        call FUNC(handleInitialInventory);
-    }] call CBA_fnc_waitUntilAndExecute;
+    [{!isNull player},
+        FUNC(handleInitialInventory)
+    ] call CBA_fnc_waitUntilAndExecute;
 
     [QEGVAR(loadout,afterArsenalClosed), {
         player call FUNC(setInsignia);

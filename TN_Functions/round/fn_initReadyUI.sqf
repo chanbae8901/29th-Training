@@ -102,9 +102,8 @@ FUNC(startReadyUIPFH) = {
 
         // Round started -> unconditionally stop PFH (fn_start.sqf already unreadies all sides)
         GVAR(readyUI_ehStarted) = [
-            QGVAR(started), {
-                call FUNC(stopReadyUIPFH);
-            }
+            QGVAR(started),
+            FUNC(stopReadyUIPFH)
         ] call CBA_fnc_addEventHandler;
     }
 ] call CBA_fnc_waitUntilAndExecute;
