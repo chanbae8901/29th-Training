@@ -38,12 +38,12 @@
 
 if !(hasInterface) exitWith {};
 
-//Add actions to spectator terminals
 GVAR(terminals) = [];
 GVAR(arsenals) = [];
-GVAR(garbages) = []; //global variable for cleanup function
+GVAR(garbages) = [];
 
-{ //forEach object placed in editor
+//- Find base objects from editor objects via naming convention -//
+{
     private _vicString = vehicleVarName _x;
     if (_vicString isEqualTo "") then { continue };
 
@@ -76,6 +76,7 @@ GVAR(garbages) = []; //global variable for cleanup function
 }
 forEach allMissionObjects "All";
 
+//- Add Spectator & Animate Terminals -//
 {
     if (USING_MODULE(spectator)) then {
         _x addAction [
@@ -96,7 +97,6 @@ forEach allMissionObjects "All";
 } forEach GVAR(terminals);
 
 //------- ACE Arsenal via radius from box -------//
-
 GVAR(arsenalActionId) = -1;
 GVAR(inArsenalZone) = false;
 
@@ -152,8 +152,17 @@ if (GVAR(arsenalCenters) isNotEqualTo []) then {
     }
 ] call CBA_fnc_addBISPlayerEventHandler;
 
+//- Add Cleanup to Trashcans -//
+{
+    _x addAction [
+        "<img image='\A3\Ui_f\data\IGUI\Cfg\simpleTasks\types\repair_ca.paa'/><t color='#FF0080'>  Clean-Up</t>",
+        {call EFUNC(common,cleanup)},
+        nil, 1, false, true, "", "true", 2
+    ];
+} forEach GVAR(garbages);
+
 //- Add Force Parade to BLUFOR Ammo Box -//
-if (USING_MODULE(parade)) then {
+if (USING_MODULE(parade) && !isNil "base_action_arsenal_blu") then {
     GVAR(forceParadeActionId) = -1;
 
     FUNC(addForceParadeAction) = {
@@ -197,14 +206,5 @@ if (USING_MODULE(parade)) then {
         }
     ] call CBA_fnc_addEventHandler;
 };
-
-//- Add Cleanup to Trashcans -//
-{
-    _x addAction [
-        "<img image='\A3\Ui_f\data\IGUI\Cfg\simpleTasks\types\repair_ca.paa'/><t color='#FF0080'>  Clean-Up</t>",
-        {call EFUNC(common,cleanup)},
-        nil, 1, false, true, "", "true", 2
-    ];
-} forEach GVAR(garbages);
 
 nil
