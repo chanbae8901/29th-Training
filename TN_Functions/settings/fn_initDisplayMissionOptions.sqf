@@ -49,7 +49,7 @@ private _ctrlAddonList = _display ctrlCreate [
 
 _ctrlAddonList ctrlAddEventHandler [
     "LBSelChanged",
-    {call FUNC(gui_addonChanged)}
+    FUNC(gui_addonChanged)
 ];
 
 _display setVariable ["cba_settings_lists", []];
@@ -97,7 +97,7 @@ _ctrlConfirm ctrlSetPosition ctrlPosition _ctrlScriptedOK;
 _ctrlConfirm ctrlCommit 0;
 _ctrlConfirm ctrlAddEventHandler [
     "ButtonClick",
-    {call FUNC(gui_saveTempData)}
+    FUNC(gui_saveTempData)
 ];
 
 nil

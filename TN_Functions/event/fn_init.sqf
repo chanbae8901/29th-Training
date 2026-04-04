@@ -83,7 +83,7 @@ if (GVAR(numberOfLives) > 0) then {
         [
             QGVAR(respawn),
             "Respawn",
-            { call FUNC(respawn) }
+            FUNC(respawn)
         ] call CBA_fnc_addBISPlayerEventHandler;
     };
 };

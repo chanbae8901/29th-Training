@@ -13,8 +13,7 @@
  * Nothing
  */
 
-player addEventHandler ["FiredMan",
-    { call FUNC(handleFired) }];
+player addEventHandler ["FiredMan", FUNC(handleFired)];
 
 ["ace_advanced_throwing_throwFiredXEH", {
     if (!local (_this select 0)) exitWith {};
@@ -22,7 +21,7 @@ player addEventHandler ["FiredMan",
 }] call CBA_fnc_addEventHandler;
 
 ["ace_explosives_place",
-    { call FUNC(handleExplosivePlace) }] call CBA_fnc_addEventHandler;
+    FUNC(handleExplosivePlace)] call CBA_fnc_addEventHandler;
 
 GVAR(lastFireCheck) = 0;
 
@@ -30,15 +29,14 @@ GVAR(lastFireCheck) = 0;
 // Will arrive on server later than projectile hit events
 // however.
 ["ace_medical_woundReceived",
-    { call FUNC(handleWoundReceived) }] call CBA_fnc_addEventHandler;
+    FUNC(handleWoundReceived)] call CBA_fnc_addEventHandler;
 
 ["ace_fire_burnSimulation",
 // We broadcast these variables since burning bodies can
 // set people on fire and we need to track that too.
-    { call FUNC(handleBurnSimulation) }] call CBA_fnc_addEventHandler;
+    FUNC(handleBurnSimulation)] call CBA_fnc_addEventHandler;
 
-addMissionEventHandler ["EntityKilled",
-    { call FUNC(handleVehicleKilled) }];
+addMissionEventHandler ["EntityKilled", FUNC(handleVehicleKilled)];
 
 player addEventHandler ["Respawn", {
     params ["_unit"];

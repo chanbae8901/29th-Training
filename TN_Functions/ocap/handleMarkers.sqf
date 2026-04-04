@@ -123,6 +123,6 @@ GVAR(fnc_onHandleMarkers) = {
   };
 };
 
-ocap_listener_markers = ["ocap_handleMarker", { call GVAR(fnc_onHandleMarkers) }] call CBA_fnc_addEventHandler;
+ocap_listener_markers = ["ocap_handleMarker", GVAR(fnc_onHandleMarkers)] call CBA_fnc_addEventHandler;
 
 nil

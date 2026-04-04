@@ -31,8 +31,8 @@ private _data = [
     getPosASL _unit, _explosiveName
 ];
 _explosive setVariable [QGVAR(instigatorInfo), _data];
-_explosive addEventHandler ["HitPart", { call FUNC(handleHit) }];
-_explosive addEventHandler ["HitExplosion", { call FUNC(handleHit) }];
+_explosive addEventHandler ["HitPart", FUNC(handleHit)];
+_explosive addEventHandler ["HitExplosion", FUNC(handleHit)];
 
 _explosive addEventHandler ["SubmunitionCreated", {
     params ["_projectile", "_submunitionProjectile"];
@@ -40,8 +40,8 @@ _explosive addEventHandler ["SubmunitionCreated", {
         QGVAR(instigatorInfo),
         _projectile getVariable QGVAR(instigatorInfo)
     ];
-    _submunitionProjectile addEventHandler ["HitPart", { call FUNC(handleHit) }];
-    _submunitionProjectile addEventHandler ["HitExplosion", { call FUNC(handleHit) }];
+    _submunitionProjectile addEventHandler ["HitPart", FUNC(handleHit)];
+    _submunitionProjectile addEventHandler ["HitExplosion", FUNC(handleHit)];
 }];
 
 nil

@@ -138,7 +138,7 @@ if (isNil QGVAR(arsenalCenters)) then {
 if (GVAR(arsenalCenters) isNotEqualTo []) then {
     [{!isNull player}, {
         private _radius = if (isNil QEGVAR(event,arsenalRadius)) then { 75 } else { EGVAR(event,arsenalRadius) };
-        [{ call FUNC(arsenalZoneCheck) }, 1, [_radius * _radius]] call CBA_fnc_addPerFrameHandler;
+        [FUNC(arsenalZoneCheck), 1, [_radius * _radius]] call CBA_fnc_addPerFrameHandler;
     }] call CBA_fnc_waitUntilAndExecute;
 };
 
@@ -156,7 +156,7 @@ if (GVAR(arsenalCenters) isNotEqualTo []) then {
 {
     _x addAction [
         "<img image='\A3\Ui_f\data\IGUI\Cfg\simpleTasks\types\repair_ca.paa'/><t color='#FF0080'>  Clean-Up</t>",
-        {call EFUNC(common,cleanup)},
+        EFUNC(common,cleanup),
         nil, 1, false, true, "", "true", 2
     ];
 } forEach GVAR(garbages);

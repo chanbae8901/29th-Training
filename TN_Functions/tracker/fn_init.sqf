@@ -140,7 +140,7 @@ if (hasInterface) then {
 
     [
         { !isNull player },
-        { call FUNC(addEventHandlersClient) }
+        FUNC(addEventHandlersClient)
     ] call CBA_fnc_waitUntilAndExecute;
 
     GVAR(weaponNameCache) = createHashMap;

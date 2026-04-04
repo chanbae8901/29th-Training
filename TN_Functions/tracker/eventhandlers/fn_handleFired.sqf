@@ -20,7 +20,7 @@ params [
 private _realWeapon =
     GVAR(weaponNameCache) getOrDefaultCall [
         [_weapon, _muzzle, _magazine, _ammo, _vehicle],
-        { call FUNC(getWeapon) },
+        FUNC(getWeapon),
         true
     ];
 
@@ -29,8 +29,8 @@ private _data = [
     getPosASL _unit, _realWeapon
 ];
 _projectile setVariable [QGVAR(instigatorInfo), _data];
-_projectile addEventHandler ["HitPart", { call FUNC(handleHit) }];
-_projectile addEventHandler ["HitExplosion", { call FUNC(handleHit) }];
+_projectile addEventHandler ["HitPart", FUNC(handleHit)];
+_projectile addEventHandler ["HitExplosion", FUNC(handleHit)];
 
 _projectile addEventHandler ["SubmunitionCreated", {
     params ["_projectile", "_submunitionProjectile"];
@@ -38,8 +38,8 @@ _projectile addEventHandler ["SubmunitionCreated", {
         QGVAR(instigatorInfo),
         _projectile getVariable QGVAR(instigatorInfo)
     ];
-    _submunitionProjectile addEventHandler ["HitPart", { call FUNC(handleHit) }];
-    _submunitionProjectile addEventHandler ["HitExplosion", { call FUNC(handleHit) }];
+    _submunitionProjectile addEventHandler ["HitPart", FUNC(handleHit)];
+    _submunitionProjectile addEventHandler ["HitExplosion", FUNC(handleHit)];
 }];
 
 nil
