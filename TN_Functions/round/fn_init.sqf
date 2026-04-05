@@ -77,15 +77,13 @@ if (hasInterface) then {
 
     /* --- JIP scoreboard suppression ---
      * showScoreTable silently fails if called too early. */
-    [
-        QEGVAR(common,preloadFinished), {
-            if (
-                ROUND_LIVE && GVARMAIN(disableScoreboard)
-            ) then {
-                showScoretable 0;
-            };
-        }
-    ] call CBA_fnc_addEventHandler;
+    [{PRELOAD_FINISHED}, {
+        if (
+            ROUND_LIVE && GVARMAIN(disableScoreboard)
+        ) then {
+            showScoretable 0;
+        };
+    }] call CBA_fnc_waitUntilAndExecute;
 
     /* --- Prevent scoreboard in respawn menu --- */
     [

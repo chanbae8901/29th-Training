@@ -28,9 +28,4 @@ GVAR(sideToStrMap) set [resistance, "GRNFOR"];
 
 call FUNC(initAdminStateChanged);
 
-if (hasInterface) then {
-    //No point of having this on server since it can't JIP
-    call FUNC(initPreloadFinished);
-};
-
 nil

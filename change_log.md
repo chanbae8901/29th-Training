@@ -87,7 +87,6 @@ v4.5.0
 
 * Common (New Module)
   - Deduplicate admin change event handlers by creating `TN_adminStateChanged` CBA event.
-  - Deduplicate `preloadFinished` event handlers by creating `TN_preloadFinished` CBA event.
   - Add `convertSide` utility function, simplifying side string-to-side conversion in ticket and loadout commands.
   - Add `notifyAdmin` function for sending systemChat messages to the current admin, with `notifySelf` parameter.
   - Admins notified via systemChat when another player uses a command.

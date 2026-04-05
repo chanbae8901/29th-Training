@@ -33,7 +33,6 @@ class TN_Common {
     class InitFunctions {
         file = "TN_Functions\common\init";
         class initAdminStateChanged {};
-        class initPreloadFinished {};
     };
 };
 
