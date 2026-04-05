@@ -21,7 +21,7 @@ private _side = side (group player);
 switch (_side) do {
     case WEST: {
         call FUNC(load);
-
+        call EFUNC(radio,add);
         [player, [missionNamespace, "Parade"]] call BIS_fnc_saveInventory;
         [player, ["missionNamespace:Parade"]] call BIS_fnc_setRespawnInventory;
     };
