@@ -140,6 +140,7 @@ v4.5.0
   - Deleting disconnected bodies moved here from training, which means it also applies to event variation.
     Now simply deletes all disconnecting bodies unless round is live.
   - Add instructions to systemChat safe start notification.
+  - Removed overtime support.
 
 * Settings
   - Add check to exclude non-global settings from GUI.

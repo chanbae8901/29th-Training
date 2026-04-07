@@ -61,25 +61,8 @@
                     ] remoteExecCall [QEFUNC(common,displayMsg)];
                     systemChat "No timer running! Only displaying end game message!";
                 } else {
-                    [true] call FUNC(end);
+                    call FUNC(end);
                     systemChat "Calling Game!";
-                };
-            }
-        ],
-
-        /* --- !overtime --- */
-        [
-            "overtime", {
-                private _argument = _this select 0;
-                // Overtime can't be negative!
-                private _minutes = abs (parseNumber _argument);
-                if (_minutes > 0) then {
-                    [true] call FUNC(setOvertimeEnabled);
-                    [_minutes * 60] call FUNC(setOverTimePeriod);
-                    systemChat format ["Overtime set for %1 Minutes", _minutes];
-                } else {
-                    [false] call FUNC(setOvertimeEnabled);
-                    systemChat "Overtime Disabled";
                 };
             }
         ],
@@ -113,7 +96,6 @@
         [
             "safe", {
                 private _argument = _this select 0;
-                // Overtime can't be negative!
                 private _minutes = abs (parseNumber _argument);
                 if (_minutes > 0) then {
                     switch (true) do {
@@ -147,7 +129,6 @@
         ["live", "Starts a countdown timer, specified by !timer"],
         ["addtime", "Adds time to the current timer, specified in minutes (negative values subtract)"],
         ["quicktimer", "Starts a countdown timer, specified in minutes (E.G. '!quicktimer 20' creates a 20 minute timer)"],
-        ["overtime", "Creates an overtime period that occurs when the timer ends, a value of 0 disables overtime. Overtime must be reapplied for each timer"],
         ["game", "Calls game and ends any countdown"],
         ["ready", "Sets the player's side as ready, and begins the safe start if all player sides are ready"],
         ["unready", "Cancels the ready status for the player's side"],

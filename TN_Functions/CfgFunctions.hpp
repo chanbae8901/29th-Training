@@ -136,8 +136,6 @@ class TN_Round {
         class initSafeStartHelper {};
         class manageReady {};
         class roundEvents {};
-        class setOvertimeEnabled {};
-        class setOverTimePeriod {};
         class setTimer {};
         class start {};
         class timeWarning {};

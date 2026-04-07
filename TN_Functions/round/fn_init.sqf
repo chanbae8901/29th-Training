@@ -29,12 +29,6 @@ if (isServer) then {
     GVAR(timerLength) = DEFAULT_TIMER;
     publicVariable QGVAR(timerLength);
 
-    GVAR(overtimeEnabled) = false;
-    publicVariable QGVAR(overtimeEnabled);
-
-    GVAR(overtimePeriod) = DEFAULT_OVERTIME;
-    publicVariable QGVAR(overtimePeriod);
-
     GVAR(ignoreReadiness) = false;
     publicVariable QGVAR(ignoreReadiness);
 

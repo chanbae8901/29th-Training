@@ -33,7 +33,7 @@ private _events = [
 
     private _timeLeft = call FUNC(getTime);
 
-    if (_timeLeft <= 0 && !GVAR(overtimeEnabled)) exitWith {
+    if (_timeLeft <= 0) exitWith {
         _handle call CBA_fnc_removePerFrameHandler;
     };
 

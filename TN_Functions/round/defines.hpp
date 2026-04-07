@@ -2,7 +2,6 @@
 #include "..\..\data\roundState.hpp"
 
 #define DEFAULT_TIMER 20 * 60
-#define DEFAULT_OVERTIME 5 * 60
 #define SCORE_REDUCE_VALUE 9999
 
 #define UNREADY_ALL_SIDES \
