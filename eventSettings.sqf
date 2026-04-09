@@ -1,6 +1,11 @@
 #include "script_macros.hpp"
 
 //Use the variables below to customize your event mission
+//For PvE, recommended to set 
+// hasTimer = false
+// numberOfLives = 0
+// hasAliveCheck = false
+
 
 EGVAR(event,hasTimer) = true; //Use timer/ready system
 EGVAR(event,forcedSafeStart) = 15 * 60; //Safe start time before all teams ready up in seconds
