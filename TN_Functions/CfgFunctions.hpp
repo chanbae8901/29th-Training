@@ -63,6 +63,7 @@ class TN_Event {
         class init {};
         class markEditorPlacedObjects {};
         class respawn {};
+        class validateSettings {};
     };
 };
 

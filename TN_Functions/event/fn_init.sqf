@@ -21,6 +21,7 @@
 
 /******** CONFIG ********/
 call compile preprocessFileLineNumbers "eventSettings.sqf";
+call FUNC(validateSettings);
 
 /******* CBA Settings Overrides ********/
 [QEGVAR(main,addRadio), 0,
@@ -70,12 +71,6 @@ if (GVAR(checkWinConditions) && isServer) then {
 };
 
 /******* AliveCheck ********/
-if (GVAR(hasAliveCheck) || GVAR(numberOfLives) > 0) then {
-    if (isNil QGVAR(spectateArea)) then {
-        systemChat "WARNING: Spectate area object (spectateArea) not found!";
-    };
-};
-
 if (GVAR(hasAliveCheck)) then {
     if (isServer) then {
         [
