@@ -84,6 +84,7 @@ v4.5.0
   - Rewrote arsenal command and moved logic into separate subfolder.
     Arsenals created with this command are deleted automatically on round start.
   - Defer HashMap finalization of command registry until global `initFinished` event fires.
+  - Executing a command as non-admin now sends admin a notification, with some exceptions.
 
 * Common (New Module)
   - Deduplicate admin change event handlers by creating `TN_adminStateChanged` CBA event.
@@ -166,6 +167,7 @@ v4.5.0
 * Training
   - Deleting bodies at base on disconnect no longer occurs during round live to reduce lag spikes caused by disconnecting.
   - Moved deleting disconnecting bodies to round.
+  - Admin now has a "Useful Commands" entry in his map diary.
 
 * Vehicle
   - Added workaround for ACE bug that left vehicle seats locked when uncon -> dead players were moved out of the seat via ACE interaction.
