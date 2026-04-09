@@ -16,6 +16,10 @@
  * call TN_parade_fnc_load;
  */
 
+if (!isNil QEGVAR(loadout,settingLoadout)) exitWith {
+    [{isNil QEGVAR(loadout,settingLoadout)}, FUNC(load)] call CBA_fnc_waitUntilAndExecute;
+};
+
 // ACE Arsenal display IDs (from ace3/addons/arsenal/defines.hpp):
 //   1127001 = main ACE Arsenal display
 //   1127002 = ACE Arsenal loadouts sub-display

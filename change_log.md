@@ -127,6 +127,7 @@ v4.5.0
     This change has a side effect where this parade loadout is overwritten when leaving arsenal, but this should not be a problem.
   - Uniform message now states if loadout is not the default.
   - `checkNonCombatLoadout` now also recognizes Class A uniforms as non-combat.
+  - Now waits until fullSetUnitLoadout finishes before applying.
 
 * Round
   - All players notified in systemChat when a side readies or unreadies.

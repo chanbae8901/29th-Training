@@ -27,6 +27,8 @@ if (!local _unit) exitWith {
 
 if (!alive _unit) exitWith { false };
 
+GVAR(settingLoadout) = true;
+
 _this spawn 
 {
     params ["_unit", "_loadout", "_fullMagazines"];
@@ -51,6 +53,7 @@ _this spawn
 
     sleep 1;
     
+    GVAR(settingLoadout) = nil;
     [QGVAR(afterSetLoadout), _unit] call CBA_fnc_localEvent;
 };
 
