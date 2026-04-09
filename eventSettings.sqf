@@ -72,12 +72,3 @@ Kill/Destroy Example (gives _pointValue points to _awardTeam (in example BLUFOR)
 NOTE: If multiple teams meet their win conditions at the same time, the tiebreaker will be OPFOR, BLUFOR, then GRNFOR.
 Win conditions should be designed to avoid this where possible.
 */
-
-/*** Do Not Edit Anything Below This Line ***/
-[QGVARMAIN(safeStartTime), EGVAR(event,readySafeStart),
-    nil, "server", false] call cba_settings_fnc_set;
-[QGVARMAIN(notifyFinalCheck), false,
-    nil, "server", false] call cba_settings_fnc_set;
-[QGVARMAIN(addRadio), 0,
-    nil, "server", false] call cba_settings_fnc_set;
-[EGVAR(event,timerLength)] call EFUNC(round,setTimer);

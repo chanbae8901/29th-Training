@@ -22,6 +22,10 @@
 /******** CONFIG ********/
 call compile preprocessFileLineNumbers "eventSettings.sqf";
 
+/******* CBA Settings Overrides ********/
+[QEGVAR(main,addRadio), 0,
+    nil, "server", false] call cba_settings_fnc_set;
+
 /******* Admin Event Menu ********/
 if (isServer) then {
     [
@@ -38,6 +42,13 @@ if (isServer) then {
 
 /******* Timer ********/
 if (GVAR(hasTimer)) then {
+    if (isServer) then {
+        [QEGVAR(main,safeStartTime), GVAR(readySafeStart),
+            nil, "server", false] call cba_settings_fnc_set;
+        [QEGVAR(main,notifyFinalCheck), false,
+            nil, "server", false] call cba_settings_fnc_set;
+        [GVAR(timerLength)] call EFUNC(round,setTimer);
+    };
     if (hasInterface) then {
         [{!isNull player}, {
             call FUNC(flagActions);
