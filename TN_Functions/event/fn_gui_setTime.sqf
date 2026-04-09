@@ -137,7 +137,7 @@ _btnOK ctrlAddEventHandler [
                     (round _newTime) call EFUNC(round,formatTime)
                 ],
                 "PLAIN",
-                0.5,
+                0.3,
                 false
             ] remoteExecCall [QEFUNC(common,displayMsg)];
         };
