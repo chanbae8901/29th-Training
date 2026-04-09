@@ -1,6 +1,5 @@
 #include "script_component.hpp"
 #include "readyui\readyui_defines.hpp"
-#include "..\..\data\roundState.hpp"
 
 /*
  * Author: PFC Wells [29th ID] being nagged at by Bae [29th ID]

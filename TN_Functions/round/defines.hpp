@@ -1,5 +1,4 @@
 #include "script_component.hpp"
-#include "..\..\data\roundState.hpp"
 
 #define DEFAULT_TIMER 20 * 60
 #define SCORE_REDUCE_VALUE 9999

@@ -1,5 +1,4 @@
 #include "script_component.hpp"
-#include "..\..\data\roundState.hpp"
 
 #define ENV_ON 1 fadeEnvironment 1
 #define ENV_OFF 1 fadeEnvironment 0

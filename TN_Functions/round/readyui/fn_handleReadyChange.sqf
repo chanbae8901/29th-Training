@@ -1,6 +1,5 @@
 #include "script_component.hpp"
 #include "readyui_defines.hpp"
-#include "..\..\..\data\roundState.hpp"
 
 /*
  * Author: Wells [29th ID]

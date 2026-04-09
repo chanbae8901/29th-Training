@@ -18,7 +18,6 @@
  */
 
 #include "script_component.hpp"
-#include "..\..\data\roundState.hpp"
 
 #define RESPAWN_BIRD 1
 #define ALIVE_CHECK_INTERVAL 5

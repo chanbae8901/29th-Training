@@ -1,6 +1,5 @@
 #include "script_component.hpp"
 #include "..\..\data\settingCategories.hpp"
-#include "..\..\data\roundState.hpp"
 
 [
     QGVARMAIN(disableScoreboard),

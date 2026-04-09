@@ -1,5 +1,4 @@
 #include "script_component.hpp"
-#include "..\..\data\roundState.hpp"
 
 /*
  * Author: Claude prompted by Bae [29th ID]
