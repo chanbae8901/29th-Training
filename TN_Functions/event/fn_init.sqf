@@ -71,7 +71,7 @@ if (GVAR(checkWinConditions) && isServer) then {
 };
 
 /******* AliveCheck ********/
-if (GVAR(hasAliveCheck)) then {
+if (GVAR(hasTimer) && {GVAR(hasAliveCheck)}) then {
     if (isServer) then {
         [
             QEGVAR(round,started), {
@@ -81,7 +81,7 @@ if (GVAR(hasAliveCheck)) then {
     };
 };
 
-if (GVAR(numberOfLives) > 0) then {
+if (GVAR(hasTimer) && {GVAR(numberOfLives) > 0}) then {
     if (hasInterface) then {
         [
             QEGVAR(round,started),

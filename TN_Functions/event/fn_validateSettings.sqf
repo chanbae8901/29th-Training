@@ -101,9 +101,12 @@ if ((GVAR(hasTimer) isEqualType false) && {GVAR(hasTimer)}) then {
     };
 };
 
-/******* Spectate/respawn-gated *******/
-private _needSpectate = (GVAR(hasAliveCheck) isEqualType false && {GVAR(hasAliveCheck)})
-    || {GVAR(numberOfLives) isEqualType 0 && {GVAR(numberOfLives) > 0}};
+/******* Spectate/respawn-gated (also requires timer) *******/
+private _timerOn = GVAR(hasTimer) isEqualType false && {GVAR(hasTimer)};
+private _needSpectate = _timerOn && {
+    (GVAR(hasAliveCheck) isEqualType false && {GVAR(hasAliveCheck)})
+    || {GVAR(numberOfLives) isEqualType 0 && {GVAR(numberOfLives) > 0}}
+};
 if (_needSpectate) then {
     if (isNil QGVAR(spectateArea)
         || {!(GVAR(spectateArea) isEqualType objNull)}
@@ -112,12 +115,12 @@ if (_needSpectate) then {
     };
 };
 
-if (GVAR(hasAliveCheck) isEqualType false && {GVAR(hasAliveCheck)}) then {
+if (_timerOn && {GVAR(hasAliveCheck) isEqualType false && {GVAR(hasAliveCheck)}}) then {
     ["spectateAreaRadius", GVAR(spectateAreaRadius), T_POSNUM,
         GVAR(spectateAreaRadius) call _isPosNum] call _fnCheck;
 };
 
-if (GVAR(numberOfLives) isEqualType 0 && {GVAR(numberOfLives) > 0}) then {
+if (_timerOn && {GVAR(numberOfLives) isEqualType 0 && {GVAR(numberOfLives) > 0}}) then {
     ["respawnDisarmPlayers", GVAR(respawnDisarmPlayers), T_BOOL,
         GVAR(respawnDisarmPlayers) call _isBool] call _fnCheck;
 };
