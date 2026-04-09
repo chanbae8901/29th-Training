@@ -125,6 +125,12 @@ if (hasInterface) then {
             !(_playerSideStr in _x)
         }
     });
+
+    if (GVAR(disableStatistics)) then {
+        [{PRELOAD_FINISHED}, {
+            player removeDiarySubject "Statistics";
+        }] call CBA_fnc_waitUntilAndExecute;
+    };
 };
 
 nil

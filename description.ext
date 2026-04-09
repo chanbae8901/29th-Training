@@ -66,10 +66,6 @@ class CfgNotifications {
     #include "data\cfgNotifications.hpp"
 };
 
-class Params {
-    #include "data\params.hpp"
-};
-
 #include "data\gui.hpp"
 
 class CfgRespawnInventory {

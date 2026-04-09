@@ -158,6 +158,10 @@ if (hasInterface) then {
     };
 
     call FUNC(initDefaultLoadouts);
+
+    [{PRELOAD_FINISHED}, {
+        player removeDiarySubject "Statistics";
+    }] call CBA_fnc_waitUntilAndExecute;
 };
 
 if (isServer) then {

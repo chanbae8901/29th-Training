@@ -5,6 +5,7 @@
 // hasTimer = false
 // numberOfLives = 0
 // hasAliveCheck = false
+// disableStatistics = false
 
 
 EGVAR(event,hasTimer) = true; //Use timer/ready system
@@ -21,13 +22,15 @@ EGVAR(event,numberOfLives) = 1; //0 for unlimited lives
 EGVAR(event,spectateArea) = base_endFlag; //Point where players will be teleported to spectate from when out of lives.
 EGVAR(event,spectateAreaRadius) = 200; //Radius around EGVAR(event,spectateArea) that is used to determine which players are spectating/lost all lives
 EGVAR(event,respawnDisarmPlayers) = true; //Disarm players when they are out of lives and teleported to spectateArea
-EGVAR(event,timeAcc) = 1; //Time acceleration multiplier for the event (1 = normal time, 2 = 2x faster, 0.5 = half speed, etc)
-
 EGVAR(event,hasAliveCheck) = true; //Automatically end mission if only one side has players alive with them as the winner
+
+EGVAR(event,timeAcc) = 1; //Time acceleration multiplier for the event (1 = normal time, 2 = 2x faster, 0.5 = half speed, etc)
 
 EGVAR(event,arsenalRadius) = 20; //Radius around arsenal object where players can access the arsenal
 
 EGVAR(event,autoMarkObjects) = true; //Mark static editor placed objects on map for all players
+
+EGVAR(event,disableStatistics) = true; //Disable statistics tab in map diary
 
 //Win conditions
 //Leave "" for no win condition for that side

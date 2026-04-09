@@ -15,8 +15,6 @@
  * Nothing
  */
 
-if (("enableRoundEventLog" call BIS_fnc_getParamValue) isNotEqualTo 1) exitWith {};
-
 if (isServer) then {
     GVAR(previous) = [];
     GVAR(events) = [];
@@ -144,11 +142,9 @@ if (hasInterface) then {
     ] call CBA_fnc_waitUntilAndExecute;
 
     GVAR(weaponNameCache) = createHashMap;
-    // --- Remove Statistics from Map, Send All
-    //     Round Histories --- //
+    // --- Send All Round Histories --- //
     [{PRELOAD_FINISHED}, {
         [player] remoteExecCall [QFUNC(sendAll), 2];
-        player removeDiarySubject "Statistics";
     }] call CBA_fnc_waitUntilAndExecute;
 
     // --- Fire/Burn Related Information --- //
