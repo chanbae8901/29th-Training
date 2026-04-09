@@ -133,5 +133,9 @@
         ["ready", "Sets the player's side as ready, and begins the safe start if all player sides are ready"],
         ["unready", "Cancels the ready status for the player's side"],
         ["safe", "Forces safe start with a specified time in minutes, or unforce safe start if given 0 (E.G. '!safe 1' forces a 1 minute safe start)"]
+    ],
+    [
+        ["ready", 0],
+        ["unready", 0]
     ]
 ] call EFUNC(commands,addModule);

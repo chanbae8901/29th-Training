@@ -54,11 +54,12 @@ if !(isNil "_commandCode") then {
 
     [_argument] call _commandCode;
 
-    if !(_command in GVAR(noLogCommands)) then {
+    private _adminNotificationLevel = (GVAR(adminNotificationLevel) getOrDefault [_command, 2]);
+    if !(_adminNotificationLevel isEqualTo 0 || _command in GVAR(noLogCommands)) then {
         private _msg = format ["%1 executed command !%2 %3", name player, _command, _argument];
         SERVER_LOG(_msg);
         ["Log", ["Commands", _msg]] remoteExecCall [QEFUNC(common,addDiaryRecord)];
-        private _useNotificationSystem = (GVAR(adminNotificationLevel) getOrDefault [_command, 2]) isEqualTo 2;
+        private _useNotificationSystem = _adminNotificationLevel isEqualTo 2;
         [_msg, false, _useNotificationSystem] call EFUNC(common,notifyAdmin);
     };
 } else {

@@ -167,8 +167,8 @@ GVAR(adminNotificationLevel) = [
     /*
     [
         "exampleCommand",
-        1 //1 for chat only, 2 for chat and vanilla notification system
-          //If not specified, no notification if in noLogCommands, 2 otherwise
+        1 //0 for no notification, 1 for chat only, 2 for chat and vanilla notification system
+          //If not specified, 0 if in noLogCommands, 2 otherwise
     ]
     */
 ];
