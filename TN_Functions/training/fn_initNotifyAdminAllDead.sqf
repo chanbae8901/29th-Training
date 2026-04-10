@@ -57,14 +57,14 @@ GVAR(sideAllDead) = [false, false, false];
         if (_aliveCount isEqualTo 0) then { continue };
 
         private _allDead = (_inBaseCounts select _forEachIndex) isEqualTo _aliveCount;
-        private _was = GVAR(sideAllDead) select _forEachIndex;
+        private _prevAllDead = GVAR(sideAllDead) select _forEachIndex;
 
-        if (_allDead && !_was) then {
+        if (_allDead && !_prevAllDead) then {
             GVAR(sideAllDead) set [_forEachIndex, true];
             private _name = [_x] call EFUNC(common,convertSide);
             [format ["All %1 players currently dead or in base.", _name], false, true] call EFUNC(common,notifyAdmin);
         };
-        if (!_allDead && _was) then {
+        if (!_allDead && _prevAllDead) then {
             GVAR(sideAllDead) set [_forEachIndex, false];
         };
     } forEach [east, west, resistance];
