@@ -6,9 +6,11 @@ private _radios = player call TFAR_fnc_vehicleLr;
 if (isNil "_radios") exitWith {};
 private _vehicle = _radios select 0;
 
+private _vehicleSide = _vehicle call TFAR_fnc_getVehicleSide;
+
 private _correctSide = switch (GVARMAIN(forceSideLRVic)) do {
     case true: { side group player };
-    case false: { _vehicle call TFAR_fnc_getVehicleSide };
+    case false: { _vehicleSide };
 };
 
 private _encryptionCode = "";
@@ -29,3 +31,7 @@ _encryptionCode = missionNamespace getVariable [
 ];
 
 [_radios, _encryptionCode] call TFAR_fnc_setLrRadioCode;
+
+if (GVARMAIN(forceSideLRVic) && {_correctSide != _vehicleSide}) then {
+    systemChat "Vehicle LR radio set to your side's encryption.";
+};
