@@ -3,17 +3,14 @@
 /*
  * Author: Bae [29th ID]
  * Opens a GUI dialog that lets an admin adjust the remaining
- * countdown timer via a slider or direct text input. The new
- * time is applied via BIS_fnc_countdown and broadcast to all
- * clients via displayMsg.
+ * countdown timer via a slider or direct text input.
  *
  * Uses createDialog (TN_RscDisplaySafeStartTime, IDD 29141)
  * which overlays on display 46 — readyUI stays visible.
  *
  * Arguments:
  * 0: Title label <STRING>
- * 1: Confirmation message format, one %1 for formatted time <STRING>
- * 2: Guard code, returns true if edits should be rejected <CODE>
+ * 1: Callback called with the new time in seconds <CODE>
  *
  * Return Value:
  * Nothing
@@ -21,12 +18,14 @@
  * Example:
  * [
  *     "New Safe Start Time:",
- *     "<t color='#ffffff' size='2.5'>Safe Start Time changed to %1!</t>",
- *     { NOT_ROUND_SAFE }
+ *     {
+ *         if (NOT_ROUND_SAFE) exitWith {};
+ *         [_this] call BIS_fnc_countdown;
+ *     }
  * ] call TN_event_fnc_gui_setTime;
  */
 
-params ["_title", "_msgFormat", "_guard"];
+params ["_title", "_onFinished"];
 
 #define IDD_SAFE_START_TIME 29141
 #define IDC_BG 50000
@@ -51,8 +50,7 @@ createDialog "TN_RscDisplaySafeStartTime";
 private _display = findDisplay IDD_SAFE_START_TIME;
 
 //stash params on display for the OK button handler
-_display setVariable [QGVAR(setTime_msgFormat), _msgFormat];
-_display setVariable [QGVAR(setTime_guard), _guard];
+_display setVariable [QGVAR(setTime_onFinished), _onFinished];
 
 //declare early to put in the back
 private _bg = _display ctrlCreate ["RscText", IDC_BG];
@@ -122,25 +120,8 @@ _btnOK ctrlAddEventHandler [
         private _display = ctrlParent _ctrl;
         private _sliderCtrl = _display displayCtrl IDC_SLIDER;
 
-        private _guard = _display getVariable QGVAR(setTime_guard);
-        private _msgFormat = _display getVariable QGVAR(setTime_msgFormat);
-
-        if (call _guard) then {
-            systemChat "Round state changed! Input ignored.";
-        } else {
-            private _newTime = sliderPosition _sliderCtrl;
-            [_newTime] call BIS_fnc_countdown;
-
-            [
-                format [
-                    _msgFormat,
-                    (round _newTime) call EFUNC(round,formatTime)
-                ],
-                "PLAIN",
-                0.3,
-                false
-            ] remoteExecCall [QEFUNC(common,displayMsg)];
-        };
+        private _onFinished = _display getVariable QGVAR(setTime_onFinished);
+        (sliderPosition _sliderCtrl) call _onFinished;
         (ctrlParent _ctrl) closeDisplay 1;
     }
 ];

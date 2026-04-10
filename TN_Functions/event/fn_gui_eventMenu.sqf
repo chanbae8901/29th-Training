@@ -115,8 +115,22 @@ private _fnc_buildActions = {
                     {
                         [
                             "New Safe Start Time:",
-                            "<t color='#ffffff' size='2.5'>Safe Start Time changed to %1!</t>",
-                            { NOT_ROUND_SAFE }
+                            {
+                                if (_this < 0) exitWith {};
+                                if (NOT_ROUND_SAFE) exitWith {
+                                    systemChat "Safe start ended! Input ignored.";
+                                };
+                                [_this] call BIS_fnc_countdown;
+                                [
+                                    format [
+                                        "<t color='#ffffff' size='2.5'>Safe Start Time changed to %1!</t>",
+                                        (round _this) call EFUNC(round,formatTime)
+                                    ],
+                                    "PLAIN",
+                                    0.5,
+                                    false
+                                ] remoteExecCall [QEFUNC(common,displayMsg)];
+                            }
                         ] call FUNC(gui_setTime);
                     },
                     COLOR_NEUTRAL
@@ -135,8 +149,19 @@ private _fnc_buildActions = {
                     {
                         [
                             "New Round Time:",
-                            "<t color='#ffffff' size='2.5'>Round Time changed to %1!</t>",
-                            { NOT_ROUND_LIVE }
+                            {
+                                if (_this < 0) exitWith {};
+                                if (NOT_ROUND_LIVE) exitWith {
+                                    systemChat "Round ended! Input ignored.";
+                                };
+                                [_this] call BIS_fnc_countdown;
+                                [
+                                    format [
+                                        "Round Time changed to %1!",
+                                        (round _this) call EFUNC(round,formatTime)
+                                    ]
+                                ] remoteExecCall ["hint"];
+                            }
                         ] call FUNC(gui_setTime);
                     },
                     COLOR_NEUTRAL
