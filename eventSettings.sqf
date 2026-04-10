@@ -54,7 +54,8 @@ EGVAR(event,score) = [0, 0, 0]; //Starting score for each side [OPFOR, BLUFOR, G
 EGVAR(event,bluforWinConditions) = ""; //Conditions for BLUFOR to win the game
 EGVAR(event,opforWinConditions) = ""; //Conditions for OPFOR to win the game
 EGVAR(event,grnforWinConditions) = ""; //Conditions for GRNFOR to win the game
-EGVAR(event,winCheckInterval) = 3; //Interval in seconds between win condition checks
+EGVAR(event,winCheckInterval) = 3;  //Interval in seconds between win condition checks
+                                    //If useRoundSystem = true, only takes effect at start of round/
 //==============================================================
 
 /*

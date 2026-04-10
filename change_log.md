@@ -26,7 +26,7 @@ Overall Future Goals
 
 ---
 v4.5.0
-29 MAR 2026
+10 APR 2026
 ---
 * General
   - All "DOTT" tags in functions and variables converted to "TN", `Dott_Functions` folder
@@ -74,6 +74,7 @@ v4.5.0
   - Arsenal zone check refactored to fire CBA events (`enteredArsenalZone`/`exitedArsenalZone`) instead of containing inline logic.
   - Force parade action reworked: dynamically added/removed based on admin state via `adminStateChanged` event.
   - Environment sound muting logic moved from base to training module.
+  - New `fn_initPlayersInBase` to track players in arsenal zones server-side, bridging client events to server for admin notification.
 
 * Commands
   - Chat interception reverted back to waiting for display instead of event handler.
@@ -111,6 +112,12 @@ v4.5.0
   - Remove `_forceEnding` as a parameter from `fn_game`.
   - Add `private` declarations for local variables in `fn_markEditorPlacedObjects`.
   - Remove no longer used `endingObject` variable.
+  - Rename `hasTimer` to `useRoundSystem` for clearer naming — it controls the entire round/ready system, not just a timer.
+  - Expanded `useRoundSystem = false` support for PvE/non-competitive modes: time acceleration, win condition checks,
+    and Event Menu endings all work without the round system.
+  - Expanded documentation on how settings in eventSettings interact with eaco ther.
+  - Add `eventSettings.sqf` validation (`fn_validateSettings.sqf`) with descriptive error messages for invalid settings.
+  - Generalize `fn_gui_setTime` to callback-based approach, reused for both safe start time and round time changes.
 
 * Loadout
   - Add additional failsafe for `flexibleReset` teleport, if player is not within 75 meters of teleport point
@@ -124,6 +131,9 @@ v4.5.0
   - Updated folder to remove marker related workarounds to be compatible with OCAP Addon 2.1.0.
   - Instead of replacing `startRecording` and `stopRecording`, hijack the PFHObject to run when an additional variable we create is true.
   - Add timeout and logging if OCAP variables fail to initialize.
+
+* Radio
+  - Notify player in systemChat when their vehicle's long-range radio is adjusted to match faction default.
 
 * Parade
   - Fix custom parade uniform not being applied on join by making the respawn loadout the same as the forced parade loadout.
