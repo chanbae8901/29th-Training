@@ -24,7 +24,7 @@ call compile preprocessFileLineNumbers "eventSettings.sqf";
 call FUNC(validateSettings);
 
 /******* CBA Settings Overrides ********/
-[QEGVAR(main,addRadio), 0,
+[QGVARMAIN(addRadio), 0,
     nil, "server", false] call cba_settings_fnc_set;
 
 if (isServer) then {
@@ -42,9 +42,9 @@ if (isServer) then {
 
     // Timer
     if (GVAR(useRoundSystem)) then {
-        [QEGVAR(main,safeStartTime), GVAR(readySafeStart),
+        [QGVARMAIN(safeStartTime), GVAR(readySafeStart),
             nil, "server", false] call cba_settings_fnc_set;
-        [QEGVAR(main,notifyFinalCheck), false,
+        [QGVARMAIN(notifyFinalCheck), false,
             nil, "server", false] call cba_settings_fnc_set;
         [GVAR(timerLength)] call EFUNC(round,setTimer);
     };
