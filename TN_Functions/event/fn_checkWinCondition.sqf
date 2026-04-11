@@ -94,7 +94,7 @@ private _sideSettings =
 ];
 
 {
-    if (_x isEqualType "") then { continue };
+    if (_x isEqualTo []) then { continue };
 
     _x params ["_pointsRequired", "_atEnd"];
 

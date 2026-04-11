@@ -143,7 +143,7 @@ if (GVAR(checkWinConditions) call _isTrue) then {
     {
         private _val = missionNamespace getVariable [_x, nil];
         private _ok = if (isNil "_val") then {false} else {
-            _val isEqualTo ""
+            _val isEqualTo []
             || {_val isEqualType []
                 && {count _val isEqualTo 2}
                 && {_val select 0 isEqualType 0}
@@ -151,7 +151,11 @@ if (GVAR(checkWinConditions) call _isTrue) then {
         };
         if (!_ok) then {
             _errors pushBack format
-                [ERR_PREFIX + "%1 must be \"\" or [pointsRequired (number), atEnd (boolean)]", _x];
+                [ERR_PREFIX + "%1 must be [] or [pointsRequired (number), atEnd (boolean)]", _x];
+        };
+        if (_ok && {_val isEqualType []} && {count _val isEqualTo 2} && {_val select 1} && {!GVAR(useRoundSystem)}) then {
+            _errors pushBack format
+                [ERR_PREFIX + "%1 has atEnd = true but useRoundSystem is false. atEnd only works with useRoundSystem = true", _x];
         };
     } forEach [
         QGVAR(bluforWinConditions),

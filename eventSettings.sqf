@@ -45,22 +45,23 @@ EGVAR(event,disableStatistics) = true; //Disable statistics tab in map diary
 //Format: [pointsRequired, atEnd]
 //  pointsRequired - Number of points the side needs to win
 //  atEnd - If true, only check at end of timer. If false, check throughout the round.
-//Leave "" for no win condition for that side.
+//  atEnd = true can only be used if useRoundSystem = true
+//Leave [] for no win condition for that side.
 //Points can be increased/decreased by modifying the mission.sqm in editor, often by editing an object's init field.
 //See examples below.
 EGVAR(event,checkWinConditions) = true; //Run win condition checks.
 //=========== Only used if checkWinConditions = true ===========
 EGVAR(event,score) = [0, 0, 0]; //Starting score for each side [OPFOR, BLUFOR, GRNFOR]
-EGVAR(event,bluforWinConditions) = ""; //Conditions for BLUFOR to win the game
-EGVAR(event,opforWinConditions) = ""; //Conditions for OPFOR to win the game
-EGVAR(event,grnforWinConditions) = ""; //Conditions for GRNFOR to win the game
+EGVAR(event,bluforWinConditions) = []; //Conditions for BLUFOR to win the game
+EGVAR(event,opforWinConditions) = []; //Conditions for OPFOR to win the game
+EGVAR(event,grnforWinConditions) = []; //Conditions for GRNFOR to win the game
 EGVAR(event,winCheckInterval) = 3;  //Interval in seconds between win condition checks
                                     //If useRoundSystem = true, only takes effect at start of round/
 //==============================================================
 
 /*
 Examples
-TN_event_bluforWinConditions = ""; //No win condition for BLUFOR (except only team standing at end if hasAliveCheck = true)
+TN_event_bluforWinConditions = []; //No win condition for BLUFOR (except only team standing at end if hasAliveCheck = true)
 TN_event_opforWinConditions = [3, false]; //Win when OPFOR has 3 points at any time
 TN_event_grnforWinConditions = [2, true]; //Win when GRNFOR has 2 points at the end of the timer
 
