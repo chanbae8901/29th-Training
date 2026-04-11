@@ -42,6 +42,7 @@ if (isNil QGVAR(liveDeaths)) then {
 _playerDeaths = (_playerDeaths - GVAR(liveDeaths));
 
 if (_playerDeaths >= GVAR(numberOfLives)) then {
+    player setVariable [QGVAR(outOfLives), true, true];
     _playerDeaths spawn {
         private _point = getPosASL GVAR(spectateArea);
 

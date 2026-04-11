@@ -114,11 +114,6 @@ if (_needSpectate) then {
     };
 };
 
-if (_timerOn && {GVAR(hasAliveCheck) call _isTrue}) then {
-    ["spectateAreaRadius", T_POSNUM,
-        GVAR(spectateAreaRadius) call _isPosNum] call _fnCheck;
-};
-
 if (_timerOn && {GVAR(numberOfLives) isEqualType 0 && {GVAR(numberOfLives) > 0}}) then {
     ["respawnDisarmPlayers", T_BOOL,
         GVAR(respawnDisarmPlayers) call _isBool] call _fnCheck;

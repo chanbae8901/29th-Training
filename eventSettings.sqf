@@ -25,9 +25,6 @@ EGVAR(event,respawnDisarmPlayers) = true;   //Disarm players when they are out o
 
 EGVAR(event,hasAliveCheck) = true;          //Automatically end mission if only one side has players alive with them as the winner
 
-EGVAR(event,spectateAreaRadius) = 200;      //Radius around EGVAR(event,spectateArea) that is used to determine which players are spectating/lost all lives
-                                            //Only used if hasAliveCheck = true
-
 EGVAR(event,spectateArea) = base_endFlag;   //Point where players will be teleported to spectate from when out of lives.
                                             //Only used if hasAliveCheck = true OR numberOfLives > 0
 //====================================================

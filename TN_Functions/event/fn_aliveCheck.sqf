@@ -63,15 +63,15 @@ private _remainDead = (_respawnType isEqualTo RESPAWN_BIRD);
         _numResistanceDead = { !alive _x } count _resistancePlayers;
     } else {
         _numBluforDead = {
-            (_x distance2D GVAR(spectateArea)) < GVAR(spectateAreaRadius)
+            _x getVariable [QGVAR(outOfLives), false]
         } count _bluforPlayers;
 
         _numOpforDead = {
-            (_x distance2D GVAR(spectateArea)) < GVAR(spectateAreaRadius)
+            _x getVariable [QGVAR(outOfLives), false]
         } count _opforPlayers;
 
         _numResistanceDead = {
-            (_x distance2D GVAR(spectateArea)) < GVAR(spectateAreaRadius)
+            _x getVariable [QGVAR(outOfLives), false]
         } count _resistancePlayers;
     };
 
