@@ -80,22 +80,22 @@ player createDiaryRecord [
     [
         "Round System",
         "<font color='#FF00FF'>!timer <font color='#00FFFF'>[minutes]</font></font><br />" +
-        "Sets countdown timer length.<br /><br />" +
+        "Sets length of next round.<br /><br />" +
 
         "<font color='#FF00FF'>!live</font><br />" +
-        "Starts the countdown timer set by <font color='#00FF00'>!timer</font>.<br /><br />" +
+        "Starts the round with length set by <font color='#00FF00'>!timer</font>.<br /><br />" +
 
         "<font color='#FF00FF'>!addtime <font color='#00FFFF'>[minutes]</font></font><br />" +
         "Adds or subtracts time from the current round timer. Can only be used when round is LIVE.<br /><br />" +
 
         "<font color='#FF00FF'>!quicktimer <font color='#00FFFF'>[minutes]</font></font><br />" +
-        "Starts a round instantly.<br /><br />" +
+        "Starts a round instantly with specified time length.<br /><br />" +
 
         "<font color='#FF00FF'>!game</font><br />" +
         "Ends the current round. Can be used to display game notification even if round is not running.<br /><br />" +
 
         "<font color='#FF00FF'>!safe <font color='#00FFFF'>[minutes]</font></font><br />" +
-        "Forces safe start with specified time, or ends forced safe start if given <font color='#00FFFF'>0</font>."
+        "Immediately forces safe start with specified time, or ends forced safe start if given <font color='#00FFFF'>0</font>."
     ]
 ];
 
