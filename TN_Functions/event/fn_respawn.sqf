@@ -25,9 +25,6 @@ if (!GVAR(trackingLives)) exitWith {};
 
 GVAR(livesLeft) = GVAR(livesLeft) - 1;
 
-diag_log text format ["%1: Player respawned, %2 lives remaining",
-    QFUNC(respawn), GVAR(livesLeft)];
-
 if (GVAR(livesLeft) > 0) exitWith {};
 
 // --- Out of lives ---
@@ -38,16 +35,9 @@ titleText [
     "BLACK OUT", 0.5, true, true
 ];
 
-if (GVAR(respawnDisarmPlayers)) then {
-    removeAllWeapons player;
-};
-
 [{
+    player setPos [0,0,0];
     [player] call EFUNC(spectator,enter);
-
-    [{
-        player allowDamage true;
-    }, [], 1] call CBA_fnc_waitAndExecute;
 
     titleText [
         "<t color='#ffffff' size='4'>Out of Lives!</t>",

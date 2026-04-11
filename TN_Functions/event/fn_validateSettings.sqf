@@ -100,24 +100,6 @@ if (GVAR(useRoundSystem) call _isTrue) then {
     };
 };
 
-/******* Spectate/respawn-gated (also requires timer) *******/
-private _timerOn = GVAR(useRoundSystem) call _isTrue;
-private _needSpectate = _timerOn && {
-    (GVAR(hasAliveCheck) call _isTrue)
-    || {GVAR(numberOfLives) isEqualType 0 && {GVAR(numberOfLives) > 0}}
-};
-if (_needSpectate) then {
-    if (isNil QGVAR(spectateArea)
-        || {!(GVAR(spectateArea) isEqualType objNull)}
-        || {isNull GVAR(spectateArea)}) then {
-        _errors pushBack (ERR_PREFIX + "spectateArea is missing or not a valid object");
-    };
-};
-
-if (_timerOn && {GVAR(numberOfLives) isEqualType 0 && {GVAR(numberOfLives) > 0}}) then {
-    ["respawnDisarmPlayers", T_BOOL,
-        GVAR(respawnDisarmPlayers) call _isBool] call _fnCheck;
-};
 
 /******* Win-condition-gated *******/
 if (GVAR(checkWinConditions) call _isTrue) then {

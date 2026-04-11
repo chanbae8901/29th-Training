@@ -7,8 +7,6 @@
  * Requires:
  *     TN_event_fnc_game
  *     TN_round_state
- *     TN_event_spectateArea (global, if respawn-based)
- *     TN_event_spectateAreaRadius (global, if respawn-based)
  *
  * Arguments:
  * None
