@@ -75,7 +75,7 @@ private _createMarker = {
 
     _marker setMarkerShapeLocal "Rectangle";
     _marker setMarkerBrushLocal "SolidFull";
-    _marker setMarkerColorLocal "ColorBlack";
+    _marker setMarkerColorLocal "ColorGrey";
     _marker setMarkerDirLocal getDir _obj;
 
     private _bbr = boundingBoxReal _obj;
