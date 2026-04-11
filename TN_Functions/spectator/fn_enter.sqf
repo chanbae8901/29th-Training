@@ -11,12 +11,14 @@
  *
  * Arguments:
  * 0: Unit to place into spectator (default: player) <OBJECT>
+ * 1: Force spectator without exit hints or PFH checks (default: false) <BOOL>
  *
  * Return Value:
  * True if spectator entered, false if blocked <BOOL>
  *
  * Example:
  * [] call TN_spectator_fnc_enter
+ * [player, true] call TN_spectator_fnc_enter
  */
 
 /*
@@ -38,7 +40,7 @@
  * _this select 9 : Whether to show entities / locations lists
  */
 
-params [["_unit", player]];
+params [["_unit", player], ["_forced", false, [false]]];
 
 if (isDedicated || !hasInterface) exitWith {
     ["Player must not be dedicated server or HC."]
@@ -52,17 +54,19 @@ if (GVARMAIN(limitSpectator) isEqualTo 2) exitWith {
     false
 };
 
-hintSilent "SPECTATOR\n----------\nPress RELOAD to exit";
+if (!_forced) then {
+    hintSilent "SPECTATOR\n----------\nPress RELOAD to exit";
 
-// --- Periodic reminder while spectating ---
-[{
-    cutText [
-        "SPECTATOR\n----------\nPress RELOAD to exit",
-        "PLAIN DOWN"
-    ];
-}, 30, [], {}, {}, {true}, {
-    isNil "BIS_EGSpectator_initialized"
-}] call CBA_fnc_createPerFrameHandlerObject;
+    // --- Periodic reminder while spectating ---
+    [{
+        cutText [
+            "SPECTATOR\n----------\nPress RELOAD to exit",
+            "PLAIN DOWN"
+        ];
+    }, 30, [], {}, {}, {true}, {
+        isNil "BIS_EGSpectator_initialized"
+    }] call CBA_fnc_createPerFrameHandlerObject;
+};
 
 [_unit, true] remoteExecCall ["hideObjectGlobal", 2];
 
@@ -77,28 +81,32 @@ private _params = switch (GVARMAIN(limitSpectator)) do {
 
 ["Initialize", _params] call BIS_fnc_EGSpectator;
 
-// --- Per-frame exit checks ---
-private _startPos = getPosATL _unit;
+if (!_forced) then
+{
+    // --- Per-frame exit checks ---
+    private _startPos = getPosATL _unit;
 
-GVAR(exitPFH) = [{
-    params ["_args"];
-    _args params ["_startPos", "_unit"];
+    GVAR(exitPFH) = [{
+        params ["_args"];
+        _args params ["_startPos", "_unit"];
 
-    // Reload key pressed.
-    if (inputAction "ReloadMagazine" > 0) exitWith {
-        call FUNC(exit);
-    };
+        // Reload key pressed.
+        if (inputAction "ReloadMagazine" > 0) exitWith {
+            call FUNC(exit);
+        };
 
-    // Player drifted away from start position.
-    if (getPosATL _unit distanceSqr _startPos > 25) exitWith {
-        call FUNC(exit);
-    };
+        // Player drifted away from start position.
+        if (getPosATL _unit distanceSqr _startPos > 25) exitWith {
+            call FUNC(exit);
+        };
 
-    // Player respawned while in spectator (known issue).
-    if (!alive _unit) exitWith {
-        call FUNC(exit);
-    };
-}, 0, [_startPos, _unit]] call CBA_fnc_addPerFrameHandler;
+        // Player respawned while in spectator (known issue).
+        if (!alive _unit) exitWith {
+            call FUNC(exit);
+        };
+    }, 0, [_startPos, _unit]] call CBA_fnc_addPerFrameHandler;
+};
+
 
 [QGVAR(entered), []] call CBA_fnc_localEvent;
 

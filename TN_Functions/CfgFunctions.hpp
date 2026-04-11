@@ -63,8 +63,8 @@ class TN_Event {
         class gui_setTime {};
         class handleAdminEventMenu {};
         class init {};
+        class killed {};
         class markEditorPlacedObjects {};
-        class respawn {};
         class validateSettings {};
     };
 };

@@ -132,9 +132,9 @@ if (hasInterface) then {
         };
     }] call CBA_fnc_waitUntilAndExecute;
 
-    // Respawn / Lives
+    // Enable lives tracking system
     if (GVAR(numberOfLives) > 0) then {
-        [QGVAR(respawn), "Respawn", FUNC(respawn)]
+        [QGVAR(killed), "Killed", FUNC(killed)]
             call CBA_fnc_addBISPlayerEventHandler;
 
         [QGVAR(jipLivesResult), {
