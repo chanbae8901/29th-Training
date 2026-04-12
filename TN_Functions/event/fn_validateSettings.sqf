@@ -60,18 +60,12 @@ private _isNonNegNum = {
 /******* Always-used toggles *******/
 ["useRoundSystem", T_BOOL,
     GVAR(useRoundSystem) call _isBool] call _fnCheck;
-["hasAliveCheck", T_BOOL,
-    GVAR(hasAliveCheck) call _isBool] call _fnCheck;
 ["checkWinConditions", T_BOOL,
     GVAR(checkWinConditions) call _isBool] call _fnCheck;
 ["autoMarkObjects", T_BOOL,
     GVAR(autoMarkObjects) call _isBool] call _fnCheck;
 ["disableStatistics", T_BOOL,
     GVAR(disableStatistics) call _isBool] call _fnCheck;
-["numberOfLives", T_NONNEG,
-    GVAR(numberOfLives) call _isNonNegNum] call _fnCheck;
-["stopTimeUntilLive", T_BOOL,
-    GVAR(stopTimeUntilLive) call _isBool] call _fnCheck;
 ["timeAcc", T_POSNUM,
     GVAR(timeAcc) call _isPosNum] call _fnCheck;
 if (isNil QGVAR(arsenalRadius)) then {
@@ -80,6 +74,8 @@ if (isNil QGVAR(arsenalRadius)) then {
     ["arsenalRadius", T_POSNUM,
         GVAR(arsenalRadius) call _isPosNum] call _fnCheck;
 };
+["endingDelay", T_POSNUM,
+    GVAR(endingDelay) call _isPosNum] call _fnCheck;
 
 /******* Timer-gated *******/
 if (GVAR(useRoundSystem) call _isTrue) then {
@@ -99,6 +95,19 @@ if (GVAR(useRoundSystem) call _isTrue) then {
                     [ERR_PREFIX + "timerObjects[%1] is missing or not a valid object", _forEachIndex];
             };
         } forEach GVAR(timerObjects);
+    };
+
+    ["stopTimeUntilLive", T_BOOL,
+        GVAR(stopTimeUntilLive) call _isBool] call _fnCheck;
+    ["numberOfLives", T_NONNEG,
+        GVAR(numberOfLives) call _isNonNegNum] call _fnCheck;
+
+    /******* Lives-gated (numberOfLives > 0) *******/
+    if (GVAR(numberOfLives) call _isPosNum) then {
+        ["penalizeJIPLives", T_BOOL,
+            GVAR(penalizeJIPLives) call _isBool] call _fnCheck;
+        ["hasAliveCheck", T_BOOL,
+            GVAR(hasAliveCheck) call _isBool] call _fnCheck;
     };
 };
 
