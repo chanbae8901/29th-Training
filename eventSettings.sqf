@@ -36,7 +36,7 @@ GVAR(autoMarkObjects) = true;    //Mark static editor placed objects on map for 
 
 GVAR(disableStatistics) = true;  //Disable statistics tab in map diary
 
-GVAR(endingDelay) = 10; //Delay before ending is called after hasAliveCheck/checkWinConditions conditions are met 
+GVAR(endingDelay) = 5;  //Delay before ending is called after hasAliveCheck/checkWinConditions notification
                         //or useRoundSystem time running out
 
 // Win conditions

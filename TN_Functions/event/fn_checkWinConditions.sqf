@@ -32,18 +32,21 @@ private _checks = if (_gameEnded) then {
     if (call _x) exitWith {
         private _winningSide = _forEachIndex call BIS_fnc_sideType;
         if (!GVAR(missionEnded)) then {
-            private _sideName = _winningSide call EFUNC(common,convertSide);
-            private _msg = format ["%1 has completed the necessary objectives!", _sideName];
-            _msg remoteExecCall ["hint"];
-            _msg remoteExecCall ["systemChat"];
-            [_winningSide, GVAR(endingDelay)] call FUNC(endMission);
+            [{
+                params["_winningSide"];
+                private _sideName = _winningSide call EFUNC(common,convertSide);
+                private _msg = format ["%1 has completed the necessary objectives!", _sideName];
+                _msg remoteExecCall ["hint"];
+                _msg remoteExecCall ["systemChat"];
+                [_winningSide, GVAR(endingDelay)] call FUNC(endMission);
+            }, _winningSide, 5] call CBA_fnc_waitAndExecute;
         };
 
     };
 } forEach _checks;
 
 if (_gameEnded) then {
-    [] call FUNC(endMission);
+    [nil, GVAR(endingDelay)] call FUNC(endMission);
 };
 
 nil
