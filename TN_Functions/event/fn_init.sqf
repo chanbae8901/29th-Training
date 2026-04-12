@@ -24,6 +24,9 @@ call compile preprocessFileLineNumbers "eventSettings.sqf";
 call FUNC(validateSettings);
 
 if (isServer) then {
+    GVAR(missionEnded) = false;
+    publicVariable QGVAR(gameCalled);
+
     /******* CBA Settings Overrides ********/
     [QGVARMAIN(addRadio), 0,
         nil, "server", false] call cba_settings_fnc_set;

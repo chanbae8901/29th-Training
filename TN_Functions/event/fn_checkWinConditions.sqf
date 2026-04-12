@@ -31,7 +31,14 @@ private _checks = if (_gameEnded) then {
 {
     if (call _x) exitWith {
         private _winningSide = _forEachIndex call BIS_fnc_sideType;
-        [_winningSide] call FUNC(game);
+        if (!GVAR(missionEnded)) then {
+            private _sideName = _winningSide call EFUNC(common,convertSide);
+            private _msg = format ["%1 has completed the necessary objectives!", _sideName];
+            _msg remoteExecCall ["hint"];
+            _msg remoteExecCall ["systemChat"];
+            [_winningSide, GVAR(endingDelay)] call FUNC(game);
+        };
+
     };
 } forEach _checks;
 

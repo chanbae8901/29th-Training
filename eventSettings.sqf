@@ -1,3 +1,4 @@
+#define COMPONENT event
 #include "script_macros.hpp"
 
 // Use the variables below to customize your event mission
@@ -8,32 +9,35 @@
 // disableStatistics = false
 
 
-EGVAR(event,useRoundSystem) = true; //Use timer/ready system
+GVAR(useRoundSystem) = true; //Use timer/ready system
 //=========== Only used if useRoundSystem = true ===========
-EGVAR(event,forcedSafeStart) = 15 * 60; //Safe start time before all teams ready up in seconds
-EGVAR(event,readySafeStart) = 30; //Safe start time after all teams ready up in seconds
-EGVAR(event,timerLength) = 45 * 60; //Length of round in seconds
-EGVAR(event,timerObjects) = [
+GVAR(forcedSafeStart) = 15 * 60; //Safe start time before all teams ready up in seconds
+GVAR(readySafeStart) = 30; //Safe start time after all teams ready up in seconds
+GVAR(timerLength) = 45 * 60; //Length of round in seconds
+GVAR(timerObjects) = [
     base_timerFlagWest,
     base_timerFlagEast,
     base_timerFlagGuer
 ]; //Objects players can interact with to ready up their team, default colored flags in editor
-EGVAR(event,stopTimeUntilLive) = true;      //Stop time so that time at round start is the same as mission start
-EGVAR(event,hasAliveCheck) = true;          //Automatically end mission if only one side has players alive with them as the winner
+GVAR(stopTimeUntilLive) = true;      //Stop time so that time at round start is the same as mission start
+GVAR(hasAliveCheck) = true;          //Automatically end mission if only one side has players alive with them as the winner
                                             //NOTE: Only used if numberOfLives > 0
 //====================================================
-EGVAR(event,numberOfLives) = 1;         //0 for unlimited lives
-EGVAR(event,penalizeJIPLives) = true;   //If player JIP after round has started, reduce their number of lives by 1
+GVAR(numberOfLives) = 1;         //0 for unlimited lives
+GVAR(penalizeJIPLives) = true;   //If player JIP after round has started, reduce their number of lives by 1
                                         //NOTE: Only used if numberOfLives > 0 AND useRoundSystem = true
 
-EGVAR(event,timeAcc) = 1;   //Time acceleration multiplier for the event (1 = normal time, 2 = 2x faster, 0.5 = half speed, etc)
+GVAR(timeAcc) = 1;   //Time acceleration multiplier for the event (1 = normal time, 2 = 2x faster, 0.5 = half speed, etc)
                             //If useRoundSystem = true, only takes effect at start of round
 
-EGVAR(event,arsenalRadius) = 20;        //Radius around arsenal object where players can access the arsenal
+GVAR(arsenalRadius) = 20;        //Radius around arsenal object where players can access the arsenal
 
-EGVAR(event,autoMarkObjects) = true;    //Mark static editor placed objects on map for all players
+GVAR(autoMarkObjects) = true;    //Mark static editor placed objects on map for all players
 
-EGVAR(event,disableStatistics) = true;  //Disable statistics tab in map diary
+GVAR(disableStatistics) = true;  //Disable statistics tab in map diary
+
+GVAR(endingDelay) = 10; //Delay before ending is called after hasAliveCheck/checkWinConditions conditions are met 
+                        //or useRoundSystem time running out
 
 // Win conditions
 // Format: [pointsRequired, atEnd]
@@ -43,19 +47,19 @@ EGVAR(event,disableStatistics) = true;  //Disable statistics tab in map diary
 // Leave [] for no win condition for that side.
 // Points can be increased/decreased by modifying the mission.sqm in editor, often by editing an object's init field.
 // See examples below.
-EGVAR(event,checkWinConditions) = true; //Run win condition checks.
+GVAR(checkWinConditions) = true; //Run win condition checks.
 //=========== Only used if checkWinConditions = true ===========
-EGVAR(event,score) = [0, 0, 0];         //Starting score for each side [OPFOR, BLUFOR, GRNFOR]
-EGVAR(event,bluforWinConditions) = [];  //Conditions for BLUFOR to win the game
-EGVAR(event,opforWinConditions) = [];   //Conditions for OPFOR to win the game
-EGVAR(event,grnforWinConditions) = [];  //Conditions for GRNFOR to win the game
+GVAR(score) = [0, 0, 0];         //Starting score for each side [OPFOR, BLUFOR, GRNFOR]
+GVAR(bluforWinConditions) = [];  //Conditions for BLUFOR to win the game
+GVAR(opforWinConditions) = [];   //Conditions for OPFOR to win the game
+GVAR(grnforWinConditions) = [];  //Conditions for GRNFOR to win the game
 //==============================================================
 
 /*
 Examples
-EGVAR(event,bluforWinConditions) = []; //No win condition for BLUFOR (except only team standing if hasAliveCheck = true)
-EGVAR(event,opforWinConditions) = [3, false]; //Win when OPFOR has 3 points at any time
-EGVAR(event,grnforWinConditions) = [2, true]; //Win when GRNFOR has 2 points at the end of the timer
+GVAR(bluforWinConditions) = []; //No win condition for BLUFOR (except only team standing if hasAliveCheck = true)
+GVAR(opforWinConditions) = [3, false]; //Win when OPFOR has 3 points at any time
+GVAR(grnforWinConditions) = [2, true]; //Win when GRNFOR has 2 points at the end of the timer
 
 Put example code below in the init field of the relevant object to award points.
 

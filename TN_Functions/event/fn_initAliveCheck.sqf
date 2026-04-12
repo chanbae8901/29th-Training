@@ -41,7 +41,13 @@ GVAR(fnCheckWinner) = {
 
     private _winIdx = GVAR(aliveCounts) findIf { _x > 0 };
     private _winningSide = _winIdx call BIS_fnc_sideType;
-    [_winningSide] call FUNC(game);
+    if (!GVAR(missionEnded)) then {
+        private _sideName = _winningSide call EFUNC(common,convertSide);
+        private _msg = format ["%1 is the only team left standing!", _sideName];
+        _msg remoteExecCall ["hint"];
+        _msg remoteExecCall ["systemChat"];
+        [_winningSide, GVAR(endingDelay)] call FUNC(game);
+    };
 };
 
 // --- Round start: build initial counts ---
