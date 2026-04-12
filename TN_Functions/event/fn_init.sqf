@@ -157,7 +157,7 @@ if (hasInterface) then {
     if (GVAR(numberOfLives) > 0) then {
         GVAR(livesLeft) = GVAR(numberOfLives); //default to prevent nil
 
-        [QGVAR(killed), "Killed", FUNC(killed)]
+        [QGVAR(killed), "Killed", FUNC(handleLivesOnKilled)]
             call CBA_fnc_addBISPlayerEventHandler;
 
         [QGVAR(jipLivesResult), {
