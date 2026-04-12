@@ -72,55 +72,6 @@ if (isServer) then {
         call FUNC(initAliveCheck);
     };
 
-    // Lives Tracking
-    if (GVAR(numberOfLives) > 0) then {
-        GVAR(trackingLives) = false;
-        publicVariable QGVAR(trackingLives);
-        GVAR(livesByUID) = createHashMap;
-
-        ["CAManBase", "Killed", {
-            params ["_unit"];
-            if (!GVAR(trackingLives)) exitWith {};
-            if (!isPlayer _unit) exitWith {};
-
-            private _uid = getPlayerUID _unit;
-            if (_uid isEqualTo "") exitWith {};
-
-            private _lives = GVAR(livesByUID) getOrDefault [
-                _uid, GVAR(numberOfLives)
-            ];
-            private _newLives = _lives - 1;
-            GVAR(livesByUID) set [_uid, _newLives];
-            if (_newLives isEqualTo 0) then {
-                [QGVAR(outOfLives), [_unit]] call CBA_fnc_localEvent;
-            };
-        }] call CBA_fnc_addClassEventHandler;
-
-        [QGVAR(checkJIPLives), {
-            params ["_player"];
-            private _uid = getPlayerUID _player;
-            private _lives = GVAR(livesByUID) getOrDefault [
-                _uid, GVAR(numberOfLives)
-            ];
-            if (GVAR(useRoundSystem) && {GVAR(penalizeJIPLives)} && {GVAR(trackingLives)}) then {
-                _lives = _lives - 1;
-                GVAR(livesByUID) set [_uid, _lives];
-            };
-            [QGVAR(jipLivesResolved), [_player, _lives]]
-                call CBA_fnc_localEvent;
-            [QGVAR(jipLivesResult), [_lives], _player]
-                call CBA_fnc_targetEvent;
-        }] call CBA_fnc_addEventHandler;
-
-        if (GVAR(useRoundSystem)) then {
-            [QEGVAR(round,started), {
-                GVAR(livesByUID) = createHashMap;
-                GVAR(trackingLives) = true;
-                publicVariable QGVAR(trackingLives);
-            }] call CBA_fnc_addEventHandler;
-        };
-    };
-
     // Time Acceleration
     if (GVAR(useRoundSystem)) then {
         [
@@ -155,82 +106,6 @@ if (hasInterface) then {
         };
     }] call CBA_fnc_waitUntilAndExecute;
 
-    // Enable lives tracking system
-    if (GVAR(numberOfLives) > 0) then {
-        GVAR(livesLeft) = GVAR(numberOfLives); //default to prevent nil
-
-        [QGVAR(killed), "Killed", FUNC(handleLivesOnKilled)]
-            call CBA_fnc_addBISPlayerEventHandler;
-
-        [QGVAR(jipLivesResult), {
-            params ["_livesLeft"];
-            GVAR(livesLeft) = _livesLeft;
-            if (_livesLeft isEqualTo 0) then {
-                [player] call ACE_medical_treatment_fnc_fullHealLocal;
-                [player, true] call EFUNC(spectator,enter);
-                // Delay setPos to let spectator camera initialize
-                [{
-                    (_this select 0) setPos [0,0,0];
-                    (_this select 0) enableSimulation false;
-                }, [player], 0.5] call CBA_fnc_waitAndExecute;
-            };
-        }] call CBA_fnc_addEventHandler;
-
-        [QGVAR(adjustLives), {
-            params ["_livesLeft"];
-
-            if (_livesLeft isEqualto GVAR(livesLeft)) exitWith {};
-            private _oldLivesLeft = GVAR(livesLeft);
-            GVAR(livesLeft) = _livesLeft;
-            if (_livesLeft isEqualTo 0) then {
-                [player] call ACE_medical_treatment_fnc_fullHealLocal;
-                [player, true] call EFUNC(spectator,enter);
-                // Delay setPos to let spectator camera initialize
-                [{
-                    (_this select 0) setPos [0,0,0];
-                    (_this select 0) enableSimulation false;
-                }, [player], 0.5] call CBA_fnc_waitAndExecute;
-            };
-            if (_oldLivesLeft isEqualTo 0) then {
-                [player] call ACE_medical_treatment_fnc_fullHealLocal;
-                call EFUNC(spectator,exit);
-                private _respawnPosition = (player call BIS_fnc_getRespawnPositions) select 0;
-                if (count _respawnPosition isEqualTo 0) exit
-                _respawnPosition = switch (typeName _respawnPosition) do
-                {
-                    case ("STRING"): {
-                        getMarkerPos _respawnPosition;
-                    };
-                    case ("OBJECT"): {
-                        getPosATL _respawnPosition;
-                    };
-                    default {
-                        _respawnPosition;
-                    };
-                };
-                player setPosATL _respawnPosition;
-                player enableSimulation true;
-            };
-        }] call CBA_fnc_addEventHandler;
-
-        [{!isNull player}, {
-            [QGVAR(checkJIPLives), [player]]
-                call CBA_fnc_serverEvent;
-        }] call CBA_fnc_waitUntilAndExecute;
-
-        //disable Respawn button in Pause menu if out of lives
-        [   
-            QGVARMAIN(enteredPauseMenu),
-            { 
-                if (GVAR(livesLeft) <= 0) then {
-                    [{!isNull ((findDisplay 49) displayCtrl 1010)}, 
-                    {((findDisplay 49) displayCtrl 1010) ctrlEnable false}
-                    ] call CBA_fnc_waitUntilAndExecute;
-                };
-            }
-        ] call CBA_fnc_addEventHandler;    
-    };
-
     // Auto Mark Editor Objects
     if (GVAR(autoMarkObjects)) then {
         call FUNC(markEditorPlacedObjects);
@@ -257,5 +132,7 @@ if (hasInterface) then {
         }] call CBA_fnc_waitUntilAndExecute;
     };
 };
+
+call FUNC(initTrackLives);
 
 nil

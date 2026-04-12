@@ -96,6 +96,34 @@ FUNC(checkWinner) = {
     [FUNC(checkWinner), {}, CHECK_DELAY] call CBA_fnc_waitAndExecute;
 }] call CBA_fnc_addEventHandler;
 
+// --- Player regained lives (admin action) ---
+[QGVAR(backInAction), {
+    params ["_unit"];
+    if (NOT_ROUND_LIVE) exitWith {};
+
+    private _sideIdx = (side group _unit) call BIS_fnc_sideId;
+    if (_sideIdx > 2) exitWith {};
+
+    titleText [
+        "<t color='#ffffff' size='4'>Back In Action!</t>",
+        "BLACK OUT", 0.1, true, true
+    ];
+
+    [ 
+        { 
+            titleText [
+                "<t color='#ffffff' size='4'>Back In Action!</t>",
+                "BLACK IN", 0.5, true, true
+            ];
+        },
+        {},
+        2
+    ] call CBA_fnc_waitAndExecute;
+
+    private _newCount = (GVAR(aliveCounts) select _sideIdx) + 1;
+    GVAR(aliveCounts) set [_sideIdx, _newCount max 0];
+}] call CBA_fnc_addEventHandler;
+
 // --- Player disconnect ---
 addMissionEventHandler ["HandleDisconnect", {
     params ["_unit", "_id", "_uid"];
