@@ -35,6 +35,8 @@ if (isServer) then {
     /* --- Prevent scores showing up on right side UI --- */
     [
         QGVAR(started), {
+            if !(GVARMAIN(disableScoreboard)) exitWith {};
+
             {
                 _x addScoreSide -SCORE_REDUCE_VALUE;
             } forEach [west, east, independent];
@@ -43,6 +45,8 @@ if (isServer) then {
 
     [
         QGVAR(ended), {
+            if !(GVARMAIN(disableScoreboard)) exitWith {};
+                        
             {
                 _x addScoreSide SCORE_REDUCE_VALUE;
             } forEach [west, east, independent];

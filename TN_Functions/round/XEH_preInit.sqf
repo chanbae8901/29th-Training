@@ -1,4 +1,4 @@
-#include "script_component.hpp"
+#include "defines.hpp"
 #include "..\..\data\settingCategories.hpp"
 
 [
@@ -10,7 +10,23 @@
     ],
     [GENERAL_SETTINGS_CATEGORY, ROUND_SUBCATEGORY],
     true,
-    1, {
+    1, 
+    {
+        if (!PRELOAD_FINISHED) exitWith {};
+
+        if (isServer && ROUND_LIVE) then
+        {
+            if (_this) then {
+                {
+                    _x addScoreSide -SCORE_REDUCE_VALUE;
+                } forEach [west, east, independent];
+            } else {
+                {
+                    _x addScoreSide SCORE_REDUCE_VALUE;
+                } forEach [west, east, independent];
+            };
+        };
+
         if (hasInterface) then {
             if (!_this) exitWith {
                 removeMissionEventHandler [
