@@ -41,7 +41,7 @@ FUNC(checkWinner) = {
             GVAR(notifiedAllDead) = true;
             [{
                 private _msg = "All teams eliminated!";
-                _msg remoteExecCall ["hint"];
+                _msg remoteExecCall [QEFUNC(common,timedHint)];
                 _msg remoteExecCall ["systemChat"];
             }, {}, 5] call CBA_fnc_waitAndExecute;
             ["All sides eliminated — admin should declare the winner.", true, true]
@@ -56,7 +56,7 @@ FUNC(checkWinner) = {
             params["_winningSide"];
             private _sideName = _winningSide call EFUNC(common,convertSide);
             private _msg = format ["%1 is the only team left standing!", _sideName];
-            _msg remoteExecCall ["hint"];
+            _msg remoteExecCall [QEFUNC(common,timedHint)];
             _msg remoteExecCall ["systemChat"];
             [_winningSide, ENDING_DELAY] call FUNC(endMission);
         }, _winningSide, 5] call CBA_fnc_waitAndExecute;
