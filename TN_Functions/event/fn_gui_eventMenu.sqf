@@ -52,7 +52,7 @@ private _fnc_buildActions = {
     private _fnc_appendEndings = {
         [
             "Neutral Ending",
-            { [] call FUNC(game) },
+            { [] call FUNC(endMission) },
             COLOR_NEUTRAL
         ] call _fnc_add;
 
@@ -73,7 +73,7 @@ private _fnc_buildActions = {
                     {
                         params ["_ctrl"];
                         private _side = _ctrl getVariable QGVAR(side);
-                        [_side] call FUNC(game);
+                        [_side] call FUNC(endMission);
                     },
                     _sideColor,
                     _side

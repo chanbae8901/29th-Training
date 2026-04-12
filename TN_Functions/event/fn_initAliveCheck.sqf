@@ -8,7 +8,7 @@
  * elimination, disconnect, and JIP events.
  *
  * Requires:
- *     TN_event_fnc_game
+ *     TN_event_fnc_endMission
  *     TN_event_livesByUID
  *     TN_event_numberOfLives
  *     TN_round_state
@@ -46,7 +46,7 @@ GVAR(fnCheckWinner) = {
         private _msg = format ["%1 is the only team left standing!", _sideName];
         _msg remoteExecCall ["hint"];
         _msg remoteExecCall ["systemChat"];
-        [_winningSide, GVAR(endingDelay)] call FUNC(game);
+        [_winningSide, GVAR(endingDelay)] call FUNC(endMission);
     };
 };
 

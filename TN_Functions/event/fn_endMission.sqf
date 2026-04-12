@@ -16,7 +16,7 @@
  * Nothing
  *
  * Example:
- * [west] call TN_event_fnc_game;
+ * [west] call TN_event_fnc_endMission;
  */
 
 params
@@ -27,7 +27,7 @@ params
 ];
 
 if (!isServer) exitWith {
-    _this remoteExecCall [QFUNC(game), 2];
+    _this remoteExecCall [QFUNC(endMission), 2];
 };
 
 /******** CONFIG ********/
