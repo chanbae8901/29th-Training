@@ -5,12 +5,11 @@
  * Ends the mission with a specific side victory, neutral
  * ending, or named ending class. Redirects to server if
  * called on a client. Prevents duplicate endings via the
- * TN_event_gameCalled guard.
+ * TN_event_missionEnded guard.
  *
  * Arguments:
- * 0: Winning side, omit for neutral ending <SIDE> (default: sideUnknown)
- * 1: Named ending class from CfgDebriefing, overrides side victory if set <STRING> (default: "")
- * 2: Delay before calling game <NUMBER> (default: 0)
+ * 0: Winning side or ending class, omit for neutral ending <SIDE|STRING> (default: sideUnknown)
+ * 1: Delay before calling game <NUMBER> (default: 0)
  *
  * Return Value:
  * Nothing
@@ -21,8 +20,7 @@
 
 params
 [
-    ["_sideVictory", sideUnknown],
-    ["_endingClass", "", [""]],
+    ["_ending", "EndNeutral", [sideUnknown, ""]],
     ["_delay", 0, [0]]
 ];
 
@@ -44,12 +42,8 @@ GVAR(missionEnded) = true;
 publicVariable QGVAR(gameCalled);
 [QGVAR(missionEnded), []] call CBA_fnc_globalEvent;
 
-private _ending = _endNeutral;
-
-if (_endingClass isNotEqualTo "") then {
-    _ending = _endingClass;
-} else {
-    _ending = switch (_sideVictory) do {
+if (_ending isEqualType sideUnknown) then {
+    _ending = switch (_ending) do {
         case west: {
             _endWest;
         };
