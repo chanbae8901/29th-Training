@@ -42,7 +42,7 @@ player setVariable ["BIS_fnc_showRespawnMenu_disable", true];
         ];
     },
     {},
-    1 //wait so transition is less jarring for the player
+    2 //wait so transition is less jarring for the player
 ] call CBA_fnc_waitAndExecute;
 
 [ 
@@ -53,7 +53,7 @@ player setVariable ["BIS_fnc_showRespawnMenu_disable", true];
         ];
     },
     {},
-    4 //At least delayed enough to hide respawn screen before getting into spectator
+    5
 ] call CBA_fnc_waitAndExecute;
 
 [
@@ -74,7 +74,7 @@ player setVariable ["BIS_fnc_showRespawnMenu_disable", true];
         ] call CBA_fnc_waitUntilAndExecute;
     },
     {},
-    4
+    5
 ] call CBA_fnc_waitAndExecute;
 
 nil
