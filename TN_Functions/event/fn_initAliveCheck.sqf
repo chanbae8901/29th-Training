@@ -24,11 +24,12 @@
  */
 
 #include "script_component.hpp"
+#define CHECK_DELAY 1 //Grace period for trades that result in no team standing 
 
 if (!isServer) exitWith {};
 
 // --- Winner check function ---
-GVAR(fnCheckWinner) = {
+FUNC(checkWinner) = {
     private _aliveSides = GVAR(aliveCounts) select { _x > 0 };
     private _numAlive = count _aliveSides;
 
@@ -83,7 +84,7 @@ GVAR(fnCheckWinner) = {
 
     private _newCount = (GVAR(aliveCounts) select _sideIdx) - 1;
     GVAR(aliveCounts) set [_sideIdx, _newCount max 0];
-    call GVAR(fnCheckWinner);
+    [FUNC(checkWinner), {}, CHECK_DELAY] call CBA_fnc_waitAndExecute;
 }] call CBA_fnc_addEventHandler;
 
 // --- Player disconnect ---
@@ -100,7 +101,7 @@ addMissionEventHandler ["HandleDisconnect", {
     if (_lives > 0) then {
         private _newCount = (GVAR(aliveCounts) select _sideIdx) - 1;
         GVAR(aliveCounts) set [_sideIdx, _newCount max 0];
-        call GVAR(fnCheckWinner);
+        [FUNC(checkWinner), {}, CHECK_DELAY] call CBA_fnc_waitAndExecute;
     };
 
     false

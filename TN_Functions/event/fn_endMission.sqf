@@ -29,10 +29,10 @@ if (!isServer) exitWith {
 };
 
 /******** CONFIG ********/
-private _endNeutral = "EndNeutral";
-private _endWest = "EndWestVictory";
-private _endEast = "EndEastVictory";
-private _endResistance = "EndGuerVictory";
+#define END_NEUTRAL     "EndNeutral"
+#define END_WEST        "EndWestVictory"
+#define END_EAST        "EndEastVictory"
+#define END_RESISTANCE  "EndGuerVictory"
 
 /************************/
 
@@ -45,16 +45,16 @@ publicVariable QGVAR(gameCalled);
 if (_ending isEqualType sideUnknown) then {
     _ending = switch (_ending) do {
         case west: {
-            _endWest;
+            END_WEST;
         };
         case east: {
-            _endEast;
+            END_EAST;
         };
         case resistance: {
-            _endResistance;
+            END_RESISTANCE;
         };
         default {
-            _endNeutral;
+            END_NEUTRAL;
         };
     };
 };
