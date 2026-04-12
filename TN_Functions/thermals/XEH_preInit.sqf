@@ -10,6 +10,9 @@
     1, {
         if (hasInterface) then {
             ace_javelin_ignoreVisionMode = _this;
+
+            if !(PRELOAD_FINISHED) exitWith {};
+
             call FUNC(blackScreen);
 
             if (!alive player
