@@ -20,9 +20,9 @@
 
 #define CHECK_INTERVAL 5
 
-if (!isServer) exitWith {};
-
 call EFUNC(base,initPlayersInBase);
+
+if (!isServer) exitWith {};
 
 GVAR(sideAllDead) = [false, false, false];
 
@@ -62,7 +62,7 @@ GVAR(sideAllDead) = [false, false, false];
         if (_allDead && !_prevAllDead) then {
             GVAR(sideAllDead) set [_forEachIndex, true];
             private _name = [_x] call EFUNC(common,convertSide);
-            [format ["All %1 players currently dead or in base.", _name], false, true] call EFUNC(common,notifyAdmin);
+            [format ["All %1 players currently dead or in base.", _name], true, true] call EFUNC(common,notifyAdmin);
         };
         if (!_allDead && _prevAllDead) then {
             GVAR(sideAllDead) set [_forEachIndex, false];

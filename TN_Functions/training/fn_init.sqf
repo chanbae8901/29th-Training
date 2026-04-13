@@ -164,10 +164,6 @@ if (hasInterface) then {
 };
 
 if (isServer) then {
-    if (USING_MODULE(base)) then {
-        call FUNC(initNotifyAdminAllDead);
-    };
-
     INDEPENDENT setFriend [WEST, 0];
 
     private _forcedDate = [2018, 3, 30, 12, 0];
@@ -184,6 +180,10 @@ if (isServer) then {
             }
         ] call CBA_fnc_addEventHandler;
     };
+};
+
+if (USING_MODULE(base)) then {
+    call FUNC(initNotifyAdminAllDead);
 };
 
 nil
