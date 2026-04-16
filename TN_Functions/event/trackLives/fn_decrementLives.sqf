@@ -15,7 +15,7 @@
  * Nothing
  *
  * Example:
- * [] call TN_event_fnc_handleLivesOnKilled;
+ * [] call TN_event_fnc_decrementLives;
  */
 
 if (!hasInterface) exitWith {};

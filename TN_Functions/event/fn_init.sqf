@@ -37,7 +37,7 @@ if (isServer) then {
             params ["_unit", "_loggedIn"];
             if (isNull _unit) exitWith {};
             [_loggedIn] remoteExecCall [
-                QFUNC(handleAdminEventMenu),
+                QFUNC(updateAdminEventMenu),
                 owner _unit
             ];
         }
@@ -99,14 +99,14 @@ if (hasInterface) then {
     // Admin Event Menu
     [QGVAR(eventMenuKilled), "Killed", 
         {
-            [false] call FUNC(handleAdminEventMenu);
+            [false] call FUNC(updateAdminEventMenu);
         }
     ] call CBA_fnc_addBISPlayerEventHandler;
 
     [QGVAR(eventMenuRespawn), "Respawn", 
         {
             if (IS_ADMIN) then {
-                [true] call FUNC(handleAdminEventMenu);
+                [true] call FUNC(updateAdminEventMenu);
             };
         }
     ] call CBA_fnc_addBISPlayerEventHandler;

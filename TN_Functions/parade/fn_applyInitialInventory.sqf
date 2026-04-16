@@ -11,7 +11,7 @@
  * Nothing
  *
  * Example:
- * call TN_parade_fnc_handleInitialInventory;
+ * call TN_parade_fnc_applyInitialInventory;
  */
 
 if (!hasInterface) exitWith {};

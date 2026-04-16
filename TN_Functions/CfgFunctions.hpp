@@ -45,8 +45,8 @@ class TN_Curator {
         class addEditable {};
         class createModule {};
         class excludeObjects {};
-        class handleAdminStateChanged {};
         class init {};
+        class onAdminStateChanged {};
     };
 };
 
@@ -55,24 +55,24 @@ class TN_Event {
     class EventFunctions {
         file = "TN_Functions\event";
         class checkWinConditions {};
-        class initAliveCheck {};
-        class initWinConditions {};
         class endMission {};
         class flagActions {};
         class gui_eventMenu {};
         class gui_setTime {};
-        class handleAdminEventMenu {};       
         class init {};
+        class initAliveCheck {};
+        class initWinConditions {};
         class markEditorPlacedObjects {};
+        class updateAdminEventMenu {};
         class validateSettings {};
     };
     class TrackLivesFunctions {
         file = "TN_Functions\event\trackLives";
         class adjustLives {};
-        class handleAdjustLivesClient {};
-        class handleLivesOnKilled {};
+        class decrementLives {};
         class initTrackLives {};
-        class initTrackLivesClient {};        
+        class initTrackLivesClient {};
+        class onAdjustLivesClient {};        
     };    
 };
 
@@ -100,9 +100,9 @@ class TN_Parade {
     tag = "TN_parade";
     class ParadeFunctions {
         file = "TN_Functions\parade";
+        class applyInitialInventory {};
         class checkNonCombatLoadout {};
         class forceAll {};
-        class handleInitialInventory {};
         class init {};
         class load {};
         class setInsignia {};
@@ -114,11 +114,11 @@ class TN_Radio {
     class RadioFunctions {
         file = "TN_Functions\radio";
         class add {};
-        class handleFrequencyChanged {};
-        class handleLoadoutLr {};
         class init {};
         class initTransferSettings {};
+        class onFrequencyChanged {};
         class remove {};
+        class restoreLrSettings {};
     };
 };
 
@@ -128,7 +128,7 @@ class TN_Round {
         file = "TN_Functions\round\readyui";
         class createReadyUIControls {};
         class flashReadyUI {};
-        class handleReadyChange {};
+        class onReadyChange {};
         class stopReadyUIPFH {};
         class updateReadyUI {};
     };
@@ -209,12 +209,12 @@ class TN_Tracker {
     };
     class EventHandlerFunctions {
         file = "TN_Functions\tracker\eventhandlers";
-        class handleBurnSimulation {};
-        class handleExplosivePlace {};
-        class handleFired {};
-        class handleHit {};
-        class handleVehicleKilled {};
-        class handleWoundReceived {};
+        class onBurnSimulation {};
+        class onExplosivesPlace {};
+        class onFiredMan {};
+        class onHit {};
+        class onVehicleKilled {};
+        class onWoundReceived {};
     };
     class TrackerFunctions {
         file = "TN_Functions\tracker";

@@ -81,7 +81,7 @@ FUNC(startReadyUIPFH) = {
         // Ready state changes -> wake PFH, flash on ready, stop if nothing to show
         GVAR(readyUI_ehReady) = [
             QGVAR(manageReadyChange),
-            FUNC(handleReadyChange)
+            FUNC(onReadyChange)
         ] call CBA_fnc_addEventHandler;
 
         // Safe start aborted -> stop PFH if no teams are still ready

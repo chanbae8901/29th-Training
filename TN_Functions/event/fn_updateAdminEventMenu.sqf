@@ -12,7 +12,7 @@
  * Nothing
  *
  * Example:
- * [true] call TN_event_fnc_handleAdminEventMenu;
+ * [true] call TN_event_fnc_updateAdminEventMenu;
  */
 
 params ["_loggedIn"];

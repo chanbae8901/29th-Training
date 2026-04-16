@@ -16,11 +16,11 @@
 
 GVAR(livesLeft) = GVAR(numberOfLives); //default to prevent nil
 
-[QGVAR(killed), "Killed", FUNC(handleLivesOnKilled)]
+[QGVAR(killed), "Killed", FUNC(decrementLives)]
     call CBA_fnc_addBISPlayerEventHandler;
 
 [QGVAR(adjustLivesClient), 
-    FUNC(handleAdjustLivesClient)
+    FUNC(onAdjustLivesClient)
 ] call CBA_fnc_addEventHandler;
 
 if (didJIP) then {

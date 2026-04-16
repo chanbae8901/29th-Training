@@ -15,7 +15,7 @@
  * Nothing
  *
  * Example:
- * [west, true] call TN_round_fnc_handleReadyChange;
+ * [west, true] call TN_round_fnc_onReadyChange;
  */
 
 params ["_side", "_isReady"];

@@ -12,7 +12,7 @@
  * Nothing
  *
  * Example:
- * call TN_radio_fnc_handleLoadoutLr;
+ * call TN_radio_fnc_restoreLrSettings;
  */
 
 // Ref: https://github.com/michail-nikolaev/task-force-arma-3-radio/blob/878f98e/addons/core/functions/fnc_getDefaultRadioSettings.sqf#L62

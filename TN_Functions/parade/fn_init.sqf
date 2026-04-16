@@ -21,7 +21,7 @@ if (!isClass (configFile >> "CfgPatches" >> "29thID_Uniforms"))
 
 if (hasInterface) then {
     [{!isNull player},
-        FUNC(handleInitialInventory)
+        FUNC(applyInitialInventory)
     ] call CBA_fnc_waitUntilAndExecute;
 
     [QEGVAR(loadout,afterArsenalClosed), {
@@ -42,7 +42,7 @@ if (hasInterface) then {
 if (isServer) then {
     // Register parade respawn inventories for each faction.
     // West is special case due to custom parade loadouts,
-    // done in handleInitialInventory
+    // done in applyInitialInventory
     [EAST, "29TH_PARADE_EAST"] call BIS_fnc_addRespawnInventory;
     [INDEPENDENT, "29TH_PARADE_INDEPENDENT"] call BIS_fnc_addRespawnInventory;
 };

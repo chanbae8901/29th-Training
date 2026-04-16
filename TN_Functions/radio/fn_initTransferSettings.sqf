@@ -77,7 +77,7 @@ private _fn_saveLrSettings = {
 // Frequency changes apply to either SW or LR -- check both.
 [
     "TFAR_event_OnFrequencyChanged",
-    FUNC(handleFrequencyChanged)
+    FUNC(onFrequencyChanged)
 ] call CBA_fnc_addEventHandler;
 
 // ------------------------------------------------------------------
@@ -131,7 +131,7 @@ private _fn_saveLrSettings = {
 // ------------------------------------------------------------------
 [
     "loadout",
-    FUNC(handleLoadoutLr)
+    FUNC(restoreLrSettings)
 ] call CBA_fnc_addPlayerEventHandler;
 
 // ------------------------------------------------------------------

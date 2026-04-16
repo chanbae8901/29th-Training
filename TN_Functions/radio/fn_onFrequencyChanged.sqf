@@ -13,7 +13,7 @@
  * Nothing
  *
  * Example:
- * [player, "TFAR_anprc152"] call TN_radio_fnc_handleFrequencyChanged;
+ * [player, "TFAR_anprc152"] call TN_radio_fnc_onFrequencyChanged;
  */
 
 params ["_unit", "_radio"];

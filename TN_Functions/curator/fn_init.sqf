@@ -82,7 +82,7 @@ if (isServer) then {
         QEGVAR(common,adminStateChanged), {
             params ["_unit", "_loggedIn"];
             if (isNull _unit || isNil "zeus_admin") exitWith {};
-            [_unit, _loggedIn] call FUNC(handleAdminStateChanged);
+            [_unit, _loggedIn] call FUNC(onAdminStateChanged);
         }
     ] call CBA_fnc_addEventHandler;
 

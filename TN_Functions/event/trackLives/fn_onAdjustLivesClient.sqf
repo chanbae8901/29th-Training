@@ -12,7 +12,7 @@
  * Nothing
  *
  * Example:
- * [2] call TN_event_fnc_handleAdjustLivesClient;
+ * [2] call TN_event_fnc_onAdjustLivesClient;
  */
 
 params ["_livesLeft"];
