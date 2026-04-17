@@ -32,6 +32,6 @@ _encryptionCode = missionNamespace getVariable [
 
 [_radios, _encryptionCode] call TFAR_fnc_setLrRadioCode;
 
-if (GVARMAIN(forceSideLRVic) && {_correctSide != _vehicleSide}) then {
+if (GVARMAIN(forceSideLRVic) && {_correctSide isNotEqualTo _vehicleSide}) then {
     systemChat "Vehicle LR radio set to your side's encryption.";
 };

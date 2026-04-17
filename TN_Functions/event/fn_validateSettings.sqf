@@ -115,8 +115,8 @@ if (GVAR(useRoundSystem) call _isTrue) then {
 if (GVAR(checkWinConditions) call _isTrue) then {
     if (isNil QGVAR(score)
         || {!(GVAR(score) isEqualType [])}
-        || {count GVAR(score) != 3}
-        || {(GVAR(score) findIf {!(_x isEqualType 0)}) != -1}) then {
+        || {count GVAR(score) isNotEqualTo 3}
+        || {(GVAR(score) findIf {!(_x isEqualType 0)}) isNotEqualTo -1}) then {
         _errors pushBack (ERR_PREFIX + "score must be an array of 3 numbers [OPFOR, BLUFOR, GRNFOR]");
     };
 
