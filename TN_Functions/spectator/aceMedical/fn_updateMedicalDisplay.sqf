@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /*
- * Author: Bae [29th ID]
+ * Author: Claude prompted by Bae [29th ID]
  * Updates the ACE medical overlay panel with the focused unit's
  * blood volume and body part damage. Clears the panel when no
  * CAManBase is focused.
@@ -40,24 +40,19 @@ private _bloodColor = switch (true) do {
 private _bodyPartDamage = _unit getVariable ["ace_medical_bodyPartDamage", [0,0,0,0,0,0]];
 
 private _fnDamageColor = {
-    params ["_dmg"];
+    private _dmg = _this select 0;
     if (_dmg < 0.01) exitWith {"#44ff44"};
-    if (_dmg < 0.5) exitWith {"#ffff44"};
-    if (_dmg < 1)  exitWith {"#ff8800"};
+    if (_dmg < 0.5)  exitWith {"#ffff44"};
+    if (_dmg < 1)    exitWith {"#ff8800"};
     "#ff4444"
 };
 
-private _html = format ["<t color='%1'>%2</t>", _bloodColor, _bloodVol toFixed 2];
-
+private _lines = [format ["<t color='%1'>%2</t>", _bloodColor, _bloodVol toFixed 2]];
 {
-    _html = _html + format [
-        "<br/><t color='%1'>%2</t>",
-        [_x] call _fnDamageColor,
-        _x toFixed 2
-    ];
+    _lines pushBack format ["<br/><t color='%1'>%2</t>", [_x] call _fnDamageColor, _x toFixed 2];
 } forEach _bodyPartDamage;
 
-_valueCtrl ctrlSetStructuredText parseText _html;
+_valueCtrl ctrlSetStructuredText parseText (_lines joinString "");
 _bgCtrl    ctrlShow true;
 _labelCtrl ctrlShow true;
 _valueCtrl ctrlShow true;

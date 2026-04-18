@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /*
- * Author: Bae [29th ID]
+ * Author: Claude prompted by Bae [29th ID]
  * Initializes the ACE medical overlay while in spectator mode.
  * The panel is hidden by default; press H to toggle it.
  * Polls the ACE spectator camera focus to refresh
@@ -101,11 +101,9 @@ _spectatorDisplay displayAddEventHandler ["KeyDown", {
 GVAR(medicalPFH) = [{
     if (!GVAR(medicalVisible)) exitWith {};
     private _target = missionNamespace getVariable ["ace_spectator_camFocus", objNull];
-    GVAR(medicalFocusedUnit) = if (!isNull _target && {_target isKindOf "CAManBase"}) then {
-        _target
-    } else {
-        objNull
-    };
+    private _newUnit = if (!isNull _target && {_target isKindOf "CAManBase"}) then { _target } else { objNull };
+    if (_newUnit isEqualTo GVAR(medicalFocusedUnit) && { isNull _newUnit }) exitWith {};
+    GVAR(medicalFocusedUnit) = _newUnit;
     call FUNC(updateMedicalDisplay);
 }] call CBA_fnc_addPerFrameHandler;
 
