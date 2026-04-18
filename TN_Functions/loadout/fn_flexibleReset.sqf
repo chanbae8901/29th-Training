@@ -35,7 +35,7 @@ if (_inventory isEqualTo true) then {
 };
 
 if (_inventory isNotEqualTo []) then {
-    if (!isNil {missionNamespace getVariable "BIS_EGSpectator_initialized"}) exitWith {
+    if (EGVAR(spectator,active)) exitWith {
         systemChat "Player in spectator, skipping rearm.";
     };
 

@@ -1,13 +1,9 @@
 #include "script_component.hpp"
 /*
  * Author: Bae [29th ID], modified from Hill [29th ID]
- * Places the player into BIS EG Spectator mode and registers a
+ * Places the player into ACE spectator mode and registers a
  * per-frame handler that exits spectator when the player presses
  * Reload, moves too far from the start position, or dies.
- *
- * KNOWN ISSUE: The player can sometimes respawn while still in the
- * spectator box. The onEachFrame handler catches this via an
- * !alive check and forces an exit to prevent a stuck state.
  *
  * Arguments:
  * 0: Unit to place into spectator (default: player) <OBJECT>
@@ -21,24 +17,6 @@
  * [player, true] call TN_spectator_fnc_enter
  */
 
-/*
- * BIS_fnc_EGSpectator Initialize parameters:
- *
- * ["Initialize", [player, [<side>,<side>], true, true, true,
- *     true, true, true, true, true]] call BIS_fnc_EGSpectator;
- *
- * _this select 0 : The target player object
- * _this select 1 : Whitelisted sides, empty means all
- * _this select 2 : Whether AI can be viewed by the spectator
- * _this select 3 : Whether Free camera mode is available
- * _this select 4 : Whether 3rd Person Perspective camera mode
- *                   is available
- * _this select 5 : Whether to show Focus Info stats widget
- * _this select 6 : Whether or not to show camera buttons widget
- * _this select 7 : Whether to show controls helper widget
- * _this select 8 : Whether to show header widget
- * _this select 9 : Whether to show entities / locations lists
- */
 
 params [["_unit", player], ["_forced", false, [false]]];
 
@@ -54,6 +32,8 @@ if (GVARMAIN(limitSpectator) isEqualTo 2) exitWith {
     false
 };
 
+GVAR(active) = true;
+
 if (!_forced) then {
     hintSilent "SPECTATOR\n----------\nPress RELOAD to exit";
 
@@ -64,22 +44,21 @@ if (!_forced) then {
             "PLAIN DOWN"
         ];
     }, 30, [], {}, {}, {true}, {
-        isNil "BIS_EGSpectator_initialized"
+        !(GVAR(active))
     }] call CBA_fnc_createPerFrameHandlerObject;
 };
 
-[_unit, true] remoteExecCall ["hideObjectGlobal", 2];
-
-// --- Build params based on spectator restriction level ---
-private _params = switch (GVARMAIN(limitSpectator)) do {
-    case 0: { [_unit, [], false] };
-    case 1: {
+if (!isNil "ace_spectator_fnc_setSpectator") then {
+    [true, true, true] call ace_spectator_fnc_setSpectator;
+} else {
+    [_unit, true] remoteExecCall ["hideObjectGlobal", 2];
+    private _params = if (GVARMAIN(limitSpectator) isEqualTo 1) then {
         [_unit, [side _unit], false, false, false, false]
+    } else {
+        [_unit, [], false]
     };
-    default { [_unit, [], false] };
+    ["Initialize", _params] call BIS_fnc_EGSpectator;
 };
-
-["Initialize", _params] call BIS_fnc_EGSpectator;
 
 if (!_forced) then {
     // --- Per-frame exit checks ---

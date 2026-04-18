@@ -1,7 +1,7 @@
 #include "script_component.hpp"
 /*
  * Author: Hill [29th ID]
- * Removes the player from BIS EG Spectator mode and undoes all
+ * Removes the player from ACE spectator mode and undoes all
  * changes made by TN_spectator_fnc_enter. Temporarily disables
  * damage to prevent collision kills when multiple players leave
  * the spectator box at once.
@@ -22,10 +22,15 @@
  */
 
 // --- Bail if spectator was never initialized ---
-if (isNil "BIS_EGSpectator_initialized") exitWith { false };
+if !(GVAR(active)) exitWith { false };
 
-["Terminate"] call BIS_fnc_EGSpectator;
-[player, false] remoteExecCall ["hideObjectGlobal", 2];
+GVAR(active) = false;
+if (!isNil "ace_spectator_fnc_setSpectator") then {
+    [false] call ace_spectator_fnc_setSpectator;
+} else {
+    ["Terminate"] call BIS_fnc_EGSpectator;
+    [player, false] remoteExecCall ["hideObjectGlobal", 2];
+};
 
 cutText ["", "PLAIN DOWN"];
 hintSilent "";

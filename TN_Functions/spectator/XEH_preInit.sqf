@@ -1,6 +1,8 @@
 #include "script_component.hpp"
 #include "..\..\data\settingCategories.hpp"
 
+GVAR(active) = false;
+
 // --- Auto-spectate on respawn ---
 [
     QGVARMAIN(autoSpectate),
@@ -25,12 +27,20 @@
     1, {
         if (!hasInterface) exitWith {};
 
-        if (isNil {
-            missionNamespace getVariable
-                "BIS_EGSpectator_initialized"
-        }) exitWith {};
+        if (!isNil "ace_spectator_fnc_updateSides") then {
+            if (GVARMAIN(limitSpectator) isEqualTo 1) then {
+                [[side player], [west, east, independent, civilian] - [side player]]
+                    call ace_spectator_fnc_updateSides;
+                [[1], [0, 2]] call ace_spectator_fnc_updateCameraModes;
+            } else {
+                [[west, east, independent, civilian], []]
+                    call ace_spectator_fnc_updateSides;
+                [[0, 1, 2], []] call ace_spectator_fnc_updateCameraModes;
+            };
+        };
 
-        // Kick player out of spectator to apply new limits.
+        if !(GVAR(active)) exitWith {};
+
         systemChat
             "Spectator settings changed."
             + " Kicking out player to apply changes.";

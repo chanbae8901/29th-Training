@@ -153,7 +153,7 @@ if (hasInterface) then {
             if !(GVARMAIN(disableScoreboard)) exitWith {};
             if !(isNull (uiNamespace getVariable ["RscDisplayCurator", displayNull])) exitWith {};
             if (
-                !isNil {missionNamespace getVariable "BIS_EGSpectator_initialized"}
+                EGVAR(spectator,active)
                 && GVARMAIN(limitSpectator) isEqualTo 0
             ) exitWith {};
             showScoretable 0;
