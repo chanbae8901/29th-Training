@@ -733,3 +733,4 @@ class TN_RscDisplaySafeStartTime {
     enableSimulation = 1;
     class controls {};
 };
+

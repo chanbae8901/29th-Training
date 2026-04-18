@@ -60,6 +60,8 @@ if (!isNil "ace_spectator_fnc_setSpectator") then {
     ["Initialize", _params] call BIS_fnc_EGSpectator;
 };
 
+[{!isNull findDisplay 60000},FUNC(aceMedicalInit)] call CBA_fnc_waitUntilAndExecute;
+
 if (!_forced) then {
     // --- Per-frame exit checks ---
     private _startPos = getPosATL _unit;

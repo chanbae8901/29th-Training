@@ -165,6 +165,11 @@ class TN_Settings {
 
 class TN_Spectator {
     tag = "TN_spectator";
+    class ACEMedicalFunctions {
+        file = "TN_Functions\spectator\aceMedical";
+        class aceMedicalInit {};
+        class updateMedicalDisplay {};
+    };
     class SpectatorFunctions {
         file = "TN_Functions\spectator";
         class enter {};
