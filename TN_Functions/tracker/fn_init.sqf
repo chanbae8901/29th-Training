@@ -57,11 +57,7 @@ if (isServer) then {
 
         // remoteExecCall for sending info occurs 1
         // frame later so wait.
-        [ {
-                call FUNC(recordKill);
-            },
-            _this, 0.75 // Delay to wait for info from clients.
-        ] call CBA_fnc_waitAndExecute;
+        [FUNC(recordKill), _this, 0.75] call CBA_fnc_waitAndExecute;
     }];
 
     addMissionEventHandler ["EntityRespawned", {
@@ -75,11 +71,8 @@ if (isServer) then {
         "ace_unconscious", {
             // remoteExecCall for sending info occurs 1
             // frame later so wait.
-            [ {
-                    call FUNC(recordACEConscious);
-                },
-                _this, 0.5
-            ] call CBA_fnc_waitAndExecute;
+            [FUNC(recordACEConscious),
+                _this, 0.75] call CBA_fnc_waitAndExecute;
         }
     ] call CBA_fnc_addEventHandler;
 
