@@ -33,6 +33,8 @@
 if (isServer) then {
     if !(isClass (configFile >> "CfgPatches" >> "OCAP_recorder")) exitWith {};
 
+    if (USING_MODULE(event) && {!EGVAR(event,useRoundSystem)}) exitWith {};
+
     GVAR(roundNum) = 1;
 
     GVAR(recording) = false;
