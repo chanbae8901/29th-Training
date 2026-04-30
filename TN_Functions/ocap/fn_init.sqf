@@ -40,7 +40,7 @@ if (isServer) then {
     GVAR(recording) = false;
 
     //Dont start/pause recordings if autoStart is forced by server config
-    if !(OCAP_settings_autoStart && NEWER_OCAP) then {
+    if (!OCAP_settings_autoStart && NEWER_OCAP) then {
         FUNC(initializePlayer) = compile
             preprocessFileLineNumbers
             "TN_Functions\ocap\fn_initializePlayer.sqf";
