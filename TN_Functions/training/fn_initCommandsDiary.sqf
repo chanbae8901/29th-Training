@@ -35,7 +35,8 @@ player createDiaryRecord [
         "Deletes all bodies and ground items on the map.<br /><br />" +
 
         "<font color='#FF00FF'>!arsenal</font><br />" +
-        "Creates an ACE arsenal in front of the player.<br /><br />" +
+        "Creates an ACE arsenal in front of the player.<br />" +
+        "Disappears on round start.<br /><br />" +
 
         "<font color='#FF00FF'>!goto <font color='#00FFFF'>[side]</font></font><br />" +
         "Teleports admin to side spawns (<font color='#00FFFF'>blufor</font>, <font color='#00FFFF'>opfor</font>, <font color='#00FFFF'>grnfor</font>).<br /><br />" +
