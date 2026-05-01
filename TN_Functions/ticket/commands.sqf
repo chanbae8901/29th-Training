@@ -61,8 +61,10 @@
                     systemChat "Error: Invalid input! Must be 'blufor', 'opfor', 'grnfor', 'reset', 'enable', 'disable'";
                 };
 
-                systemChat format ["Changing %1 tickets by %2", toUpper _filterArg, _ticketAmount];
                 [_side, _ticketAmount] call FUNC(add);
+                private _sideID = _side call BIS_fnc_sideID;
+                private _newTotal = (GVAR(counts) select _sideID) max 0;
+                systemChat format ["Changed %1 tickets by %2. New total: %3", toUpper _filterArg, _ticketAmount, _newTotal];
             }
         ]
     ],
