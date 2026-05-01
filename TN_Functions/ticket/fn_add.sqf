@@ -31,7 +31,7 @@ if (_sideID < 0 || _sideID > 2) exitWith {
     systemChat "Error: No side defined!";
 };
 
-private _newTotal = (GVAR(counts) select _sideID) + _ticketAmount;
+private _newTotal = ((GVAR(counts) select _sideID) + _ticketAmount) max 0;
 GVAR(counts) set [_sideID, _newTotal];
 publicVariable QGVAR(counts);
 
