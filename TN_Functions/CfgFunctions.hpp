@@ -192,9 +192,10 @@ class TN_Ticket {
     tag = "TN_ticket";
     class TicketFunctions {
         file = "TN_Functions\ticket";
-        class add {};
         class count {};
         class init {};
+        class reset {};
+        class set {};
     };
 };
 

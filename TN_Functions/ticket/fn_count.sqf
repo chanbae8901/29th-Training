@@ -28,7 +28,7 @@ private _clientOwner = remoteExecutedOwner;
 
 // Map the side to its ID and admin-facing label.
 // Civilian and unknown sides are ignored.
-private _adminLabel = [_playerSide] call EFUNC(common,convertSide);
+private _sideName = [_playerSide] call EFUNC(common,convertSide);
 private _sideID = _playerSide call BIS_fnc_sideID;
 
 if (_sideID < 0 || _sideID > 2) exitWith {};
@@ -54,7 +54,7 @@ if (_tickets isEqualTo 0) then {
         // Last ticket -- warn team and admin.
         ["Your team is out of tickets!", 10] remoteExecCall [QEFUNC(common,timedHint), _playerSide];
         format [
-            "ADMIN: %1 is out of tickets!", _adminLabel
+            "ADMIN: %1 is out of tickets!", _sideName
         ] remoteExecCall [QEFUNC(common,timedHint), EGVAR(common,adminClient)];
         [
             "<t color='#ffffff' size='2'>You are the last player allowed to leave spawn!</t>",

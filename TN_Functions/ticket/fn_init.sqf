@@ -2,7 +2,6 @@
 /*
  * Author: Bae [29th ID]
  * Initializes ticket system.
- * NOTE: Unsure if finished.
  *
  * Arguments:
  * None
@@ -14,12 +13,19 @@
  * call TN_ticket_fnc_init;
  */
 
-// Ensure JIP client is aware of the status of the ticket system.
-if (isNil QGVAR(enabled)) then {
+if (isServer) then {
     GVAR(enabled) = false;
-};
-if (isNil QGVAR(counts)) then {
     GVAR(counts) = [0, 0, 0];
+    GVAR(startingCounts) = [0, 0, 0];
+
+    [
+        QEGVAR(round,started),
+        {
+            if (!GVAR(enabled)) exitWith {};
+            GVAR(counts) = +GVAR(startingCounts);
+            publicVariable QGVAR(counts);
+        }
+    ] call CBA_fnc_addEventHandler;
 };
 
 if (hasInterface) then {
@@ -39,9 +45,9 @@ if (hasInterface) then {
             if !(IS_ADMIN) exitWith {};
             systemChat format [
                 "Current Tickets: Blu: %1, Opf: %2, Grn: %3",
-                GVAR(counts) select 1,
-                GVAR(counts) select 0,
-                GVAR(counts) select 2
+                GVAR(startingCounts) select 1,
+                GVAR(startingCounts) select 0,
+                GVAR(startingCounts) select 2
             ];
         }
     ] call CBA_fnc_addEventHandler;
