@@ -26,7 +26,7 @@ Overall Future Goals
 
 ---
 v4.5.0
-18 APR 2026
+1 MAY 2026
 ---
 * General
   - All "DOTT" tags in functions and variables converted to "TN", `Dott_Functions` folder
@@ -61,6 +61,7 @@ v4.5.0
   - Renamed many event handler functions from `fn_handle*` to `fn_on*` prefix across all modules
     (e.g. `fn_handleHit` → `fn_onHit`, `fn_handleFrequencyChanged` → `fn_onFrequencyChanged`, etc.).
   - Replace `"Man"` with `"CAManBase"` for more precise unit class matching (excludes animals).
+  - Attempt to fix rare bug where players are invisible
     
 * Unscheduling Effort
   - Major pass to replace `spawn`/`waitUntil` patterns with unscheduled `call` and CBA alternatives (`perFrameHandler`, `waitAndExecute`).
@@ -180,6 +181,12 @@ v4.5.0
 * Ticket
   - Cache current admin into `fn_init` to avoid repeated lookup in `fn_count`.
   - Refactor to use a single array to store tickets instead of 3 separate team variables.
+  - Deeper round system integration: dual-mode ticket tracking with `startingCounts` (persisted across
+    rounds) and `counts` (live round state). Starting counts restored each round start.
+  - New `fn_set` for setting absolute ticket values and `fn_reset` for resetting/enabling/disabling.
+    Removed `fn_add` — setting logic consolidated into `fn_set`.
+  - Admin sees starting ticket counts at round start.
+  - `!tickets` command shorthand changed to `!t`.
 
 * Tracker
   - Optimize `sendHit` by not inadvertently creating a new HashMap even if it's not needed.
