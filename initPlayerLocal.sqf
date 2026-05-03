@@ -33,24 +33,22 @@ _unit addEventHandler ["HandleRating", {0}];
 }, [_unit]] call CBA_fnc_waitUntilAndExecute;
 
 // ====== Prevent respawn showing up on old unit for split second.==========
-// Each remote client locally hides newly-init'd entities for HIDE_ENTITY_DELAY
-// seconds, then unhides via CBA's per-frame scheduler. Stamp the entity so the
-// safety sweep below can recognize hides set by THIS handler (vs. intentional
-// hides from spectator, Zeus, etc.).
-["CAManBase", "Init", {
+addMissionEventHandler ["EntityCreated", {
     params ["_entity"];
-    if (local _entity) exitWith {};
+    if (!(_entity isKindOf "CAManBase") || local _entity) exitWith {};
     _entity hideObject true;
+    // Stamp the entity so the safety sweep below can recognize hides set by THIS
+    // handler (vs. intentional hides from spectator, Zeus, etc.).
     _entity setVariable [QGVARMAIN(respawnHideTime), diag_tickTime];
     [{
-        params ["_e"];
-        if (isNull _e) exitWith {};
-        _e hideObject false;
-        _e setVariable [QGVARMAIN(respawnHideTime), nil];
+        params ["_entity"];
+        if (isNull _entity) exitWith {};
+        _entity hideObject false;
+        _entity setVariable [QGVARMAIN(respawnHideTime), nil];
     }, [_entity], HIDE_ENTITY_DELAY] call CBA_fnc_waitAndExecute;
-}] call CBA_fnc_addClassEventHandler;
+}];
 
-//NOTE: Below theorized by Claude, not confirmed.
+//NOTE: Below theorized by Claude, not confirmed. Very skeptical it fixes anything.
 // ====== Safety sweep: recover from orphaned local hides ==========
 // Race-condition recovery for the handler above. Under server/network load or
 // rapid respawn, the timer-based unhide can race with entity replication,
