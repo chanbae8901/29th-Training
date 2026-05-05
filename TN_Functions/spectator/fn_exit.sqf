@@ -27,12 +27,7 @@ if !(GVAR(active)) exitWith { false };
 GVAR(active) = false;
 if (!isNil "ace_spectator_fnc_setSpectator") then {
     [false] call ace_spectator_fnc_setSpectator;
-    if (alive player) then {
-        player allowDamage true; //does nothing due to below but copy pasting from ACE
-        player setVariable ["ace_medical_allowDamage", true];
-        [player, "ace_spectator_isSet"] call ace_common_fnc_unhideUnit;
-        [player, "ace_spectator_isSet"] call ace_common_fnc_unmuteUnit;      
-    };
+    //Don't need to revert hiding done in fn_enter, done auto
 } else {
     ["Terminate"] call BIS_fnc_EGSpectator;
     [player, false] remoteExecCall ["hideObjectGlobal", 2];
