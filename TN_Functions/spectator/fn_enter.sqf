@@ -127,6 +127,7 @@ if (!_forced) then {
     }, 0, [_startPos, _unit]] call CBA_fnc_addPerFrameHandler;
 };
 
+if (alive _unit) then { _unit enableSimulationGlobal false };
 
 [QGVAR(entered), []] call CBA_fnc_localEvent;
 

@@ -59,6 +59,7 @@ if (!isNil QGVAR(exitPFH)) then {
     GVAR(exitPFH) = nil;
 };
 
+if (alive player) then { player enableSimulationGlobal true };
 
 if !(weaponLowered player) then {
     player action ["WeaponOnBack", player];
