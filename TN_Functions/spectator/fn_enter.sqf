@@ -44,8 +44,11 @@ if (!_forced) then {
 
 if (!isNil "ace_spectator_fnc_setSpectator") then
 {
-    _hintText = _hintText + 
-    "Press Tab for Scoreboard\n" +
+    if (GVARMAIN(limitSpectator) isEqualTo 0) then {
+        _hintText = _hintText +
+        "Press Tab for Scoreboard\n";
+    };
+    _hintText = _hintText +
     "Press H for ACE Medical Stats";
 };
 
@@ -75,14 +78,16 @@ if (!isNil "ace_spectator_fnc_setSpectator") then {
     };
 
     [{!isNull findDisplay 60000}, {
-        //Workaround for ACE Spectator blocking default scoreboard button 'P'
-        (findDisplay 60000) displayAddEventHandler ["KeyDown", {
-            params ["", "_key"];
-            if (_key isEqualTo 0x0F) then { //Tab
-                showScoretable ([1, 0] select visibleScoretable);
-            };
-            false
-        }];
+        if (GVARMAIN(limitSpectator) isEqualTo 0) then {
+            //Workaround for ACE Spectator blocking default scoreboard button 'P'
+            (findDisplay 60000) displayAddEventHandler ["KeyDown", {
+                params ["", "_key"];
+                if (_key isEqualTo 0x0F) then { //Tab
+                    showScoretable ([1, 0] select visibleScoretable);
+                };
+                false
+            }];
+        };
 
         call FUNC(aceMedicalInit);
     }] call CBA_fnc_waitUntilAndExecute;
