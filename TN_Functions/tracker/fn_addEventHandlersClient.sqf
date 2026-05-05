@@ -17,7 +17,12 @@ player addEventHandler ["FiredMan", FUNC(onFiredMan)];
 
 ["ace_advanced_throwing_throwFiredXEH", {
     if (!local (_this select 0)) exitWith {};
+    //set element to objNull so system doesn't think
+    //player unit is a vehicle for tracking purposes
+    private _old = _this select 7;
+    _this set [7, objNull];
     call FUNC(onFiredMan);
+    _this set [7, _old];
 }] call CBA_fnc_addEventHandler;
 
 ["ace_explosives_place",
