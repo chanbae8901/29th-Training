@@ -28,7 +28,10 @@ Overall Future Goals
 v4.5.1
 4 MAY 2026
 ---
-
+* Spectator
+  - Manually hide unit in ACE Spectator case to avoid leaving group behavior.
+  - Workaround for scoreboard not working in ACE Spectator by adding hardcoded Tab bind for it.
+  - Show all custom spectator key binds in hintSilent.
 ---
 v4.5.0
 1 MAY 2026

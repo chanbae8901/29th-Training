@@ -162,12 +162,8 @@ if (hasInterface) then {
 
     [
         QEGVAR(spectator,exited), {
-            if (
-                ROUND_LIVE
-                && GVARMAIN(disableScoreboard)
-            ) then {
-                showScoretable 0;
-            };
+            showScoretable ([-1, 0] select 
+                (ROUND_LIVE && GVARMAIN(disableScoreboard)));
         }
     ] call CBA_fnc_addEventHandler;
 
