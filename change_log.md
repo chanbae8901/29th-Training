@@ -36,6 +36,9 @@ v4.5.1
 
 * Tracker
   - Fix advanced grenade thrown grenades being treated as vehicle weapon.
+
+* Vehicle
+  - Fix removeDefaultVehicleInventories not working
 ---
 v4.5.0
 1 MAY 2026
