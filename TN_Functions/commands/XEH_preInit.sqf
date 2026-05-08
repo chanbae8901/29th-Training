@@ -1,7 +1,7 @@
 #include "script_component.hpp"
 #include "..\..\data\settingCategories.hpp"
 
-private _defaultNoLog = "['commands', 'help', 'showchat', 'radio', 'fb']";
+private _defaultNoLog = "['commands', 'help', 'showchat', 'radio', 'fb', 'weaponstate']";
 private _defaultRestrictedCommands = "['arsenal', 'heal', 'rearm', 'cleanup', 'fb']";
 private _defaultAdminCommands = "['reset', 'debrief', 'goto', 'measure', 't', 'parade', 's', 'safe']";
 

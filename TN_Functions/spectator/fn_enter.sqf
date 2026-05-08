@@ -34,13 +34,31 @@ if (GVARMAIN(limitSpectator) isEqualTo 2) exitWith {
 
 GVAR(active) = true;
 
-if (!_forced) then {
-    hintSilent "SPECTATOR\n----------\nPress RELOAD to exit";
+#define HINT_TITLE "SPECTATOR\n----------\n"
 
+private _hintText = HINT_TITLE;
+if (!_forced) then {
+    _hintText = _hintText +
+    "Press Reload to Exit\n";
+};
+
+if (!isNil "ace_spectator_fnc_setSpectator") then
+{
+    if (GVARMAIN(limitSpectator) isEqualTo 0) then {
+        _hintText = _hintText +
+        "Press Tab for Scoreboard\n";
+    };
+    _hintText = _hintText +
+    "Press H for ACE Medical Stats";
+};
+
+if (_hintText isNotEqualTo HINT_TITLE) then {hintSilent _hintText};
+
+if (!_forced) then {
     // --- Periodic reminder while spectating ---
     [{
         cutText [
-            "SPECTATOR\n----------\nPress RELOAD to exit",
+            "SPECTATOR\n----------\nPress RELOAD to Exit",
             "PLAIN DOWN"
         ];
     }, 30, [], {}, {}, {true}, {
@@ -49,7 +67,30 @@ if (!_forced) then {
 };
 
 if (!isNil "ace_spectator_fnc_setSpectator") then {
-    [true, true, true] call ace_spectator_fnc_setSpectator;
+    [true, true, false] call ace_spectator_fnc_setSpectator;
+    //Manually hide the player instead of using ACE
+    //to avoid group leave
+    if (alive player) then {
+        player allowDamage false;
+        player setVariable ["ace_medical_allowDamage", false];
+        [player, "ace_spectator_isSet"] call ace_common_fnc_hideUnit;
+        [player, "ace_spectator_isSet"] call ace_common_fnc_muteUnit;
+    };
+
+    [{!isNull findDisplay 60000}, {
+        if (GVARMAIN(limitSpectator) isEqualTo 0) then {
+            //Workaround for ACE Spectator blocking default scoreboard button 'P'
+            (findDisplay 60000) displayAddEventHandler ["KeyDown", {
+                params ["", "_key"];
+                if (_key isEqualTo 0x0F) then { //Tab
+                    showScoretable ([1, 0] select visibleScoretable);
+                };
+                false
+            }];
+        };
+
+        call FUNC(aceMedicalInit);
+    }] call CBA_fnc_waitUntilAndExecute;
 } else {
     [_unit, true] remoteExecCall ["hideObjectGlobal", 2];
     private _params = if (GVARMAIN(limitSpectator) isEqualTo 1) then {
@@ -60,7 +101,6 @@ if (!isNil "ace_spectator_fnc_setSpectator") then {
     ["Initialize", _params] call BIS_fnc_EGSpectator;
 };
 
-[{!isNull findDisplay 60000},FUNC(aceMedicalInit)] call CBA_fnc_waitUntilAndExecute;
 
 if (!_forced) then {
     // --- Per-frame exit checks ---
@@ -87,6 +127,7 @@ if (!_forced) then {
     }, 0, [_startPos, _unit]] call CBA_fnc_addPerFrameHandler;
 };
 
+if (alive _unit) then { _unit enableSimulationGlobal false };
 
 [QGVAR(entered), []] call CBA_fnc_localEvent;
 

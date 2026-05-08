@@ -25,6 +25,21 @@ Overall Future Goals
   - Player profile string reading for Cpl, Sgt, etc?
 
 ---
+v4.5.1
+4 MAY 2026
+---
+* Spectator
+  - Manually hide unit in ACE Spectator case to avoid leaving group behavior.
+  - Workaround for scoreboard not working in ACE Spectator by adding hardcoded Tab bind for it.
+  - Show all custom spectator key binds in hintSilent.
+  - Fix spectating player moving when WASD is used in 1PP camera.
+
+* Tracker
+  - Fix advanced grenade thrown grenades being treated as vehicle weapon.
+
+* Vehicle
+  - Fix removeDefaultVehicleInventories not working
+---
 v4.5.0
 1 MAY 2026
 ---

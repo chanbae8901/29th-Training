@@ -27,6 +27,7 @@ if !(GVAR(active)) exitWith { false };
 GVAR(active) = false;
 if (!isNil "ace_spectator_fnc_setSpectator") then {
     [false] call ace_spectator_fnc_setSpectator;
+    //Don't need to revert hiding done in fn_enter, done auto
 } else {
     ["Terminate"] call BIS_fnc_EGSpectator;
     [player, false] remoteExecCall ["hideObjectGlobal", 2];
@@ -53,6 +54,7 @@ if (!isNil QGVAR(exitPFH)) then {
     GVAR(exitPFH) = nil;
 };
 
+if (alive player) then { player enableSimulationGlobal true };
 
 if !(weaponLowered player) then {
     player action ["WeaponOnBack", player];

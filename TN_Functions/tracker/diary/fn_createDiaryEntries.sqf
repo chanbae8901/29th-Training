@@ -39,7 +39,7 @@ if !(player diarySubjectExists "RoundEventLog") then {
     _infoLines pushBack
         "Information is updated at the end of"
         + " the round.";
-    private _infoText = _infoLines joinString "<br />";
+    private _infoText = _infoLines joinString "<br/>";
     player createDiaryRecord ["RoundEventLog", ["Information", _infoText]];
 };
 
@@ -85,7 +85,7 @@ private _copyButton = format [
     "RoundEventLog", _title
 ];
 _playerEventStrings pushBack _copyButton;
-private _text = _playerEventStrings joinString "<br />";
+private _text = _playerEventStrings joinString "<br/>";
 player createDiaryRecord ["RoundEventLog", [_title, _text]];
 
 _title = format [
@@ -98,7 +98,7 @@ _copyButton = format [
     "RoundEventLog", _title
 ];
 _eventStrings pushBack _copyButton;
-_text = _eventStrings joinString "<br />";
+_text = _eventStrings joinString "<br/>";
 player createDiaryRecord ["RoundEventLog", [_title, _text]];
 
 if !(player diarySubjectExists "RoundScoreboard") then {
@@ -117,7 +117,7 @@ if !(player diarySubjectExists "RoundScoreboard") then {
     _infoLines pushBack
         "Information is updated at the end of"
         + " the round.";
-    private _infoText = _infoLines joinString "<br />";
+    private _infoText = _infoLines joinString "<br/>";
     player createDiaryRecord ["RoundScoreboard", ["Information", _infoText]];
 };
 
@@ -125,7 +125,7 @@ private _killCounts = [_events, _sides] call FUNC(getKillCounts);
 _title = format ["Round %1", _roundNum];
 _text = [_killCounts, _names] call FUNC(killCountsToString);
 _copyButton = format [
-    "<br /><execute expression='[""%1"",""%2""]"
+    "<br/><execute expression='[""%1"",""%2""]"
     + " call TN_tracker_fnc_copyRecordToClipboard;'>"
     + "Copy to Clipboard</execute>",
     "RoundScoreboard", _title

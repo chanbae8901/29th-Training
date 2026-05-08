@@ -26,6 +26,6 @@ private _lines = [];
 }
 forEach _killCounts;
 
-private _text = _lines joinString "<br />";
+private _text = _lines joinString "<br/>";
 
 _text

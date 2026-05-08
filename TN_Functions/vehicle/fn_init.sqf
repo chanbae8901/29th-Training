@@ -33,7 +33,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_main")) then {
     }] call CBA_fnc_addClassEventHandler;
 };
 
-["AllVehicles", "Init", {
+["AllVehicles", "InitPost", {
     if !(GVARMAIN(removeDefaultVehicleInventories)) exitWith {};
     params ["_objectCreated"];
     clearWeaponCargoGlobal _objectCreated;
