@@ -25,6 +25,18 @@ Overall Future Goals
   - Player profile string reading for Cpl, Sgt, etc?
 
 ---
+v4.5.2
+8 MAY 2026
+---
+* OCAP
+  - Added initalized players to trackedUnits.
+  - Make sure the minimum value of captureFrameNo is 1 in initalizePlayer,
+    as any value lower breaks OCAP recordings when they are chunked for streaming.
+
+* Spectator
+  - Swapped scoreboard button from Tab to '[' due to player request to avoid button conflicts.
+  
+---
 v4.5.1
 4 MAY 2026
 ---
