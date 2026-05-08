@@ -29,7 +29,7 @@ if !(_player getVariable ["ocap_isInitialized", false]) then {
     _player setVariable ["ocap_id", ocap_recorder_nextId];
 
     private _newUnit = [
-        ocap_recorder_captureFrameNo, //1
+        ocap_recorder_captureFrameNo max 1, //1
         ocap_recorder_nextId, //2
         name _player, //3
         groupID (group _player), //4
