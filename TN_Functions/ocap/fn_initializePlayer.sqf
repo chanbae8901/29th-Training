@@ -54,6 +54,8 @@ if !(_player getVariable ["ocap_isInitialized", false]) then {
 
     ocap_recorder_nextId = ocap_recorder_nextId + 1;
 
+    ocap_recorder_trackedUnits set [_player getVariable ["ocap_id", -1], _player];
+
     _player setVariable ["ocap_isInitialized", true, true];
 };
 
