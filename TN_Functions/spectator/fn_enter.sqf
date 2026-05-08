@@ -46,7 +46,7 @@ if (!isNil "ace_spectator_fnc_setSpectator") then
 {
     if (GVARMAIN(limitSpectator) isEqualTo 0) then {
         _hintText = _hintText +
-        "Press Tab for Scoreboard\n";
+        "Press [ for Scoreboard\n";
     };
     _hintText = _hintText +
     "Press H for ACE Medical Stats";
@@ -82,7 +82,7 @@ if (!isNil "ace_spectator_fnc_setSpectator") then {
             //Workaround for ACE Spectator blocking default scoreboard button 'P'
             (findDisplay 60000) displayAddEventHandler ["KeyDown", {
                 params ["", "_key"];
-                if (_key isEqualTo 0x0F) then { //Tab
+                if (_key isEqualTo 0x1A) then { //[
                     showScoretable ([1, 0] select visibleScoretable);
                 };
                 false
