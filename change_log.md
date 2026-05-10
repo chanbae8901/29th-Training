@@ -32,6 +32,8 @@ v4.5.2
   - Added initalized players to trackedUnits.
   - Make sure the minimum value of captureFrameNo is 1 in initalizePlayer,
     as any value lower breaks OCAP recordings when they are chunked for streaming.
+  - Fix projectile tracking not working due to incorrect function name.
+  - Fix sectors placed before recording start not showing up.
 
 * Spectator
   - Swapped scoreboard button from Tab to '[' due to player request to avoid button conflicts.
