@@ -61,8 +61,11 @@ if (!OCAP_settings_autoStart && NEWER_OCAP) then {
         preprocessFileLineNumbers
         "TN_Functions\ocap\fn_initializePlayer.sqf";
 
-    call ocap_recorder_fnc_startRecording;
-
+    //don't use startRecording, causes double call of it
+    //assigning startTime will call it properly
+    ocap_recorder_startTime = time;
+    publicVariable "ocap_recorder_startTime";
+    
     [{ocap_recorder_captureFrameNo > 0}, {
         GVAR(recording) = false;
 
